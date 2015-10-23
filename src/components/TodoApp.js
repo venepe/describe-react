@@ -3,6 +3,7 @@ import Relay from 'react-relay';
 
 import AddTodoMutation from '../mutations/AddTodoMutation';
 
+import Archy from './Archy';
 import TodoListFooter from './TodoListFooter';
 import TodoTextInput from './TodoTextInput';
 
@@ -22,12 +23,22 @@ class TodoApp extends React.Component {
 
   render() {
     const {viewer, children} = this.props;
+    let object = {
+      component: (<div>describe:</div>),
+      nodes: [
+        {
+          component: (<div>hellow world</div>),
+          nodes: []
+        }
+      ]
+    };
 
     return (
       <div data-framework="relay">
         <section className="todoapp">
           <header className="header">
             <h1>todos</h1>
+            <Archy archible={object}/>
             <TodoTextInput
               className="new-todo"
               placeholder="What needs to be done?"

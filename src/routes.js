@@ -5,11 +5,11 @@ import ViewerQueries from './queries/ViewerQueries';
 
 import TodoApp from './components/TodoApp';
 import TodoList from './components/TodoList';
+import App from './components/App';
 
 export default (
   <Route
-    path="/" component={TodoApp}
-    queries={ViewerQueries}
+    path="/" component={App}
   >
     <IndexRoute
       component={TodoList}

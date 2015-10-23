@@ -9,10 +9,6 @@ import RelayLocalSchema from 'relay-local-schema';
 import routes from './routes';
 import schema from './data/schema';
 
-import 'todomvc-common/base';
-import 'todomvc-common/base.css';
-import 'todomvc-app-css/index.css';
-
 import './assets/learn.json';
 
 Relay.injectNetworkLayer(
