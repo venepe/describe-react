@@ -4,16 +4,11 @@ import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 import {Router} from 'react-router';
 import ReactRouterRelay from 'react-router-relay';
-import RelayLocalSchema from 'relay-local-schema';
+import SMTIDefaultNetworkLayer from './utils/SMTIDefaultNetworkLayer';
 
 import routes from './routes';
-import schema from './data/schema';
 
-import './assets/learn.json';
-
-Relay.injectNetworkLayer(
-  new RelayLocalSchema.NetworkLayer({schema})
-);
+SMTIDefaultNetworkLayer.init();
 
 const history = createHashHistory({queryKey: false});
 

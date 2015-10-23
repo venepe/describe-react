@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import { isFunction } from 'lodash';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import lightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
@@ -9,7 +9,7 @@ import Header from '../Header';
 import Panel from '../Panel';
 import Archy from '../Archy';
 
-class App extends React.Component {
+class App extends Component {
 
     constructor(props) {
         super(props);
@@ -20,21 +20,13 @@ class App extends React.Component {
     }
 
     render() {
-      let object = {
-        component: (<div>describe:</div>),
-        nodes: [
-          {
-            component: (<div>hellow world</div>),
-            nodes: []
-          }
-        ]
-      };
+      const {children} = this.props;
 
         return (
             <div>
               <Header/>
               <Panel>
-                <Archy archible={object}/>
+                 {children}
               </Panel>
             </div>
             );

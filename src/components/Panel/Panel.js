@@ -1,12 +1,12 @@
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import Paper from 'material-ui/lib/paper';
 import StylePropable from 'material-ui/lib/mixins/style-propable';
 import _ from 'lodash';
 import UI from '../../utils/UI';
 
-class Panel extends React.Component {
+class Panel extends Component {
 
     constructor(props) {
         super(props);

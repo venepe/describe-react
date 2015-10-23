@@ -3,7 +3,7 @@ import {graphql} from 'graphql';
 import {introspectionQuery, printSchema} from 'graphql/utilities';
 import path from 'path';
 
-import schema from '../src/data/schema';
+import schema from './schema';
 
 async () => {
   const result = await graphql(schema, introspectionQuery);

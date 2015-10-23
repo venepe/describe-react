@@ -1,13 +1,13 @@
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
 import event from '../../utils/Event';
 import _ from 'lodash';
 import UI from '../../utils/UI';
 
-class Header extends React.Component {
+class Header extends Component {
 
     constructor(props) {
         super(props);

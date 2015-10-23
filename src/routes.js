@@ -1,24 +1,21 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 
-import ViewerQueries from './queries/ViewerQueries';
-
-import TodoApp from './components/TodoApp';
-import TodoList from './components/TodoList';
 import App from './components/App';
+import ProjectView from './components/ProjectView';
+import ProjectRoute from './routes/ProjectRoute';
+import ProjectQueries from './queries/ProjectQueries';
 
 export default (
   <Route
     path="/" component={App}
   >
     <IndexRoute
-      component={TodoList}
-      queries={ViewerQueries}
-      prepareParams={() => ({status: 'any'})}
+      component={App}
     />
     <Route
-      path=":status" component={TodoList}
-      queries={ViewerQueries}
-    />
+        path="projects/:projectId" component={ProjectView}
+        queries={ProjectQueries}
+      />
   </Route>
 );

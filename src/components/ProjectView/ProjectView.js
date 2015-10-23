@@ -23,10 +23,10 @@ class ProjectView extends Component {
       console.log(this.props.project.id);
       console.log(this.props.project.title);
       object = {
-        component: (<div>describe:</div>),
+        component: (<div className="archy-label">describe:</div>),
         nodes: [
           {
-            component: (<div id={this.props.project.id}>{this.props.project.title}</div>),
+            component: (<div id={this.props.project.id} className="archy-label">{this.props.project.title}</div>),
             nodes: []
           }
         ]
