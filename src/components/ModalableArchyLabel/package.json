@@ -1,0 +1,6 @@
+{
+  "name": "ModalableArchyLabel",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ModalableArchyLabel.js"
+}

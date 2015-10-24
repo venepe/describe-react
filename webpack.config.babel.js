@@ -32,7 +32,7 @@ export default {
       'process.env': {NODE_ENV: JSON.stringify(process.env.NODE_ENV)}
     }),
     new HtmlWebpackPlugin({
-      title: 'Relay • TodoMVC'
+      title: 'Describe'
     })
   ],
   devtool: production ? 'source-map' : 'eval-source-map',

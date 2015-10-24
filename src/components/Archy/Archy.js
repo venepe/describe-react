@@ -54,7 +54,9 @@ class Archy extends Component {
       } else {
         view = (
             <li key={uuidKey}>
-              {node.component}
+              <div className="archy">
+                {node.component}
+              </div>
               <ul>
                 {rows}
               </ul>

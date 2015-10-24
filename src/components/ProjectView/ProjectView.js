@@ -5,12 +5,16 @@ import Relay from 'react-relay';
 import styles from './ProjectView.css';
 import { Paper } from 'material-ui';
 import Archy from '../Archy';
+import ArchyLabel from '../ArchyLabel';
+import ModalableArchyLabel from '../ModalableArchyLabel';
 import ProjectCoverImage from '../ProjectCoverImage';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
 import DeleteImageMutation from '../../mutations/DeleteImageMutation';
 import DeletePaperMutation from '../../mutations/DeletePaperMutation';
 import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
+
+import EditProjectModal from '../EditProjectModal';
 
 class ProjectView extends Component {
   constructor(props) {
@@ -23,10 +27,10 @@ class ProjectView extends Component {
       console.log(this.props.project.id);
       console.log(this.props.project.title);
       object = {
-        component: (<div className="archy-label">describe:</div>),
+        component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
           {
-            component: (<div id={this.props.project.id} className="archy-label">{this.props.project.title}</div>),
+            component: (<ModalableArchyLabel iconMenu={<EditProjectModal />} id={this.props.project.id} text={this.props.project.title}/>),
             nodes: []
           }
         ]
