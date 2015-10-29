@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import { IconMenu, IconButton } from 'material-ui';
+import { IconMenu, IconButton, Dialog } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 import styles from './ModalableArchyLabel.css';
 import ArchyLabel from '../ArchyLabel';
@@ -31,9 +31,13 @@ class ModalableArchyLabel extends Component {
 
     let IconMenu = this.state.iconMenu;
 
+    if (IconMenu) {
+      IconMenu = React.cloneElement(IconMenu);
+    }
+
     return (
       <div className="modalable-archy-label">{this.state.text}
-      {IconMenu}
+        {IconMenu}
       </div>
     );
   }

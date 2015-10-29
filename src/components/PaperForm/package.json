@@ -1,0 +1,6 @@
+{
+  "name": "PaperForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PaperForm.js"
+}

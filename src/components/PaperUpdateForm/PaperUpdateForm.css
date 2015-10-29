@@ -1,0 +1,9 @@
+
+.action-container {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  padding: 8;
+  margin-bottom: 8;
+  width: 100%;
+  text-align: right;
+}

@@ -1,7 +1,7 @@
-/*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
+'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import styles from './LoginPage.css';
+import styles from './LoginView.css';
 import { RaisedButton, TextField, FlatButton } from 'material-ui';
 import validator from 'validator';
 import Utilities from '../../utils/utilities';
@@ -9,7 +9,7 @@ import Authenticate from '../../utils/authenticate';
 
 const errorMessage = 'Invalid email or password. Please try again';
 
-class LoginPage extends Component {
+class LoginView extends Component {
   constructor(props) {
     super(props);
     this._onChangeEmail = this._onChangeEmail.bind(this);
@@ -20,7 +20,6 @@ class LoginPage extends Component {
     this.state = {
       email: '',
       password: '',
-      keyboardSpace: 0,
       errorMessage: '',
       isEmailValid: false,
       isPasswordValid: false,
@@ -28,13 +27,9 @@ class LoginPage extends Component {
     }
   }
 
-  static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired,
-  };
-
   _onChangeEmail(e) {
-    var email = e.target.value;
-    var isEmailValid = false;
+    let email = e.target.value;
+    let isEmailValid = false;
     if (validator.isEmail(email)) {
       isEmailValid = true;
     }
@@ -46,10 +41,10 @@ class LoginPage extends Component {
   }
 
   _onChangePassword(e) {
-    var password = e.target.value;
-    var isPasswordValid = false;
+    let password = e.target.value;
+    let isPasswordValid = false;
     if (Utilities.isValidPassword(password)) {
-      var isPasswordValid = true;
+      isPasswordValid = true;
     }
     this.setState({
       password,
@@ -58,13 +53,13 @@ class LoginPage extends Component {
   }
 
   _onLogin() {
-    var password = this.state.password;
-    var email = this.state.email.trim();
+    let password = this.state.password;
+    let email = this.state.email.trim();
     if (this.state.isEmailValid && this.state.isPasswordValid && !this.state.isLoading) {
       this.setState({isLoading: true});
       Authenticate.login(email, password)
         .then((meId) => {
-          // this.props.onAuthenticated(meId);
+          console.log(meId);
         })
         .catch((err) => {
           this.setState({
@@ -79,18 +74,14 @@ class LoginPage extends Component {
   }
 
   render() {
-    const title = 'Log In';
-    this.context.onSetTitle(title);
-
     let isDisabled = true;
     if (this.state.isEmailValid && this.state.isPasswordValid && !this.state.isLoading) {
       isDisabled = false;
     }
 
     return (
-      <div className="LoginPage">
-        <div className="LoginPage-container">
-          <h1>{title}</h1>
+      <div className="LoginView">
+        <div className="LoginView-container">
           <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
           <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
           <RaisedButton disabled={isDisabled} label="Log in" fullWidth={true} disabled={isDisabled} onMouseUp={this._onLogin} onTouchEnd={this._onLogin} />
@@ -102,4 +93,4 @@ class LoginPage extends Component {
 
 }
 
-export default LoginPage;
+export default LoginView;

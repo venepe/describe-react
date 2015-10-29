@@ -1,0 +1,6 @@
+{
+  "name": "UnauthenticatedView",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./UnauthenticatedView.js"
+}

@@ -19,7 +19,6 @@ class Archy extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('will receive props');
     this.setState({
       archible: nextProps.archible
     });
@@ -70,7 +69,7 @@ class Archy extends Component {
     var view = getLabel(this.state.archible);
 
     return (
-      <div>
+      <div className="Archy-container">
         {view}
       </div>
     );

@@ -13,20 +13,7 @@ function init(token) {
   }
   )
 
-  var SETINetwork = {
-    sendMutation(request) {
-      return SMTIDefaultNetworkLayer.sendMutation(request);
-    },
-    sendQueries(request) {
-      console.log('get thing');
-      return SMTIDefaultNetworkLayer.sendQueries(request);
-    },
-    supports() {
-      return false;
-    }
-  }
-
-  Relay.injectNetworkLayer(SETINetwork);
+  Relay.injectNetworkLayer(SMTIDefaultNetworkLayer);
 }
 
 module.exports.init = init;

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import AppBar from 'material-ui/lib/app-bar';
-import IconButton from 'material-ui/lib/icon-button';
+import FlatButton from 'material-ui/lib/icon-button';
 import event from '../../utils/Event';
 import _ from 'lodash';
 import UI from '../../utils/UI';
@@ -18,12 +18,10 @@ class Header extends Component {
     }
 
     _onRightClick(e) {
-        window.location.href = 'https://github.com/leftstick/generator-material-react';
         event.stop(e);
     }
 
     _onLeftClick(e) {
-        window.location.href = 'http://leftstick.gitcafe.io/';
         event.stop(e);
     }
 
@@ -43,9 +41,8 @@ class Header extends Component {
 
     render() {
         return (
-            <AppBar title="todos"
+            <AppBar title="Sumseti"
               iconClassNameLeft="icon-html5"
-              iconElementRight={ <IconButton iconClassName="icon-github-1" onClick={ this._onRightClick.bind(this) } tooltip="View Source" /> }
               onLeftIconButtonTouchTap={ this._onLeftClick.bind(this) }
               zDepth={ this.state.zDepth } />
             );

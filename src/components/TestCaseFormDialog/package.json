@@ -1,0 +1,6 @@
+{
+  "name": "TestCaseFormDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TestCaseFormDialog.js"
+}

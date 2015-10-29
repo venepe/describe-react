@@ -1,0 +1,6 @@
+{
+  "name": "PaperUpdateFormDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PaperUpdateFormDialog.js"
+}

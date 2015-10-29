@@ -30,9 +30,9 @@ document.head.appendChild(materialIcons);
 
 
 ReactDOM.render(
-  <Router
-    createElement={ReactRouterRelay.createElement}
-    history={history} routes={routes}
-  />,
+    <Router
+      createElement={ReactRouterRelay.createElement}
+      history={history} routes={routes}
+    />,
   mountNode
 );

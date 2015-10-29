@@ -1,0 +1,6 @@
+{
+  "name": "ImageForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ImageForm.js"
+}

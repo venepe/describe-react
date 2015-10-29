@@ -1,22 +1,18 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import { IconMenu, IconButton } from 'material-ui';
+import { IconMenu, IconButton, FontIcon, Dialog } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './EditProjectModal.css';
-import EditModalButton from '../EditModalButton';
+import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_IMAGE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
 class EditProjectModal extends Component {
   constructor(props) {
     super(props);
-    this._onPress = this._onPress.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this.state = {
-      text: props.text,
-      id: props.id,
-      isModalOpen: false,
-      modal: props.modal
+      id: props.id
     }
   }
 
@@ -26,23 +22,19 @@ class EditProjectModal extends Component {
     });
   }
 
-  _onPress() {
-    this.props.onPress(this.state.id);
-  }
-
   _onItemTouchTap(event, item) {
-    console.log(item);
+    this.props.onItemTouchTap(item.props.value, this.state.id);
   }
 
   render() {
-
+    let iconButtonElement = (<IconButton><FontIcon className="material-icons">more_horiz</FontIcon></IconButton>);
     return (
-        <IconMenu iconButtonElement={<IconButton iconClassName="material-icons">more_horiz</IconButton>} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
-          <MenuItem primaryText="Add Test Case" />
-          <MenuItem primaryText="Add Paper" />
-          <MenuItem primaryText="Add Image" />
-          <MenuItem primaryText="Update Project" />
-          <MenuItem primaryText="Delete Project" />
+        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+          <MenuItem primaryText="Add Test Case" value={INTRODUCE_TEST_CASE} />
+          <MenuItem primaryText="Add Paper" value={INTRODUCE_PAPER} />
+          <MenuItem primaryText="Add Image" value={INTRODUCE_IMAGE} />
+          <MenuItem primaryText="Update Project" value={UPDATE_PROJECT} />
+          <MenuItem primaryText="Delete Project" value={DELETE_PROJECT} />
           <MenuDivider />
           <MenuItem primaryText="Close" />
         </IconMenu>
@@ -50,7 +42,7 @@ class EditProjectModal extends Component {
   }
 }
 
-EditProjectModal.propTypes = {id: PropTypes.string, text: PropTypes.string, onPress: PropTypes.func};
-EditProjectModal.defaultProps = {id: '', text: '', onPress: function() {}};
+EditProjectModal.propTypes = {id: PropTypes.string, text: PropTypes.string, onItemTouchTap: PropTypes.func};
+EditProjectModal.defaultProps = {id: '', text: '', onItemTouchTap: function() {}};
 
 module.exports = EditProjectModal;

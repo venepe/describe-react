@@ -1,6 +1,6 @@
 'use strict';
 
-const AuthenticatedTypes = require('../constants/AuthenticatedTypes');
+import AuthenticatedTypes from '../constants/AuthenticatedTypes';
 
 const {
   AUTHENTICATED,

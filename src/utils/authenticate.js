@@ -89,6 +89,7 @@ function refreshToken() {
         resolve(token);
       }).catch((error) => {
         console.log('did fail');
+        SMTIDefaultNetworkLayer.init();
         reject();
       })
   });

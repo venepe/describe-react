@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
+import { CardMedia } from 'material-ui';
 import styles from './CoverImage.css';
 
 class CoverImage extends Component {
@@ -21,7 +22,11 @@ class CoverImage extends Component {
   }
 
   _renderView(uri) {
-    <img className='CoverImage-img' src={uri} />
+    return (
+      <CardMedia expandable={true}>
+        <img className='CoverImage-img' height={400} src={uri} />
+      </CardMedia>
+    );
   }
 
   render() {

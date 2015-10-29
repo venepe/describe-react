@@ -1,0 +1,6 @@
+{
+  "name": "ProjectFormDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ProjectFormDialog.js"
+}
