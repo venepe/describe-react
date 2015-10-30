@@ -2,10 +2,9 @@
     display: none;
 }
 
-.modalable-archy-label:hover .modal {
+.modalable-image:hover .modal {
     display: block;
     position: absolute;
     top: 0px;
     right: 0px;
-    width: auto;
 }

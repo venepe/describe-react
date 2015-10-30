@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import Relay from 'react-relay';
+import { CardMedia } from 'material-ui';
 import styles from './ImageView.css';
 
 class ImageView extends Component {
@@ -15,9 +16,9 @@ class ImageView extends Component {
       uri = this.props.image.uri;
     }
     return (
-      <div className='ImageView-container'>
-        <img className='ImageView-img' src={uri} />
-      </div>
+      <CardMedia expandable={true}>
+        <img className='ImageView-img' height={400} src={uri} />
+      </CardMedia>
     );
   }
 }

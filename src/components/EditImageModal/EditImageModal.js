@@ -4,16 +4,16 @@ import React, { PropTypes, Component } from 'react';
 import { IconMenu, IconButton, FontIcon, Dialog } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
-import styles from './EditPaperModal.css';
-import ModalTypes, { UPDATE_PAPER, DELETE_PAPER } from '../../constants/ModalTypes';
+import styles from './EditImageModal.css';
+import ModalTypes, { DELETE_IMAGE } from '../../constants/ModalTypes';
 
-class EditPaperModal extends Component {
+class EditImageModal extends Component {
   constructor(props) {
     super(props);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this.state = {
       id: props.id,
-      paper: props.paper
+      image: props.image
     }
   }
 
@@ -24,15 +24,14 @@ class EditPaperModal extends Component {
   }
 
   _onItemTouchTap(event, item) {
-    this.props.onItemTouchTap(item.props.value, this.state.id, this.state.paper);
+    this.props.onItemTouchTap(item.props.value, this.state.id, this.state.image);
   }
 
   render() {
     let iconButtonElement = (<IconButton><FontIcon className="material-icons">more_horiz</FontIcon></IconButton>);
     return (
         <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
-          <MenuItem primaryText="Update Paper" value={UPDATE_PAPER} />
-          <MenuItem primaryText="Delete Paper" value={DELETE_PAPER} />
+          <MenuItem primaryText="Delete Image" value={DELETE_IMAGE} />
           <MenuDivider />
           <MenuItem primaryText="Close" />
         </IconMenu>
@@ -40,7 +39,7 @@ class EditPaperModal extends Component {
   }
 }
 
-EditPaperModal.propTypes = {id: PropTypes.string, text: PropTypes.string, onItemTouchTap: PropTypes.func};
-EditPaperModal.defaultProps = {id: '', text: '', onItemTouchTap: function() {}};
+EditImageModal.propTypes = {id: PropTypes.string, onItemTouchTap: PropTypes.func};
+EditImageModal.defaultProps = {id: '', onItemTouchTap: function() {}};
 
-module.exports = EditPaperModal;
+module.exports = EditImageModal;

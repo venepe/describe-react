@@ -1,6 +1,7 @@
 
-.archy-label {
+.touchable-archy-label {
    display: inline-block;
    font-size: 1.5em;
    font-family: 'Roboto', sans-serif;
+   cursor: pointer;
 }

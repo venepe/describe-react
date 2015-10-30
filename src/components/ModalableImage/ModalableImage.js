@@ -1,15 +1,15 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import styles from './ModalableArchyLabel.css';
-import TouchableArchyLabel from '../TouchableArchyLabel';
+import styles from './ModalableImage.css';
+import TouchableImage from '../TouchableImage';
 
-class ModalableArchyLabel extends Component {
+class ModalableImage extends Component {
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
     this.state = {
-      text: props.text,
+      src: props.src,
       id: props.id,
       iconMenu: props.iconMenu
     }
@@ -34,8 +34,8 @@ class ModalableArchyLabel extends Component {
     }
 
     return (
-      <div className="modalable-archy-label">
-        <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />
+      <div className="modalable-image">
+        <TouchableImage src={this.state.src} onClick={this._onClick} />
         <div className="modal">
           {IconMenu}
         </div>
@@ -44,7 +44,7 @@ class ModalableArchyLabel extends Component {
   }
 }
 
-ModalableArchyLabel.propTypes = {id: PropTypes.string, text: PropTypes.string, onClick: PropTypes.func};
-ModalableArchyLabel.defaultProps = {id: '', text: '', onClick: function() {}};
+ModalableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, onClick: PropTypes.func};
+ModalableImage.defaultProps = {id: '', src: '', onClick: function() {}};
 
-module.exports = ModalableArchyLabel;
+module.exports = ModalableImage;

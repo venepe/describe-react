@@ -46,10 +46,6 @@ class ProjectFormDialog extends Component {
     });
     this.refs.dialog.show();
   }
-
-  show() {
-    this.refs.dialog.show();
-  }
 }
 
 ProjectFormDialog.propTypes = {meId: PropTypes.string};

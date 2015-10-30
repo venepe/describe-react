@@ -59,7 +59,7 @@ class LoginView extends Component {
       this.setState({isLoading: true});
       Authenticate.login(email, password)
         .then((meId) => {
-          console.log(meId);
+          this.props.history.pushState(null, '/myprojects');
         })
         .catch((err) => {
           this.setState({

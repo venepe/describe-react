@@ -12,7 +12,8 @@ class EditProjectModal extends Component {
     super(props);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this.state = {
-      id: props.id
+      id: props.id,
+      project: props.project
     }
   }
 
@@ -23,7 +24,7 @@ class EditProjectModal extends Component {
   }
 
   _onItemTouchTap(event, item) {
-    this.props.onItemTouchTap(item.props.value, this.state.id);
+    this.props.onItemTouchTap(item.props.value, this.state.id, this.state.project);
   }
 
   render() {

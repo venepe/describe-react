@@ -1,0 +1,6 @@
+{
+  "name": "PaperView",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PaperView.js"
+}

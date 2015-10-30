@@ -1,0 +1,6 @@
+{
+  "name": "EditImageModal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./EditImageModal.js"
+}

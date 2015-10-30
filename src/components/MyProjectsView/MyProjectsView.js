@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import styles from './MyProjectsView.css';
 import { Paper } from 'material-ui';
 import ProjectListView from '../ProjectListView';
+import SMTIStorage from '../../utils/storage';
 
 import MeRoute from '../../routes/MeRoute';
 
@@ -28,8 +29,7 @@ class MyProjects extends Component {
   }
 
   render() {
-    var meId = this.state.meId;
-    meId = 'VXNlcjo0Yzk5MDVkOC1kMmE3LTRlNDItOWI0Yi02OTlhM2U5MTcyYjM=';
+    var meId = SMTIStorage.getMeIdFromLocalStorage();
     var meRoute = new MeRoute({meId});
     return (
       <div>
