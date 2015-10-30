@@ -5,11 +5,13 @@ import Relay from 'react-relay';
 import {Router} from 'react-router';
 import ReactRouterRelay from 'react-router-relay';
 import SMTIDefaultNetworkLayer from './utils/SMTIDefaultNetworkLayer';
+import SMTIStorage from './utils/storage';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import routes from './routes';
 
-SMTIDefaultNetworkLayer.init();
+let token = SMTIStorage.getTokenFromLocalStorage();
+SMTIDefaultNetworkLayer.init(token);
 injectTapEventPlugin();
 
 const history = createHashHistory({queryKey: false});

@@ -17,7 +17,7 @@ class ImageView extends Component {
     }
     return (
       <CardMedia expandable={true}>
-        <img className='ImageView-img' height={400} src={uri} />
+        <img className='ImageView-img' src={uri} />
       </CardMedia>
     );
   }

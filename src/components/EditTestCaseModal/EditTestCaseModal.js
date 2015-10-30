@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import { IconMenu, IconButton, FontIcon, Dialog } from 'material-ui';
+import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './EditTestCaseModal.css';
@@ -28,9 +28,9 @@ class EditTestCaseModal extends Component {
   }
 
   render() {
-    let iconButtonElement = (<IconButton><FontIcon className="material-icons">more_horiz</FontIcon></IconButton>);
+    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
     return (
-        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="Add Paper" value={INTRODUCE_PAPER} />
           <MenuItem primaryText="Add Image" value={INTRODUCE_IMAGE} />
           <MenuItem primaryText="Fulfill Test Case" value={FULFILL_PROJECT} />

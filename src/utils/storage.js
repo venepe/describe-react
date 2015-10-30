@@ -52,6 +52,10 @@ function getMeIdFromLocalStorage() {
   return localStorage.getItem(meIdKey);
 }
 
+function getTokenFromLocalStorage() {
+  return localStorage.getItem(tokenKey);
+}
+
 module.exports.saveToken = saveToken;
 module.exports.saveTokenAndMeId = saveTokenAndMeId;
 module.exports.getToken = getToken;
@@ -59,3 +63,4 @@ module.exports.getMeId = getMeId;
 module.exports.getTokenAndMeId = getTokenAndMeId;
 module.exports.clearCredentials = clearCredentials;
 module.exports.getMeIdFromLocalStorage = getMeIdFromLocalStorage;
+module.exports.getTokenFromLocalStorage = getTokenFromLocalStorage;
