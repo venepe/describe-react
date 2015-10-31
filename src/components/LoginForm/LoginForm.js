@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import styles from './LoginView.css';
+import styles from './LoginForm.css';
 import { RaisedButton, TextField, FlatButton } from 'material-ui';
 import validator from 'validator';
 import Utilities from '../../utils/utilities';
@@ -9,7 +9,7 @@ import Authenticate from '../../utils/authenticate';
 
 const errorMessage = 'Invalid email or password. Please try again';
 
-class LoginView extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
     this._onChangeEmail = this._onChangeEmail.bind(this);
@@ -59,7 +59,7 @@ class LoginView extends Component {
       this.setState({isLoading: true});
       Authenticate.login(email, password)
         .then((meId) => {
-          this.props.history.pushState(null, '/myprojects');
+          this.props.onLogin(meId);
         })
         .catch((err) => {
           this.setState({
@@ -80,8 +80,8 @@ class LoginView extends Component {
     }
 
     return (
-      <div className="LoginView">
-        <div className="LoginView-container">
+      <div className="LoginForm">
+        <div className="LoginForm-container">
           <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
           <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
           <RaisedButton disabled={isDisabled} label="Log in" fullWidth={true} disabled={isDisabled} onMouseUp={this._onLogin} onTouchEnd={this._onLogin} />
@@ -96,4 +96,7 @@ class LoginView extends Component {
 
 }
 
-export default LoginView;
+LoginForm.propTypes = {onLogin: PropTypes.func};
+LoginForm.defaultProps = {onLogin: function() {}};
+
+export default LoginForm;

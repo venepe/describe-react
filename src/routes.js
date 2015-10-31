@@ -5,7 +5,6 @@ import {IndexRoute, Route} from 'react-router';
 
 import App from './components/App';
 import ProjectView from './components/ProjectView';
-import LoginView from './components/LoginView';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
 import FailureView from './components/FailureView';
@@ -29,9 +28,6 @@ export default (
     <IndexRoute
       component={App}
     />
-    <Route
-        path="login" component={LoginView}
-      />
     <Route
         path="myprojects" component={MyProjectsView}
         queries={MeQueries}

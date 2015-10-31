@@ -6,12 +6,14 @@ import { FlatButton } from 'material-ui';
 import event from '../../utils/Event';
 import _ from 'lodash';
 import UI from '../../utils/UI';
+import LoginFormDialog from '../LoginFormDialog';
 const SMTIRawTheme = require('../../utils/theme');
 
 class Header extends Component {
 
     constructor(props) {
         super(props);
+        this._showLogin = this._showLogin.bind(this);
         this._onLogin = this._onLogin.bind(this);
         this._onSignup = this._onSignup.bind(this);
 
@@ -25,8 +27,13 @@ class Header extends Component {
         event.stop(e);
     }
 
+    _showLogin() {
+        this.refs.loginFormDialog.show();
+    }
+
     _onLogin() {
-        this.props.history.pushState(null, '/login');
+      this.refs.loginFormDialog.dismiss();
+      this.props.history.pushState(null, '/myprojects');
     }
 
     _onSignup() {
@@ -48,13 +55,16 @@ class Header extends Component {
     }
 
     render() {
-        let children = [<FlatButton style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._onLogin} />, <FlatButton  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._onSignup} />];
+        let children = [<FlatButton style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._onSignup} />];
         return (
+          <div>
             <AppBar title="Sumseti"
               iconClassNameLeft="icon-html5"
               children={children}
               onLeftIconButtonTouchTap={ this._onLeftClick.bind(this) }
               zDepth={ this.state.zDepth } />
+            <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} />
+          </div>
             );
     }
 }
