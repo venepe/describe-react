@@ -1,0 +1,10 @@
+
+.add-project-button {
+	position: fixed;
+	bottom: 40px;
+}
+
+.add-project-button-container {
+	float: right;
+	margin-right: 80px;
+}

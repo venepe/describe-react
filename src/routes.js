@@ -15,9 +15,12 @@ import ImageView from './components/ImageView';
 
 import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
-import TestCaseQueries from './queries/TestCaseQueries';
+import TestCaseQueries from './queries/TestCaseQueries';SMTIStorage.getMeIdFromLocalStorage()
 import PaperQueries from './queries/PaperQueries';
 import ImageQueries from './queries/ImageQueries';
+import MeQueries from './queries/MeQueries';
+
+import SMTIStorage from './utils/storage';
 
 export default (
   <Route
@@ -31,6 +34,10 @@ export default (
       />
     <Route
         path="myprojects" component={MyProjectsView}
+        queries={MeQueries}
+        prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
       />
     <Route
         path="projects/:projectId" component={ProjectView}

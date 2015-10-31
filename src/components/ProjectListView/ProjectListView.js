@@ -35,20 +35,18 @@ class ProjectListView extends Component {
     };
   }
 
-  _onClick() {
-    console.log('did click');
+  _onClick(project) {
+    this.props.onPressRow(project);
   }
 
   buildElements(projects) {
     return projects.edges.map(function (object, index) {
           let project = object.node;
           let projectComponent = (
-            <Link key={index} to={`/projects/${project.id}`}>
-              <Card className="clickable">
-                <ProjectCoverImage projectCoverImage={project} />
-                <CardTitle title={project.title} />
-              </Card>
-            </Link>
+            <Card key={index} className="clickable" onClick={() => this._onClick(project)}>
+              <ProjectCoverImage projectCoverImage={project} />
+              <CardTitle title={project.title} />
+            </Card>
           );
 
          return projectComponent;
@@ -92,8 +90,8 @@ class ProjectListView extends Component {
   }
 }
 
-ProjectListView.propTypes = {onEndReached: PropTypes.func};
-ProjectListView.defaultProps = {onEndReached: function() {}};
+ProjectListView.propTypes = {onPressRow: PropTypes.func, onEndReached: PropTypes.func};
+ProjectListView.defaultProps = {onPressRow: function() {}, onEndReached: function() {}};
 
 let ProjectListViewContainer = Relay.createContainer(ProjectListView, {
   fragments: {

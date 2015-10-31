@@ -3,50 +3,31 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import styles from './MyProjectsView.css';
-import { Paper } from 'material-ui';
+import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import ProjectListView from '../ProjectListView';
+import ProjectFormDialog from '../ProjectFormDialog';
 import SMTIStorage from '../../utils/storage';
-
-import MeRoute from '../../routes/MeRoute';
 
 import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
 
 const _first = 10;
 const _next = 10;
 
-class MyProjects extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      meId: props.meId
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      ...nextProps
-    });
-  }
-
-  render() {
-    var meId = SMTIStorage.getMeIdFromLocalStorage();
-    var meRoute = new MeRoute({meId});
-    return (
-      <div>
-        <Relay.RootContainer Component={MyProjectsContainer} route={meRoute} renderFetched={data => <MyProjectsContainer {...data} /> } />
-      </div>
-    );
-  }
-}
-
 class MyProjectsView extends Component {
   constructor(props) {
     super(props);
     this._onPressRow = this._onPressRow.bind(this);
     this._onEndReached = this._onEndReached.bind(this);
+    this._introduceProject = this._introduceProject.bind(this);
+  }
+
+  _introduceProject() {
+    let meId = SMTIStorage.getMeIdFromLocalStorage();
+    this.refs.projectFormDialog.show(meId);
   }
 
   _onPressRow(project) {
+    this.props.history.pushState(null, '/projects/' + project.id);
   }
 
   _onEndReached(cursor) {
@@ -63,7 +44,15 @@ class MyProjectsView extends Component {
       var me = this.props.me
       if (me.originalProjects.edges.length > 0)
         return (
-          <ProjectListView projects={this.props.me.originalProjects} onEndReached={this._onEndReached}/>
+          <div>
+            <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
+            <div className="add-project-button-container">
+              <div className="add-project-button">
+                <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
+              </div>
+            </div>
+            <ProjectFormDialog ref="projectFormDialog" />
+          </div>
         );
       else {
         return (
@@ -103,4 +92,4 @@ var MyProjectsContainer = Relay.createContainer(MyProjectsView, {
 });
 
 
-module.exports = MyProjects;
+module.exports = MyProjectsContainer;
