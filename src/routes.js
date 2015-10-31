@@ -11,10 +11,11 @@ import FailureView from './components/FailureView';
 import TestCaseView from './components/TestCaseView';
 import PaperView from './components/PaperView';
 import ImageView from './components/ImageView';
+import MeView from './components/MeView';
 
 import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
-import TestCaseQueries from './queries/TestCaseQueries';SMTIStorage.getMeIdFromLocalStorage()
+import TestCaseQueries from './queries/TestCaseQueries';
 import PaperQueries from './queries/PaperQueries';
 import ImageQueries from './queries/ImageQueries';
 import MeQueries from './queries/MeQueries';
@@ -28,6 +29,13 @@ export default (
     <IndexRoute
       component={App}
     />
+    <Route
+        path="me" component={MeView}
+        queries={MeQueries}
+        prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+      />
     <Route
         path="myprojects" component={MyProjectsView}
         queries={MeQueries}

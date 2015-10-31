@@ -66,6 +66,7 @@ class ProjectView extends Component {
             Relay.Store.update(
               new DeleteProjectMutation({project: targetRelayObject, me: {id: null}})
             );
+            this.props.history.replaceState(null, '/myprojects')
           break;
         case DELETE_TEST_CASE:
             Relay.Store.update(

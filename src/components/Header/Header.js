@@ -7,6 +7,7 @@ import event from '../../utils/Event';
 import _ from 'lodash';
 import UI from '../../utils/UI';
 import LoginFormDialog from '../LoginFormDialog';
+import RegisterFormDialog from '../RegisterFormDialog';
 const SMTIRawTheme = require('../../utils/theme');
 
 class Header extends Component {
@@ -14,8 +15,10 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this._showLogin = this._showLogin.bind(this);
+        this._showRegister = this._showRegister.bind(this);
         this._onLogin = this._onLogin.bind(this);
-        this._onSignup = this._onSignup.bind(this);
+        this._onRegister = this._onRegister.bind(this);
+
 
         this.state = {
             zDepth: UI.windowWidth() <= UI.BREAK_POINT ? 0 : 1
@@ -36,8 +39,13 @@ class Header extends Component {
       this.props.history.pushState(null, '/myprojects');
     }
 
-    _onSignup() {
+    _showRegister() {
+      this.refs.registerFormDialog.show();
+    }
 
+    _onRegister() {
+      this.refs.registerFormDialog.dismiss();
+      this.props.history.pushState(null, '/myprojects');
     }
 
     _onResize(e) {
@@ -55,7 +63,7 @@ class Header extends Component {
     }
 
     render() {
-        let children = [<FlatButton style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._onSignup} />];
+        let children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton key={1}  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._showRegister} />];
         return (
           <div>
             <AppBar title="Sumseti"
@@ -64,6 +72,7 @@ class Header extends Component {
               onLeftIconButtonTouchTap={ this._onLeftClick.bind(this) }
               zDepth={ this.state.zDepth } />
             <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} />
+            <RegisterFormDialog ref="registerFormDialog" onRegister={this._onRegister} />
           </div>
             );
     }

@@ -1,0 +1,6 @@
+{
+  "name": "RegisterFormDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RegisterFormDialog.js"
+}

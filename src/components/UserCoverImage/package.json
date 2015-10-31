@@ -1,0 +1,6 @@
+{
+  "name": "UserCoverImage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./UserCoverImage.js"
+}

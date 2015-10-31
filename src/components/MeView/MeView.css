@@ -1,0 +1,33 @@
+
+.me-container {
+  margin: 0px 40px 10px 10px;
+  padding-top: 10px;
+}
+
+.username {
+   display: block;
+   margin: 10px 10px 0px 10px;
+   font-size: 1.75em;
+   font-family: 'Roboto', sans-serif;
+}
+
+.full-name {
+   display: block;
+   margin: 0px 0px 10px 10px;
+   font-size: 1.0em;
+   font-family: 'Roboto', sans-serif;
+}
+
+.summary {
+   display: block;
+   margin: 10px;
+   font-size: 1.2em;
+   font-family: 'Roboto', sans-serif;
+}
+
+.label {
+  display: block;
+  margin: 10px;
+  font-size: 1.5em;
+  font-family: 'Roboto', sans-serif;
+}
