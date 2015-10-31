@@ -28,7 +28,7 @@ class EditImageModal extends Component {
   }
 
   render() {
-    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
+    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey700}>more_horiz</FontIcon></IconButton>);
     return (
         <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="Delete Image" value={DELETE_IMAGE} />

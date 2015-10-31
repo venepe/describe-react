@@ -39,7 +39,7 @@ class TestCaseUpdateForm extends Component {
     var it = this.state.it;
     if (it.length > 0) {
       Relay.Store.update(
-        new IntroduceTestCaseMutation({it, project: this.props.project})
+        new UpdateTestCaseMutation({it, testCase: this.props.testCase})
       );
       this.props.onUpdate();
     }
@@ -70,7 +70,7 @@ class TestCaseUpdateForm extends Component {
         <Archy archible={this.state.archible}/>
         <div className="action-container">
           <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
-          <FlatButton label="Create" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onUpdate} />
+          <FlatButton label="Update" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onUpdate} />
         </div>
       </div>
     );

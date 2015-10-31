@@ -61,6 +61,6 @@ class Panel extends Component {
     }
 }
 
-Panel.propTypes = {children: React.PropTypes.array};
+// Panel.propTypes = {children: React.PropTypes.array};
 
 export default Panel;

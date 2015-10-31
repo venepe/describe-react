@@ -6,7 +6,7 @@ import { Dialog } from 'material-ui';
 import styles from './PaperFormDialog.css';
 import PaperForm from '../PaperForm';
 
-import TargetRoute from '../../routes/TargetRoute';
+const TargetRoute = require('../../routes/TargetRoute');
 
 class PaperFormDialog extends Component {
   constructor(props) {

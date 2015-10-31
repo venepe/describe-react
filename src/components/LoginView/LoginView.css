@@ -1,6 +1,16 @@
 
 .LoginView-container {
-  margin: 0 auto;
-  padding: 0 0 40px;
+  margin: 40px auto;
+  padding: 20px 20px 40px 20px;
   max-width: var(--max-content-width);
+}
+
+.forgot-button-container {
+  margin-top: 10px;
+  max-width: var(--max-content-width);
+  text-align: center;
+}
+
+.error-text {
+	color: #F50F50;
 }

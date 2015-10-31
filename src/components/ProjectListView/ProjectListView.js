@@ -7,6 +7,7 @@ import Infinite from 'react-infinite';
 import styles from './ProjectListView.css';
 import { Card, CardTitle } from 'material-ui';
 import ProjectCoverImage from '../ProjectCoverImage';
+import SpinnerView from '../SpinnerView';
 
 class ProjectListView extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class ProjectListView extends Component {
     this._getInitialState = this._getInitialState.bind(this);
     this.buildElements = this.buildElements.bind(this);
     this._onClick = this._onClick.bind(this);
+    this._onEndReached = this._onEndReached.bind(this);
 
     //
     this.state = this._getInitialState();
@@ -21,8 +23,15 @@ class ProjectListView extends Component {
 
   _getInitialState() {
     return {
-      isInfiniteLoading: false,
-      elements: this.buildElements()
+      hasNextPage: false,
+      elements: this.buildElements(this.props.projects)
+    };
+  }
+
+  _getUpdatedState(projects) {
+    return {
+      hasNextPage: false,
+      elements: this.buildElements(projects)
     };
   }
 
@@ -30,11 +39,11 @@ class ProjectListView extends Component {
     console.log('did click');
   }
 
-  buildElements() {
-    return this.props.projects.edges.map(function (object, index) {
-          var project = object.node;
-          var projectComponent = (
-            <Link to={`/projects/${project.id}`}>
+  buildElements(projects) {
+    return projects.edges.map(function (object, index) {
+          let project = object.node;
+          let projectComponent = (
+            <Link key={index} to={`/projects/${project.id}`}>
               <Card className="clickable">
                 <ProjectCoverImage projectCoverImage={project} />
                 <CardTitle title={project.title} />
@@ -46,15 +55,24 @@ class ProjectListView extends Component {
        }.bind(this));
   }
 
-  handleInfiniteLoad() {
-    console.log('load more');
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.projects) {
+      this.setState(this._getUpdatedState(nextProps.projects));
+    }
+  }
+
+  _onEndReached() {
+    let hasNextPage = this.props.projects.pageInfo.hasNextPage;
+    this.setState({hasNextPage});
+    let edges = this.props.projects.edges;
+    if (edges.length > 0) {
+      this.props.onEndReached(edges[edges.length - 1].cursor);
+    } 
   }
 
   elementInfiniteLoad() {
       return (
-          <div className="infinite-list-item">
-            Loading...
-          </div>
+          <SpinnerView />
       );
   }
 
@@ -63,9 +81,9 @@ class ProjectListView extends Component {
       <Infinite elementHeight={468}
                        containerHeight={window.screen.height}
                        infiniteLoadBeginBottomOffset={200}
-                       onInfiniteLoad={this.handleInfiniteLoad}
+                       onInfiniteLoad={this._onEndReached}
                        loadingSpinnerDelegate={this.elementInfiniteLoad()}
-                       isInfiniteLoading={this.state.isInfiniteLoading}
+                       isInfiniteLoading={this.state.hasNextPage}
                        useWindowAsScrollContainer={true}
                        >
           {this.state.elements}
@@ -74,7 +92,10 @@ class ProjectListView extends Component {
   }
 }
 
-var ProjectListViewContainer = Relay.createContainer(ProjectListView, {
+ProjectListView.propTypes = {onEndReached: PropTypes.func};
+ProjectListView.defaultProps = {onEndReached: function() {}};
+
+let ProjectListViewContainer = Relay.createContainer(ProjectListView, {
   fragments: {
     projects: () => Relay.QL`
       fragment on ProjectConnection {

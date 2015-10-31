@@ -24,7 +24,7 @@ class PaperForm extends Component {
         key: this._getUUID(),
         nodes: [
           {
-            component: (<ArchyInput placeholder={'you deep thought'} onChangeText={this._onChangeText} />),
+            component: (<ArchyInput placeholder={'your deep thought'} onChangeText={this._onChangeText} />),
             key: this._getUUID(),
             nodes: [],
           },
@@ -39,6 +39,8 @@ class PaperForm extends Component {
   _onCreate() {
     var text = this.state.text;
     if (text.length > 0) {
+      console.log(this.props.target);
+      console.log(text);
       Relay.Store.update(
         new IntroducePaperMutation({text, target: this.props.target})
       );

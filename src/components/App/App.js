@@ -2,8 +2,10 @@
 
 import React, { Component } from 'react';
 import { isFunction } from 'lodash';
+import styles from './App.css';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import lightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
+const SMTIRawTheme = require('../../utils/theme');
 
 import Header from '../Header';
 import Panel from '../Panel';
@@ -16,7 +18,7 @@ class App extends Component {
     }
 
     getChildContext() {
-        return {muiTheme: ThemeManager.getMuiTheme(lightTheme)};
+        return {muiTheme: ThemeManager.getMuiTheme(SMTIRawTheme)};
     }
 
     render() {
@@ -24,7 +26,7 @@ class App extends Component {
 
         return (
             <div>
-              <Header/>
+              <Header history={this.props.history}/>
               <Panel>
                  {children}
               </Panel>

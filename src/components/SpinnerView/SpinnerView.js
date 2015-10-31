@@ -11,8 +11,7 @@ class SpinnerView extends Component {
   render() {
 
     return (
-      <div>
-      </div>
+      <div className="loading-spinner"></div>
     );
   }
 }

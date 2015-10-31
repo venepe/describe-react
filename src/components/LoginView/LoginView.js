@@ -85,7 +85,10 @@ class LoginView extends Component {
           <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
           <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
           <RaisedButton disabled={isDisabled} label="Log in" fullWidth={true} disabled={isDisabled} onMouseUp={this._onLogin} onTouchEnd={this._onLogin} />
-          <FlatButton label="Forgot Your Password?" onMouseUp={this._pushForgot} onTouchEnd={this._pushForgot} />
+          <div className="forgot-button-container">
+            <div className="error-text">{this.state.errorMessage}</div>
+            <FlatButton label="Forgot Your Password?" onMouseUp={this._pushForgot} onTouchEnd={this._pushForgot} />
+          </div>
         </div>
       </div>
     );

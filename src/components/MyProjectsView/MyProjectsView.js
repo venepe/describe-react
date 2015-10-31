@@ -50,11 +50,11 @@ class MyProjectsView extends Component {
   }
 
   _onEndReached(cursor) {
-    // var first = this.props.relay.variables.first;
-    // this.props.relay.setVariables({
-    //   first: first + _next,
-    //   after: cursor
-    // });
+    var first = this.props.relay.variables.first;
+    this.props.relay.setVariables({
+      first: first + _next,
+      after: cursor
+    });
   }
 
   render() {
@@ -63,7 +63,7 @@ class MyProjectsView extends Component {
       var me = this.props.me
       if (me.originalProjects.edges.length > 0)
         return (
-          <ProjectListView projects={this.props.me.originalProjects}/>
+          <ProjectListView projects={this.props.me.originalProjects} onEndReached={this._onEndReached}/>
         );
       else {
         return (
