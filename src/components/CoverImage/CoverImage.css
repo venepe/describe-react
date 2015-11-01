@@ -1,4 +1,13 @@
 
 .CoverImage-img {
   background-color: #fafafa;
+  cursor: pointer;
+}
+
+.modal {
+    display: none;
+}
+
+.CoverImage-container:hover .modal {
+    display: block;
 }

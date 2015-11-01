@@ -7,15 +7,17 @@
 .username {
    display: block;
    margin: 10px 10px 0px 10px;
-   font-size: 1.75em;
+   font-size: 1.80em;
    font-family: 'Roboto', sans-serif;
+   font-weight: 500;
 }
 
 .full-name {
    display: block;
    margin: 0px 0px 10px 10px;
-   font-size: 1.0em;
+   font-size: 1.1em;
    font-family: 'Roboto', sans-serif;
+   font-weight: 300;
 }
 
 .summary {
@@ -23,11 +25,13 @@
    margin: 10px;
    font-size: 1.2em;
    font-family: 'Roboto', sans-serif;
+   font-weight: 300;
 }
 
 .label {
   display: block;
   margin: 10px;
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }

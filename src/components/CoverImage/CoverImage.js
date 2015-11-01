@@ -3,28 +3,32 @@
 import React, { PropTypes, Component } from 'react';
 import { CardMedia } from 'material-ui';
 import styles from './CoverImage.css';
+import EditCoverImageModal from '../EditCoverImageModal';
+import ModalableImage from '../ModalableImage';
 
 class CoverImage extends Component {
   constructor(props) {
     super(props);
     this._pushImage = this._pushImage.bind(this);
-    this._onLongPress = this._onLongPress.bind(this);
     this._renderView = this._renderView.bind(this);
     this.state = {
-      title: props.title
+      title: props.title,
+      isEditable: props.isEditable
     }
   }
 
   _pushImage() {
   }
 
-  _onLongPress() {
-  }
-
   _renderView(uri) {
+    let editModal = (<div></div>);
+    if (this.state.isEditable) {
+      editModal = (<div className="modal"><EditCoverImageModal className="modal" onItemTouchTap={this.props.onMenuItemClick} /></div>);
+    }
     return (
-      <CardMedia expandable={true}>
+      <CardMedia className='CoverImage-container' expandable={true}>
         <img className='CoverImage-img' height={400} src={uri} />
+        {editModal}
       </CardMedia>
     );
   }
@@ -45,7 +49,7 @@ class CoverImage extends Component {
   }
 }
 
-CoverImage.propTypes = {onLongPress: PropTypes.func, title: PropTypes.string};
-CoverImage.defaultProps = {onLongPress: function() {}, title: 'Image'};
+CoverImage.propTypes = {onMenuItemClick: PropTypes.func, title: PropTypes.string};
+CoverImage.defaultProps = {onMenuItemClick: function() {}, title: 'Image', isEditable: false};
 
 export default CoverImage;

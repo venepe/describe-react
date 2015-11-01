@@ -11,7 +11,9 @@ class TouchableImage extends Component {
     this._onClick = this._onClick.bind(this);
     this.state = {
       src: props.src,
-      id: props.id
+      id: props.id,
+      height: props.height,
+      width: props.width
     }
   }
 
@@ -29,13 +31,13 @@ class TouchableImage extends Component {
 
     return (
       <div>
-        <img className="touchable-image" src={this.state.src} height={200} width={200} onClick={this._onClick} />
+        <img className="touchable-image" src={this.state.src} height={this.state.height} width={this.state.width} onClick={this._onClick} />
       </div>
     );
   }
 }
 
-TouchableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, onClick: PropTypes.func};
-TouchableImage.defaultProps = {id: '', src: '', onClick: function() {}};
+TouchableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
+TouchableImage.defaultProps = {id: '', src: '', height: 200, width: 200, onClick: function() {}};
 
 module.exports = TouchableImage;

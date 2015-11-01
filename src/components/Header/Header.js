@@ -8,6 +8,8 @@ import _ from 'lodash';
 import UI from '../../utils/UI';
 import LoginFormDialog from '../LoginFormDialog';
 import RegisterFormDialog from '../RegisterFormDialog';
+import EditUserModal from '../EditUserModal';
+import Authenticate from '../../utils/authenticate';
 const SMTIRawTheme = require('../../utils/theme');
 
 class Header extends Component {
@@ -18,6 +20,7 @@ class Header extends Component {
         this._showRegister = this._showRegister.bind(this);
         this._onLogin = this._onLogin.bind(this);
         this._onRegister = this._onRegister.bind(this);
+        this._pushProjects = this._pushProjects.bind(this);
 
 
         this.state = {
@@ -48,6 +51,10 @@ class Header extends Component {
       this.props.history.pushState(null, '/myprojects');
     }
 
+    _pushProjects() {
+      this.props.history.pushState(null, '/myprojects');
+    }
+
     _onResize(e) {
         this.setState({
             zDepth: UI.windowWidth() <= UI.BREAK_POINT ? 0 : 1
@@ -63,7 +70,12 @@ class Header extends Component {
     }
 
     render() {
-        let children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton key={1}  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._showRegister} />];
+      let children;
+      if (Authenticate.isLoggedIn()) {
+        children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Projects"} onClick={this._pushProjects} />, <EditUserModal key={1} />];
+      } else {
+        children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton key={1}  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._showRegister} />];
+      }
         return (
           <div>
             <AppBar title="Sumseti"

@@ -1,4 +1,16 @@
 
 .ProjectCoverImage-container {
-  
+  display: block;
+  width: auto;
+}
+
+.edit-cover-image-button {
+	position: absolute;
+	top: 0px;
+  left: 0px
+}
+
+.edit-cover-image-button-container {
+	float: right;
+	margin-right: 0px;
 }

@@ -2,11 +2,11 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import styles from './ImageForm.css';
+import styles from './CoverImageForm.css';
 
-import IntroduceImageMutation from '../../mutations/IntroduceImageMutation';
+import IntroduceCoverImageMutation from '../../mutations/IntroduceCoverImageMutation';
 
-class ImageForm extends Component {
+class CoverImageForm extends Component {
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -19,7 +19,7 @@ class ImageForm extends Component {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.update(
-        new IntroduceImageMutation({uri, target: this.props.target})
+        new IntroduceCoverImageMutation({uri, target: this.props.target})
       );
       this.props.onCreate();
     }
@@ -49,17 +49,17 @@ class ImageForm extends Component {
   }
 }
 
-ImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-ImageForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
+CoverImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
+CoverImageForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
 
-var ImageFormContainer = Relay.createContainer(ImageForm, {
+var CoverImageFormContainer = Relay.createContainer(CoverImageForm, {
   fragments: {
     target: () => Relay.QL`
       fragment on Node {
-        ${IntroduceImageMutation.getFragment('target')}
+        ${IntroduceCoverImageMutation.getFragment('target')}
       }
     `,
   },
 });
 
-export default ImageFormContainer;
+export default CoverImageFormContainer;

@@ -21,6 +21,14 @@ import ImageQueries from './queries/ImageQueries';
 import MeQueries from './queries/MeQueries';
 
 import SMTIStorage from './utils/storage';
+import Authenticate from './utils/authenticate';
+
+function requireAuth(nextState, replaceState) {
+  if (!Authenticate.isLoggedIn) {
+    console.log('unauth');
+    replaceState({ nextPathname: nextState.location.pathname }, '/')
+  }
+}
 
 export default (
   <Route
@@ -35,6 +43,7 @@ export default (
         prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
       />
     <Route
         path="myprojects" component={MyProjectsView}

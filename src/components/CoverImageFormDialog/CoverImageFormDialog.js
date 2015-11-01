@@ -2,12 +2,12 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import styles from './ImageFormDialog.css';
-import ImageForm from '../ImageForm';
+import styles from './CoverImageFormDialog.css';
+import CoverImageForm from '../CoverImageForm';
 
 import TargetRoute from '../../routes/TargetRoute';
 
-class ImageFormDialog extends Component {
+class CoverImageFormDialog extends Component {
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -36,14 +36,14 @@ class ImageFormDialog extends Component {
 
   show(targetId) {
     let targetRoute = new TargetRoute({targetId});
-    let component = (<Relay.RootContainer Component={ImageForm} route={targetRoute} renderFetched={data => <ImageForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
+    let component = (<Relay.RootContainer Component={CoverImageForm} route={targetRoute} renderFetched={data => <CoverImageForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
     this.setState({
       component
     });
   }
 }
 
-ImageFormDialog.propTypes = {targetId: PropTypes.string};
-ImageFormDialog.defaultProps = {targetId: ''};
+CoverImageFormDialog.propTypes = {targetId: PropTypes.string};
+CoverImageFormDialog.defaultProps = {targetId: ''};
 
-export default ImageFormDialog;
+export default CoverImageFormDialog;

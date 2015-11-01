@@ -33,7 +33,7 @@ class ProjectFormDialog extends Component {
 
     return (
       <Dialog ref="dialog"
-        title="Add Project"
+        title="Start Project"
         modal={false}>
         <Relay.RootContainer Component={ProjectForm} route={meRoute} renderFetched={data => <ProjectForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />
       </Dialog>

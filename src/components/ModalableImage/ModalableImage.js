@@ -11,6 +11,8 @@ class ModalableImage extends Component {
     this.state = {
       src: props.src,
       id: props.id,
+      height: props.height,
+      width: props.width,
       iconMenu: props.iconMenu
     }
   }
@@ -35,7 +37,7 @@ class ModalableImage extends Component {
 
     return (
       <div className="modalable-image">
-        <TouchableImage src={this.state.src} onClick={this._onClick} />
+        <TouchableImage src={this.state.src} height={this.state.height} width={this.state.width} onClick={this._onClick} />
         <div className="modal">
           {IconMenu}
         </div>
@@ -44,7 +46,7 @@ class ModalableImage extends Component {
   }
 }
 
-ModalableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, onClick: PropTypes.func};
-ModalableImage.defaultProps = {id: '', src: '', onClick: function() {}};
+ModalableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
+ModalableImage.defaultProps = {id: '', src: '', height: 200, width: 200, onClick: function() {}};
 
 module.exports = ModalableImage;

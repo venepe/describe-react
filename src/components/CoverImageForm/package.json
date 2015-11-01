@@ -1,0 +1,6 @@
+{
+  "name": "CoverImageForm",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CoverImageForm.js"
+}

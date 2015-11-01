@@ -160,6 +160,10 @@ function logoff() {
   });
 }
 
+function isLoggedIn() {
+  return !!SMTIStorage.getTokenFromLocalStorage();
+}
+
 function status(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
@@ -177,3 +181,4 @@ module.exports.register = register;
 module.exports.refreshToken = refreshToken;
 module.exports.password = password;
 module.exports.forgot = forgot;
+module.exports.isLoggedIn = isLoggedIn;
