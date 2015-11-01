@@ -4,12 +4,10 @@ import React, { Component } from 'react';
 import { isFunction } from 'lodash';
 import styles from './App.css';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import lightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
-import SMTIRawTheme from '../../utils/theme'; 
+import SMTIRawTheme from '../../utils/theme';
 
 import Header from '../Header';
 import Panel from '../Panel';
-import Archy from '../Archy';
 
 class App extends Component {
 

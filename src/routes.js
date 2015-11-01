@@ -4,6 +4,7 @@ import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 
 import App from './components/App';
+import HomeView from './components/HomeView';
 import ProjectView from './components/ProjectView';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
@@ -24,9 +25,11 @@ import SMTIStorage from './utils/storage';
 import Authenticate from './utils/authenticate';
 
 function requireAuth(nextState, replaceState) {
-  if (!Authenticate.isLoggedIn) {
-    console.log('unauth');
+  let isLoggedIn = Authenticate.isLoggedIn();
+  if (!isLoggedIn && nextState.location.pathname !== '/') {
     replaceState({ nextPathname: nextState.location.pathname }, '/')
+  } else if (isLoggedIn && nextState.location.pathname === '/') {
+    replaceState({ nextPathname: nextState.location.pathname }, '/myprojects')
   }
 }
 
@@ -35,7 +38,8 @@ export default (
     path="/" component={App}
   >
     <IndexRoute
-      component={App}
+      component={HomeView}
+      onEnter={requireAuth}
     />
     <Route
         path="me" component={MeView}
@@ -51,30 +55,35 @@ export default (
         prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
       />
     <Route
         path="projects/:projectId" component={ProjectView}
         queries={ProjectQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
       />
     <Route
         path="testCases/:testCaseId" component={TestCaseView}
         queries={TestCaseQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
       />
     <Route
         path="papers/:paperId" component={PaperView}
         queries={PaperQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
       />
     <Route
         path="images/:imageId" component={ImageView}
         queries={ImageQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
       />
   </Route>
 );

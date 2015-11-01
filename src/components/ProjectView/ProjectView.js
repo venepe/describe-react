@@ -166,7 +166,7 @@ class ProjectView extends Component {
 
     return (
       <div className="ProjectView-container">
-        <ProjectCoverImage projectCoverImage={this.props.project} isEditable={true} />
+        <ProjectCoverImage projectCoverImage={this.props.project} isEditable={true} history={this.props.history}/>
         <Archy archible={object}/>
           <ProjectUpdateFormDialog ref="projectUpdateFormDialog" />
           <TestCaseFormDialog ref="testCaseFormDialog" />

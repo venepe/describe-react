@@ -57,12 +57,25 @@ class MyProjectsView extends Component {
       else {
         return (
           <div>
+            <div className="add-project-button-container">
+              <div className="add-project-button">
+                <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
+              </div>
+            </div>
+            <ProjectFormDialog ref="projectFormDialog" />
           </div>
         );
       }
     } else {
       return (
-        <div></div>
+        <div>
+          <div className="add-project-button-container">
+            <div className="add-project-button">
+              <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
+            </div>
+          </div>
+          <ProjectFormDialog ref="projectFormDialog" />
+        </div>
       );
     }
   }

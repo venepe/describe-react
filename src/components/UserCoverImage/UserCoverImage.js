@@ -52,7 +52,7 @@ class UserCoverImage extends Component {
       }
     return (
       <div className="UserCoverImage-container">
-        <CoverImage coverImage={coverImage} title={username} isEditable={this.state.isEditable} onMenuItemClick={this._presentDialog}/>
+        <CoverImage coverImage={coverImage} title={username} isEditable={this.state.isEditable} onMenuItemClick={this._presentDialog} history={this.props.history}/>
         <CoverImageFormDialog ref="coverImageFormDialog" />
       </div>
     );

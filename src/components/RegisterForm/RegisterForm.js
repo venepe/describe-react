@@ -17,7 +17,6 @@ class RegisterForm extends Component {
     this._onChangeEmail = this._onChangeEmail.bind(this);
     this._onChangePassword = this._onChangePassword.bind(this);
     this._onRegister = this._onRegister.bind(this);
-    this._pushForgot = this._pushForgot.bind(this);
 
     this.state = {
       email: '',
@@ -90,9 +89,6 @@ class RegisterForm extends Component {
     }
   }
 
-  _pushForgot() {
-  }
-
   render() {
     let isDisabled = false;
     if (this.state.isLoading) {
@@ -104,7 +100,7 @@ class RegisterForm extends Component {
         <div className="RegisterForm-container">
           <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
           <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
-          <RaisedButton disabled={isDisabled} label="Sign up" fullWidth={true} disabled={isDisabled} onMouseUp={this._onRegister} onTouchEnd={this._onRegister} />
+          <RaisedButton primary={true} disabled={isDisabled} label="Sign up" fullWidth={true} disabled={isDisabled} onMouseUp={this._onRegister} onTouchEnd={this._onRegister} />
           <div className="error-text-container">
             <div className="error-text">{this.state.errorMessage}</div>
           </div>

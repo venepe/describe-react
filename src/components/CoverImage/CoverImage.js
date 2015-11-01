@@ -18,6 +18,7 @@ class CoverImage extends Component {
   }
 
   _pushImage() {
+    this.props.history.pushState(null, '/images/' + this.props.coverImage.id);
   }
 
   _renderView(uri) {
@@ -27,7 +28,7 @@ class CoverImage extends Component {
     }
     return (
       <CardMedia className='CoverImage-container' expandable={true}>
-        <img className='CoverImage-img' height={400} src={uri} />
+        <img className='CoverImage-img' height={400} src={uri} onClick={this._pushImage}/>
         {editModal}
       </CardMedia>
     );

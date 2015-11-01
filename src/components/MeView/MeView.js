@@ -20,7 +20,7 @@ class MeView extends Component {
       let summary = this.props.me.summary || 'No summary';
       return (
         <div className="MeView-container">
-          <UserCoverImage userCoverImage={this.props.me} isEditable={true} />
+          <UserCoverImage userCoverImage={this.props.me} isEditable={true} history={this.props.history} />
           <div className="me-container">
             <div className="username">{this.props.me.username}</div>
             <div className="full-name">{fullName}</div>

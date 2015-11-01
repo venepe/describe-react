@@ -53,7 +53,7 @@ class ProjectCoverImage extends Component {
       }
     return (
       <div className="ProjectCoverImage-container">
-        <CoverImage coverImage={coverImage} title={title} isEditable={this.state.isEditable} onMenuItemClick={this._presentDialog}/>
+        <CoverImage coverImage={coverImage} title={title} isEditable={this.state.isEditable} onMenuItemClick={this._presentDialog} history={this.props.history}/>
         <CoverImageFormDialog ref="coverImageFormDialog" />
       </div>
     );

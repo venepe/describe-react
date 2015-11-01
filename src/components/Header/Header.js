@@ -12,6 +12,8 @@ import EditUserModal from '../EditUserModal';
 import Authenticate from '../../utils/authenticate';
 const SMTIRawTheme = require('../../utils/theme');
 
+import ModalTypes, { VIEW_PROFILE, SIGN_OUT } from '../../constants/ModalTypes';
+
 class Header extends Component {
 
     constructor(props) {
@@ -21,6 +23,7 @@ class Header extends Component {
         this._onLogin = this._onLogin.bind(this);
         this._onRegister = this._onRegister.bind(this);
         this._pushProjects = this._pushProjects.bind(this);
+        this._presentDialog = this._presentDialog.bind(this);
 
 
         this.state = {
@@ -55,6 +58,25 @@ class Header extends Component {
       this.props.history.pushState(null, '/myprojects');
     }
 
+    _presentDialog(dialogType) {
+      switch (dialogType) {
+          case VIEW_PROFILE:
+            this.props.history.pushState(null, '/me');
+            break;
+          case SIGN_OUT:
+              Authenticate.logoff()
+                .then(() => {
+                  this.props.history.replaceState(null, '/');
+                })
+                .catch(() => {
+                  this.props.history.replaceState(null, '/');
+                })
+            break;
+        default:
+
+      }
+    }
+
     _onResize(e) {
         this.setState({
             zDepth: UI.windowWidth() <= UI.BREAK_POINT ? 0 : 1
@@ -72,14 +94,13 @@ class Header extends Component {
     render() {
       let children;
       if (Authenticate.isLoggedIn()) {
-        children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Projects"} onClick={this._pushProjects} />, <EditUserModal key={1} />];
+        children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Projects"} onClick={this._pushProjects} />, <EditUserModal key={1} onItemTouchTap={this._presentDialog} />];
       } else {
         children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton key={1}  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._showRegister} />];
       }
         return (
           <div>
             <AppBar title="Sumseti"
-              iconClassNameLeft="icon-html5"
               children={children}
               onLeftIconButtonTouchTap={ this._onLeftClick.bind(this) }
               zDepth={ this.state.zDepth } />
