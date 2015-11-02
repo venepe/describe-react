@@ -2,7 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import styles from './RegisterForm.css';
-import { RaisedButton, TextField, FlatButton } from 'material-ui';
+import { RaisedButton, TextField } from 'material-ui';
 import validator from 'validator';
 import Utilities from '../../utils/utilities';
 import Authenticate from '../../utils/authenticate';
