@@ -1,4 +1,8 @@
 
+.MyProjects-container {
+	min-height: 900px;
+}
+
 .add-project-button {
 	position: fixed;
 	bottom: 40px;

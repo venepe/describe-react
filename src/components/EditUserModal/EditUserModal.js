@@ -5,7 +5,7 @@ import { IconMenu, FlatButton, Dialog } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './EditUserModal.css';
-import ModalTypes, { VIEW_PROFILE, UPDATE_USER, SIGN_OUT } from '../../constants/ModalTypes';
+import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT } from '../../constants/ModalTypes';
 const SMTIRawTheme = require('../../utils/theme');
 
 class EditUserModal extends Component {
@@ -33,6 +33,7 @@ class EditUserModal extends Component {
         <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="View Profile" value={VIEW_PROFILE} />
           <MenuItem primaryText="Edit Profile" value={UPDATE_USER} />
+          <MenuItem primaryText="Change Password" value={CHANGE_PASSWORD} />
           <MenuDivider />
           <MenuItem primaryText="Sign Out" value={SIGN_OUT} />
         </IconMenu>

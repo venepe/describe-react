@@ -8,11 +8,14 @@ import _ from 'lodash';
 import UI from '../../utils/UI';
 import LoginFormDialog from '../LoginFormDialog';
 import RegisterFormDialog from '../RegisterFormDialog';
+import UserUpdateFormDialog from '../UserUpdateFormDialog';
+import PasswordFormDialog from '../PasswordFormDialog';
 import EditUserModal from '../EditUserModal';
 import Authenticate from '../../utils/authenticate';
+import SMTIStorage from '../../utils/storage';
 const SMTIRawTheme = require('../../utils/theme');
 
-import ModalTypes, { VIEW_PROFILE, SIGN_OUT } from '../../constants/ModalTypes';
+import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT } from '../../constants/ModalTypes';
 
 class Header extends Component {
 
@@ -63,6 +66,13 @@ class Header extends Component {
           case VIEW_PROFILE:
             this.props.history.pushState(null, '/me');
             break;
+          case UPDATE_USER:
+            let meId = SMTIStorage.getMeIdFromLocalStorage();
+            this.refs.userUpdateFormDialog.show(meId);
+            break;
+          case CHANGE_PASSWORD:
+            this.refs.passwordFormDialog.show();
+            break;
           case SIGN_OUT:
               Authenticate.logoff()
                 .then(() => {
@@ -106,6 +116,8 @@ class Header extends Component {
               zDepth={ this.state.zDepth } />
             <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} />
             <RegisterFormDialog ref="registerFormDialog" onRegister={this._onRegister} />
+            <PasswordFormDialog ref="passwordFormDialog" />
+            <UserUpdateFormDialog ref="userUpdateFormDialog" />
           </div>
             );
     }

@@ -44,7 +44,7 @@ class MyProjectsView extends Component {
       var me = this.props.me
       if (me.originalProjects.edges.length > 0)
         return (
-          <div>
+          <div className="MyProjects-container">
             <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
             <div className="add-project-button-container">
               <div className="add-project-button">

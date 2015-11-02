@@ -39,8 +39,6 @@ class PaperForm extends Component {
   _onCreate() {
     var text = this.state.text;
     if (text.length > 0) {
-      console.log(this.props.target);
-      console.log(text);
       Relay.Store.update(
         new IntroducePaperMutation({text, target: this.props.target})
       );
