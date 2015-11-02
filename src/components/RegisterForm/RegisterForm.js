@@ -100,7 +100,7 @@ class RegisterForm extends Component {
         <div className="RegisterForm-container">
           <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
           <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
-          <RaisedButton primary={true} disabled={isDisabled} label="Sign up" fullWidth={true} disabled={isDisabled} onMouseUp={this._onRegister} onTouchEnd={this._onRegister} />
+          <RaisedButton primary={true} label="Sign up" fullWidth={true} disabled={isDisabled} onMouseUp={this._onRegister} onTouchEnd={this._onRegister} />
           <div className="error-text-container">
             <div className="error-text">{this.state.errorMessage}</div>
           </div>

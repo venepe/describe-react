@@ -15,7 +15,8 @@ class LoginForm extends Component {
     this._onChangeEmail = this._onChangeEmail.bind(this);
     this._onChangePassword = this._onChangePassword.bind(this);
     this._onLogin = this._onLogin.bind(this);
-    this._pushForgot = this._pushForgot.bind(this);
+    this._onShowForgot = this._onShowForgot.bind(this);
+    this._onShowRegister = this._onShowRegister.bind(this);
 
     this.state = {
       email: '',
@@ -70,7 +71,12 @@ class LoginForm extends Component {
     }
   }
 
-  _pushForgot() {
+  _onShowForgot() {
+    this.props.onShowForgot();
+  }
+
+  _onShowRegister() {
+    this.props.onShowRegister();
   }
 
   render() {
@@ -87,8 +93,8 @@ class LoginForm extends Component {
           <RaisedButton primary={true} disabled={isDisabled} label="Log in" fullWidth={true} disabled={isDisabled} onMouseUp={this._onLogin} onTouchEnd={this._onLogin} />
           <div className="forgot-button-container">
             <div className="error-text">{this.state.errorMessage}</div>
-            <FlatButton secondary={true} label="Sign Up" onMouseUp={this._pushForgot} onTouchEnd={this._pushForgot} />
-            <FlatButton secondary={true} label="Forgot Your Password?" onMouseUp={this._pushForgot} onTouchEnd={this._pushForgot} />
+            <FlatButton secondary={true} label="Sign Up" onMouseUp={this._onShowRegister} onTouchEnd={this._onShowRegister} />
+            <FlatButton secondary={true} label="Forgot Your Password?" onMouseUp={this._onShowForgot} onTouchEnd={this._onShowForgot} />
           </div>
         </div>
       </div>
@@ -97,7 +103,7 @@ class LoginForm extends Component {
 
 }
 
-LoginForm.propTypes = {onLogin: PropTypes.func};
-LoginForm.defaultProps = {onLogin: function() {}};
+LoginForm.propTypes = {onLogin: PropTypes.func, onShowRegister: PropTypes.func, onShowForgot: PropTypes.func};
+LoginForm.defaultProps = {onLogin: function() {}, onShowRegister: function() {}, onShowForgot: function() {}};
 
 export default LoginForm;

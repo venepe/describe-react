@@ -25,6 +25,8 @@ class Header extends Component {
         this._showRegister = this._showRegister.bind(this);
         this._onLogin = this._onLogin.bind(this);
         this._onRegister = this._onRegister.bind(this);
+        this._onForgot = this._onForgot.bind(this);
+        this._onRegisterLogin = this._onRegisterLogin.bind(this);
         this._pushProjects = this._pushProjects.bind(this);
         this._presentDialog = this._presentDialog.bind(this);
 
@@ -55,6 +57,15 @@ class Header extends Component {
     _onRegister() {
       this.refs.registerFormDialog.dismiss();
       this.props.history.pushState(null, '/myprojects');
+    }
+
+    _onRegisterLogin() {
+      this.refs.loginFormDialog.dismiss();
+      this.props.history.pushState(null, '/myprojects');
+    }
+
+    _onForgot() {
+      this.refs.loginFormDialog.dismiss();
     }
 
     _pushProjects() {
@@ -114,7 +125,7 @@ class Header extends Component {
               iconElementLeft={<div />}
               children={children}
               zDepth={ this.state.zDepth } />
-            <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} />
+            <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} onRegister={this._onRegisterLogin} onForgot={this._onForgot} />
             <RegisterFormDialog ref="registerFormDialog" onRegister={this._onRegister} />
             <PasswordFormDialog ref="passwordFormDialog" />
             <UserUpdateFormDialog ref="userUpdateFormDialog" />

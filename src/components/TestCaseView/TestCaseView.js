@@ -32,6 +32,9 @@ class TestCaseView extends Component {
   constructor(props) {
     super(props);
     this._presentDialog = this._presentDialog.bind(this);
+    this._pushProject = this._pushProject.bind(this);
+    this._pushPaper = this._pushPaper.bind(this);
+    this._pushImage = this._pushImage.bind(this);
   }
 
   _presentDialog(dialogType, targetId, targetRelayObject) {
@@ -80,6 +83,18 @@ class TestCaseView extends Component {
     }
   }
 
+  _pushProject(id) {
+    this.props.history.pushState(null, '/projects/' + id);
+  }
+
+  _pushPaper(id) {
+    this.props.history.pushState(null, '/papers/' + id);
+  }
+
+  _pushImage(id) {
+    this.props.history.pushState(null, '/images/' + id);
+  }
+
   render() {
     let object = {};
     if (this.props.testCase) {
@@ -87,7 +102,7 @@ class TestCaseView extends Component {
          let paper = object.node;
 
           let paperComponent = {
-            component: (<ModalableArchyLabel iconMenu={<EditPaperModal onItemTouchTap={this._presentDialog} id={paper.id} paper={paper} />} id={paper.id} text={paper.text}/>),
+            component: (<ModalableArchyLabel iconMenu={<EditPaperModal onItemTouchTap={this._presentDialog} id={paper.id} paper={paper} />} id={paper.id} text={paper.text} onClick={this._pushPaper} />),
           };
           return paperComponent;
         }.bind(this));
@@ -95,7 +110,7 @@ class TestCaseView extends Component {
       let imageNodes = this.props.testCase.images.edges.map(function (object, index) {
          let image = object.node;
           let imageComponent = {
-            component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri}/>),
+            component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
           };
           return imageComponent;
         }.bind(this));
@@ -106,7 +121,7 @@ class TestCaseView extends Component {
           component: (<ArchyLabel text={'describe:'}/>),
           nodes: [
             {
-              component: (<ModalableArchyLabel iconMenu={<EditProjectModal onItemTouchTap={this._presentDialog} id={project.id} project={project} />} text={project.title}/>),
+              component: (<ModalableArchyLabel iconMenu={<EditProjectModal onItemTouchTap={this._presentDialog} id={project.id} project={project} />} id={project.id} text={project.title} onClick={this._pushProject} />),
             }
           ]
         };
