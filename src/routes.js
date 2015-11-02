@@ -10,14 +10,12 @@ import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
 import FailureView from './components/FailureView';
 import TestCaseView from './components/TestCaseView';
-import PaperView from './components/PaperView';
 import ImageView from './components/ImageView';
 import MeView from './components/MeView';
 
 import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
 import TestCaseQueries from './queries/TestCaseQueries';
-import PaperQueries from './queries/PaperQueries';
 import ImageQueries from './queries/ImageQueries';
 import MeQueries from './queries/MeQueries';
 
@@ -67,13 +65,6 @@ export default (
     <Route
         path="testCases/:testCaseId" component={TestCaseView}
         queries={TestCaseQueries}
-        renderLoading={() => <SpinnerView />}
-        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
-        onEnter={requireAuth}
-      />
-    <Route
-        path="papers/:paperId" component={PaperView}
-        queries={PaperQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}
