@@ -111,8 +111,8 @@ class Header extends Component {
         return (
           <div>
             <AppBar title="Sumseti"
+              iconElementLeft={<div />}
               children={children}
-              onLeftIconButtonTouchTap={ this._onLeftClick.bind(this) }
               zDepth={ this.state.zDepth } />
             <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} />
             <RegisterFormDialog ref="registerFormDialog" onRegister={this._onRegister} />
