@@ -86,7 +86,7 @@ class ForgotForm extends Component {
     } else {
       return (
         <div>
-          <div className="success-message">Reset instructions were sent to: {this.state.email}</div>
+          <div className="success-message">Reset instructions sent to: {this.state.email}</div>
           <RaisedButton primary={true} label="Okay" fullWidth={true} onMouseUp={this._dismissForm} onTouchEnd={this._dismissForm} />
         </div>
       );
