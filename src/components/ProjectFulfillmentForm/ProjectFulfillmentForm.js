@@ -2,6 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
+import uuid from 'node-uuid';
 import { FlatButton } from 'material-ui';
 import styles from './ProjectFulfillmentForm.css';
 import Archy from '../Archy';
@@ -20,11 +21,23 @@ class ProjectFulfillmentForm extends Component {
 
     this.state = {
       archible: {
-        component: (<ArchyLabel text={'describe:'} />),
+        component: (<ArchyLabel text={'it should:'} />),
+        key: this._getUUID(),
         nodes: [
           {
-            component: (<ArchyInput placeholder={'my awesome project'} onChangeText={this._onChangeTitle} />),
-            nodes: [],
+            component: (<ArchyLabel text={this.props.testCase.it} />),
+            key: this._getUUID(),
+            nodes: [
+              {
+                component: (<ArchyLabel text={'describe:'} />),
+                nodes: [
+                  {
+                    component: (<ArchyInput placeholder={'my awesome project'} onChangeText={this._onChangeTitle} />),
+                    nodes: [],
+                  },
+                ],
+              }
+            ],
           },
         ],
       },
@@ -57,6 +70,10 @@ class ProjectFulfillmentForm extends Component {
       title,
       isDisabled
     });
+  }
+
+  _getUUID() {
+    return uuid.v4();
   }
 
   render() {

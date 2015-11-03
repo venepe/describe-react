@@ -12,6 +12,7 @@ import FailureView from './components/FailureView';
 import TestCaseView from './components/TestCaseView';
 import ImageView from './components/ImageView';
 import MeView from './components/MeView';
+import ResetForm from './components/ResetForm';
 
 import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
@@ -39,6 +40,9 @@ export default (
       component={HomeView}
       onEnter={requireAuth}
     />
+    <Route
+        path="reset" component={ResetForm}
+      />
     <Route
         path="me" component={MeView}
         queries={MeQueries}

@@ -14,6 +14,7 @@ class PasswordFormDialog extends Component {
     this._onChangeNewPassword = this._onChangeNewPassword.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
     this._onCancel = this._onCancel.bind(this);
+    this._reset = this._reset.bind(this);
 
     this.state = {
       current: '',
@@ -50,13 +51,7 @@ class PasswordFormDialog extends Component {
     if (this.state.isNewPasswordValid && this.state.isCurrentPasswordValid) {
       Authenticate.password(currentPassword, newPassword)
         .then(() => {
-          this.setState({
-            current: '',
-            new: '',
-            errorMessage: '',
-            isCurrentPasswordValid: false,
-            isNewPasswordValid: false
-          });
+          this._reset();
           this.refs.dialog.dismiss();
         })
         .catch((err) => {
@@ -75,10 +70,21 @@ class PasswordFormDialog extends Component {
     this.refs.dialog.dismiss();
   }
 
+  _reset() {
+    this.setState({
+      current: '',
+      new: '',
+      errorMessage: '',
+      isCurrentPasswordValid: false,
+      isNewPasswordValid: false
+    });
+  }
+
   render() {
     return (
       <Dialog ref="dialog"
         title="Change Password"
+        onClickAway={this._reset}
         modal={false}>
         <div>
           <div>
