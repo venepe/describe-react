@@ -86,6 +86,7 @@ class PasswordFormDialog extends Component {
             <TextField hintText={'New Password'} type='password' onChange={this._onChangeNewPassword} value={this.state.new} fullWidth={true} /> <br/>
           </div>
           <div className="action-container">
+            <div className="error-text">{this.state.errorMessage}</div>
             <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
             <FlatButton label="Submit" disabled={!(this.state.isNewPasswordValid && this.state.isCurrentPasswordValid)} primary={true} onTouchTap={this._onSubmit} />
           </div>
