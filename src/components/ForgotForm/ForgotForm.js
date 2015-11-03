@@ -13,13 +13,15 @@ class ForgotForm extends Component {
     super(props);
     this._onSubmit = this._onSubmit.bind(this);
     this._onChangeEmail = this._onChangeEmail.bind(this);
+    this._dismissForm = this._dismissForm.bind(this);
 
     this.state = {
       email: '',
       password: '',
       errorMessage: '',
       isEmailValid: false,
-      isLoading: false
+      isLoading: false,
+      didSend: false
     }
   }
 
@@ -51,7 +53,9 @@ class ForgotForm extends Component {
       this.setState({isLoading: true});
       Authenticate.forgot(email)
         .then(() => {
-          this.props.onForgot();
+          this.setState({
+            didSend: true
+          });
         })
         .catch((err) => {
           this.setState({
@@ -62,18 +66,31 @@ class ForgotForm extends Component {
     }
   }
 
+  _dismissForm() {
+    this.props.onForgot();
+  }
+
   render() {
-    return (
-      <div className="ForgotForm">
-        <div className="ForgotForm-container">
-          <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
-          <RaisedButton primary={true} label="Send Email" disabled={!this.state.isEmailValid || this.state.isLoading} fullWidth={true} onMouseUp={this._onSubmit} onTouchEnd={this._onSubmit} />
-          <div className="error-text-container">
-            <div className="error-text">{this.state.errorMessage}</div>
+    if (!this.state.didSend) {
+      return (
+        <div className="ForgotForm">
+          <div className="ForgotForm-container">
+            <TextField floatingLabelText='Email' type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
+            <RaisedButton primary={true} label="Send Email" disabled={!this.state.isEmailValid || this.state.isLoading} fullWidth={true} onMouseUp={this._onSubmit} onTouchEnd={this._onSubmit} />
+            <div className="error-text-container">
+              <div className="error-text">{this.state.errorMessage}</div>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <div className="success-message">Reset instructions were sent to: {this.state.email}</div>
+          <RaisedButton primary={true} label="Okay" fullWidth={true} onMouseUp={this._dismissForm} onTouchEnd={this._dismissForm} />
+        </div>
+      );
+    }
   }
 
 }
