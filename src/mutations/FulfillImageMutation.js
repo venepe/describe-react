@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class FulfillProjectMutation extends Relay.Mutation {
+class FulfillImageMutation extends Relay.Mutation {
   static fragments = {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -10,22 +10,22 @@ class FulfillProjectMutation extends Relay.Mutation {
       }
     `,
   };
+
   getMutation() {
-    return Relay.QL`mutation{fulfillProject}`;
+    return Relay.QL`mutation{fulfillImage}`;
   }
+
   getFatQuery() {
     return Relay.QL`
-      fragment on FulfillProjectPayload {
+      fragment on FulfillImagePayload {
         fulfillmentEdge
         testCase {
           fulfillments
         },
-        me {
-          projects
-        },
       }
     `;
   }
+
   getConfigs() {
     return [{
       type: 'RANGE_ADD',
@@ -40,37 +40,31 @@ class FulfillProjectMutation extends Relay.Mutation {
         // Prepend the ship, wherever the connection is sorted by age
         // 'orderby:newest': 'prepend',
       },
-    },
-    {
-      type: 'RANGE_ADD',
-      parentName: 'me',
-      parentID: this.props.me.id,
-      connectionName: 'projects',
-      edgeName: 'fulfillmentEdge',
-      rangeBehaviors: {
-        // When the ships connection is not under the influence
-        // of any call, append the ship to the end of the connection
-        '': 'prepend',
-        // Prepend the ship, wherever the connection is sorted by age
-        // 'orderby:newest': 'prepend',
-      },
     }];
   }
+
+  getFiles() {
+    return [
+      this.props.uri
+    ]
+  }
+
   getVariables() {
     return {
       testCaseId: this.props.testCase.id,
-      title: this.props.title,
+      uri: this.props.uri,
     };
   }
+
   getOptimisticResponse() {
     return {
       fulfillmentEdge: {
         node: {
-          title: this.props.title,
+          uri: this.props.uri,
         },
       },
     };
   }
 }
 
-module.exports = FulfillProjectMutation;
+module.exports = FulfillImageMutation;

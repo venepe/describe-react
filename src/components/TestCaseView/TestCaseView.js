@@ -12,7 +12,7 @@ import ModalableImage from '../ModalableImage';
 import ImageFormDialog from '../ImageFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
-import ProjectFulfillmentFormDialog from '../ProjectFulfillmentFormDialog';
+import ImageFulfillmentFormDialog from '../ImageFulfillmentFormDialog';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
 import DeleteImageMutation from '../../mutations/DeleteImageMutation';
@@ -22,7 +22,7 @@ import EditTestCaseModal from '../EditTestCaseModal';
 import EditImageModal from '../EditImageModal';
 import EditProjectModal from '../EditProjectModal';
 
-import ModalTypes, { INTRODUCE_IMAGE, FULFILL_PROJECT, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_TEST_CASE, DELETE_IMAGE, DELETE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_TEST_CASE, DELETE_IMAGE, DELETE_PROJECT } from '../../constants/ModalTypes';
 
 class TestCaseView extends Component {
   constructor(props) {
@@ -37,8 +37,8 @@ class TestCaseView extends Component {
         case INTRODUCE_IMAGE:
             this.refs.imageFormDialog.show(targetId);
           break;
-        case FULFILL_PROJECT:
-            this.refs.projectFulfillmentFormDialog.show(targetId);
+        case FULFILL_IMAGE:
+            this.refs.imageFulfillmentFormDialog.show(targetId);
           break;
         case UPDATE_TEST_CASE:
             this.refs.testCaseUpdateFormDialog.show(targetId);
@@ -88,16 +88,11 @@ class TestCaseView extends Component {
         }.bind(this));
 
       let fulfillmentNodes = this.props.testCase.fulfillments.edges.map(function (object, index) {
-       var project = object.node;
-        var projectComponent = {
-          component: (<ArchyLabel text={'describe:'}/>),
-          nodes: [
-            {
-              component: (<ModalableArchyLabel iconMenu={<EditProjectModal onItemTouchTap={this._presentDialog} id={project.id} project={project} />} id={project.id} text={project.title} onClick={this._pushProject} />),
-            }
-          ]
-        };
-        return projectComponent;
+        let image = object.node;
+         let imageComponent = {
+           component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
+         };
+         return imageComponent;
       }.bind(this));
 
       object = {
@@ -122,7 +117,7 @@ class TestCaseView extends Component {
       if (fulfillmentNodes.length > 0) {
         object.nodes[0].nodes.push(
           {
-            component: (<ArchyLabel text={'as fulfilled by'} />),
+            component: (<ArchyLabel text={'as fulfilled in:'} />),
             nodes: fulfillmentNodes
           }
         )
@@ -135,7 +130,7 @@ class TestCaseView extends Component {
           <ProjectUpdateFormDialog ref="projectUpdateFormDialog" />
           <ImageFormDialog ref="imageFormDialog" />
           <TestCaseUpdateFormDialog ref="testCaseUpdateFormDialog" />
-          <ProjectFulfillmentFormDialog ref="projectFulfillmentFormDialog" />
+          <ImageFulfillmentFormDialog ref="imageFulfillmentFormDialog" />
       </div>
     );
   }
@@ -160,8 +155,8 @@ export default Relay.createContainer(TestCaseView, {
           edges {
             node {
               id
-              title
-              ${DeleteProjectMutation.getFragment('project')},
+              uri
+              ${DeleteImageMutation.getFragment('image')},
             }
           }
         }

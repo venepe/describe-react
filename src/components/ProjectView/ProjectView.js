@@ -13,7 +13,7 @@ import ProjectCoverImage from '../ProjectCoverImage';
 import TestCaseFormDialog from '../TestCaseFormDialog';
 import ImageFormDialog from '../ImageFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
-import ProjectFulfillmentFormDialog from '../ProjectFulfillmentFormDialog';
+import ImageFulfillmentFormDialog from '../ImageFulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
@@ -24,7 +24,7 @@ import EditProjectModal from '../EditProjectModal';
 import EditTestCaseModal from '../EditTestCaseModal';
 import EditImageModal from '../EditImageModal';
 
-import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_IMAGE, FULFILL_PROJECT, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_IMAGE } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_IMAGE } from '../../constants/ModalTypes';
 
 class ProjectView extends Component {
   constructor(props) {
@@ -42,8 +42,8 @@ class ProjectView extends Component {
         case INTRODUCE_IMAGE:
             this.refs.imageFormDialog.show(targetId);
           break;
-        case FULFILL_PROJECT:
-            this.refs.projectFulfillmentFormDialog.show(targetId);
+        case FULFILL_IMAGE:
+            this.refs.imageFulfillmentFormDialog.show(targetId);
           break;
         case UPDATE_PROJECT:
             this.refs.projectUpdateFormDialog.show(targetId);
@@ -134,7 +134,7 @@ class ProjectView extends Component {
           <TestCaseFormDialog ref="testCaseFormDialog" />
           <ImageFormDialog ref="imageFormDialog" />
           <TestCaseUpdateFormDialog ref="testCaseUpdateFormDialog" />
-          <ProjectFulfillmentFormDialog ref="projectFulfillmentFormDialog" />
+          <ImageFulfillmentFormDialog ref="imageFulfillmentFormDialog" />
       </div>
     );
   }

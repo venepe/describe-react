@@ -722,7 +722,7 @@
             },
             {
               "name": "fulfillments",
-              "description": "The projects fulfilling the test case.",
+              "description": "The images fulfilling the test case.",
               "args": [
                 {
                   "name": "before",
@@ -767,7 +767,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "ProjectConnection",
+                "name": "ImageConnection",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1423,7 +1423,7 @@
               "deprecationReason": null
             },
             {
-              "name": "fulfillProject",
+              "name": "fulfillImage",
               "description": null,
               "args": [
                 {
@@ -1434,7 +1434,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "FulfillProjectInput",
+                      "name": "FulfillImageInput",
                       "ofType": null
                     }
                   },
@@ -1443,7 +1443,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "FulfillProjectPayload",
+                "name": "FulfillImagePayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1947,7 +1947,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "FulfillProjectInput",
+          "name": "FulfillImageInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -1966,7 +1966,7 @@
               "defaultValue": null
             },
             {
-              "name": "title",
+              "name": "uri",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -2678,7 +2678,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "FulfillProjectPayload",
+          "name": "FulfillImagePayload",
           "description": null,
           "fields": [
             {
@@ -2687,7 +2687,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "ProjectEdge",
+                "name": "ImageEdge",
                 "ofType": null
               },
               "isDeprecated": false,
