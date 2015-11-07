@@ -3,9 +3,8 @@
 }
 
 .modalable-archy-label:hover .modal {
-    display: block;
+    display: inline-block;
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -10px;
     width: auto;
 }
