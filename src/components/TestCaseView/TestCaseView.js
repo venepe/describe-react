@@ -6,6 +6,7 @@ import styles from './TestCaseView.css';
 import { Paper, Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
+import TestCaseLabel from '../TestCaseLabel';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import ModalableImage from '../ModalableImage';
 
@@ -16,13 +17,15 @@ import ImageFulfillmentFormDialog from '../ImageFulfillmentFormDialog';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
 import DeleteImageMutation from '../../mutations/DeleteImageMutation';
+import DeleteFulfillmentMutation from '../../mutations/DeleteFulfillmentMutation';
 import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
 
 import EditTestCaseModal from '../EditTestCaseModal';
 import EditImageModal from '../EditImageModal';
 import EditProjectModal from '../EditProjectModal';
+import EditFulfillmentModal from '../EditFulfillmentModal';
 
-import ModalTypes, { INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_TEST_CASE, DELETE_IMAGE, DELETE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_TEST_CASE, DELETE_IMAGE, DELETE_FULFILLMENT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
 class TestCaseView extends Component {
   constructor(props) {
@@ -54,6 +57,11 @@ class TestCaseView extends Component {
         case DELETE_IMAGE:
             Relay.Store.update(
               new DeleteImageMutation({image: targetRelayObject, target: this.props.testCase})
+            );
+          break;
+        case DELETE_FULFILLMENT:
+            Relay.Store.update(
+              new DeleteFulfillmentMutation({fulfillment: targetRelayObject, testCase: this.props.testCase})
             );
           break;
         case DELETE_PROJECT:
@@ -90,13 +98,13 @@ class TestCaseView extends Component {
       let fulfillmentNodes = this.props.testCase.fulfillments.edges.map(function (object, index) {
         let image = object.node;
          let imageComponent = {
-           component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
+           component: (<ModalableImage iconMenu={<EditFulfillmentModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
          };
          return imageComponent;
       }.bind(this));
 
       object = {
-        component: (<ArchyLabel text={'it should:'}/>),
+        component: (<TestCaseLabel isFulfilled={this.props.testCase.isFulfilled} />),
         nodes: [
           {
             component: (<ModalableArchyLabel iconMenu={<EditTestCaseModal onItemTouchTap={this._presentDialog} id={this.props.testCase.id} testCase={this.props.testCase} />} text={this.props.testCase.it}/>),
@@ -142,6 +150,7 @@ export default Relay.createContainer(TestCaseView, {
       fragment on TestCase {
         id
         it
+        isFulfilled
         images(first: 10) {
           edges {
             node {
@@ -156,12 +165,13 @@ export default Relay.createContainer(TestCaseView, {
             node {
               id
               uri
-              ${DeleteImageMutation.getFragment('image')},
+              ${DeleteFulfillmentMutation.getFragment('fulfillment')},
             }
           }
         }
         ${DeleteImageMutation.getFragment('target')},
         ${DeleteTestCaseMutation.getFragment('testCase')},
+        ${DeleteFulfillmentMutation.getFragment('testCase')},
       }
     `,
   },

@@ -5,10 +5,6 @@
 
 .add-project-button {
 	position: fixed;
+	right: 40px;
 	bottom: 40px;
-}
-
-.add-project-button-container {
-	float: right;
-	margin-right: 80px;
 }

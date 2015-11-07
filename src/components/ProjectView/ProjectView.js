@@ -6,6 +6,7 @@ import styles from './ProjectView.css';
 import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
+import TestCaseLabel from '../TestCaseLabel';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import ModalableImage from '../ModalableImage';
 import ProjectCoverImage from '../ProjectCoverImage';
@@ -92,7 +93,7 @@ class ProjectView extends Component {
           }
          ];
          let testCaseComponent = {
-           component: (<ArchyLabel text={'it should:'} />),
+           component: (<TestCaseLabel isFulfilled={testCase.isFulfilled} />),
            nodes: nodes
          };
          return testCaseComponent;
@@ -151,6 +152,7 @@ export default Relay.createContainer(ProjectView, {
             node {
               id
               it
+              isFulfilled
               ${DeleteTestCaseMutation.getFragment('testCase')},
             }
           }

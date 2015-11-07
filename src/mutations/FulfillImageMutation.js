@@ -20,6 +20,7 @@ class FulfillImageMutation extends Relay.Mutation {
       fragment on FulfillImagePayload {
         fulfillmentEdge
         testCase {
+          isFulfilled,
           fulfillments
         },
       }
@@ -40,7 +41,14 @@ class FulfillImageMutation extends Relay.Mutation {
         // Prepend the ship, wherever the connection is sorted by age
         // 'orderby:newest': 'prepend',
       },
-    }];
+    },
+    {
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        testCase: this.props.testCase.id,
+      }
+    }
+  ];
   }
 
   getFiles() {
@@ -63,6 +71,10 @@ class FulfillImageMutation extends Relay.Mutation {
           uri: this.props.uri,
         },
       },
+      testCase: {
+        id: this.props.testCase.id,
+        isFulfilled: true
+      }
     };
   }
 }

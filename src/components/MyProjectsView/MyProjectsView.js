@@ -46,21 +46,17 @@ class MyProjectsView extends Component {
         return (
           <div className="MyProjects-container">
             <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
-            <div className="add-project-button-container">
               <div className="add-project-button">
                 <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
               </div>
-            </div>
             <ProjectFormDialog ref="projectFormDialog" />
           </div>
         );
       else {
         return (
           <div>
-            <div className="add-project-button-container">
-              <div className="add-project-button">
-                <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
-              </div>
+            <div className="add-project-button">
+              <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
             </div>
             <ProjectFormDialog ref="projectFormDialog" />
           </div>
@@ -69,10 +65,8 @@ class MyProjectsView extends Component {
     } else {
       return (
         <div>
-          <div className="add-project-button-container">
-            <div className="add-project-button">
-              <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
-            </div>
+          <div className="add-project-button">
+            <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
           </div>
           <ProjectFormDialog ref="projectFormDialog" />
         </div>
