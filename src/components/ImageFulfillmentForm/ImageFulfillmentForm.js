@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ImageFulfillmentForm.css';
 
-import FulfillImageMutation from '../../mutations/FulfillImageMutation';
+import IntroduceFulfillmentMutation from '../../mutations/IntroduceFulfillmentMutation';
 
 class ImageFulfillmentForm extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class ImageFulfillmentForm extends Component {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.update(
-        new FulfillImageMutation({uri, testCase: this.props.testCase})
+        new IntroduceFulfillmentMutation({uri, testCase: this.props.testCase})
       );
       this.props.onCreate();
     }
@@ -56,7 +56,7 @@ var ImageFulfillmentFormContainer = Relay.createContainer(ImageFulfillmentForm, 
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
-        ${FulfillImageMutation.getFragment('testCase')}
+        ${IntroduceFulfillmentMutation.getFragment('testCase')}
       }
     `,
   },

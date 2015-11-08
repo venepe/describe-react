@@ -7,7 +7,7 @@ import { Paper } from 'material-ui';
 import UserCoverImage from '../UserCoverImage';
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 
-import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_IMAGE, FULFILL_PROJECT, UPDATE_PAPER, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_IMAGE, DELETE_PAPER } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_EXAMPLE, FULFILL_PROJECT, UPDATE_PAPER, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_EXAMPLE, DELETE_PAPER } from '../../constants/ModalTypes';
 
 class MeView extends Component {
   constructor(props) {

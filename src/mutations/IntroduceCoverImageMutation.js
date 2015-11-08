@@ -17,7 +17,7 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceCoverImagePayload {
-        imageEdge
+        coverImageEdge
         target
       }
     `;
@@ -29,7 +29,7 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
       parentName: 'target',
       parentID: this.props.target.id,
       connectionName: 'coverImages',
-      edgeName: 'imageEdge',
+      edgeName: 'coverImageEdge',
       rangeBehaviors: {
         // When the ships connection is not under the influence
         // of any call, append the ship to the end of the connection
@@ -55,7 +55,7 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
 
   getOptimisticResponse() {
     return {
-      imageEdge: {
+      coverImageEdge: {
         node: {
           uri: this.props.uri,
         },

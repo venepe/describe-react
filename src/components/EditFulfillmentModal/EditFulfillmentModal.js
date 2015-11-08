@@ -30,7 +30,7 @@ class EditFulfillmentModal extends Component {
   render() {
     let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey700}>more_horiz</FontIcon></IconButton>);
     return (
-        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
+        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="Delete Fulfillment" value={DELETE_FULFILLMENT} />
           <MenuDivider />
           <MenuItem primaryText="Close" />

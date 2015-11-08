@@ -2,10 +2,10 @@
 
 import Relay from 'react-relay';
 
-class DeleteImageMutation extends Relay.Mutation {
+class DeleteExampleMutation extends Relay.Mutation {
   static fragments = {
-    image: () => Relay.QL`
-      fragment on Image {
+    example: () => Relay.QL`
+      fragment on File {
         id
       }
     `,
@@ -16,12 +16,12 @@ class DeleteImageMutation extends Relay.Mutation {
     `,
   };
   getMutation() {
-    return Relay.QL`mutation{deleteImage}`;
+    return Relay.QL`mutation{deleteExample}`;
   }
   getFatQuery() {
     return Relay.QL`
-      fragment on DeleteImagePayload {
-        deletedImageId,
+      fragment on DeleteExamplePayload {
+        deletedExampleId,
         target
       }
     `;
@@ -31,20 +31,21 @@ class DeleteImageMutation extends Relay.Mutation {
       type: 'NODE_DELETE',
       parentName: 'target',
       parentID: this.props.target.id,
-      connectionName: 'images',
-      deletedIDFieldName: 'deletedImageId',
+      connectionName: 'examples',
+      deletedIDFieldName: 'deletedExampleId',
     }];
   }
   getVariables() {
     return {
-      id: this.props.image.id,
+      id: this.props.example.id,
+      targetId: this.props.target.id
     };
   }
   getOptimisticResponse() {
     return {
-      deletedImageId: this.props.image.id
+      deletedExampleId: this.props.example.id
     };
   }
 }
 
-module.exports = DeleteImageMutation;
+module.exports = DeleteExampleMutation;

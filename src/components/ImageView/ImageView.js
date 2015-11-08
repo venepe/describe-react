@@ -12,8 +12,8 @@ class ImageView extends Component {
 
   render() {
     var uri = null;
-    if (this.props.image) {
-      uri = this.props.image.uri;
+    if (this.props.file) {
+      uri = this.props.file.uri;
     }
     return (
       <CardMedia expandable={true}>
@@ -25,8 +25,8 @@ class ImageView extends Component {
 
 export default Relay.createContainer(ImageView, {
   fragments: {
-    image: () => Relay.QL`
-      fragment on Image {
+    file: () => Relay.QL`
+      fragment on File {
         id
         uri
       }

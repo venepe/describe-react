@@ -5,7 +5,7 @@ import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './EditImageModal.css';
-import ModalTypes, { DELETE_IMAGE } from '../../constants/ModalTypes';
+import ModalTypes, { DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
 class EditImageModal extends Component {
   constructor(props) {
@@ -30,8 +30,8 @@ class EditImageModal extends Component {
   render() {
     let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey700}>more_horiz</FontIcon></IconButton>);
     return (
-        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
-          <MenuItem primaryText="Delete Image" value={DELETE_IMAGE} />
+        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+          <MenuItem primaryText="Delete Example" value={DELETE_EXAMPLE} />
           <MenuDivider />
           <MenuItem primaryText="Close" />
         </IconMenu>

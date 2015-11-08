@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ImageForm.css';
 
-import IntroduceImageMutation from '../../mutations/IntroduceImageMutation';
+import IntroduceExampleMutation from '../../mutations/IntroduceExampleMutation';
 
 class ImageForm extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class ImageForm extends Component {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.update(
-        new IntroduceImageMutation({uri, target: this.props.target})
+        new IntroduceExampleMutation({uri, target: this.props.target})
       );
       this.props.onCreate();
     }
@@ -56,7 +56,7 @@ var ImageFormContainer = Relay.createContainer(ImageForm, {
   fragments: {
     target: () => Relay.QL`
       fragment on Node {
-        ${IntroduceImageMutation.getFragment('target')}
+        ${IntroduceExampleMutation.getFragment('target')}
       }
     `,
   },

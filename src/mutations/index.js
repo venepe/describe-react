@@ -1,7 +1,7 @@
 module.exports = {
   DeleteCoverImageMutation: require('./DeleteCoverImageMutation.js'),
   DeleteFulfillmentMutation: require('./DeleteFulfillmentMutation.js'),
-  DeleteImageMutation: require('./DeleteImageMutation.js'),
+  DeleteExampleMutation: require('./DeleteExampleMutation.js'),
   DeleteProjectMutation: require('./DeleteProjectMutation.js'),
   DeleteTestCaseMutation: require('./DeleteTestCaseMutation.js'),
   DeleteUserMutation: require('./DeleteUserMutation.js'),

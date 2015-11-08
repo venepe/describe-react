@@ -138,7 +138,7 @@
             },
             {
               "kind": "OBJECT",
-              "name": "Image",
+              "name": "File",
               "ofType": null
             }
           ]
@@ -214,7 +214,7 @@
             },
             {
               "name": "createdAt",
-              "description": "The timestamp when the image was created.",
+              "description": "The timestamp when the user was created.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -226,7 +226,7 @@
             },
             {
               "name": "updatedAt",
-              "description": "The timestamp when the image was last updated.",
+              "description": "The timestamp when the user was last updated.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -238,7 +238,7 @@
             },
             {
               "name": "coverImages",
-              "description": "The cover images of the project.",
+              "description": "The cover images of the user.",
               "args": [
                 {
                   "name": "before",
@@ -599,8 +599,8 @@
               "deprecationReason": null
             },
             {
-              "name": "images",
-              "description": "The images of the project.",
+              "name": "examples",
+              "description": "The files exemplifying the project.",
               "args": [
                 {
                   "name": "before",
@@ -645,7 +645,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageConnection",
+                "name": "ExampleConnection",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -734,7 +734,7 @@
             },
             {
               "name": "fulfillments",
-              "description": "The images fulfilling the test case.",
+              "description": "The files fulfilling the test case.",
               "args": [
                 {
                   "name": "before",
@@ -779,15 +779,15 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageConnection",
+                "name": "FulfillmentConnection",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "images",
-              "description": "The images of the test case.",
+              "name": "examples",
+              "description": "The files exemplifying the test case.",
               "args": [
                 {
                   "name": "before",
@@ -832,7 +832,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageConnection",
+                "name": "ExampleConnection",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -852,8 +852,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "Image",
-          "description": "Image object",
+          "name": "File",
+          "description": "File object",
           "fields": [
             {
               "name": "id",
@@ -873,7 +873,7 @@
             },
             {
               "name": "uri",
-              "description": "The uri of the image.",
+              "description": "The uri of the file.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -885,7 +885,7 @@
             },
             {
               "name": "createdAt",
-              "description": "The timestamp when the image was created.",
+              "description": "The timestamp when the file was created.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -897,7 +897,7 @@
             },
             {
               "name": "updatedAt",
-              "description": "The timestamp when the image was last updated.",
+              "description": "The timestamp when the file was last updated.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -964,8 +964,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ImageConnection",
-          "description": "A connection to a list of images.",
+          "name": "ExampleConnection",
+          "description": "A connection to a list of examples.",
           "fields": [
             {
               "name": "pageInfo",
@@ -992,7 +992,50 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "ImageEdge",
+                  "name": "FileEdge",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "FulfillmentConnection",
+          "description": "A connection to a list of fulfillments.",
+          "fields": [
+            {
+              "name": "pageInfo",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PageInfo",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "edges",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "FileEdge",
                   "ofType": null
                 }
               },
@@ -1035,7 +1078,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "ImageEdge",
+                  "name": "FileEdge",
                   "ofType": null
                 }
               },
@@ -1311,7 +1354,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ImageEdge",
+          "name": "FileEdge",
           "description": "An edge in a connection.",
           "fields": [
             {
@@ -1320,7 +1363,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "Image",
+                "name": "File",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1435,7 +1478,7 @@
               "deprecationReason": null
             },
             {
-              "name": "fulfillImage",
+              "name": "introduceFulfillment",
               "description": null,
               "args": [
                 {
@@ -1446,7 +1489,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "FulfillImageInput",
+                      "name": "IntroduceFulfillmentInput",
                       "ofType": null
                     }
                   },
@@ -1455,7 +1498,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "FulfillImagePayload",
+                "name": "IntroduceFulfillmentPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1489,7 +1532,7 @@
               "deprecationReason": null
             },
             {
-              "name": "introduceImage",
+              "name": "introduceExample",
               "description": null,
               "args": [
                 {
@@ -1500,7 +1543,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "IntroduceImageInput",
+                      "name": "IntroduceExampleInput",
                       "ofType": null
                     }
                   },
@@ -1509,7 +1552,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "IntroduceImagePayload",
+                "name": "IntroduceExamplePayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1705,7 +1748,7 @@
               "deprecationReason": null
             },
             {
-              "name": "deleteImage",
+              "name": "deleteExample",
               "description": null,
               "args": [
                 {
@@ -1716,7 +1759,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "DeleteImageInput",
+                      "name": "DeleteExampleInput",
                       "ofType": null
                     }
                   },
@@ -1725,7 +1768,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "DeleteImagePayload",
+                "name": "DeleteExamplePayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1986,7 +2029,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "FulfillImageInput",
+          "name": "IntroduceFulfillmentInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -2092,7 +2135,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "IntroduceImageInput",
+          "name": "IntroduceExampleInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -2510,12 +2553,26 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "DeleteImageInput",
+          "name": "DeleteExampleInput",
           "description": null,
           "fields": null,
           "inputFields": [
             {
               "name": "id",
+              "description": null,
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "targetId",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -2608,6 +2665,20 @@
           "inputFields": [
             {
               "name": "id",
+              "description": null,
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "targetId",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -2770,7 +2841,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "FulfillImagePayload",
+          "name": "IntroduceFulfillmentPayload",
           "description": null,
           "fields": [
             {
@@ -2779,7 +2850,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageEdge",
+                "name": "FileEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2884,16 +2955,16 @@
         },
         {
           "kind": "OBJECT",
-          "name": "IntroduceImagePayload",
+          "name": "IntroduceExamplePayload",
           "description": null,
           "fields": [
             {
-              "name": "imageEdge",
+              "name": "exampleEdge",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageEdge",
+                "name": "FileEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2939,12 +3010,12 @@
           "description": null,
           "fields": [
             {
-              "name": "imageEdge",
+              "name": "coverImageEdge",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageEdge",
+                "name": "FileEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -3244,11 +3315,11 @@
         },
         {
           "kind": "OBJECT",
-          "name": "DeleteImagePayload",
+          "name": "DeleteExamplePayload",
           "description": null,
           "fields": [
             {
-              "name": "deletedImageId",
+              "name": "deletedExampleId",
               "description": null,
               "args": [],
               "type": {

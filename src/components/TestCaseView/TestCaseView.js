@@ -16,7 +16,7 @@ import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
 import ImageFulfillmentFormDialog from '../ImageFulfillmentFormDialog';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
-import DeleteImageMutation from '../../mutations/DeleteImageMutation';
+import DeleteExampleMutation from '../../mutations/DeleteExampleMutation';
 import DeleteFulfillmentMutation from '../../mutations/DeleteFulfillmentMutation';
 import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
 
@@ -25,7 +25,7 @@ import EditImageModal from '../EditImageModal';
 import EditProjectModal from '../EditProjectModal';
 import EditFulfillmentModal from '../EditFulfillmentModal';
 
-import ModalTypes, { INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_TEST_CASE, DELETE_IMAGE, DELETE_FULFILLMENT, DELETE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_TEST_CASE, DELETE_EXAMPLE, DELETE_FULFILLMENT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
 class TestCaseView extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class TestCaseView extends Component {
 
   _presentDialog(dialogType, targetId, targetRelayObject) {
     switch (dialogType) {
-        case INTRODUCE_IMAGE:
+        case INTRODUCE_EXAMPLE:
             this.refs.imageFormDialog.show(targetId);
           break;
         case FULFILL_IMAGE:
@@ -54,9 +54,9 @@ class TestCaseView extends Component {
               new DeleteTestCaseMutation({testCase, project: {id: null}})
             );
           break;
-        case DELETE_IMAGE:
+        case DELETE_EXAMPLE:
             Relay.Store.update(
-              new DeleteImageMutation({image: targetRelayObject, target: this.props.testCase})
+              new DeleteExampleMutation({example: targetRelayObject, target: this.props.testCase})
             );
           break;
         case DELETE_FULFILLMENT:
@@ -87,7 +87,7 @@ class TestCaseView extends Component {
     let object = {};
     if (this.props.testCase) {
 
-      let imageNodes = this.props.testCase.images.edges.map(function (object, index) {
+      let exampleNodes = this.props.testCase.examples.edges.map(function (object, index) {
          let image = object.node;
           let imageComponent = {
             component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
@@ -113,11 +113,11 @@ class TestCaseView extends Component {
         ]
       }
 
-      if (imageNodes.length > 0) {
+      if (exampleNodes.length > 0) {
         object.nodes[0].nodes.push(
           {
             component: (<ArchyLabel text={'as shown in:'}/>),
-            nodes: imageNodes
+            nodes: exampleNodes
           }
         )
       }
@@ -151,12 +151,12 @@ export default Relay.createContainer(TestCaseView, {
         id
         it
         isFulfilled
-        images(first: 10) {
+        examples(first: 10) {
           edges {
             node {
               id
               uri
-              ${DeleteImageMutation.getFragment('image')},
+              ${DeleteExampleMutation.getFragment('example')},
             }
           }
         }
@@ -169,7 +169,7 @@ export default Relay.createContainer(TestCaseView, {
             }
           }
         }
-        ${DeleteImageMutation.getFragment('target')},
+        ${DeleteExampleMutation.getFragment('target')},
         ${DeleteTestCaseMutation.getFragment('testCase')},
         ${DeleteFulfillmentMutation.getFragment('testCase')},
       }

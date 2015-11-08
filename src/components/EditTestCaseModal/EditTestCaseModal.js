@@ -5,7 +5,7 @@ import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './EditTestCaseModal.css';
-import ModalTypes, { INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_IMAGE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
 class EditTestCaseModal extends Component {
   constructor(props) {
@@ -30,8 +30,8 @@ class EditTestCaseModal extends Component {
   render() {
     let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
     return (
-        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
-          <MenuItem primaryText="Add Image" value={INTRODUCE_IMAGE} />
+        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+          <MenuItem primaryText="Add Example" value={INTRODUCE_EXAMPLE} />
           <MenuItem primaryText="Fulfill Test Case" value={FULFILL_IMAGE} />
           <MenuItem primaryText="Update Test Case" value={UPDATE_TEST_CASE} />
           <MenuItem primaryText="Delete Test Case" value={DELETE_TEST_CASE} />

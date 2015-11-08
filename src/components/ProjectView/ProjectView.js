@@ -18,14 +18,14 @@ import ImageFulfillmentFormDialog from '../ImageFulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
-import DeleteImageMutation from '../../mutations/DeleteImageMutation';
+import DeleteExampleMutation from '../../mutations/DeleteExampleMutation';
 import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
 
 import EditProjectModal from '../EditProjectModal';
 import EditTestCaseModal from '../EditTestCaseModal';
 import EditImageModal from '../EditImageModal';
 
-import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_IMAGE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_IMAGE } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_EXAMPLE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
 class ProjectView extends Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class ProjectView extends Component {
       case INTRODUCE_TEST_CASE:
           this.refs.testCaseFormDialog.show(targetId);
         break;
-        case INTRODUCE_IMAGE:
+        case INTRODUCE_EXAMPLE:
             this.refs.imageFormDialog.show(targetId);
           break;
         case FULFILL_IMAGE:
@@ -63,9 +63,9 @@ class ProjectView extends Component {
               new DeleteTestCaseMutation({testCase: targetRelayObject, project: this.props.project})
             );
           break;
-        case DELETE_IMAGE:
+        case DELETE_EXAMPLE:
             Relay.Store.update(
-              new DeleteImageMutation({image: targetRelayObject, target: this.props.project})
+              new DeleteExampleMutation({example: targetRelayObject, target: this.props.project})
             );
           break;
       default:
@@ -99,7 +99,7 @@ class ProjectView extends Component {
          return testCaseComponent;
        }.bind(this));
 
-      let imageNodes = this.props.project.images.edges.map(function (object, index) {
+      let exampleNodes = this.props.project.examples.edges.map(function (object, index) {
          let image = object.node;
           let imageComponent = {
             component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
@@ -117,11 +117,11 @@ class ProjectView extends Component {
         ]
       }
 
-      if (imageNodes.length > 0) {
+      if (exampleNodes.length > 0) {
         object.nodes[0].nodes.push(
           {
             component: (<ArchyLabel text={'as shown in:'}/>),
-            nodes: imageNodes
+            nodes: exampleNodes
           }
         )
       }
@@ -157,18 +157,18 @@ export default Relay.createContainer(ProjectView, {
             }
           }
         }
-        images(first: 10) {
+        examples(first: 10) {
           edges {
             node {
               id
               uri
-              ${DeleteImageMutation.getFragment('image')},
+              ${DeleteExampleMutation.getFragment('example')},
             }
           }
         }
         ${ProjectCoverImage.getFragment('projectCoverImage')},
         ${DeleteTestCaseMutation.getFragment('project')},
-        ${DeleteImageMutation.getFragment('target')},
+        ${DeleteExampleMutation.getFragment('target')},
         ${DeleteProjectMutation.getFragment('project')},
       }
     `,

@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class IntroduceImageMutation extends Relay.Mutation {
+class IntroduceExampleMutation extends Relay.Mutation {
   static fragments = {
     target: () => Relay.QL`
       fragment on Node {
@@ -12,12 +12,12 @@ class IntroduceImageMutation extends Relay.Mutation {
   };
 
   getMutation() {
-    return Relay.QL`mutation{introduceImage}`;
+    return Relay.QL`mutation{introduceExample}`;
   }
   getFatQuery() {
     return Relay.QL`
-      fragment on IntroduceImagePayload {
-        imageEdge
+      fragment on IntroduceExamplePayload {
+        exampleEdge
         target
       }
     `;
@@ -28,8 +28,8 @@ class IntroduceImageMutation extends Relay.Mutation {
       type: 'RANGE_ADD',
       parentName: 'target',
       parentID: this.props.target.id,
-      connectionName: 'images',
-      edgeName: 'imageEdge',
+      connectionName: 'examples',
+      edgeName: 'exampleEdge',
       rangeBehaviors: {
         // When the ships connection is not under the influence
         // of any call, append the ship to the end of the connection
@@ -55,7 +55,7 @@ class IntroduceImageMutation extends Relay.Mutation {
 
   getOptimisticResponse() {
     return {
-      imageEdge: {
+      exampleEdge: {
         node: {
           uri: this.props.uri,
         },
@@ -64,4 +64,4 @@ class IntroduceImageMutation extends Relay.Mutation {
   }
 }
 
-module.exports = IntroduceImageMutation;
+module.exports = IntroduceExampleMutation;

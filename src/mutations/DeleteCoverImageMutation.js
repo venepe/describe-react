@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 class DeleteCoverImageMutation extends Relay.Mutation {
   static fragments = {
     coverImage: () => Relay.QL`
-      fragment on Image {
+      fragment on File {
         id
       }
     `,

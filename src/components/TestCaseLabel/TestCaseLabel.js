@@ -14,7 +14,6 @@ class TestCaseLabel extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.setState({
       ...nextProps
     });

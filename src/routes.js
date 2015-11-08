@@ -17,7 +17,7 @@ import ResetForm from './components/ResetForm';
 import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
 import TestCaseQueries from './queries/TestCaseQueries';
-import ImageQueries from './queries/ImageQueries';
+import FileQueries from './queries/FileQueries';
 import MeQueries from './queries/MeQueries';
 
 import SMTIStorage from './utils/storage';
@@ -74,8 +74,8 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="images/:imageId" component={ImageView}
-        queries={ImageQueries}
+        path="images/:fileId" component={ImageView}
+        queries={FileQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}

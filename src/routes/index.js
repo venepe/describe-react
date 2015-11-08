@@ -1,5 +1,5 @@
 module.exports = {
-  ImageRoute:  require('./ImageRoute.js'),
+  FileRoute:  require('./FileRoute.js'),
   MeRoute:  require('./MeRoute.js'),
   ProjectRoute:  require('./ProjectRoute.js'),
   SearchProjectsRoute:  require('./SearchProjectsRoute.js'),

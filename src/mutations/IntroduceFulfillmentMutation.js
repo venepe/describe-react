@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class FulfillImageMutation extends Relay.Mutation {
+class IntroduceFulfillmentMutation extends Relay.Mutation {
   static fragments = {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -12,12 +12,12 @@ class FulfillImageMutation extends Relay.Mutation {
   };
 
   getMutation() {
-    return Relay.QL`mutation{fulfillImage}`;
+    return Relay.QL`mutation{introduceFulfillment}`;
   }
 
   getFatQuery() {
     return Relay.QL`
-      fragment on FulfillImagePayload {
+      fragment on IntroduceFulfillmentPayload {
         fulfillmentEdge
         testCase {
           isFulfilled,
@@ -65,6 +65,7 @@ class FulfillImageMutation extends Relay.Mutation {
   }
 
   getOptimisticResponse() {
+
     return {
       fulfillmentEdge: {
         node: {
@@ -79,4 +80,4 @@ class FulfillImageMutation extends Relay.Mutation {
   }
 }
 
-module.exports = FulfillImageMutation;
+module.exports = IntroduceFulfillmentMutation;

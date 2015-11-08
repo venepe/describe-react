@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 class DeleteFulfillmentMutation extends Relay.Mutation {
   static fragments = {
     fulfillment: () => Relay.QL`
-      fragment on Image {
+      fragment on File {
         id
       }
     `,

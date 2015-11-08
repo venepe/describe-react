@@ -5,7 +5,7 @@ import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './EditProjectModal.css';
-import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_IMAGE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_EXAMPLE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
 class EditProjectModal extends Component {
   constructor(props) {
@@ -30,9 +30,9 @@ class EditProjectModal extends Component {
   render() {
     let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
     return (
-        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
+        <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="Add Test Case" value={INTRODUCE_TEST_CASE} />
-          <MenuItem primaryText="Add Image" value={INTRODUCE_IMAGE} />
+          <MenuItem primaryText="Add Example" value={INTRODUCE_EXAMPLE} />
           <MenuItem primaryText="Update Project" value={UPDATE_PROJECT} />
           <MenuItem primaryText="Delete Project" value={DELETE_PROJECT} />
           <MenuDivider />
