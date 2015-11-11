@@ -56,9 +56,7 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
   getOptimisticResponse() {
     return {
       coverImageEdge: {
-        node: {
-          uri: this.props.uri,
-        },
+        node: {},
       },
     };
   }

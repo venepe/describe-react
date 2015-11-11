@@ -29,19 +29,20 @@ class ImageFulfillmentForm extends Component {
     this.props.onCancel();
   }
 
-  _openFileDialog() {
-    let fileUploadDom = React.findDOMNode(this.refs.fileUpload);
-    fileUploadDom.click();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isOpen === true) {
+      this._fileUpload.click();
+    }
   }
 
   componentDidMount() {
-    this._openFileDialog();
+    this._fileUpload.click();
   }
 
   render() {
     return (
         <input
-        ref="fileUpload"
+        ref={(c) => this._fileUpload = c}
         type="file"
         style={{"display" : "none"}}
         onChange={this._onCreate}/>
@@ -49,8 +50,8 @@ class ImageFulfillmentForm extends Component {
   }
 }
 
-ImageFulfillmentForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-ImageFulfillmentForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
+ImageFulfillmentForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func, isOpen: PropTypes.boolean};
+ImageFulfillmentForm.defaultProps = {onCancel: function() {}, onCreate: function() {}, isOpen: false};
 
 var ImageFulfillmentFormContainer = Relay.createContainer(ImageFulfillmentForm, {
   fragments: {

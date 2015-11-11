@@ -36,7 +36,7 @@ class ImageFormDialog extends Component {
 
   show(targetId) {
     let targetRoute = new TargetRoute({targetId});
-    let component = (<Relay.RootContainer Component={ImageForm} route={targetRoute} renderFetched={data => <ImageForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
+    let component = (<Relay.RootContainer Component={ImageForm} route={targetRoute} renderFetched={data => <ImageForm {...data} isOpen={true} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
     this.setState({
       component
     });

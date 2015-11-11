@@ -36,7 +36,7 @@ class CoverImageFormDialog extends Component {
 
   show(targetId) {
     let targetRoute = new TargetRoute({targetId});
-    let component = (<Relay.RootContainer Component={CoverImageForm} route={targetRoute} renderFetched={data => <CoverImageForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
+    let component = (<Relay.RootContainer Component={CoverImageForm} route={targetRoute} renderFetched={data => <CoverImageForm {...data} isOpen={true} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
     this.setState({
       component
     });

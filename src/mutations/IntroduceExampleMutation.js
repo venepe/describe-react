@@ -56,9 +56,7 @@ class IntroduceExampleMutation extends Relay.Mutation {
   getOptimisticResponse() {
     return {
       exampleEdge: {
-        node: {
-          uri: this.props.uri,
-        },
+        node: {},
       },
     };
   }

@@ -36,7 +36,7 @@ class ImageFulfillmentFormDialog extends Component {
 
   show(testCaseId) {
     let testCaseRoute = new TestCaseRoute({testCaseId});
-    let component = (<Relay.RootContainer Component={ImageFulfillmentForm} route={testCaseRoute} renderFetched={data => <ImageFulfillmentForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
+    let component = (<Relay.RootContainer Component={ImageFulfillmentForm} route={testCaseRoute} renderFetched={data => <ImageFulfillmentForm {...data} isOpen={true} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
     this.setState({
       component
     });

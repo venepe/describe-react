@@ -11,11 +11,9 @@ class ImageForm extends Component {
     super(props);
     this._onCancel = this._onCancel.bind(this);
     this._onCreate = this._onCreate.bind(this);
-    this._openFileDialog = this._openFileDialog.bind(this);
   }
 
   _onCreate(e) {
-    console.log(e);
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.update(
@@ -29,19 +27,20 @@ class ImageForm extends Component {
     this.props.onCancel();
   }
 
-  _openFileDialog() {
-    let fileUploadDom = React.findDOMNode(this.refs.fileUpload);
-    fileUploadDom.click();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isOpen === true) {
+      this._fileUpload.click();
+    }
   }
 
   componentDidMount() {
-    this._openFileDialog();
+    this._fileUpload.click();
   }
 
   render() {
     return (
         <input
-        ref="fileUpload"
+        ref={(c) => this._fileUpload = c}
         type="file"
         style={{"display" : "none"}}
         onChange={this._onCreate}/>
@@ -49,8 +48,8 @@ class ImageForm extends Component {
   }
 }
 
-ImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-ImageForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
+ImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func, isOpen: PropTypes.boolean};
+ImageForm.defaultProps = {onCancel: function() {}, onCreate: function() {}, isOpen: false};
 
 var ImageFormContainer = Relay.createContainer(ImageForm, {
   fragments: {
