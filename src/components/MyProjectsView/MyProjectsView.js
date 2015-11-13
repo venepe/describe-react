@@ -6,6 +6,7 @@ import styles from './MyProjectsView.css';
 import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import ProjectListView from '../ProjectListView';
 import ProjectFormDialog from '../ProjectFormDialog';
+import MyProjectsPlaceholder from '../MyProjectsPlaceholder';
 import SMTIStorage from '../../utils/storage';
 
 import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
@@ -58,6 +59,7 @@ class MyProjectsView extends Component {
             <div className="add-project-button">
               <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
             </div>
+            <MyProjectsPlaceholder />
             <ProjectFormDialog ref="projectFormDialog" />
           </div>
         );
@@ -68,6 +70,7 @@ class MyProjectsView extends Component {
           <div className="add-project-button">
             <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
           </div>
+          <MyProjectsPlaceholder />
           <ProjectFormDialog ref="projectFormDialog" />
         </div>
       );
