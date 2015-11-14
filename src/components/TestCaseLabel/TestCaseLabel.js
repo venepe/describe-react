@@ -31,10 +31,10 @@ class TestCaseLabel extends Component {
 
     return (
       <div className="test-case-label">
-        <ArchyLabel text={'it should:'} />
         <div className="isFulfilledIcon">
           <FontIcon className="material-icons" color={color}>{name}</FontIcon>
         </div>
+        <ArchyLabel text={'it should:'} />
       </div>
     );
   }
