@@ -11,7 +11,6 @@ class ImageFulfillmentForm extends Component {
     super(props);
     this._onCancel = this._onCancel.bind(this);
     this._onCreate = this._onCreate.bind(this);
-    this._openFileDialog = this._openFileDialog.bind(this);
   }
 
   _onCreate(e) {
