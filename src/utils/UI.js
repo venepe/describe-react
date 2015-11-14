@@ -2,7 +2,7 @@
 
 let UI = {};
 
-UI.BREAK_POINT = 850;
+UI.BREAK_POINT = 650;
 
 UI.windowWidth = () => {
     let element = document.documentElement;
