@@ -14,14 +14,16 @@ class ResetForm extends Component {
     super(props);
     this._onChangePassword = this._onChangePassword.bind(this);
     this._onReset = this._onReset.bind(this);
+    this._dismissForm = this._dismissForm.bind(this);
 
     this.state = {
-      email: props.location.query.email,
+      id: props.location.query.id,
       token: props.location.query.token,
       password: '',
       errorMessage: '',
       isPasswordValid: false,
-      isLoading: false
+      isLoading: false,
+      didReset: false
     }
   }
 
@@ -38,12 +40,17 @@ class ResetForm extends Component {
   }
 
   _onReset() {
+    let id = this.state.id;
+    let token = this.state.token;
     let password = this.state.password;
     if (this.state.isPasswordValid && !this.state.isLoading) {
       this.setState({isLoading: true});
-      Authenticate.login(password)
-        .then((meId) => {
-          this.props.onReset(meId);
+      Authenticate.reset(token, id, password)
+        .then(() => {
+          this.setState({
+            didReset: true,
+            isLoading: false
+          })
         })
         .catch((err) => {
           this.setState({
@@ -54,23 +61,37 @@ class ResetForm extends Component {
     }
   }
 
+  _dismissForm() {
+    this.props.history.replaceState(null, '/');
+  }
+
   render() {
     let isDisabled = true;
     if (this.state.isPasswordValid && !this.state.isLoading) {
       isDisabled = false;
     }
 
-    return (
-      <div className="ResetForm">
-        <div className="ResetForm-container">
-          <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
-          <RaisedButton primary={true} disabled={isDisabled} label="Reset" fullWidth={true} disabled={isDisabled} onMouseUp={this._onReset} onTouchEnd={this._onReset} />
-          <div className="error-text-container">
-            <div className="error-text">{this.state.errorMessage}</div>
+    if (!this.state.didReset) {
+      return (
+        <div className="ResetForm">
+          <div className="ResetForm-container">
+            <TextField floatingLabelText='Password' type='password' onChange={this._onChangePassword} value={this.state.password} fullWidth={true} /> <br/>
+            <RaisedButton primary={true} disabled={isDisabled} label="Reset" fullWidth={true} disabled={isDisabled} onMouseUp={this._onReset} onTouchEnd={this._onReset} />
+            <div className="error-text-container">
+              <div className="error-text">{this.state.errorMessage}</div>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="success-message-container">
+          <div className="success-message">Your password was successfully reset.</div>
+          <div className="success-message">Go ahead and login.</div>
+          <RaisedButton primary={true} label="Okay" fullWidth={true} onMouseUp={this._dismissForm} onTouchEnd={this._dismissForm} />
+        </div>
+      );
+    }
   }
 
 }

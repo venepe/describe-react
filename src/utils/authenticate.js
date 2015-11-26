@@ -147,6 +147,28 @@ function forgot(email) {
   });
 }
 
+function reset(token, id, password) {
+  let reset = {id, password};
+  return new Promise((resolve, reject) => {
+    fetch(SMTIBaseUrl + '/reset', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token': token
+            },
+            body: JSON.stringify({reset})
+      })
+      .then(status)
+      .then(json)
+      .then((json) => {
+        resolve();
+      }).catch((error) => {
+        reject();
+      })
+  });
+}
+
 function unregister() {
   return new Promise((resolve, reject) => {
     SMTIStorage.getTokenAndMeId()
@@ -213,3 +235,4 @@ module.exports.password = password;
 module.exports.forgot = forgot;
 module.exports.isLoggedIn = isLoggedIn;
 module.exports.unregister = unregister;
+module.exports.reset = reset;
