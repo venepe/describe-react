@@ -40,7 +40,6 @@ class TestCaseFormDialog extends Component {
   }
 
   show(projectId) {
-    console.log(projectId);
     this.setState({
       projectId
     });

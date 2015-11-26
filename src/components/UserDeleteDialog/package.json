@@ -1,0 +1,6 @@
+{
+  "name": "UserDeleteDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./UserDeleteDialog.js"
+}

@@ -10,12 +10,13 @@ import LoginFormDialog from '../LoginFormDialog';
 import RegisterFormDialog from '../RegisterFormDialog';
 import UserUpdateFormDialog from '../UserUpdateFormDialog';
 import PasswordFormDialog from '../PasswordFormDialog';
+import UserDeleteDialog from '../UserDeleteDialog';
 import EditUserModal from '../EditUserModal';
 import Authenticate from '../../utils/authenticate';
 import SMTIStorage from '../../utils/storage';
 const SMTIRawTheme = require('../../utils/theme');
 
-import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT } from '../../constants/ModalTypes';
+import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT, DELETE_USER } from '../../constants/ModalTypes';
 
 class Header extends Component {
 
@@ -29,6 +30,7 @@ class Header extends Component {
         this._onRegisterLogin = this._onRegisterLogin.bind(this);
         this._pushProjects = this._pushProjects.bind(this);
         this._presentDialog = this._presentDialog.bind(this);
+        this._onDeleteUser = this._onDeleteUser.bind(this);
 
 
         this.state = {
@@ -72,6 +74,16 @@ class Header extends Component {
       this.props.history.pushState(null, '/myprojects');
     }
 
+    _onDeleteUser() {
+      Authenticate.unregister()
+        .then(() => {
+          this.props.history.replaceState(null, '/');
+        })
+        .catch(() => {
+          this.props.history.replaceState(null, '/');
+        })
+    }
+
     _presentDialog(dialogType) {
       switch (dialogType) {
           case VIEW_PROFILE:
@@ -83,6 +95,9 @@ class Header extends Component {
             break;
           case CHANGE_PASSWORD:
             this.refs.passwordFormDialog.show();
+            break;
+          case DELETE_USER:
+          this.refs.userDeleteDialog.show();
             break;
           case SIGN_OUT:
               Authenticate.logoff()
@@ -128,7 +143,8 @@ class Header extends Component {
             <LoginFormDialog ref="loginFormDialog" onLogin={this._onLogin} onRegister={this._onRegisterLogin} onForgot={this._onForgot} />
             <RegisterFormDialog ref="registerFormDialog" onRegister={this._onRegister} />
             <PasswordFormDialog ref="passwordFormDialog" />
-            <UserUpdateFormDialog ref="userUpdateFormDialog" />
+            <UserUpdateFormDialog ref="userUpdateFormDialog" onMenuItemClick={this._presentDialog}/>
+            <UserDeleteDialog ref="userDeleteDialog" onDelete={this._onDeleteUser}/>
           </div>
             );
     }

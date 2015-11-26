@@ -147,6 +147,36 @@ function forgot(email) {
   });
 }
 
+function unregister() {
+  return new Promise((resolve, reject) => {
+    SMTIStorage.getTokenAndMeId()
+      .then((result) => {
+        let token = result[0];
+        let meId = result[1];
+        return fetch(SMTIBaseUrl + '/unregister', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-access-token': token
+            },
+            body: JSON.stringify({unregister: {userId: meId}})
+          })
+      })
+      .then(status)
+      .then(json)
+      .then((result) => {
+        return this.logoff();
+      })
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject();
+      })
+  });
+}
+
 function logoff() {
   return new Promise((resolve, reject) => {
     SMTIStorage.clearCredentials()
@@ -182,3 +212,4 @@ module.exports.refreshToken = refreshToken;
 module.exports.password = password;
 module.exports.forgot = forgot;
 module.exports.isLoggedIn = isLoggedIn;
+module.exports.unregister = unregister;

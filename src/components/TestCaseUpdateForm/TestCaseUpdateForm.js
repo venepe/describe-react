@@ -8,12 +8,14 @@ import styles from './TestCaseUpdateForm.css';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
+import Utilities from '../../utils/utilities';
 
 import UpdateTestCaseMutation from '../../mutations/UpdateTestCaseMutation';
 
 class TestCaseUpdateForm extends Component {
   constructor(props) {
     super(props);
+    let testCasePlaceholder = Utilities.getTestCasePlaceholderText();
     this._onCancel = this._onCancel.bind(this);
     this._onUpdate = this._onUpdate.bind(this);
     this._onChangeIt = this._onChangeIt.bind(this);
@@ -24,7 +26,7 @@ class TestCaseUpdateForm extends Component {
         key: this._getUUID(),
         nodes: [
           {
-            component: (<ArchyInput text={props.testCase.it} placeholder={'do something epic.'} onChangeText={this._onChangeIt} />),
+            component: (<ArchyInput text={props.testCase.it} placeholder={testCasePlaceholder} onChangeText={this._onChangeIt} />),
             key: this._getUUID(),
             nodes: [],
           },

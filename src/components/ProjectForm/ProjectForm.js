@@ -7,12 +7,14 @@ import styles from './ProjectForm.css';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
+import Utilities from '../../utils/utilities';
 
 import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
 
 class ProjectForm extends Component {
   constructor(props) {
     super(props);
+    let projectPlaceholder = Utilities.getProjectPlaceholderText();
     this._onCancel = this._onCancel.bind(this);
     this._onCreate = this._onCreate.bind(this);
     this._onChangeTitle = this._onChangeTitle.bind(this);
@@ -22,7 +24,7 @@ class ProjectForm extends Component {
         component: (<ArchyLabel text={'describe:'} />),
         nodes: [
           {
-            component: (<ArchyInput placeholder={'my awesome project'} onChangeText={this._onChangeTitle} />),
+            component: (<ArchyInput placeholder={projectPlaceholder} onChangeText={this._onChangeTitle} />),
             nodes: [],
           },
         ],
