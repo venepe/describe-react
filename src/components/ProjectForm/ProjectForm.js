@@ -8,6 +8,7 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 import Utilities from '../../utils/utilities';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
 
@@ -40,6 +41,10 @@ class ProjectForm extends Component {
       Relay.Store.update(
         new IntroduceProjectMutation({title, me: this.props.me})
       );
+      //Start SMTIAnalytics
+      track(Events.CREATED_PROJECT);
+      //End SMTIAnalytics
+
       this.props.onCreate();
     }
   }

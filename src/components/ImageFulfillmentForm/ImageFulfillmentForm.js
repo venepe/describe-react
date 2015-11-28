@@ -3,6 +3,7 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ImageFulfillmentForm.css';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 import IntroduceFulfillmentMutation from '../../mutations/IntroduceFulfillmentMutation';
 
@@ -20,6 +21,10 @@ class ImageFulfillmentForm extends Component {
       Relay.Store.update(
         new IntroduceFulfillmentMutation({uri, testCase: this.props.testCase})
       );
+      //Start SMTIAnalytics
+      track(Events.FULFILLED_TEST_CASE);
+      //End SMTIAnalytics
+
       this.props.onCreate();
     }
   }

@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import { FlatButton, TextField } from 'material-ui';
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './UserUpdateForm.css';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 import UpdateUserMutation from '../../mutations/UpdateUserMutation';
 
@@ -57,6 +58,10 @@ class UserUpdateForm extends Component {
       Relay.Store.update(
         new UpdateUserMutation({username, fullName, summary, user: this.props.me})
       );
+      //Start SMTIAnalytics
+      track(Events.UPDATED_PROFILE);
+      //End SMTIAnalytics
+
       this.props.onUpdate();
     }
   }

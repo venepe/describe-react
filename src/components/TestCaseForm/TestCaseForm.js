@@ -9,6 +9,7 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 import Utilities from '../../utils/utilities';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 import IntroduceTestCaseMutation from '../../mutations/IntroduceTestCaseMutation';
 
@@ -55,6 +56,10 @@ class TestCaseForm extends Component {
       Relay.Store.update(
         new IntroduceTestCaseMutation({it, project: this.props.project})
       );
+      //Start SMTIAnalytics
+      track(Events.ADDED_TEST_CASE);
+      //End SMTIAnalytics
+
       this.props.onCreate();
     }
   }

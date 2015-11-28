@@ -6,6 +6,7 @@ import { RaisedButton, TextField } from 'material-ui';
 import validator from 'validator';
 import Utilities from '../../utils/utilities';
 import Authenticate from '../../utils/authenticate';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 const serverErrorMsg = 'Invalid email or password. Please try again';
 const emailErrorMsg = 'Please enter a valid email address.';
@@ -78,6 +79,10 @@ class RegisterForm extends Component {
       this.setState({isLoading: true});
       Authenticate.register(email, password)
         .then((meId) => {
+          //Start SMTIAnalytics
+          track(Events.REGISTERED);
+          //End SMTIAnalytics
+
           this.props.onRegister(meId);
         })
         .catch((err) => {

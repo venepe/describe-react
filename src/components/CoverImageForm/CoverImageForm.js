@@ -3,6 +3,7 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CoverImageForm.css';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 import IntroduceCoverImageMutation from '../../mutations/IntroduceCoverImageMutation';
 
@@ -19,6 +20,10 @@ class CoverImageForm extends Component {
       Relay.Store.update(
         new IntroduceCoverImageMutation({uri, target: this.props.target})
       );
+      //Start SMTIAnalytics
+      track(Events.ADDED_COVER_IMAGE);
+      //End SMTIAnalytics
+
       this.props.onCreate();
     }
   }

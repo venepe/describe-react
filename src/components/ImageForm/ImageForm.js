@@ -3,6 +3,7 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ImageForm.css';
+import {track, Events} from '../../utils/SMTIAnalytics';
 
 import IntroduceExampleMutation from '../../mutations/IntroduceExampleMutation';
 
@@ -19,6 +20,10 @@ class ImageForm extends Component {
       Relay.Store.update(
         new IntroduceExampleMutation({uri, target: this.props.target})
       );
+      //Start SMTIAnalytics
+      track(Events.ADDED_EXAMPLE);
+      //End SMTIAnalytics
+
       this.props.onCreate();
     }
   }
