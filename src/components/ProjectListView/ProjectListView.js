@@ -65,7 +65,7 @@ class ProjectListView extends Component {
     let edges = this.props.projects.edges;
     if (edges.length > 0) {
       this.props.onEndReached(edges[edges.length - 1].cursor);
-    } 
+    }
   }
 
   elementInfiniteLoad() {

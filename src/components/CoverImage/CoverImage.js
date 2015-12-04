@@ -18,7 +18,9 @@ class CoverImage extends Component {
   }
 
   _pushImage() {
-    this.props.history.pushState(null, '/images/' + this.props.coverImage.id);
+    if (this.props.history) {
+      this.props.history.pushState(null, '/images/' + this.props.coverImage.id);
+    }
   }
 
   _renderView(uri) {

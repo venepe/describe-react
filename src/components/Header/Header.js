@@ -136,7 +136,7 @@ class Header extends Component {
       }
         return (
           <div>
-            <AppBar title="Sumseti"
+            <AppBar title="Describe"
               iconElementLeft={<div />}
               children={children}
               zDepth={ this.state.zDepth } />
