@@ -10,7 +10,6 @@ module.exports = {
   IntroduceImageMutation:  require('./IntroduceImageMutation.js'),
   IntroduceProjectMutation:  require('./IntroduceProjectMutation.js'),
   IntroduceTestCaseMutation:  require('./IntroduceTestCaseMutation.js'),
-  IntroduceUserMutation:  require('./IntroduceUserMutation.js'),
   UpdateProjectMutation:  require('./UpdateProjectMutation.js'),
   UpdateTestCaseMutation:  require('./UpdateTestCaseMutation.js'),
   UpdateUserMutation:  require('./UpdateUserMutation.js')
