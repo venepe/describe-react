@@ -73,7 +73,7 @@ function refreshToken() {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'x-access-token': token
+              'x-smti-authorization': token
             },
             body: JSON.stringify({})
           })
@@ -105,7 +105,7 @@ function password(currentPassword, newPassword) {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'x-access-token': token
+              'x-smti-authorization': token
             },
             body: JSON.stringify({password})
           })
@@ -155,7 +155,7 @@ function reset(token, id, password) {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'x-access-token': token
+              'x-smti-authorization': token
             },
             body: JSON.stringify({reset})
       })
@@ -180,7 +180,7 @@ function unregister() {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'x-access-token': token
+              'x-smti-authorization': token
             },
             body: JSON.stringify({unregister: {userId: meId}})
           })

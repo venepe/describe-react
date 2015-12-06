@@ -13,7 +13,7 @@ function init(token) {
 
   var SMTIDefaultNetworkLayer = new Relay.DefaultNetworkLayer(SMTIGraphQLUrl, {
     headers: {
-      'x-access-token': token
+      'x-smti-authorization': token
     }
   }
   )
