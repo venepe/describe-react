@@ -2,6 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import styles from './MyProjectsPlaceholder.css';
+import { SMTIBaseUrl } from '../../constants';
 
 class MyProjectsPlaceholder extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class MyProjectsPlaceholder extends Component {
   render() {
     return (
       <div className="map">
-        <img src={'http://localhost:8000/assets/map-27749_1280.png'} width={120} height={120} />
+        <img src={`${SMTIBaseUrl}/assets/map-27749_1280.png`} width={120} height={120} />
         <div className="map-line1">You have no projects!</div>
         <div className="map-line2">Start one and get life done.</div>
       </div>
