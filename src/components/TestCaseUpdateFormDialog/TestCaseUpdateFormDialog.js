@@ -11,43 +11,51 @@ import TestCaseRoute from '../../routes/TestCaseRoute';
 class TestCaseUpdateFormDialog extends Component {
   constructor(props) {
     super(props);
-    this._onCancel = this._onCancel.bind(this);
-    this._onUpdate = this._onUpdate.bind(this);
+    if (props.isVisible === true) {
+      this.refs.dialog.show();
+    }
+
     this.state = {
-      testCaseId: props.testCaseId
+      isVisible: props.isVisible
     };
   }
 
-  _onUpdate() {
-    this.refs.dialog.dismiss();
-  }
-
-  _onCancel() {
-    this.refs.dialog.dismiss();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isVisible !== undefined) {
+      if (nextProps.isVisible === true) {
+        this.refs.dialog.show();
+      } else {
+        this.refs.dialog.dismiss();
+      }
+    }
+    this.setState({
+      ...nextProps
+    });
   }
 
   render() {
-    var testCaseId = this.state.testCaseId;
-    var testCaseRoute = new TestCaseRoute({testCaseId});
 
     return (
       <Dialog ref="dialog"
         title="Update Test Case"
         modal={false}>
-        <Relay.RootContainer Component={TestCaseUpdateForm} route={testCaseRoute} renderFetched={data => <TestCaseUpdateForm {...data} onCancel={this._onCancel} onUpdate={this._onUpdate} /> } />
+        <TestCaseUpdateForm testCase={this.props.testCase} onCancel={this.props.onCancel} onUpdate={this.props.onUpdate} />
       </Dialog>
     );
   }
-
-  show(testCaseId) {
-    this.setState({
-      testCaseId
-    });
-    this.refs.dialog.show();
-  }
 }
 
-TestCaseUpdateFormDialog.propTypes = {testCaseId: PropTypes.string};
-TestCaseUpdateFormDialog.defaultProps = {testCaseId: ''};
+TestCaseUpdateFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onUpdate: PropTypes.func};
+TestCaseUpdateFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onUpdate: function() {}};
 
-export default TestCaseUpdateFormDialog;
+var TestCaseUpdateFormDialogContainer = Relay.createContainer(TestCaseUpdateFormDialog, {
+  fragments: {
+    testCase: () => Relay.QL`
+      fragment on TestCase {
+        ${TestCaseUpdateForm.getFragment('testCase')}
+      }
+    `,
+  },
+});
+
+export default TestCaseUpdateFormDialogContainer;

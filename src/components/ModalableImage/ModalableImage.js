@@ -1,6 +1,9 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
+import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
+let MenuItem = require('material-ui/lib/menus/menu-item');
+let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './ModalableImage.css';
 import TouchableImage from '../TouchableImage';
 
@@ -8,12 +11,13 @@ class ModalableImage extends Component {
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
+    this._buildMenuItem = this._buildMenuItem.bind(this);
+    this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this.state = {
       src: props.src,
-      id: props.id,
       height: props.height,
       width: props.width,
-      iconMenu: props.iconMenu
+      sheetOptions: props.sheetOptions
     }
   }
 
@@ -24,29 +28,45 @@ class ModalableImage extends Component {
   }
 
   _onClick() {
-    this.props.onClick(this.state.id);
+    this.props.onClick();
+  }
+
+  _buildMenuItem() {
+    if (this.state.sheetOptions) {
+      return this.state.sheetOptions.options.map(function (object, index) {
+        let menuItem = (
+          <MenuItem key={index} primaryText={object.text} value={object.value} />
+        );
+       return menuItem;
+     }.bind(this));
+    }
+  }
+
+  _onItemTouchTap(event, item) {
+    console.log(item.props.value);
+    this.props.onItemTouchTap(item.props.value);
   }
 
   render() {
 
-    let IconMenu = this.state.iconMenu;
-
-    if (IconMenu) {
-      IconMenu = React.cloneElement(IconMenu);
-    }
+    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
 
     return (
       <div className="modalable-image">
         <TouchableImage src={this.state.src} height={this.state.height} width={this.state.width} onClick={this._onClick} />
         <div className="modal">
-          {IconMenu}
+          <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+            {this._buildMenuItem()}
+            <MenuDivider />
+            <MenuItem primaryText="Close" />
+          </IconMenu>
         </div>
       </div>
     );
   }
 }
 
-ModalableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
-ModalableImage.defaultProps = {id: '', src: '', height: 200, width: 200, onClick: function() {}};
+ModalableImage.propTypes = {src: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onItemTouchTap: PropTypes.func};
+ModalableImage.defaultProps = {src: '', height: 200, width: 200, onClick: function() {}, onItemTouchTap: function() {}};
 
 module.exports = ModalableImage;

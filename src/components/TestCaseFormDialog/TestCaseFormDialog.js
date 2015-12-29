@@ -11,43 +11,51 @@ import ProjectRoute from '../../routes/ProjectRoute';
 class TestCaseFormDialog extends Component {
   constructor(props) {
     super(props);
-    this._onCancel = this._onCancel.bind(this);
-    this._onCreate = this._onCreate.bind(this);
+    if (props.isVisible === true) {
+      this.refs.dialog.show();
+    }
+
     this.state = {
-      projectId: props.projectId
+      isVisible: props.isVisible
     };
   }
 
-  _onCreate() {
-    this.refs.dialog.dismiss();
-  }
-
-  _onCancel() {
-    this.refs.dialog.dismiss();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isVisible !== undefined) {
+      if (nextProps.isVisible === true) {
+        this.refs.dialog.show();
+      } else {
+        this.refs.dialog.dismiss();
+      }
+    }
+    this.setState({
+      ...nextProps
+    });
   }
 
   render() {
-    var projectId = this.state.projectId;
-    var projectRoute = new ProjectRoute({projectId});
 
     return (
       <Dialog ref="dialog"
         title="Add Test Case"
         modal={false}>
-        <Relay.RootContainer Component={TestCaseForm} route={projectRoute} renderFetched={data => <TestCaseForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />
+        <TestCaseForm project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
       </Dialog>
     );
   }
-
-  show(projectId) {
-    this.setState({
-      projectId
-    });
-    this.refs.dialog.show();
-  }
 }
 
-TestCaseFormDialog.propTypes = {projectId: PropTypes.string};
-TestCaseFormDialog.defaultProps = {projectId: ''};
+TestCaseFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onCreate: PropTypes.func};
+TestCaseFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onCreate: function() {}};
 
-export default TestCaseFormDialog;
+var TestCaseFormDialogContainer = Relay.createContainer(TestCaseFormDialog, {
+  fragments: {
+    project: () => Relay.QL`
+      fragment on Project {
+        ${TestCaseForm.getFragment('project')}
+      }
+    `,
+  },
+});
+
+export default TestCaseFormDialogContainer;

@@ -7,6 +7,11 @@ const ProjectQueries = {
     query {
       node(id: $projectId)
     }
+  `,
+  me: () => Relay.QL`
+    query {
+      node(id: $meId)
+    }
   `
 }
 

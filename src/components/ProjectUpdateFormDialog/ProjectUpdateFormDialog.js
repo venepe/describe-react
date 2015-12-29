@@ -6,49 +6,54 @@ import { Dialog } from 'material-ui';
 import styles from './ProjectUpdateFormDialog.css';
 import ProjectUpdateForm from '../ProjectUpdateForm';
 
-import ProjectRoute from '../../routes/ProjectRoute';
-
 class ProjectUpdateFormDialog extends Component {
   constructor(props) {
     super(props);
-    this._onCancel = this._onCancel.bind(this);
-    this._onUpdate = this._onUpdate.bind(this);
+    if (props.isVisible === true) {
+      this.refs.dialog.show();
+    }
 
     this.state = {
-      projectId: props.projectId
+      isVisible: props.isVisible
     };
   }
 
-  _onUpdate() {
-    this.refs.dialog.dismiss();
-  }
-
-  _onCancel() {
-    this.refs.dialog.dismiss();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isVisible !== undefined) {
+      if (nextProps.isVisible === true) {
+        this.refs.dialog.show();
+      } else {
+        this.refs.dialog.dismiss();
+      }
+    }
+    this.setState({
+      ...nextProps
+    });
   }
 
   render() {
-    var projectId = this.state.projectId;
-    var projectRoute = new ProjectRoute({projectId});
 
     return (
       <Dialog ref="dialog"
         title="Update Project"
         modal={false}>
-        <Relay.RootContainer Component={ProjectUpdateForm} route={projectRoute} renderFetched={data => <ProjectUpdateForm {...data} onCancel={this._onCancel} onUpdate={this._onUpdate} /> } />
+        <ProjectUpdateForm project={this.props.project} onCancel={this.props.onCancel} onUpdate={this.props.onUpdate} />
       </Dialog>
     );
   }
-
-  show(projectId) {
-    this.setState({
-      projectId
-    });
-    this.refs.dialog.show();
-  }
 }
 
-ProjectUpdateFormDialog.propTypes = {projectId: PropTypes.string};
-ProjectUpdateFormDialog.defaultProps = {projectId: ''};
+ProjectUpdateFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onUpdate: PropTypes.func};
+ProjectUpdateFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onUpdate: function() {}};
 
-export default ProjectUpdateFormDialog;
+var ProjectUpdateFormDialogContainer = Relay.createContainer(ProjectUpdateFormDialog, {
+  fragments: {
+    project: () => Relay.QL`
+      fragment on Project {
+        ${ProjectUpdateForm.getFragment('project')}
+      }
+    `,
+  },
+});
+
+export default ProjectUpdateFormDialogContainer;

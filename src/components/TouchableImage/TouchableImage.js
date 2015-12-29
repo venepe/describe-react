@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import { IconMenu, IconButton, Dialog } from 'material-ui';
+import { IconMenu, IconButton, Dialog, CardMedia } from 'material-ui';
 let MenuItem = require('material-ui/lib/menus/menu-item');
 import styles from './TouchableImage.css';
 
@@ -30,9 +30,9 @@ class TouchableImage extends Component {
   render() {
 
     return (
-      <div>
-        <img className="touchable-image" src={this.state.src} height={this.state.height} width={this.state.width} onClick={this._onClick} />
-      </div>
+        <CardMedia expandable={true}>
+          <img className='touchable-image' style={{maxHeight: this.state.height, maxWidth: this.state.width, minWidth: this.state.width}} src={this.state.src} onClick={this._onClick}/>
+        </CardMedia>
     );
   }
 }

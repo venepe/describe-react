@@ -7,78 +7,32 @@ import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import TestCaseLabel from '../TestCaseLabel';
-import ModalableArchyLabel from '../ModalableArchyLabel';
-import ModalableImage from '../ModalableImage';
+import ProjectText from '../ProjectText';
+import TestCaseText from '../TestCaseText';
+import ExampleImage from '../ExampleImage';
+
 import ProjectCoverImage from '../ProjectCoverImage';
-
-import TestCaseFormDialog from '../TestCaseFormDialog';
-import ImageFormDialog from '../ImageFormDialog';
-import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
-import ImageFulfillmentFormDialog from '../ImageFulfillmentFormDialog';
-import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
-
-import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
-import DeleteExampleMutation from '../../mutations/DeleteExampleMutation';
-import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
-
-import EditProjectModal from '../EditProjectModal';
-import EditTestCaseModal from '../EditTestCaseModal';
-import EditImageModal from '../EditImageModal';
-
-import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_EXAMPLE, FULFILL_IMAGE, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
 class ProjectView extends Component {
   constructor(props) {
     super(props);
-    this._presentDialog = this._presentDialog.bind(this);
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushImage = this._pushImage.bind(this);
+    this._onDelete = this._onDelete.bind(this);
   }
 
-  _presentDialog(dialogType, targetId, targetRelayObject) {
-    switch (dialogType) {
-      case INTRODUCE_TEST_CASE:
-          this.refs.testCaseFormDialog.show(targetId);
-        break;
-        case INTRODUCE_EXAMPLE:
-            this.refs.imageFormDialog.show(targetId);
-          break;
-        case FULFILL_IMAGE:
-            this.refs.imageFulfillmentFormDialog.show(targetId);
-          break;
-        case UPDATE_PROJECT:
-            this.refs.projectUpdateFormDialog.show(targetId);
-          break;
-        case UPDATE_TEST_CASE:
-            this.refs.testCaseUpdateFormDialog.show(targetId);
-          break;
-        case DELETE_PROJECT:
-            Relay.Store.update(
-              new DeleteProjectMutation({project: targetRelayObject, me: {id: null}})
-            );
-            this.props.history.replaceState(null, '/myprojects')
-          break;
-        case DELETE_TEST_CASE:
-            Relay.Store.update(
-              new DeleteTestCaseMutation({testCase: targetRelayObject, project: this.props.project})
-            );
-          break;
-        case DELETE_EXAMPLE:
-            Relay.Store.update(
-              new DeleteExampleMutation({example: targetRelayObject, target: this.props.project})
-            );
-          break;
-      default:
-
-    }
+  _pushTestCase(testCaseId) {
+    let projectId = this.props.project.id;
+    this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}`);
   }
 
-  _pushTestCase(id) {
-    this.props.history.pushState(null, '/testCases/' + id);
+  _pushImage(exampleId) {
+    let projectId = this.props.project.id;
+    this.props.history.pushState(null, `/target/${projectId}/examples/${exampleId}`);
   }
 
-  _pushImage(id) {
-    this.props.history.pushState(null, '/images/' + id);
+  _onDelete() {
+    this.props.history.replaceState(null, '/myprojects')
   }
 
   render() {
@@ -88,12 +42,12 @@ class ProjectView extends Component {
         let testCase = object.node;
          let nodes = [
           {
-            component: (<ModalableArchyLabel iconMenu={<EditTestCaseModal onItemTouchTap={this._presentDialog} id={testCase.id} testCase={testCase} />} id={testCase.id} text={testCase.it} onClick={this._pushTestCase} />),
+            component: (<TestCaseText testCase={testCase} project={this.props.project} onClick={this._pushTestCase}/>),
             nodes: []
           }
          ];
          let testCaseComponent = {
-           component: (<TestCaseLabel isFulfilled={testCase.isFulfilled} />),
+           component: (<TestCaseLabel testCase={testCase} />),
            nodes: nodes
          };
          return testCaseComponent;
@@ -102,7 +56,7 @@ class ProjectView extends Component {
       let exampleNodes = this.props.project.examples.edges.map(function (object, index) {
          let image = object.node;
           let imageComponent = {
-            component: (<ModalableImage iconMenu={<EditImageModal onItemTouchTap={this._presentDialog} id={image.id} image={image} />} id={image.id} src={image.uri} onClick={this._pushImage} />),
+            component: (<ExampleImage example={image} target={this.props.project} onClick={this._pushImage} />),
           };
           return imageComponent;
         }.bind(this));
@@ -111,7 +65,7 @@ class ProjectView extends Component {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
           {
-            component: (<ModalableArchyLabel iconMenu={<EditProjectModal onItemTouchTap={this._presentDialog} id={this.props.project.id} project={this.props.project} />} text={this.props.project.title}/>),
+            component: (<ProjectText project={this.props.project} me={this.props.me} onDelete={this._onDelete}/>),
             nodes: testCaseNodes
           }
         ]
@@ -131,11 +85,6 @@ class ProjectView extends Component {
       <div className="ProjectView-container">
         <ProjectCoverImage projectCoverImage={this.props.project} isEditable={true} history={this.props.history}/>
         <Archy archible={object}/>
-          <ProjectUpdateFormDialog ref="projectUpdateFormDialog" />
-          <TestCaseFormDialog ref="testCaseFormDialog" />
-          <ImageFormDialog ref="imageFormDialog" />
-          <TestCaseUpdateFormDialog ref="testCaseUpdateFormDialog" />
-          <ImageFulfillmentFormDialog ref="imageFulfillmentFormDialog" />
       </div>
     );
   }
@@ -151,9 +100,8 @@ export default Relay.createContainer(ProjectView, {
           edges {
             node {
               id
-              it
-              isFulfilled
-              ${DeleteTestCaseMutation.getFragment('testCase')},
+              ${TestCaseLabel.getFragment('testCase')},
+              ${TestCaseText.getFragment('testCase')},
             }
           }
         }
@@ -162,14 +110,19 @@ export default Relay.createContainer(ProjectView, {
             node {
               id
               uri
-              ${DeleteExampleMutation.getFragment('example')},
+              ${ExampleImage.getFragment('example')},
             }
           }
         }
         ${ProjectCoverImage.getFragment('projectCoverImage')},
-        ${DeleteTestCaseMutation.getFragment('project')},
-        ${DeleteExampleMutation.getFragment('target')},
-        ${DeleteProjectMutation.getFragment('project')},
+        ${ProjectText.getFragment('project')},
+        ${TestCaseText.getFragment('project')},
+        ${ExampleImage.getFragment('target')},
+      }
+    `,
+    me: () => Relay.QL`
+      fragment on User {
+        ${ProjectText.getFragment('me')},
       }
     `,
   },

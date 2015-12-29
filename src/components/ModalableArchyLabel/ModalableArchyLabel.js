@@ -1,6 +1,9 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
+import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
+let MenuItem = require('material-ui/lib/menus/menu-item');
+let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './ModalableArchyLabel.css';
 import TouchableArchyLabel from '../TouchableArchyLabel';
 
@@ -8,10 +11,11 @@ class ModalableArchyLabel extends Component {
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
+    this._buildMenuItem = this._buildMenuItem.bind(this);
+    this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this.state = {
       text: props.text,
-      id: props.id,
-      iconMenu: props.iconMenu
+      sheetOptions: props.sheetOptions
     }
   }
 
@@ -22,29 +26,45 @@ class ModalableArchyLabel extends Component {
   }
 
   _onClick() {
-    this.props.onClick(this.state.id);
+    this.props.onClick();
+  }
+
+  _buildMenuItem() {
+    if (this.state.sheetOptions) {
+      return this.state.sheetOptions.options.map(function (object, index) {
+        let menuItem = (
+          <MenuItem key={index} primaryText={object.text} value={object.value} />
+        );
+       return menuItem;
+     }.bind(this));
+    }
+  }
+
+  _onItemTouchTap(event, item) {
+    console.log(item.props.value);
+    this.props.onItemTouchTap(item.props.value);
   }
 
   render() {
 
-    let IconMenu = this.state.iconMenu;
-
-    if (IconMenu) {
-      IconMenu = React.cloneElement(IconMenu);
-    }
+    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
 
     return (
       <div className="modalable-archy-label">
         <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />
         <div className="modal">
-          {IconMenu}
+          <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+            {this._buildMenuItem()}
+            <MenuDivider />
+            <MenuItem primaryText="Close" />
+          </IconMenu>
         </div>
       </div>
     );
   }
 }
 
-ModalableArchyLabel.propTypes = {id: PropTypes.string, text: PropTypes.string, onClick: PropTypes.func};
-ModalableArchyLabel.defaultProps = {id: '', text: '', onClick: function() {}};
+ModalableArchyLabel.propTypes = {text: PropTypes.string, onClick: PropTypes.func, onItemTouchTap: PropTypes.func};
+ModalableArchyLabel.defaultProps = {text: '', onClick: function() {}, onItemTouchTap: function() {}};
 
 module.exports = ModalableArchyLabel;

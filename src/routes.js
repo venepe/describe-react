@@ -11,12 +11,15 @@ import MyProjectsView from './components/MyProjectsView';
 import FailureView from './components/FailureView';
 import TestCaseView from './components/TestCaseView';
 import ImageView from './components/ImageView';
+import ExampleImageView from './components/ExampleImageView';
 import MeView from './components/MeView';
 import ResetForm from './components/ResetForm';
 
 import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
 import TestCaseQueries from './queries/TestCaseQueries';
+import ExampleQueries from './queries/ExampleQueries';
+
 import FileQueries from './queries/FileQueries';
 import MeQueries from './queries/MeQueries';
 
@@ -31,6 +34,13 @@ function requireAuth(nextState, replaceState) {
     replaceState({ nextPathname: nextState.location.pathname }, '/myprojects')
   }
 }
+
+function prepareParams(params, route) {
+  return {
+    ...params,
+    meId: SMTIStorage.getMeIdFromLocalStorage()
+  };
+};
 
 export default (
   <Route
@@ -62,13 +72,21 @@ export default (
     <Route
         path="projects/:projectId" component={ProjectView}
         queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}
       />
     <Route
-        path="testCases/:testCaseId" component={TestCaseView}
+        path="projects/:projectId/testCases/:testCaseId" component={TestCaseView}
         queries={TestCaseQueries}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="target/:targetId/examples/:exampleId" component={ExampleImageView}
+        queries={ExampleQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}

@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
+import Relay from 'react-relay';
 import { FontIcon } from 'material-ui';
 import styles from './TestCaseLabel.css';
 import ArchyLabel from '../ArchyLabel';
@@ -8,9 +9,6 @@ import ArchyLabel from '../ArchyLabel';
 class TestCaseLabel extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isFulfilled: props.isFulfilled
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +22,7 @@ class TestCaseLabel extends Component {
     let name = 'remove_circle_outline';
     let color = '#E0E0E0';
 
-    if (this.state.isFulfilled) {
+    if (this.props.testCase.isFulfilled) {
       name = 'check_circle';
       color = '#76FF03';
     }
@@ -40,7 +38,14 @@ class TestCaseLabel extends Component {
   }
 }
 
-TestCaseLabel.propTypes = {id: PropTypes.string, text: PropTypes.string, onClick: PropTypes.func};
-TestCaseLabel.defaultProps = {id: '', text: '', onClick: function() {}};
+var TestCaseLabelContainer = Relay.createContainer(TestCaseLabel, {
+  fragments: {
+    testCase: () => Relay.QL`
+      fragment on TestCase {
+        isFulfilled
+      }
+    `,
+  },
+});
 
-module.exports = TestCaseLabel;
+module.exports = TestCaseLabelContainer;

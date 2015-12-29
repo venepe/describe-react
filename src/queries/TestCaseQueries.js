@@ -7,7 +7,12 @@ const TestCaseQueries = {
     query {
       node(id: $testCaseId)
     }
-  `
+  `,
+  project: () => Relay.QL`
+    query {
+      node(id: $projectId)
+    }
+  `,
 }
 
 export default TestCaseQueries;

@@ -1,0 +1,6 @@
+{
+  "name": "TestCaseText",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TestCaseText.js"
+}

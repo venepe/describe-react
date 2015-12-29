@@ -11,6 +11,13 @@ class ProjectRoute extends Relay.Route {
         },
       }
     `,
+    me: (Component) => Relay.QL`
+      query {
+        node(id: $meId) {
+          ${Component.getFragment('me')},
+        },
+      }
+    `,
   };
 
   static paramDefinitions = {

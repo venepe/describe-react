@@ -2,12 +2,12 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import styles from './ImageFulfillmentForm.css';
+import styles from './ExampleForm.css';
 import {track, Events} from '../../utils/SMTIAnalytics';
 
-import IntroduceFulfillmentMutation from '../../mutations/IntroduceFulfillmentMutation';
+import IntroduceExampleMutation from '../../mutations/IntroduceExampleMutation';
 
-class ImageFulfillmentForm extends Component {
+class ExampleForm extends Component {
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -15,17 +15,15 @@ class ImageFulfillmentForm extends Component {
   }
 
   _onCreate(e) {
-    console.log(e);
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.update(
-        new IntroduceFulfillmentMutation({uri, testCase: this.props.testCase})
+        new IntroduceExampleMutation({uri, target: this.props.target})
       );
       //Start SMTIAnalytics
-      track(Events.FULFILLED_TEST_CASE);
+      track(Events.ADDED_EXAMPLE);
       //End SMTIAnalytics
 
-      this.props.onCreate();
     }
   }
 
@@ -36,11 +34,8 @@ class ImageFulfillmentForm extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpen === true) {
       this._fileUpload.click();
+      this.props.onCancel();
     }
-  }
-
-  componentDidMount() {
-    this._fileUpload.click();
   }
 
   render() {
@@ -54,17 +49,17 @@ class ImageFulfillmentForm extends Component {
   }
 }
 
-ImageFulfillmentForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func, isOpen: PropTypes.boolean};
-ImageFulfillmentForm.defaultProps = {onCancel: function() {}, onCreate: function() {}, isOpen: false};
+ExampleForm.propTypes = {onCancel: PropTypes.func, isOpen: PropTypes.bool};
+ExampleForm.defaultProps = {onCancel: function() {}, isOpen: false};
 
-var ImageFulfillmentFormContainer = Relay.createContainer(ImageFulfillmentForm, {
+var ExampleFormContainer = Relay.createContainer(ExampleForm, {
   fragments: {
-    testCase: () => Relay.QL`
-      fragment on TestCase {
-        ${IntroduceFulfillmentMutation.getFragment('testCase')}
+    target: () => Relay.QL`
+      fragment on Node {
+        ${IntroduceExampleMutation.getFragment('target')}
       }
     `,
   },
 });
 
-export default ImageFulfillmentFormContainer;
+export default ExampleFormContainer;
