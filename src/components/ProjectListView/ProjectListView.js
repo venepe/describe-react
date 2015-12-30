@@ -5,8 +5,7 @@ import Relay from 'react-relay';
 import { Link } from 'react-router';
 import Infinite from 'react-infinite';
 import styles from './ProjectListView.css';
-import { Card, CardTitle } from 'material-ui';
-import ProjectCoverImage from '../ProjectCoverImage';
+import { Card, CardMedia, CardTitle } from 'material-ui';
 import SpinnerView from '../SpinnerView';
 
 class ProjectListView extends Component {
@@ -42,9 +41,17 @@ class ProjectListView extends Component {
   buildElements(projects) {
     return projects.edges.map(function (object, index) {
           let project = object.node;
+          let uri = ''
+          if (project.coverImages && project.coverImages.edges.length > 0) {
+            uri = project.coverImages.edges[0].node.uri;
+          }
           let projectComponent = (
             <Card key={index} className="clickable" onClick={() => this._onClick(project)}>
-              <ProjectCoverImage projectCoverImage={project} />
+              <div>
+                <CardMedia className='CoverImage-container' expandable={true}>
+                  <img className='CoverImage-img' height={400} src={uri} />
+                </CardMedia>
+              </div>
               <CardTitle title={project.title} />
             </Card>
           );
@@ -105,7 +112,13 @@ let ProjectListViewContainer = Relay.createContainer(ProjectListView, {
           node {
             id
             title
-            ${ProjectCoverImage.getFragment('projectCoverImage')}
+            coverImages(first: 1) {
+              edges {
+                node {
+                  uri
+                }
+              }
+            }
           }
         }
       }

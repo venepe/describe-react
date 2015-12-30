@@ -10,14 +10,14 @@ import TestCaseLabel from '../TestCaseLabel';
 import ProjectText from '../ProjectText';
 import TestCaseText from '../TestCaseText';
 import ExampleImage from '../ExampleImage';
-
-import ProjectCoverImage from '../ProjectCoverImage';
+import CoverImage from '../CoverImage';
 
 class ProjectView extends Component {
   constructor(props) {
     super(props);
     this._pushTestCase = this._pushTestCase.bind(this);
-    this._pushImage = this._pushImage.bind(this);
+    this._pushCoverImage = this._pushCoverImage.bind(this);
+    this._pushExample = this._pushExample.bind(this);
     this._onDelete = this._onDelete.bind(this);
   }
 
@@ -26,9 +26,14 @@ class ProjectView extends Component {
     this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}`);
   }
 
-  _pushImage(exampleId) {
+  _pushExample(exampleId) {
     let projectId = this.props.project.id;
-    this.props.history.pushState(null, `/target/${projectId}/examples/${exampleId}`);
+    this.props.history.pushState(null, `/projects/${projectId}/examples/${exampleId}`);
+  }
+
+  _pushCoverImage(coverImageId) {
+    let projectId = this.props.project.id;
+    this.props.history.pushState(null, `/projects/${projectId}/coverImages/${coverImageId}`);
   }
 
   _onDelete() {
@@ -56,7 +61,7 @@ class ProjectView extends Component {
       let exampleNodes = this.props.project.examples.edges.map(function (object, index) {
          let image = object.node;
           let imageComponent = {
-            component: (<ExampleImage example={image} target={this.props.project} onClick={this._pushImage} />),
+            component: (<ExampleImage example={image} target={this.props.project} onClick={this._pushExample} />),
           };
           return imageComponent;
         }.bind(this));
@@ -81,9 +86,14 @@ class ProjectView extends Component {
       }
     }
 
+    let coverImage = null;
+    if (this.props.project && this.props.project.coverImages && this.props.project.coverImages.edges.length > 0) {
+      coverImage = this.props.project.coverImages.edges[0].node;
+    }
+
     return (
       <div className="ProjectView-container">
-        <ProjectCoverImage projectCoverImage={this.props.project} isEditable={true} history={this.props.history}/>
+        <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.project} onClick={this._pushCoverImage}/>
         <Archy archible={object}/>
       </div>
     );
@@ -114,7 +124,14 @@ export default Relay.createContainer(ProjectView, {
             }
           }
         }
-        ${ProjectCoverImage.getFragment('projectCoverImage')},
+        coverImages(first: 1) {
+          edges {
+            node {
+              ${CoverImage.getFragment('coverImage')},
+            }
+          }
+        }
+        ${CoverImage.getFragment('target')},
         ${ProjectText.getFragment('project')},
         ${TestCaseText.getFragment('project')},
         ${ExampleImage.getFragment('target')},

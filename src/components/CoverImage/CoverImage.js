@@ -1,58 +1,95 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
-import { CardMedia } from 'material-ui';
+import Relay from 'react-relay';
 import styles from './CoverImage.css';
-import EditCoverImageModal from '../EditCoverImageModal';
 import ModalableImage from '../ModalableImage';
+import CoverImageFormDialog from '../CoverImageFormDialog';
+import SheetOptions from '../../constants/SheetOptions';
+
+import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../constants/ModalTypes';
+
+import DeleteCoverImageMutation from '../../mutations/DeleteCoverImageMutation';
 
 class CoverImage extends Component {
   constructor(props) {
     super(props);
-    this._pushImage = this._pushImage.bind(this);
-    this._renderView = this._renderView.bind(this);
+    this._onClick = this._onClick.bind(this);
+    this._onItemTouchTap = this._onItemTouchTap.bind(this);
+    this._dismissCoverImageForm = this._dismissCoverImageForm.bind(this);
     this.state = {
-      title: props.title,
-      isEditable: props.isEditable
+      height: props.height,
+      width: props.width,
+      showCoverImageForm: false
     }
   }
 
-  _pushImage() {
-    if (this.props.history) {
-      this.props.history.pushState(null, '/images/' + this.props.coverImage.id);
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...nextProps
+    });
+  }
+
+  _onClick() {
+    this.props.onClick(this.props.coverImage.id);
+  }
+
+  _onItemTouchTap(value) {
+    switch (value) {
+        case CHANGE_COVER_IMAGE:
+          this.setState({
+            showCoverImageForm: true
+          });
+          break;
+        case DELETE_COVER_IMAGE:
+            this.props.onDelete(this.props.coverImage.id);
+            Relay.Store.update(
+              new DeleteCoverImageMutation({coverImage: this.props.coverImage, target: this.props.target})
+            );
+          break;
+      default:
     }
   }
 
-  _renderView(uri) {
-    let editModal = (<div></div>);
-    if (this.state.isEditable) {
-      editModal = (<div className="modal"><EditCoverImageModal className="modal" onItemTouchTap={this.props.onMenuItemClick} /></div>);
-    }
-    return (
-      <CardMedia className='CoverImage-container' expandable={true}>
-        <img className='CoverImage-img' height={400} src={uri} onClick={this._pushImage}/>
-        {editModal}
-      </CardMedia>
-    );
+  _dismissCoverImageForm() {
+    this.setState({
+      showCoverImageForm: false
+    });
   }
 
   render() {
-    var uri;
-    var id;
-    var view;
+    let uri = '';
     if (this.props.coverImage) {
       uri = this.props.coverImage.uri;
     }
-    view = this._renderView(uri);
     return (
-      <div className='CoverImage-container'>
-        {view}
+      <div className="CoverImage-container">
+        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.coverImageSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <CoverImageFormDialog isVisible={this.state.showCoverImageForm} target={this.props.target} onCancel={this._dismissCoverImageForm} onCreate={this.props.onCreate} />
       </div>
     );
   }
 }
 
-CoverImage.propTypes = {onMenuItemClick: PropTypes.func, title: PropTypes.string};
-CoverImage.defaultProps = {onMenuItemClick: function() {}, title: 'Image', isEditable: false};
+CoverImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onDelete: PropTypes.func, onCreate: PropTypes.func};
+CoverImage.defaultProps = {height: 200, width: 200, onClick: function() {}, onDelete: function() {}, onCreate: function() {}};
 
-export default CoverImage;
+var CoverImageContainer = Relay.createContainer(CoverImage, {
+  fragments: {
+    coverImage: () => Relay.QL`
+      fragment on File {
+        id
+        uri
+        ${DeleteCoverImageMutation.getFragment('coverImage')},
+      }
+    `,
+    target: () => Relay.QL`
+      fragment on Node {
+        ${CoverImageFormDialog.getFragment('target')},
+        ${DeleteCoverImageMutation.getFragment('target')},
+      }
+    `,
+  },
+});
+
+module.exports = CoverImageContainer;

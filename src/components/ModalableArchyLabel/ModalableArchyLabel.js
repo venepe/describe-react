@@ -41,7 +41,6 @@ class ModalableArchyLabel extends Component {
   }
 
   _onItemTouchTap(event, item) {
-    console.log(item.props.value);
     this.props.onItemTouchTap(item.props.value);
   }
 

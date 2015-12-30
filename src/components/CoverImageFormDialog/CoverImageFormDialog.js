@@ -5,45 +5,40 @@ import Relay from 'react-relay';
 import styles from './CoverImageFormDialog.css';
 import CoverImageForm from '../CoverImageForm';
 
-import TargetRoute from '../../routes/TargetRoute';
-
 class CoverImageFormDialog extends Component {
   constructor(props) {
     super(props);
-    this._onCancel = this._onCancel.bind(this);
-    this._onCreate = this._onCreate.bind(this);
     this.state = {
-      targetId: props.targetId,
-      component: null
+      isVisible: props.isVisible
     };
   }
 
-  _onCreate() {
-    this.state.component = null
-  }
-
-  _onCancel() {
-    this.state.component = null
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isVisible !== undefined) {
+      this.setState({
+        isVisible: nextProps.isVisible
+      });
+    }
   }
 
   render() {
     return (
-      <div>
-        {this.state.component}
-      </div>
+      <CoverImageForm target={this.props.target} isOpen={this.state.isVisible} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
     );
-  }
-
-  show(targetId) {
-    let targetRoute = new TargetRoute({targetId});
-    let component = (<Relay.RootContainer Component={CoverImageForm} route={targetRoute} renderFetched={data => <CoverImageForm {...data} isOpen={true} onCancel={this._onCancel} onCreate={this._onCreate} /> } />);
-    this.setState({
-      component
-    });
   }
 }
 
-CoverImageFormDialog.propTypes = {targetId: PropTypes.string};
-CoverImageFormDialog.defaultProps = {targetId: ''};
+CoverImageFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func};
+CoverImageFormDialog.defaultProps = {isVisible: false, onCancel: function() {}};
 
-export default CoverImageFormDialog;
+var CoverImageFormDialogContainer = Relay.createContainer(CoverImageFormDialog, {
+  fragments: {
+    target: () => Relay.QL`
+      fragment on Node {
+        ${CoverImageForm.getFragment('target')}
+      }
+    `,
+  },
+});
+
+export default CoverImageFormDialogContainer;

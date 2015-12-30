@@ -5,22 +5,12 @@ import Relay from 'react-relay';
 import styles from './ExampleFormDialog.css';
 import ExampleForm from '../ExampleForm';
 
-import TargetRoute from '../../routes/TargetRoute';
-
 class ExampleFormDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isVisible: props.isVisible
     };
-  }
-
-  _onCreate() {
-    this.state.component = null
-  }
-
-  _onCancel() {
-    this.state.component = null
   }
 
   componentWillReceiveProps(nextProps) {

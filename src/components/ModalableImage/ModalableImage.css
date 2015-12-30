@@ -5,6 +5,11 @@
 .modalable-image:hover .modal {
     display: block;
     position: absolute;
+    right: 0px;
     top: 0px;
-    left: 210px;
+}
+
+.modalable-container {
+  position: relative;
+  width: 100%;
 }

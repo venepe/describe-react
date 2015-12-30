@@ -14,15 +14,26 @@ import FulfillmentImage from '../FulfillmentImage';
 class TestCaseView extends Component {
   constructor(props) {
     super(props);
-    this._pushImage = this._pushImage.bind(this);
+    this._pushExample = this._pushExample.bind(this);
+    this._pushFulfillment = this._pushFulfillment.bind(this);
     this._onDelete = this._onDelete.bind(this);
   }
 
-  _pushImage(id) {
-    this.props.history.pushState(null, '/images/' + id);
+  _pushExample(exampleId) {
+    let projectId = this.props.project.id;
+    let testCaseId = this.props.testCase.id;
+    this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}/examples/${exampleId}`);
+  }
+
+  _pushFulfillment(fulfillmentId) {
+    let projectId = this.props.project.id;
+    let testCaseId = this.props.testCase.id;
+    this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}`);
   }
 
   _onDelete() {
+    let projectId = this.props.project.id;
+    this.props.history.replaceState(null, `/projects/${projectId}`);
   }
 
   render() {
@@ -32,7 +43,7 @@ class TestCaseView extends Component {
       let exampleNodes = this.props.testCase.examples.edges.map(function (object, index) {
          let image = object.node;
           let imageComponent = {
-            component: (<ExampleImage example={image} target={this.props.testCase} onClick={this._pushImage} />),
+            component: (<ExampleImage example={image} target={this.props.testCase} onClick={this._pushExample} />),
           };
           return imageComponent;
         }.bind(this));
@@ -40,7 +51,7 @@ class TestCaseView extends Component {
       let fulfillmentNodes = this.props.testCase.fulfillments.edges.map(function (object, index) {
         let image = object.node;
          let imageComponent = {
-           component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} onClick={this._pushImage} />),
+           component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} onClick={this._pushFulfillment} />),
          };
          return imageComponent;
       }.bind(this));
@@ -114,6 +125,7 @@ export default Relay.createContainer(TestCaseView, {
     `,
     project: () => Relay.QL`
       fragment on Project {
+        id
         ${TestCaseText.getFragment('project')},
       }
     `,

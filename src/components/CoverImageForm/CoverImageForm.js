@@ -35,11 +35,8 @@ class CoverImageForm extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpen === true) {
       this._fileUpload.click();
+      this.props.onCancel();
     }
-  }
-
-  componentDidMount() {
-    this._fileUpload.click();
   }
 
   render() {
@@ -53,7 +50,7 @@ class CoverImageForm extends Component {
   }
 }
 
-CoverImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func, isOpen: PropTypes.boolean};
+CoverImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func, isOpen: PropTypes.bool};
 CoverImageForm.defaultProps = {onCancel: function() {}, onCreate: function() {}, isOpen: false};
 
 var CoverImageFormContainer = Relay.createContainer(CoverImageForm, {

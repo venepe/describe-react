@@ -44,10 +44,13 @@ class ExampleImage extends Component {
   }
 
   render() {
-
+    let uri = '';
+    if (this.props.example) {
+      uri = this.props.example.uri;
+    }
     return (
       <div className="ExampleImage-container">
-        <ModalableImage src={this.props.example.uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.exampleSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.exampleSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
       </div>
     );
   }

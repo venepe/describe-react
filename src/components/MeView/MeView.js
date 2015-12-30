@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './MeView.css';
 import { Paper } from 'material-ui';
-import UserCoverImage from '../UserCoverImage';
+import CoverImage from '../CoverImage';
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 
 import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_EXAMPLE, FULFILL_PROJECT, UPDATE_PAPER, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_EXAMPLE, DELETE_PAPER } from '../../constants/ModalTypes';
@@ -12,15 +12,25 @@ import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_EXAMPLE, FU
 class MeView extends Component {
   constructor(props) {
     super(props);
+    this._pushCoverImage = this._pushCoverImage.bind(this);
+  }
+
+  _pushCoverImage(coverImageId) {
+    let meId = this.props.me.id;
+    this.props.history.pushState(null, `/me/${meId}/coverImages/${coverImageId}`);
   }
 
   render() {
     if (this.props.me) {
       let fullName = this.props.me.fullName || ' ';
       let summary = this.props.me.summary || 'No summary';
+      let coverImage = null;
+      if (this.props.me && this.props.me.coverImages && this.props.me.coverImages.edges.length > 0) {
+        coverImage = this.props.me.coverImages.edges[0].node;
+      }
       return (
         <div className="MeView-container">
-          <UserCoverImage userCoverImage={this.props.me} isEditable={true} history={this.props.history} />
+          <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.me} onClick={this._pushCoverImage}/>
           <div className="me-container">
             <div className="username">{this.props.me.username}</div>
             <div className="full-name">{fullName}</div>
@@ -47,15 +57,14 @@ export default Relay.createContainer(MeView, {
         email
         fullName
         summary
-        projects(first: 10) {
+        coverImages(first: 1) {
           edges {
             node {
-              id
-              title
+              ${CoverImage.getFragment('coverImage')},
             }
           }
         }
-        ${UserCoverImage.getFragment('userCoverImage')}
+        ${CoverImage.getFragment('target')},
       }
     `,
   },

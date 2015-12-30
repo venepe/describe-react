@@ -44,10 +44,13 @@ class FulfillmentImage extends Component {
   }
 
   render() {
-
+    let uri = '';
+    if (this.props.fulfillment) {
+      uri = this.props.fulfillment.uri;
+    }
     return (
       <div className="FulfillmentImage-container">
-        <ModalableImage src={this.props.fulfillment.uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.fulfillmentSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.fulfillmentSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
       </div>
     );
   }

@@ -28,11 +28,16 @@ class TouchableImage extends Component {
   }
 
   render() {
-
+    let width = null;
+    if (this.state.width) {
+      width = `${this.state.width}px`
+    }
     return (
+      <div style={{width}}>
         <CardMedia expandable={true}>
-          <img className='touchable-image' style={{maxHeight: this.state.height, maxWidth: this.state.width, minWidth: this.state.width}} src={this.state.src} onClick={this._onClick}/>
+          <img className='touchable-image' height={this.state.height} src={this.state.src} onClick={this._onClick}/>
         </CardMedia>
+      </div>
     );
   }
 }

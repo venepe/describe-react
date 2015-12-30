@@ -12,12 +12,13 @@ class ExampleImageView extends Component {
   }
 
   _onDelete() {
-
+    let path = this.props.location.pathname.replace(/\/examples.*/, '');
+    this.props.history.replaceState(null, path);
   }
 
   render() {
     return (
-      <ExampleImage example={this.props.example} target={this.props.target} height={500} width={'100%'} onDelete={this._onDelete} />
+      <ExampleImage example={this.props.example} target={this.props.target} height={500} width={null} onDelete={this._onDelete} />
     );
   }
 }

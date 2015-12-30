@@ -43,7 +43,6 @@ class ModalableImage extends Component {
   }
 
   _onItemTouchTap(event, item) {
-    console.log(item.props.value);
     this.props.onItemTouchTap(item.props.value);
   }
 
@@ -53,13 +52,15 @@ class ModalableImage extends Component {
 
     return (
       <div className="modalable-image">
-        <TouchableImage src={this.state.src} height={this.state.height} width={this.state.width} onClick={this._onClick} />
-        <div className="modal">
+        <div className="modalable-container">
+          <TouchableImage src={this.state.src} height={this.state.height} width={this.state.width} onClick={this._onClick} />
+          <div className="modal">
           <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
             {this._buildMenuItem()}
             <MenuDivider />
             <MenuItem primaryText="Close" />
           </IconMenu>
+        </div>
         </div>
       </div>
     );

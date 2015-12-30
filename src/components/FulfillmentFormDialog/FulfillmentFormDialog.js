@@ -5,22 +5,12 @@ import Relay from 'react-relay';
 import styles from './FulfillmentFormDialog.css';
 import FulfillmentForm from '../FulfillmentForm';
 
-import TestCaseRoute from '../../routes/TestCaseRoute';
-
 class FulfillmentFormDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isVisible: props.isVisible
     };
-  }
-
-  _onCreate() {
-    this.state.component = null
-  }
-
-  _onCancel() {
-    this.state.component = null
   }
 
   componentWillReceiveProps(nextProps) {

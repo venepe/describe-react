@@ -103,6 +103,7 @@ var ProjectTextContainer = Relay.createContainer(ProjectText, {
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
         ${ExampleFormDialog.getFragment('target')},
+        ${DeleteProjectMutation.getFragment('project')}
       }
     `,
     me: () => Relay.QL`
