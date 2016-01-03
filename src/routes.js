@@ -9,7 +9,7 @@ import ProjectView from './components/ProjectView';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
 import FailureView from './components/FailureView';
-import TestCaseView from './components/TestCaseView';
+import TestCasePage from './components/TestCasePage';
 import CoverImageView from './components/CoverImageView';
 import ExampleImageView from './components/ExampleImageView';
 import FulfillmentImageView from './components/FulfillmentImageView';
@@ -79,7 +79,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="projects/:projectId/testCases/:testCaseId" component={TestCaseView}
+        path="projects/:projectId/testCases/:testCaseId" component={TestCasePage}
         queries={TestCaseQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}

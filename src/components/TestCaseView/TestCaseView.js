@@ -16,7 +16,6 @@ class TestCaseView extends Component {
     super(props);
     this._pushExample = this._pushExample.bind(this);
     this._pushFulfillment = this._pushFulfillment.bind(this);
-    this._onDelete = this._onDelete.bind(this);
   }
 
   _pushExample(exampleId) {
@@ -29,11 +28,6 @@ class TestCaseView extends Component {
     let projectId = this.props.project.id;
     let testCaseId = this.props.testCase.id;
     this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}`);
-  }
-
-  _onDelete() {
-    let projectId = this.props.project.id;
-    this.props.history.replaceState(null, `/projects/${projectId}`);
   }
 
   render() {
@@ -60,7 +54,7 @@ class TestCaseView extends Component {
         component: (<TestCaseLabel testCase={this.props.testCase} />),
         nodes: [
           {
-            component: (<TestCaseText testCase={this.props.testCase} project={this.props.project} onDelete={this._onDelete}/>),
+            component: (<TestCaseText testCase={this.props.testCase} project={this.props.project} onClick={this.props.onClick} onDelete={this.props.onDelete}/>),
             nodes: []
           }
         ]
@@ -92,6 +86,9 @@ class TestCaseView extends Component {
     );
   }
 }
+
+TestCaseView.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
+TestCaseView.defaultProps = {history: {}, onClick: function() {}, onDelete: function() {}};
 
 export default Relay.createContainer(TestCaseView, {
   fragments: {

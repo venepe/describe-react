@@ -6,11 +6,10 @@ import styles from './ProjectView.css';
 import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
-import TestCaseLabel from '../TestCaseLabel';
 import ProjectText from '../ProjectText';
-import TestCaseText from '../TestCaseText';
 import ExampleImage from '../ExampleImage';
 import CoverImage from '../CoverImage';
+import TestCaseView from '../TestCaseView';
 
 class ProjectView extends Component {
   constructor(props) {
@@ -45,15 +44,9 @@ class ProjectView extends Component {
     if (this.props.project) {
       let testCaseNodes = this.props.project.testCases.edges.map(function (object, index) {
         let testCase = object.node;
-         let nodes = [
-          {
-            component: (<TestCaseText testCase={testCase} project={this.props.project} onClick={this._pushTestCase}/>),
-            nodes: []
-          }
-         ];
          let testCaseComponent = {
-           component: (<TestCaseLabel testCase={testCase} />),
-           nodes: nodes
+           component: (<TestCaseView testCase={testCase} project={this.props.project} history={this.props.history} onClick={this._pushTestCase} />),
+           nodes: []
          };
          return testCaseComponent;
        }.bind(this));
@@ -110,8 +103,7 @@ export default Relay.createContainer(ProjectView, {
           edges {
             node {
               id
-              ${TestCaseLabel.getFragment('testCase')},
-              ${TestCaseText.getFragment('testCase')},
+              ${TestCaseView.getFragment('testCase')},
             }
           }
         }
@@ -133,8 +125,8 @@ export default Relay.createContainer(ProjectView, {
         }
         ${CoverImage.getFragment('target')},
         ${ProjectText.getFragment('project')},
-        ${TestCaseText.getFragment('project')},
         ${ExampleImage.getFragment('target')},
+        ${TestCaseView.getFragment('project')},
       }
     `,
     me: () => Relay.QL`
