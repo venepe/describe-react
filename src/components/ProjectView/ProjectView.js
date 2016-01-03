@@ -87,7 +87,9 @@ class ProjectView extends Component {
     return (
       <div className="ProjectView-container">
         <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.project} onClick={this._pushCoverImage}/>
-        <Archy archible={object}/>
+        <div className="ProjectArchy-container">
+          <Archy archible={object}/>
+        </div>
       </div>
     );
   }
