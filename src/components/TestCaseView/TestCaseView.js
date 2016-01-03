@@ -33,22 +33,29 @@ class TestCaseView extends Component {
   render() {
     let object = {};
     if (this.props.testCase) {
+      let testCase = this.props.testCase;
+      let exampleNodes = [];
+      let fulfillmentNodes = [];
 
-      let exampleNodes = this.props.testCase.examples.edges.map(function (object, index) {
-         let image = object.node;
-          let imageComponent = {
-            component: (<ExampleImage example={image} target={this.props.testCase} onClick={this._pushExample} />),
-          };
-          return imageComponent;
+      if (testCase.examples) {
+        exampleNodes = testCase.examples.edges.map(function (object, index) {
+           let image = object.node;
+            let imageComponent = {
+              component: (<ExampleImage example={image} target={this.props.testCase} onClick={this._pushExample} />),
+            };
+            return imageComponent;
+          }.bind(this));
+      }
+
+      if (testCase.fulfillments) {
+        fulfillmentNodes = testCase.fulfillments.edges.map(function (object, index) {
+          let image = object.node;
+           let imageComponent = {
+             component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} onClick={this._pushFulfillment} />),
+           };
+           return imageComponent;
         }.bind(this));
-
-      let fulfillmentNodes = this.props.testCase.fulfillments.edges.map(function (object, index) {
-        let image = object.node;
-         let imageComponent = {
-           component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} onClick={this._pushFulfillment} />),
-         };
-         return imageComponent;
-      }.bind(this));
+      }
 
       object = {
         component: (<TestCaseLabel testCase={this.props.testCase} />),
