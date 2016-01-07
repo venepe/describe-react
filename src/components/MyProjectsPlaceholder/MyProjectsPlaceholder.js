@@ -14,7 +14,7 @@ class MyProjectsPlaceholder extends Component {
       <div className="map">
         <img src={`${SMTIBaseUrl}/assets/map-27749_1280.png`} width={120} height={120} />
         <div className="map-line1">You have no projects!</div>
-        <div className="map-line2">Start one and get life done.</div>
+        <div className="map-line2">Start one and get done.</div>
       </div>
     );
   }
