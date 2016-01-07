@@ -7,7 +7,6 @@ import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ProjectText from '../ProjectText';
-import ExampleImage from '../ExampleImage';
 import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 
@@ -16,18 +15,12 @@ class ProjectView extends Component {
     super(props);
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCoverImage = this._pushCoverImage.bind(this);
-    this._pushExample = this._pushExample.bind(this);
     this._onDelete = this._onDelete.bind(this);
   }
 
   _pushTestCase(testCaseId) {
     let projectId = this.props.project.id;
     this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}`);
-  }
-
-  _pushExample(exampleId) {
-    let projectId = this.props.project.id;
-    this.props.history.pushState(null, `/projects/${projectId}/examples/${exampleId}`);
   }
 
   _pushCoverImage(coverImageId) {
@@ -51,14 +44,6 @@ class ProjectView extends Component {
          return testCaseComponent;
        }.bind(this));
 
-      let exampleNodes = this.props.project.examples.edges.map(function (object, index) {
-         let image = object.node;
-          let imageComponent = {
-            component: (<ExampleImage example={image} target={this.props.project} onClick={this._pushExample} />),
-          };
-          return imageComponent;
-        }.bind(this));
-
       object = {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
@@ -69,14 +54,6 @@ class ProjectView extends Component {
         ]
       }
 
-      if (exampleNodes.length > 0) {
-        object.nodes[0].nodes.push(
-          {
-            component: (<ArchyLabel text={'as shown in:'}/>),
-            nodes: exampleNodes
-          }
-        )
-      }
     }
 
     let coverImage = null;
@@ -109,15 +86,6 @@ export default Relay.createContainer(ProjectView, {
             }
           }
         }
-        examples(first: 10) {
-          edges {
-            node {
-              id
-              uri
-              ${ExampleImage.getFragment('example')},
-            }
-          }
-        }
         coverImages(first: 1) {
           edges {
             node {
@@ -127,7 +95,6 @@ export default Relay.createContainer(ProjectView, {
         }
         ${CoverImage.getFragment('target')},
         ${ProjectText.getFragment('project')},
-        ${ExampleImage.getFragment('target')},
         ${TestCaseView.getFragment('project')},
       }
     `,

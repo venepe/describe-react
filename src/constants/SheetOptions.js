@@ -19,10 +19,6 @@ const projectSheet = {
       value: INTRODUCE_TEST_CASE
     },
     {
-      text: 'Add Example',
-      value: INTRODUCE_EXAMPLE
-    },
-    {
       text: 'Update Project',
       value: UPDATE_PROJECT
     },

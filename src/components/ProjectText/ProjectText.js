@@ -6,10 +6,9 @@ import styles from './ProjectText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import SheetOptions from '../../constants/SheetOptions';
 import TestCaseFormDialog from '../TestCaseFormDialog';
-import ExampleFormDialog from '../ExampleFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
 
-import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_EXAMPLE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_TEST_CASE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
 import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
 
@@ -19,11 +18,9 @@ class ProjectText extends Component {
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissProjectUpdateForm = this._dismissProjectUpdateForm.bind(this);
     this._dismissTestCaseForm = this._dismissTestCaseForm.bind(this);
-    this._dismissExampleForm = this._dismissExampleForm.bind(this);
     this.state = {
       showProjectUpdateForm: false,
-      showTestCaseForm: false,
-      showExampleForm: false
+      showTestCaseForm: false
     }
   }
 
@@ -40,11 +37,6 @@ class ProjectText extends Component {
             showTestCaseForm: true
           });
         break;
-        case INTRODUCE_EXAMPLE:
-        this.setState({
-          showExampleForm: true
-        });
-          break;
         case UPDATE_PROJECT:
             this.setState({
               showProjectUpdateForm: true
@@ -72,12 +64,6 @@ class ProjectText extends Component {
     });
   }
 
-  _dismissExampleForm() {
-    this.setState({
-      showExampleForm: false
-    });
-  }
-
   render() {
 
     return (
@@ -85,7 +71,6 @@ class ProjectText extends Component {
         <ModalableArchyLabel text={this.props.project.title} sheetOptions={SheetOptions.projectSheet} onItemTouchTap={this._onItemTouchTap} />
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.project} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
-        <ExampleFormDialog isVisible={this.state.showExampleForm} target={this.props.project} onCancel={this._dismissExampleForm} />
       </div>
     );
   }
@@ -102,7 +87,6 @@ var ProjectTextContainer = Relay.createContainer(ProjectText, {
         title
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
-        ${ExampleFormDialog.getFragment('target')},
         ${DeleteProjectMutation.getFragment('project')}
       }
     `,
