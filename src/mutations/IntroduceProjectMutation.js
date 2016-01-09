@@ -31,11 +31,7 @@ class IntroduceProjectMutation extends Relay.Mutation {
       connectionName: 'projects',
       edgeName: 'projectEdge',
       rangeBehaviors: {
-        // When the ships connection is not under the influence
-        // of any call, append the ship to the end of the connection
         '': 'prepend',
-        // Prepend the ship, wherever the connection is sorted by age
-        // 'orderby:newest': 'prepend',
       },
     }];
   }

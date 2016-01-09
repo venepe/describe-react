@@ -9,6 +9,12 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
         id
       }
     `,
+    project: () => Relay.QL`
+      fragment on Project {
+        id
+        numOfTestCasesFulfilled
+      }
+    `
   };
 
   getMutation() {
@@ -23,6 +29,9 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
           isFulfilled,
           fulfillments
         },
+        project {
+          numOfTestCasesFulfilled
+        },
       }
     `;
   }
@@ -35,17 +44,19 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
       connectionName: 'fulfillments',
       edgeName: 'fulfillmentEdge',
       rangeBehaviors: {
-        // When the ships connection is not under the influence
-        // of any call, append the ship to the end of the connection
         '': 'prepend',
-        // Prepend the ship, wherever the connection is sorted by age
-        // 'orderby:newest': 'prepend',
       },
     },
     {
       type: 'FIELDS_CHANGE',
       fieldIDs: {
         testCase: this.props.testCase.id,
+      }
+    },
+    {
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        project: this.props.project.id,
       }
     }
   ];
@@ -65,14 +76,23 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
   }
 
   getOptimisticResponse() {
-
+    let numOfTestCasesFulfilled = this.props.project.numOfTestCasesFulfilled;
+    if (this.props.testCase.isFulfilled === false) {
+      numOfTestCasesFulfilled++;
+    }
     return {
       fulfillmentEdge: {
-        node: {},
+        node: {
+          uri: this.props.uri,
+        },
       },
       testCase: {
         id: this.props.testCase.id,
         isFulfilled: true
+      },
+      project: {
+        id: this.props.project.id,
+        numOfTestCasesFulfilled
       }
     };
   }

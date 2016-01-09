@@ -18,7 +18,7 @@ class FulfillmentForm extends Component {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.update(
-        new IntroduceFulfillmentMutation({uri, testCase: this.props.testCase})
+        new IntroduceFulfillmentMutation({uri, testCase: this.props.testCase, project: this.props.project})
       );
       //Start SMTIAnalytics
       track(Events.FULFILLED_TEST_CASE);
@@ -56,6 +56,11 @@ var FulfillmentFormContainer = Relay.createContainer(FulfillmentForm, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         ${IntroduceFulfillmentMutation.getFragment('testCase')}
+      }
+    `,
+    project: () => Relay.QL`
+      fragment on Project {
+        ${IntroduceFulfillmentMutation.getFragment('project')},
       }
     `,
   },

@@ -36,7 +36,7 @@ class FulfillmentImage extends Component {
         case DELETE_FULFILLMENT:
             this.props.onDelete(this.props.fulfillment.id);
             Relay.Store.update(
-              new DeleteFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase})
+              new DeleteFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project})
             );
           break;
       default:
@@ -71,6 +71,11 @@ var FulfillmentImageContainer = Relay.createContainer(FulfillmentImage, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         ${DeleteFulfillmentMutation.getFragment('testCase')},
+      }
+    `,
+    project: () => Relay.QL`
+      fragment on Project {
+        ${DeleteFulfillmentMutation.getFragment('project')},
       }
     `,
   },

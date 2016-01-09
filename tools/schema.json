@@ -388,6 +388,30 @@
               "deprecationReason": null
             },
             {
+              "name": "numOfTestCases",
+              "description": "The total number of test cases for the project.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "numOfTestCasesFulfilled",
+              "description": "The total number of test cases fulfilled for the project.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "createdAt",
               "description": "The timestamp when the project was created.",
               "args": [],
@@ -2443,12 +2467,12 @@
               "deprecationReason": null
             },
             {
-              "name": "me",
+              "name": "project",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "User",
+                "name": "Project",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2962,6 +2986,18 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TestCase",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "project",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Project",
                 "ofType": null
               },
               "isDeprecated": false,

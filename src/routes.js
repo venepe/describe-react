@@ -100,7 +100,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="*/testCases/:testCaseId/fulfillments/:fulfillmentId" component={FulfillmentImageView}
+        path="projects/:projectId/testCases/:testCaseId/fulfillments/:fulfillmentId" component={FulfillmentImageView}
         queries={FulfillmentQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}

@@ -51,7 +51,7 @@ class TestCaseView extends Component {
         fulfillmentNodes = testCase.fulfillments.edges.map(function (object, index) {
           let image = object.node;
            let imageComponent = {
-             component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} onClick={this._pushFulfillment} />),
+             component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} project={this.props.project} onClick={this._pushFulfillment} />),
            };
            return imageComponent;
         }.bind(this));
@@ -131,6 +131,7 @@ export default Relay.createContainer(TestCaseView, {
       fragment on Project {
         id
         ${TestCaseText.getFragment('project')},
+        ${FulfillmentImage.getFragment('project')},
       }
     `,
   },

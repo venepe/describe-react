@@ -7,6 +7,7 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
     project: () => Relay.QL`
       fragment on Project {
         id
+        numOfTestCases
       }
     `,
   };
@@ -18,6 +19,7 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
       fragment on IntroduceTestCasePayload {
         testCaseEdge
         project {
+          numOfTestCases
           testCases
         },
       }
@@ -25,19 +27,22 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
   }
   getConfigs() {
     return [{
-      type: 'RANGE_ADD',
-      parentName: 'project',
-      parentID: this.props.project.id,
-      connectionName: 'testCases',
-      edgeName: 'testCaseEdge',
-      rangeBehaviors: {
-        // When the ships connection is not under the influence
-        // of any call, append the ship to the end of the connection
-        '': 'prepend',
-        // Prepend the ship, wherever the connection is sorted by age
-        // 'orderby:newest': 'prepend',
+        type: 'RANGE_ADD',
+        parentName: 'project',
+        parentID: this.props.project.id,
+        connectionName: 'testCases',
+        edgeName: 'testCaseEdge',
+        rangeBehaviors: {
+          '': 'prepend',
+        }
       },
-    }];
+      {
+        type: 'FIELDS_CHANGE',
+        fieldIDs: {
+          project: this.props.project.id,
+        },
+      }
+    ];
   }
   getVariables() {
     return {
@@ -46,12 +51,18 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
     };
   }
   getOptimisticResponse() {
+    let numOfTestCases = this.props.project.numOfTestCases;
+    numOfTestCases++;
     return {
       testCaseEdge: {
         node: {
           it: this.props.it,
         },
       },
+      project: {
+        id: this.props.project.id,
+        numOfTestCases
+      }
     };
   }
 }

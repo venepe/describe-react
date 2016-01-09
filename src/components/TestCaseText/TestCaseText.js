@@ -90,7 +90,7 @@ class TestCaseText extends Component {
         <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={SheetOptions.testCaseSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <ExampleFormDialog isVisible={this.state.showExampleForm} target={this.props.testCase} onCancel={this._dismissExampleForm} />
-        <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} onCancel={this._dismissFulfillmentForm} />
+        <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
       </div>
     );
   }
@@ -116,6 +116,7 @@ var TestCaseTextContainer = Relay.createContainer(TestCaseText, {
       fragment on Project {
         id,
         ${DeleteTestCaseMutation.getFragment('project')},
+        ${FulfillmentFormDialog.getFragment('project')},
       }
     `,
   },

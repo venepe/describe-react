@@ -18,7 +18,7 @@ class FulfillmentImageView extends Component {
 
   render() {
     return (
-      <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} height={500} width={null} onDelete={this._onDelete} />
+      <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onDelete={this._onDelete} />
     );
   }
 }
@@ -33,6 +33,11 @@ export default Relay.createContainer(FulfillmentImageView, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         ${FulfillmentImage.getFragment('testCase')},
+      }
+    `,
+    project: () => Relay.QL`
+      fragment on TestCase {
+        ${FulfillmentImage.getFragment('project')},
       }
     `,
   },

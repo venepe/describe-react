@@ -3,9 +3,13 @@
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .CoverImage-img {
   background-color: #fafafa;
+}
+
+.rightText {
+  float: right;
 }

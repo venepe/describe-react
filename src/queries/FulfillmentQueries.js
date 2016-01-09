@@ -12,6 +12,11 @@ const FulfillmentQueries = {
     query {
       node(id: $testCaseId)
     }
+  `,
+  project: () => Relay.QL`
+    query {
+      node(id: $projectId)
+    }
   `
 }
 

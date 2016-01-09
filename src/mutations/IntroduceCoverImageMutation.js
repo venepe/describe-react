@@ -31,11 +31,7 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
       connectionName: 'coverImages',
       edgeName: 'coverImageEdge',
       rangeBehaviors: {
-        // When the ships connection is not under the influence
-        // of any call, append the ship to the end of the connection
         '': 'prepend',
-        // Prepend the ship, wherever the connection is sorted by age
-        // 'orderby:newest': 'prepend',
       },
     }];
   }

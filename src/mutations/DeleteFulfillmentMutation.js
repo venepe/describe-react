@@ -17,6 +17,12 @@ class DeleteFulfillmentMutation extends Relay.Mutation {
         }
       }
     `,
+    project: () => Relay.QL`
+      fragment on Project {
+        id
+        numOfTestCasesFulfilled
+      }
+    `,
   };
   getMutation() {
     return Relay.QL`mutation{deleteFulfillment}`;
@@ -24,8 +30,11 @@ class DeleteFulfillmentMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on DeleteFulfillmentPayload {
-        deletedFulfillmentId,
+        deletedFulfillmentId
         testCase
+        project {
+          numOfTestCasesFulfilled
+        }
       }
     `;
   }
@@ -42,6 +51,12 @@ class DeleteFulfillmentMutation extends Relay.Mutation {
       fieldIDs: {
         testCase: this.props.testCase.id,
       }
+    },
+    {
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        project: this.props.project.id,
+      }
     }
   ];
   }
@@ -53,14 +68,21 @@ class DeleteFulfillmentMutation extends Relay.Mutation {
   }
   getOptimisticResponse() {
     let isFulfilled = false;
+    let numOfTestCasesFulfilled = this.props.project.numOfTestCasesFulfilled;
     if (this.props.testCase.fulfillments.edges.length > 1) {
       isFulfilled = true;
+    } else {
+      numOfTestCasesFulfilled--;
     }
     return {
       deletedImageId: this.props.fulfillment.id,
       testCase: {
         id: this.props.testCase.id,
         isFulfilled
+      },
+      project: {
+        id: this.props.project.id,
+        numOfTestCasesFulfilled
       }
     };
   }

@@ -7,11 +7,14 @@ class DeleteTestCaseMutation extends Relay.Mutation {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
+        isFulfilled
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
         id
+        numOfTestCases
+        numOfTestCasesFulfilled
       }
     `,
   };
@@ -22,7 +25,11 @@ class DeleteTestCaseMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on DeleteTestCasePayload {
         deletedTestCaseId,
-        project { testCases }
+        project {
+          numOfTestCases
+          numOfTestCasesFulfilled
+          testCases
+        },
       }
     `;
   }
@@ -33,6 +40,12 @@ class DeleteTestCaseMutation extends Relay.Mutation {
       parentID: this.props.project.id,
       connectionName: 'testCases',
       deletedIDFieldName: 'deletedTestCaseId',
+      },
+      {
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        project: this.props.project.id,
+      },
     }];
   }
   getVariables() {
@@ -41,8 +54,19 @@ class DeleteTestCaseMutation extends Relay.Mutation {
     };
   }
   getOptimisticResponse() {
+    let numOfTestCases = this.props.project.numOfTestCases;
+    let numOfTestCasesFulfilled = this.props.project.numOfTestCasesFulfilled;
+    numOfTestCases--;
+    if (this.props.testCase.isFulfilled) {
+      numOfTestCasesFulfilled--;
+    }
     return {
-      deletedTestCaseId: this.props.testCase.id
+      deletedTestCaseId: this.props.testCase.id,
+      project: {
+        id: this.props.project.id,
+        numOfTestCases,
+        numOfTestCasesFulfilled
+      }
     };
   }
 }

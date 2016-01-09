@@ -24,7 +24,7 @@ class FulfillmentFormDialog extends Component {
   render() {
     return (
       <div>
-        <FulfillmentForm testCase={this.props.testCase} isOpen={this.state.isVisible} onCancel={this.props.onCancel} />
+        <FulfillmentForm testCase={this.props.testCase} project={this.props.project} isOpen={this.state.isVisible} onCancel={this.props.onCancel} />
       </div>
     );
   }
@@ -38,6 +38,11 @@ var FulfillmentFormDialogContainer = Relay.createContainer(FulfillmentFormDialog
     testCase: () => Relay.QL`
       fragment on TestCase {
         ${FulfillmentForm.getFragment('testCase')}
+      }
+    `,
+    project: () => Relay.QL`
+      fragment on Project {
+        ${FulfillmentForm.getFragment('project')},
       }
     `,
   },

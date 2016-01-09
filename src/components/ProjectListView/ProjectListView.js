@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import { Link } from 'react-router';
 import Infinite from 'react-infinite';
 import styles from './ProjectListView.css';
-import { Card, CardMedia, CardTitle } from 'material-ui';
+import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
 import SpinnerView from '../SpinnerView';
 
 class ProjectListView extends Component {
@@ -45,6 +45,7 @@ class ProjectListView extends Component {
           if (project.coverImages && project.coverImages.edges.length > 0) {
             uri = project.coverImages.edges[0].node.uri;
           }
+          let subtitle = `${project.numOfTestCasesFulfilled}/${project.numOfTestCases}`;
           let projectComponent = (
             <Card key={index} className="clickable" onClick={() => this._onClick(project)}>
               <div>
@@ -52,7 +53,7 @@ class ProjectListView extends Component {
                   <img className='CoverImage-img' height={400} src={uri} />
                 </CardMedia>
               </div>
-              <CardTitle title={project.title} />
+              <CardTitle title={project.title} subtitle={subtitle} />
             </Card>
           );
 
@@ -112,6 +113,8 @@ let ProjectListViewContainer = Relay.createContainer(ProjectListView, {
           node {
             id
             title
+            numOfTestCases
+            numOfTestCasesFulfilled
             coverImages(first: 1) {
               edges {
                 node {
