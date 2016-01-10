@@ -11,8 +11,8 @@ import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 
-const _first = 2;
-const _next = 2;
+const _first = 10;
+const _next = 10;
 
 class ProjectView extends Component {
   constructor(props) {

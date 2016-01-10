@@ -42,7 +42,7 @@ class TouchableImage extends Component {
   }
 }
 
-TouchableImage.propTypes = {id: PropTypes.string, src: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
+TouchableImage.propTypes = {id: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
 TouchableImage.defaultProps = {id: '', src: '', height: 200, width: 200, onClick: function() {}};
 
 module.exports = TouchableImage;

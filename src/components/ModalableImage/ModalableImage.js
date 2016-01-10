@@ -67,7 +67,7 @@ class ModalableImage extends Component {
   }
 }
 
-ModalableImage.propTypes = {src: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onItemTouchTap: PropTypes.func};
+ModalableImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onItemTouchTap: PropTypes.func};
 ModalableImage.defaultProps = {src: '', height: 200, width: 200, onClick: function() {}, onItemTouchTap: function() {}};
 
 module.exports = ModalableImage;
