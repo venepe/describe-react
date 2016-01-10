@@ -9,6 +9,10 @@ import ArchyLabel from '../ArchyLabel';
 import ProjectText from '../ProjectText';
 import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
+import MoreButton from '../MoreButton';
+
+const _first = 2;
+const _next = 2;
 
 class ProjectView extends Component {
   constructor(props) {
@@ -16,6 +20,7 @@ class ProjectView extends Component {
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCoverImage = this._pushCoverImage.bind(this);
     this._onDelete = this._onDelete.bind(this);
+    this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
   }
 
   _pushTestCase(testCaseId) {
@@ -32,10 +37,21 @@ class ProjectView extends Component {
     this.props.history.replaceState(null, '/myprojects')
   }
 
+  _onLoadMoreTestCases() {
+    var first = this.props.relay.variables.first;
+    var edges = this.props.project.originalTestCases.edges;
+    var cursor = edges[edges.length - 1].cursor;
+    this.props.relay.setVariables({
+      first: first + _next,
+      after: cursor
+    });
+  }
+
   render() {
     let object = {};
     if (this.props.project) {
-      let testCaseNodes = this.props.project.testCases.edges.map(function (object, index) {
+      let hasNextPage = this.props.project.originalTestCases.pageInfo.hasNextPage;
+      let testCaseNodes = this.props.project.originalTestCases.edges.map(function (object, index) {
         let testCase = object.node;
          let testCaseComponent = {
            component: (<TestCaseView testCase={testCase} project={this.props.project} history={this.props.history} onClick={this._pushTestCase} />),
@@ -43,6 +59,14 @@ class ProjectView extends Component {
          };
          return testCaseComponent;
        }.bind(this));
+
+       if (hasNextPage) {
+           let moreComponent = {
+             component: (<MoreButton onClick={this._onLoadMoreTestCases} />),
+             nodes: []
+           };
+           testCaseNodes.push(moreComponent);
+         }
 
       object = {
         component: (<ArchyLabel text={'describe:'}/>),
@@ -73,13 +97,34 @@ class ProjectView extends Component {
 }
 
 export default Relay.createContainer(ProjectView, {
+  initialVariables: {
+    first: _first,
+    after: null,
+    moreFirst: _first
+  },
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
         id
         title
-        testCases(first: 10) {
+        originalTestCases: testCases(first: $first) {
+          pageInfo {
+            hasNextPage
+          }
           edges {
+            cursor
+            node {
+              id
+              ${TestCaseView.getFragment('testCase')},
+            }
+          }
+        }
+        moreTestCases: testCases(first: $moreFirst, after: $after) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
             node {
               id
               ${TestCaseView.getFragment('testCase')},
