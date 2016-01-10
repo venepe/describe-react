@@ -7,12 +7,26 @@ import styles from './MoreButton.css';
 class MoreButton extends Component {
   constructor(props) {
     super(props);
+    this._onClick = this._onClick.bind(this);
+    this.state = {
+      didClick: false
+    }
+  }
+
+  _onClick() {
+    this.setState({
+      didClick: true
+    });
+    this.props.onClick();
   }
 
   render() {
+    if (this.state.didClick) {
+      return (<div></div>);
+    }
 
     return (
-      <IconButton onMouseUp={this.props.onClick} onTouchEnd={this.props.onClick}>
+      <IconButton onMouseUp={this._onClick} onTouchEnd={this._onClick}>
         <FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon>
       </IconButton>
     );

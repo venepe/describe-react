@@ -37,7 +37,6 @@ class TestCaseView extends Component {
   }
 
   _onLoadMoreExamples() {
-    console.log('load');
     var first = this.props.relay.variables.firstExample;
     var edges = this.props.testCase.originalExamples.edges;
     var cursor = edges[edges.length - 1].cursor;
