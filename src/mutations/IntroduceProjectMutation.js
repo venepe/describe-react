@@ -46,6 +46,8 @@ class IntroduceProjectMutation extends Relay.Mutation {
       projectEdge: {
         node: {
           title: this.props.title,
+          numOfTestCases: 0,
+          numOfTestCasesFulfilled: 0,
         },
       },
     };
