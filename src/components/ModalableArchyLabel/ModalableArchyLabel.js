@@ -46,18 +46,16 @@ class ModalableArchyLabel extends Component {
 
   render() {
 
-    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
+    let iconButtonElement = (<IconButton style={{width: '24px', padding: '0px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_vert</FontIcon></IconButton>);
 
     return (
       <div className="modalable-archy-label">
-        <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />
-        <div className="modal">
           <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
             {this._buildMenuItem()}
             <MenuDivider />
             <MenuItem primaryText="Close" />
           </IconMenu>
-        </div>
+        <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />
       </div>
     );
   }

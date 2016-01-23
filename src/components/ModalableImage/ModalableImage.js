@@ -48,7 +48,7 @@ class ModalableImage extends Component {
 
   render() {
 
-    let iconButtonElement = (<IconButton><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_horiz</FontIcon></IconButton>);
+    let iconButtonElement = (<IconButton style={{width: '24px', padding: '0px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_vert</FontIcon></IconButton>);
 
     return (
       <div className="modalable-image">

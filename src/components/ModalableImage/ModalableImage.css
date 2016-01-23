@@ -1,11 +1,7 @@
 .modal {
-    display: none;
-}
-
-.modalable-image:hover .modal {
     display: block;
     position: absolute;
-    right: 0px;
+    left: 0px;
     top: 0px;
 }
 
