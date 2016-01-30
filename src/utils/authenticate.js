@@ -112,15 +112,10 @@ function password(currentPassword, newPassword) {
       })
       .then(status)
       .then(json)
-      .then((json) => {
-        let password = json.password || {};
-        let token = password.token || '';
-        return SMTIStorage.saveToken(token);
-      })
-      .then((token) => {
-        SMTIDefaultNetworkLayer.init(token);
+      .then(() => {
         resolve();
-      }).catch((error) => {
+      })
+      .catch((error) => {
         reject();
       })
   });
