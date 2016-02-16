@@ -6,6 +6,7 @@ import { FlatButton, TextField } from 'material-ui';
 let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './UserUpdateForm.css';
 import {track, Events} from '../../utils/SMTIAnalytics';
+import Utilities from '../../utils/utilities';
 
 import UpdateUserMutation from '../../mutations/UpdateUserMutation';
 
@@ -14,30 +15,30 @@ class UserUpdateForm extends Component {
     super(props);
     this._onCancel = this._onCancel.bind(this);
     this._onUpdate = this._onUpdate.bind(this);
-    this._onChangeUsername = this._onChangeUsername.bind(this);
+    this._onChangeName = this._onChangeName.bind(this);
     this._onChangeSummary = this._onChangeSummary.bind(this);
     this._onChangeFullname = this._onChangeFullname.bind(this);
 
     let isDisabled = true;
-    if (props.me.username.length > 5) {
+    if (props.me.name.length > 5) {
       isDisabled = false;
     }
 
     this.state = {
-      username: props.me.username,
+      name: props.me.name,
       fullName: props.me.fullName,
       summary: props.me.summary,
       isDisabled: isDisabled
     }
   }
 
-  _onChangeUsername(e) {
-    let username = e.target.value;
+  _onChangeName(e) {
+    let name = e.target.value;
     let isDisabled = true;
-    if (username.length > 5) {
+    if (Utilities.isValidName(name)) {
       isDisabled = false;
     }
-    this.setState({username, isDisabled});
+    this.setState({name, isDisabled});
   }
 
   _onChangeSummary(e) {
@@ -51,12 +52,12 @@ class UserUpdateForm extends Component {
   }
 
   _onUpdate() {
-    let username = this.state.username;
+    let name = this.state.name;
     let fullName = this.state.fullName;
     let summary = this.state.summary;
-    if (username.length > 5) {
+    if (name.length > 5) {
       Relay.Store.update(
-        new UpdateUserMutation({username, fullName, summary, user: this.props.me})
+        new UpdateUserMutation({name, fullName, summary, user: this.props.me})
       );
       //Start SMTIAnalytics
       track(Events.UPDATED_PROFILE);
@@ -76,7 +77,7 @@ class UserUpdateForm extends Component {
         <div>
           <div className="label">Username</div>
           <div className="text-field">
-            <TextField hintText={'Username'} type='text' onChange={this._onChangeUsername} value={this.state.username} fullWidth={true} /> <br/>
+            <TextField hintText={'Username'} type='text' onChange={this._onChangeName} value={this.state.name} fullWidth={true} /> <br/>
           </div>
           <div className="label">Full Name</div>
           <div className="text-field">
@@ -103,7 +104,7 @@ let UserUpdateFormContainer = Relay.createContainer(UserUpdateForm, {
   fragments: {
     me: () => Relay.QL`
       fragment on User {
-        username
+        name
         email
         fullName
         summary

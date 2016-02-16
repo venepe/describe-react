@@ -1,0 +1,67 @@
+'use strict';
+
+import React, { PropTypes, Component } from 'react';
+import Relay from 'react-relay';
+import styles from './CollaboratorText.css';
+import ModalableArchyLabel from '../ModalableArchyLabel';
+import SheetOptions from '../../constants/SheetOptions';
+
+import ModalTypes, { DELETE_COLLABORATOR } from '../../constants/ModalTypes';
+
+import DeleteCollaboratorMutation from '../../mutations/DeleteCollaboratorMutation';
+
+class CollaboratorText extends Component {
+  constructor(props) {
+    super(props);
+    this._onItemTouchTap = this._onItemTouchTap.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...nextProps
+    });
+  }
+
+  _onItemTouchTap(value) {
+    switch (value) {
+        case DELETE_COLLABORATOR:
+            this.props.onDelete(this.props.project.id);
+            Relay.Store.update(
+              new DeleteCollaboratorMutation({collaborator: this.props.collaborator, project: this.props.project})
+            );
+          break;
+      default:
+    }
+  }
+
+  render() {
+
+    return (
+      <div className="CollaboratorText-container">
+        <ModalableArchyLabel text={this.props.collaborator.name} sheetOptions={SheetOptions.collaboratorSheet} onItemTouchTap={this._onItemTouchTap} />
+      </div>
+    );
+  }
+}
+
+CollaboratorText.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
+CollaboratorText.defaultProps = {onClick: function() {}, onDelete: function() {}};
+
+var CollaboratorTextContainer = Relay.createContainer(CollaboratorText, {
+  fragments: {
+    collaborator: () => Relay.QL`
+      fragment on User {
+        id
+        name
+        ${DeleteCollaboratorMutation.getFragment('collaborator')},
+      }
+    `,
+    project: () => Relay.QL`
+      fragment on Project {
+        ${DeleteCollaboratorMutation.getFragment('project')},
+      }
+    `,
+  },
+});
+
+module.exports = CollaboratorTextContainer;

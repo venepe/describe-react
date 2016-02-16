@@ -1,0 +1,6 @@
+{
+  "name": "CollaboratorText",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CollaboratorText.js"
+}

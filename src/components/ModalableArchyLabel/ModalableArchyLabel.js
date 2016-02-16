@@ -46,7 +46,7 @@ class ModalableArchyLabel extends Component {
 
   render() {
 
-    let iconButtonElement = (<IconButton style={{width: '24px', padding: '0px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>more_vert</FontIcon></IconButton>);
+    let iconButtonElement = (<IconButton style={{width: '24px', padding: '0px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>mode_edit</FontIcon></IconButton>);
 
     return (
       <div className="modalable-archy-label">

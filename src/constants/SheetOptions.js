@@ -1,4 +1,5 @@
 import {
+  INTRODUCE_COLLABORATOR,
   INTRODUCE_TEST_CASE,
   INTRODUCE_EXAMPLE,
   FULFILL_TEST_CASE,
@@ -9,11 +10,17 @@ import {
   DELETE_EXAMPLE,
   DELETE_FULFILLMENT,
   DELETE_COVER_IMAGE,
-  CHANGE_COVER_IMAGE
+  CHANGE_COVER_IMAGE,
+  DELETE_COLLABORATOR,
+  LEAVE_PROJECT
 } from './ModalTypes';
 
 const projectSheet = {
   options: [
+    {
+      text: 'Add Collaborator',
+      value: INTRODUCE_COLLABORATOR
+    },
     {
       text: 'Add Test Case',
       value: INTRODUCE_TEST_CASE
@@ -28,6 +35,20 @@ const projectSheet = {
     },
   ],
 };
+
+const collaborativeProjectSheet = {
+  options: [
+    {
+      text: 'Add Test Case',
+      value: INTRODUCE_TEST_CASE
+    },
+    {
+      text: 'Leave Project',
+      value:  LEAVE_PROJECT
+    },
+  ],
+}
+
 
 const testCaseSheet = {
   options: [
@@ -68,6 +89,15 @@ const fulfillmentSheet = {
   ],
 };
 
+const collaboratorSheet = {
+  options: [
+    {
+      text: 'Delete Collaborator',
+      value: DELETE_COLLABORATOR
+    }
+  ],
+}
+
 const coverImageSheet = {
   options: [
     {
@@ -82,6 +112,8 @@ const coverImageSheet = {
 };
 
 module.exports = {
+  collaboratorSheet: collaboratorSheet,
+  collaborativeProjectSheet: collaborativeProjectSheet,
   projectSheet: projectSheet,
   testCaseSheet: testCaseSheet,
   exampleSheet: exampleSheet,

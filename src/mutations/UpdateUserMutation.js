@@ -20,7 +20,7 @@ class UpdateUserMutation extends Relay.Mutation {
           email
           summary
           fullName
-          username
+          name
         }
       }
     `;
@@ -39,7 +39,7 @@ class UpdateUserMutation extends Relay.Mutation {
       email: this.props.email,
       summary: this.props.summary,
       fullName: this.props.fullName,
-      username: this.props.username
+      name: this.props.name
     };
   }
   getOptimisticResponse() {
@@ -49,7 +49,7 @@ class UpdateUserMutation extends Relay.Mutation {
         email: this.props.email,
         summary: this.props.summary,
         fullName: this.props.fullName,
-        username: this.props.username
+        name: this.props.name
       },
     };
   }

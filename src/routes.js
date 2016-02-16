@@ -6,21 +6,25 @@ import {IndexRoute, Route} from 'react-router';
 import App from './components/App';
 import HomeView from './components/HomeView';
 import ProjectView from './components/ProjectView';
+import CollaborationView from './components/CollaborationView';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
+import MyCollaborationsView from './components/MyCollaborationsView';
 import FailureView from './components/FailureView';
 import TestCasePage from './components/TestCasePage';
 import CoverImageView from './components/CoverImageView';
 import ExampleImageView from './components/ExampleImageView';
+import FileImageView from './components/FileImageView';
 import FulfillmentImageView from './components/FulfillmentImageView';
 import MeView from './components/MeView';
 import ResetForm from './components/ResetForm';
 
-import ProjectRoute from './routes/ProjectRoute';
 import ProjectQueries from './queries/ProjectQueries';
+import CollaborationQueries from './queries/CollaborationQueries';
 import TestCaseQueries from './queries/TestCaseQueries';
 import CoverImageQueries from './queries/CoverImageQueries';
 import ExampleQueries from './queries/ExampleQueries';
+import FileQueries from './queries/FileQueries';
 import FulfillmentQueries from './queries/FulfillmentQueries';
 import MeQueries from './queries/MeQueries';
 
@@ -71,9 +75,25 @@ export default (
         onEnter={requireAuth}
       />
     <Route
+        path="mycollaborations" component={MyCollaborationsView}
+        queries={MeQueries}
+        prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
         path="projects/:projectId" component={ProjectView}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="collaborations/:collaborationId" component={CollaborationView}
+        queries={CollaborationQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), collaborationId: params.collaborationId })}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}
@@ -88,6 +108,13 @@ export default (
     <Route
         path="*/:targetId/examples/:exampleId" component={ExampleImageView}
         queries={ExampleQueries}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="*/:targetId/files/:fileId" component={FileImageView}
+        queries={FileQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}

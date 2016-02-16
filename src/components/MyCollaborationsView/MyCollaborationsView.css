@@ -1,0 +1,10 @@
+
+.MyCollaborations-container {
+	min-height: 900px;
+}
+
+.add-project-button {
+	position: fixed;
+	right: 40px;
+	bottom: 40px;
+}

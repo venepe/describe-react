@@ -1,4 +1,6 @@
 module.exports = {
+  DeleteCollaborationMutation: require('./DeleteCollaborationMutation.js'),
+  DeleteCollaboratorMutation: require('./DeleteCoverImageMutation.js'),
   DeleteCoverImageMutation: require('./DeleteCoverImageMutation.js'),
   DeleteFulfillmentMutation: require('./DeleteFulfillmentMutation.js'),
   DeleteExampleMutation: require('./DeleteExampleMutation.js'),
@@ -6,6 +8,7 @@ module.exports = {
   DeleteTestCaseMutation: require('./DeleteTestCaseMutation.js'),
   DeleteUserMutation: require('./DeleteUserMutation.js'),
   FulfillImageMutation: require('./FulfillImageMutation.js'),
+  IntroduceCollaboratorMutation: require('./IntroduceCollaboratorMutation.js'),
   IntroduceCoverImageMutation: require('./IntroduceCoverImageMutation.js'),
   IntroduceImageMutation:  require('./IntroduceImageMutation.js'),
   IntroduceProjectMutation:  require('./IntroduceProjectMutation.js'),

@@ -1,0 +1,23 @@
+
+.action-container {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  padding: 8;
+  margin-bottom: 8;
+  width: 100%;
+  text-align: right;
+}
+
+.collaborator-label {
+   display: block;
+   font-size: 1.5em;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 300;
+}
+
+.collaborator-title {
+   display: block;
+   font-size: 1.2em;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 300;
+}

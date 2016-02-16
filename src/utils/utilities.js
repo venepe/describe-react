@@ -5,6 +5,11 @@ function isValidPassword(password) {
   return isValid;
 }
 
+function isValidName(name) {
+  let isValid = name.match(/^[a-zA-Z0-9_]{4,32}$/);
+  return isValid;
+}
+
 function getProjectPlaceholderText() {
   var placeholders = ['my dream house', 'my summer vacation', 'my garden', 'a new dinner table', 'the patio window'];
   var index = getRandomArbitrary(0, placeholders.length);
@@ -22,5 +27,6 @@ function getRandomArbitrary(min, max) {
 }
 
 module.exports.isValidPassword = isValidPassword;
+module.exports.isValidName = isValidName;
 module.exports.getProjectPlaceholderText = getProjectPlaceholderText;
 module.exports.getTestCasePlaceholderText = getTestCasePlaceholderText;

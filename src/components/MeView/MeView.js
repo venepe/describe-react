@@ -32,7 +32,7 @@ class MeView extends Component {
         <div className="MeView-container">
           <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.me} onClick={this._pushCoverImage}/>
           <div className="me-container">
-            <div className="username">{this.props.me.username}</div>
+            <div className="name">{this.props.me.name}</div>
             <div className="full-name">{fullName}</div>
             <MenuDivider />
             <div className="label">Summary</div>
@@ -53,7 +53,7 @@ export default Relay.createContainer(MeView, {
     me: () => Relay.QL`
       fragment on User {
         id
-        username
+        name
         email
         fullName
         summary
