@@ -17,6 +17,7 @@ import ExampleImageView from './components/ExampleImageView';
 import FileImageView from './components/FileImageView';
 import FulfillmentImageView from './components/FulfillmentImageView';
 import MeView from './components/MeView';
+import UserView from './components/UserView';
 import ResetForm from './components/ResetForm';
 
 import ProjectQueries from './queries/ProjectQueries';
@@ -27,6 +28,7 @@ import ExampleQueries from './queries/ExampleQueries';
 import FileQueries from './queries/FileQueries';
 import FulfillmentQueries from './queries/FulfillmentQueries';
 import MeQueries from './queries/MeQueries';
+import UserQueries from './queries/UserQueries';
 
 import SMTIStorage from './utils/storage';
 import Authenticate from './utils/authenticate';
@@ -94,6 +96,13 @@ export default (
         path="collaborations/:collaborationId" component={CollaborationView}
         queries={CollaborationQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), collaborationId: params.collaborationId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="users/:userId" component={UserView}
+        queries={UserQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}

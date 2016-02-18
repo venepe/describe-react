@@ -42,8 +42,8 @@ class MyProjectsView extends Component {
   render() {
 
     if(this.props.me) {
-      var me = this.props.me
-      if (me.originalProjects.edges.length > 0)
+      var me = this.props.me;
+      if (me.originalProjects.edges.length > 0) {
         return (
           <div className="MyProjects-container">
             <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
@@ -53,7 +53,7 @@ class MyProjectsView extends Component {
             <ProjectFormDialog ref="projectFormDialog" />
           </div>
         );
-      else {
+      } else {
         return (
           <div>
             <div className="add-project-button">

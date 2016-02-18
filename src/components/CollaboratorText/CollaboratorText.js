@@ -13,6 +13,7 @@ import DeleteCollaboratorMutation from '../../mutations/DeleteCollaboratorMutati
 class CollaboratorText extends Component {
   constructor(props) {
     super(props);
+    this._onClick = this._onClick.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
   }
 
@@ -20,6 +21,10 @@ class CollaboratorText extends Component {
     this.setState({
       ...nextProps
     });
+  }
+
+  _onClick() {
+    this.props.onClick(this.props.collaborator.id);
   }
 
   _onItemTouchTap(value) {
@@ -38,7 +43,7 @@ class CollaboratorText extends Component {
 
     return (
       <div className="CollaboratorText-container">
-        <ModalableArchyLabel text={this.props.collaborator.name} sheetOptions={SheetOptions.collaboratorSheet} onItemTouchTap={this._onItemTouchTap} />
+        <ModalableArchyLabel text={this.props.collaborator.name} sheetOptions={SheetOptions.collaboratorSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
       </div>
     );
   }

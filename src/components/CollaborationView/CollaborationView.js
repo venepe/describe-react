@@ -7,6 +7,8 @@ import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import CollaborationText from '../CollaborationText';
+import CollaboratorText from '../CollaboratorText';
+import TouchableArchyLabel from '../TouchableArchyLabel';
 import FileImage from '../FileImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
@@ -19,6 +21,7 @@ class CollaborationView extends Component {
     super(props);
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCoverImage = this._pushCoverImage.bind(this);
+    this._pushCollaborator = this._pushCollaborator.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
   }
@@ -31,6 +34,10 @@ class CollaborationView extends Component {
   _pushCoverImage(fileId) {
     let collaborationId = this.props.collaboration.id;
     this.props.history.pushState(null, `/collaborations/${collaborationId}/files/${fileId}`);
+  }
+
+  _pushCollaborator(userId) {
+    this.props.history.pushState(null, `/users/${userId}`);
   }
 
   _onDelete() {
@@ -68,6 +75,24 @@ class CollaborationView extends Component {
            testCaseNodes.push(moreComponent);
          }
 
+     let leaderNodes = this.props.collaboration.leaders.edges.map(function (object, index) {
+       let leader = object.node;
+           let leaderComponent = {
+              component: (<TouchableArchyLabel id={leader.id} text={leader.name} onClick={this._pushCollaborator}/>),
+              nodes: []
+            };
+           return leaderComponent;
+      }.bind(this));
+
+     let collaboratorNodes = this.props.collaboration.collaborators.edges.map(function (object, index) {
+       let collaborator = object.node;
+           let collaboratorComponent = {
+              component: (<TouchableArchyLabel id={collaborator.id} text={collaborator.name} onClick={this._pushCollaborator}/>),
+              nodes: []
+            };
+           return collaboratorComponent;
+      }.bind(this));
+
       object = {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
@@ -76,6 +101,24 @@ class CollaborationView extends Component {
             nodes: testCaseNodes
           }
         ]
+      }
+
+      if (leaderNodes.length > 0) {
+        object.nodes.push(
+          {
+            component: (<ArchyLabel text={'led by'} />),
+            nodes: leaderNodes
+          }
+        )
+      }
+
+      if (collaboratorNodes.length > 0) {
+        object.nodes.push(
+          {
+            component: (<ArchyLabel text={'in collaboration with'} />),
+            nodes: collaboratorNodes
+          }
+        )
       }
 
     }
@@ -135,6 +178,22 @@ export default Relay.createContainer(CollaborationView, {
           edges {
             node {
               ${FileImage.getFragment('file')},
+            }
+          }
+        }
+        collaborators(first: 10) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+        leaders(first: 10) {
+          edges {
+            node {
+              id
+              name
             }
           }
         }

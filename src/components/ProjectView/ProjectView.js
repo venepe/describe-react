@@ -36,7 +36,7 @@ class ProjectView extends Component {
   }
 
   _pushCollaborator(userId) {
-    console.log(userId);
+    this.props.history.pushState(null, `/users/${userId}`);
   }
 
   _onDelete() {

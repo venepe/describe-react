@@ -33,14 +33,14 @@ class MyCollaborationsView extends Component {
   render() {
 
     if(this.props.me) {
-      var me = this.props.me
-      if (me.originalProjects.edges.length > 0)
+      var me = this.props.me;
+      if (me.originalProjects.edges.length > 0) {
         return (
           <div className="MyCollaborations-container">
             <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
           </div>
         );
-      else {
+      } else {
         return (
           <div>
             <MyCollaborationsPlaceholder />
