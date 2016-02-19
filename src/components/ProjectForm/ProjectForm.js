@@ -70,7 +70,7 @@ class ProjectForm extends Component {
         <Archy archible={this.state.archible}/>
         <div className="action-container">
           <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
-          <FlatButton label="Create" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onCreate} />
+          <FlatButton label="Start" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onCreate} />
         </div>
       </div>
     );

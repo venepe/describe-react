@@ -65,7 +65,7 @@ class CollaboratorForm extends Component {
         </div>
         <div className="action-container">
           <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
-          <FlatButton label="Create" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onCreate} />
+          <FlatButton label="Add" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onCreate} />
         </div>
       </div>
     );
