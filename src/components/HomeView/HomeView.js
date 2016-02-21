@@ -6,8 +6,9 @@ import styles from './HomeView.css';
 import RegisterFormDialog from '../RegisterFormDialog';
 
 class HomeView extends Component {
-    constructor(props) {
+    constructor(props, context) {
         super(props);
+        this.router = context.router;
         this._onRegister = this._onRegister.bind(this);
         this._showRegister = this._showRegister.bind(this);
     }
@@ -18,7 +19,7 @@ class HomeView extends Component {
 
     _onRegister() {
       this.refs.registerFormDialog.dismiss();
-      this.props.history.pushState(null, '/myprojects');
+      this.router.push('/myprojects');
     }
 
     render() {
@@ -44,5 +45,9 @@ class HomeView extends Component {
             );
     }
 }
+
+HomeView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default HomeView;

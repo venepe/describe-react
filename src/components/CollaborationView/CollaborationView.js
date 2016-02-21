@@ -17,8 +17,9 @@ const _first = 10;
 const _next = 10;
 
 class CollaborationView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCoverImage = this._pushCoverImage.bind(this);
     this._pushCollaborator = this._pushCollaborator.bind(this);
@@ -28,20 +29,20 @@ class CollaborationView extends Component {
 
   _pushTestCase(testCaseId) {
     let collaborationId = this.props.collaboration.id;
-    this.props.history.pushState(null, `/collaborations/${collaborationId}/testCases/${testCaseId}`);
+    this.router.push(`/collaborations/${collaborationId}/testCases/${testCaseId}`);
   }
 
   _pushCoverImage(fileId) {
     let collaborationId = this.props.collaboration.id;
-    this.props.history.pushState(null, `/collaborations/${collaborationId}/files/${fileId}`);
+    this.router.push(`/collaborations/${collaborationId}/files/${fileId}`);
   }
 
   _pushCollaborator(userId) {
-    this.props.history.pushState(null, `/users/${userId}`);
+    this.router.push(`/users/${userId}`);
   }
 
   _onDelete() {
-    this.props.history.replaceState(null, '/mycollaborations')
+    this.router.replace('/mycollaborations');
   }
 
   _onLoadMoreTestCases() {
@@ -61,7 +62,7 @@ class CollaborationView extends Component {
       let testCaseNodes = this.props.collaboration.originalTestCases.edges.map(function (object, index) {
         let testCase = object.node;
          let testCaseComponent = {
-           component: (<TestCaseView testCase={testCase} project={this.props.collaboration} history={this.props.history} onClick={this._pushTestCase} />),
+           component: (<TestCaseView testCase={testCase} project={this.props.collaboration} onClick={this._pushTestCase} />),
            nodes: []
          };
          return testCaseComponent;
@@ -138,6 +139,10 @@ class CollaborationView extends Component {
     );
   }
 }
+
+CollaborationView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(CollaborationView, {
   initialVariables: {

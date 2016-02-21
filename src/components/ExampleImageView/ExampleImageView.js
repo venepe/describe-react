@@ -6,14 +6,15 @@ import ExampleImage from '../ExampleImage';
 import styles from './ExampleImageView.css';
 
 class ExampleImageView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onDelete = this._onDelete.bind(this);
   }
 
   _onDelete() {
     let path = this.props.location.pathname.replace(/\/examples.*/, '');
-    this.props.history.replaceState(null, path);
+    this.router.replace(path);
   }
 
   render() {
@@ -22,6 +23,10 @@ class ExampleImageView extends Component {
     );
   }
 }
+
+ExampleImageView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(ExampleImageView, {
   fragments: {

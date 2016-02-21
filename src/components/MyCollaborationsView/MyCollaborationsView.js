@@ -12,14 +12,15 @@ const _first = 10;
 const _next = 10;
 
 class MyCollaborationsView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onPressRow = this._onPressRow.bind(this);
     this._onEndReached = this._onEndReached.bind(this);
   }
 
   _onPressRow(collaboration) {
-    this.props.history.pushState(null, '/collaborations/' + collaboration.id);
+    this.router.push(`/collaborations/${collaboration.id}`);
   }
 
   _onEndReached(cursor) {
@@ -57,7 +58,11 @@ class MyCollaborationsView extends Component {
   }
 }
 
-var MyCollaborationsContainer = Relay.createContainer(MyCollaborationsView, {
+MyCollaborationsView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
+export default Relay.createContainer(MyCollaborationsView, {
   initialVariables: {
     first: _first,
     after: null,
@@ -78,6 +83,3 @@ var MyCollaborationsContainer = Relay.createContainer(MyCollaborationsView, {
     `,
   },
 });
-
-
-module.exports = MyCollaborationsContainer;

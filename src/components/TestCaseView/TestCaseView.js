@@ -16,8 +16,9 @@ const _first = 2;
 const _next = 2;
 
 class TestCaseView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._pushExample = this._pushExample.bind(this);
     this._pushFulfillment = this._pushFulfillment.bind(this);
     this._onLoadMoreExamples = this._onLoadMoreExamples.bind(this);
@@ -27,13 +28,13 @@ class TestCaseView extends Component {
   _pushExample(exampleId) {
     let projectId = this.props.project.id;
     let testCaseId = this.props.testCase.id;
-    this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}/examples/${exampleId}`);
+    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/examples/${exampleId}`);
   }
 
   _pushFulfillment(fulfillmentId) {
     let projectId = this.props.project.id;
     let testCaseId = this.props.testCase.id;
-    this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}`);
+    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}`);
   }
 
   _onLoadMoreExamples() {
@@ -139,7 +140,11 @@ class TestCaseView extends Component {
 }
 
 TestCaseView.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
-TestCaseView.defaultProps = {history: {}, onClick: function() {}, onDelete: function() {}};
+TestCaseView.defaultProps = {onClick: function() {}, onDelete: function() {}};
+
+TestCaseView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(TestCaseView, {
   initialVariables: {

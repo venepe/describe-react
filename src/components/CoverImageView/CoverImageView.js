@@ -6,18 +6,19 @@ import CoverImage from '../CoverImage';
 import styles from './CoverImageView.css';
 
 class CoverImageView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._goBack = this._goBack.bind(this);
   }
 
   _goBack() {
     let pathname = this.props.location.pathname;
     if (pathname.indexOf('/me/') !== -1) {
-      this.props.history.replaceState(null, '/me');
+      this.router.replace('/me');
     } else {
       let path = pathname.replace(/\/coverImages.*/, '');
-      this.props.history.replaceState(null, path);
+      this.router.replace(path);
     }
 
   }
@@ -28,6 +29,10 @@ class CoverImageView extends Component {
     );
   }
 }
+
+CoverImageView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(CoverImageView, {
   fragments: {

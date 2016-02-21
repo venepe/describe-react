@@ -8,14 +8,15 @@ import FileImage from '../FileImage';
 import Divider from 'material-ui/lib/divider';
 
 class UserView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._pushCoverImage = this._pushCoverImage.bind(this);
   }
 
   _pushCoverImage(fileId) {
     let userId = this.props.user.id;
-    this.props.history.pushState(null, `/users/${userId}/files/${fileId}`);
+    this.router.push(`/users/${userId}/files/${fileId}`);
   }
 
   render() {
@@ -45,6 +46,10 @@ class UserView extends Component {
     }
   }
 }
+
+UserView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(UserView, {
   fragments: {

@@ -24,7 +24,7 @@ class App extends Component {
 
         return (
             <div>
-              <Header history={this.props.history}/>
+              <Header/>
               <Panel>
                  {children}
               </Panel>

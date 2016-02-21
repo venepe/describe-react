@@ -16,8 +16,9 @@ const _first = 10;
 const _next = 10;
 
 class ProjectView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCoverImage = this._pushCoverImage.bind(this);
     this._pushCollaborator = this._pushCollaborator.bind(this);
@@ -27,20 +28,20 @@ class ProjectView extends Component {
 
   _pushTestCase(testCaseId) {
     let projectId = this.props.project.id;
-    this.props.history.pushState(null, `/projects/${projectId}/testCases/${testCaseId}`);
+    this.router.push(`/projects/${projectId}/testCases/${testCaseId}`);
   }
 
   _pushCoverImage(coverImageId) {
     let projectId = this.props.project.id;
-    this.props.history.pushState(null, `/projects/${projectId}/coverImages/${coverImageId}`);
+    this.router.push(`/projects/${projectId}/coverImages/${coverImageId}`);
   }
 
   _pushCollaborator(userId) {
-    this.props.history.pushState(null, `/users/${userId}`);
+    this.router.push(`/users/${userId}`);
   }
 
   _onDelete() {
-    this.props.history.replaceState(null, '/myprojects')
+    this.router.replace('/myprojects');
   }
 
   _onLoadMoreTestCases() {
@@ -60,7 +61,7 @@ class ProjectView extends Component {
       let testCaseNodes = this.props.project.originalTestCases.edges.map(function (object, index) {
         let testCase = object.node;
          let testCaseComponent = {
-           component: (<TestCaseView testCase={testCase} project={this.props.project} history={this.props.history} onClick={this._pushTestCase} />),
+           component: (<TestCaseView testCase={testCase} project={this.props.project} onClick={this._pushTestCase} />),
            nodes: []
          };
          return testCaseComponent;
@@ -77,7 +78,7 @@ class ProjectView extends Component {
      let collaboratorNodes = this.props.project.collaborators.edges.map(function (object, index) {
        let collaborator = object.node;
            let collaboratorComponent = {
-              component: (<CollaboratorText collaborator={collaborator} project={this.props.project} history={this.props.history} onClick={this._pushCollaborator}/>),
+              component: (<CollaboratorText collaborator={collaborator} project={this.props.project} onClick={this._pushCollaborator}/>),
               nodes: []
             };
            return collaboratorComponent;
@@ -119,6 +120,10 @@ class ProjectView extends Component {
     );
   }
 }
+
+ProjectView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(ProjectView, {
   initialVariables: {

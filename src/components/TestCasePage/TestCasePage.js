@@ -6,24 +6,29 @@ import styles from './TestCasePage.css';
 import TestCaseView from '../TestCaseView';
 
 class TestCasePage extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onDelete = this._onDelete.bind(this);
   }
 
   _onDelete() {
     let projectId = this.props.project.id;
-    this.props.history.replaceState(null, `/projects/${projectId}`);
+    this.router.replace(`/projects/${projectId}`);
   }
 
   render() {
     return (
       <div className="TestCasePage-container">
-        <TestCaseView testCase={this.props.testCase} project={this.props.project} history={this.props.history} onDelete={this._onDelete} />
+        <TestCaseView testCase={this.props.testCase} project={this.props.project} onDelete={this._onDelete} />
       </div>
     );
   }
 }
+
+TestCasePage.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Relay.createContainer(TestCasePage, {
   fragments: {

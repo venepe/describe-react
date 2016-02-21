@@ -15,8 +15,9 @@ const _first = 10;
 const _next = 10;
 
 class MyProjectsView extends Component {
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onPressRow = this._onPressRow.bind(this);
     this._onEndReached = this._onEndReached.bind(this);
     this._introduceProject = this._introduceProject.bind(this);
@@ -28,7 +29,7 @@ class MyProjectsView extends Component {
   }
 
   _onPressRow(project) {
-    this.props.history.pushState(null, '/projects/' + project.id);
+    this.router.push(`/projects/${project.id}`);
   }
 
   _onEndReached(cursor) {
@@ -78,7 +79,11 @@ class MyProjectsView extends Component {
   }
 }
 
-var MyProjectsContainer = Relay.createContainer(MyProjectsView, {
+MyProjectsView.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+
+export default Relay.createContainer(MyProjectsView, {
   initialVariables: {
     first: _first,
     after: null,
@@ -100,6 +105,3 @@ var MyProjectsContainer = Relay.createContainer(MyProjectsView, {
     `,
   },
 });
-
-
-module.exports = MyProjectsContainer;

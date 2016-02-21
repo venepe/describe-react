@@ -20,8 +20,9 @@ import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT, DELET
 
 class Header extends Component {
 
-    constructor(props) {
+    constructor(props, context) {
         super(props);
+        this.router = context.router;
         this._showLogin = this._showLogin.bind(this);
         this._showRegister = this._showRegister.bind(this);
         this._onLogin = this._onLogin.bind(this);
@@ -50,7 +51,7 @@ class Header extends Component {
 
     _onLogin() {
       this.refs.loginFormDialog.dismiss();
-      this.props.history.pushState(null, '/myprojects');
+      this.router.push('/myprojects');
     }
 
     _showRegister() {
@@ -59,12 +60,12 @@ class Header extends Component {
 
     _onRegister() {
       this.refs.registerFormDialog.dismiss();
-      this.props.history.pushState(null, '/myprojects');
+      this.router.push('/myprojects');
     }
 
     _onRegisterLogin() {
       this.refs.loginFormDialog.dismiss();
-      this.props.history.pushState(null, '/myprojects');
+      this.router.push('/myprojects');
     }
 
     _onForgot() {
@@ -72,27 +73,27 @@ class Header extends Component {
     }
 
     _pushProjects() {
-      this.props.history.pushState(null, '/myprojects');
+      this.router.push('/myprojects');
     }
 
     _pushCollaborations() {
-      this.props.history.pushState(null, '/mycollaborations');
+      this.router.push('/mycollaborations');
     }
 
     _onDeleteUser() {
       Authenticate.unregister()
         .then(() => {
-          this.props.history.replaceState(null, '/');
+          this.router.replace('/');
         })
         .catch(() => {
-          this.props.history.replaceState(null, '/');
+          this.router.replace('/');
         })
     }
 
     _presentDialog(dialogType) {
       switch (dialogType) {
           case VIEW_PROFILE:
-            this.props.history.pushState(null, '/me');
+            this.router.push('/me');
             break;
           case UPDATE_USER:
             let meId = SMTIStorage.getMeIdFromLocalStorage();
@@ -107,10 +108,10 @@ class Header extends Component {
           case SIGN_OUT:
               Authenticate.logoff()
                 .then(() => {
-                  this.props.history.replaceState(null, '/');
+                  this.router.replace('/');
                 })
                 .catch(() => {
-                  this.props.history.replaceState(null, '/');
+                  this.router.replace('/');
                 })
             break;
         default:
@@ -154,5 +155,9 @@ class Header extends Component {
             );
     }
 }
+
+Header.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default Header;
