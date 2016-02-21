@@ -2,8 +2,8 @@
 
 import React, { PropTypes, Component } from 'react';
 import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
-let MenuItem = require('material-ui/lib/menus/menu-item');
-let MenuDivider = require('material-ui/lib/menus/menu-divider');
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import Divider from 'material-ui/lib/divider';
 import styles from './EditUserSettingsModal.css';
 import ModalTypes, { DELETE_USER } from '../../constants/ModalTypes';
 
@@ -28,7 +28,7 @@ class EditUserSettingsModal extends Component {
     return (
         <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="Delete Account" value={DELETE_USER} />
-          <MenuDivider />
+          <Divider />
           <MenuItem primaryText="Close" />
         </IconMenu>
     );

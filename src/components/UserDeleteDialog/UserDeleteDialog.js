@@ -16,15 +16,23 @@ class UserDeleteDialog extends Component {
     super(props);
     this._onCancel = this._onCancel.bind(this);
     this._onDelete = this._onDelete.bind(this);
+
+    this.state = {
+      isOpened: false
+    }
   }
 
   _onDelete() {
-    this.refs.dialog.dismiss();
+    this.setState({
+      isOpened: false
+    });
     this.props.onDelete();
   }
 
   _onCancel() {
-    this.refs.dialog.dismiss();
+    this.setState({
+      isOpened: false
+    });
     this.props.onCancel();
   }
 
@@ -32,6 +40,7 @@ class UserDeleteDialog extends Component {
     return (
       <Dialog ref="dialog"
         title="Delete Your Account?"
+        open={this.state.isOpened}
         modal={false}>
         <div>
           <div className="text">Deleting your account will also delete your projects.</div>
@@ -45,7 +54,9 @@ class UserDeleteDialog extends Component {
   }
 
   show() {
-    this.refs.dialog.show();
+    this.setState({
+      isOpened: true
+    });
   }
 }
 

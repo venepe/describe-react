@@ -2,8 +2,8 @@
 
 import React, { PropTypes, Component } from 'react';
 import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
-let MenuItem = require('material-ui/lib/menus/menu-item');
-let MenuDivider = require('material-ui/lib/menus/menu-divider');
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import Divider from 'material-ui/lib/divider';
 import styles from './ModalableArchyLabel.css';
 import TouchableArchyLabel from '../TouchableArchyLabel';
 
@@ -52,7 +52,7 @@ class ModalableArchyLabel extends Component {
       <div className="modalable-archy-label">
           <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
             {this._buildMenuItem()}
-            <MenuDivider />
+            <Divider />
             <MenuItem primaryText="Close" />
           </IconMenu>
         <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />

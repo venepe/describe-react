@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import styles from './MeView.css';
 import { Paper } from 'material-ui';
 import CoverImage from '../CoverImage';
-let MenuDivider = require('material-ui/lib/menus/menu-divider');
+import Divider from 'material-ui/lib/divider';
 
 import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_EXAMPLE, FULFILL_PROJECT, UPDATE_PAPER, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_EXAMPLE, DELETE_PAPER } from '../../constants/ModalTypes';
 
@@ -34,7 +34,7 @@ class MeView extends Component {
           <div className="me-container">
             <div className="name">{this.props.me.name}</div>
             <div className="full-name">{fullName}</div>
-            <MenuDivider />
+            <Divider />
             <div className="label">Summary</div>
             <div className="summary">{summary}</div>
           </div>

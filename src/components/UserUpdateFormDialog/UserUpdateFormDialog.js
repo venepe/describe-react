@@ -12,25 +12,23 @@ import EditUserSettingsModal from '../EditUserSettingsModal';
 class UserUpdateFormDialog extends Component {
   constructor(props) {
     super(props);
-    this._onCancel = this._onCancel.bind(this);
-    this._onUpdate = this._onUpdate.bind(this);
+    this.dismiss = this.dismiss.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
 
     this.state = {
-      meId: props.meId
+      meId: props.meIs,
+      isOpened: false
     };
   }
 
-  _onUpdate() {
-    this.refs.dialog.dismiss();
-  }
-
-  _onCancel() {
-    this.refs.dialog.dismiss();
+  dismiss() {
+    this.setState({
+      isOpened: false
+    });
   }
 
   _onItemTouchTap(value) {
-    this.refs.dialog.dismiss();
+    this.dismiss();
     this.props.onMenuItemClick(value);
   }
 
@@ -41,12 +39,13 @@ class UserUpdateFormDialog extends Component {
     return (
       <Dialog ref="dialog"
         title="Edit Profile"
+        open={this.state.isOpened}
         autoDetectWindowHeight={true}
         autoScrollBodyContent={true}
         contentClassName="UserUpdateForm-container"
         modal={false}>
         <div style={{height: '315px'}}>
-          <Relay.RootContainer Component={UserUpdateForm} route={meRoute} renderFetched={data => <UserUpdateForm {...data} onCancel={this._onCancel} onUpdate={this._onUpdate} /> } />
+          <Relay.RootContainer Component={UserUpdateForm} route={meRoute} renderFetched={data => <UserUpdateForm {...data} onCancel={this.dismiss} onUpdate={this.dismiss} /> } />
           {editModal}
         </div>
       </Dialog>
@@ -55,9 +54,9 @@ class UserUpdateFormDialog extends Component {
 
   show(meId) {
     this.setState({
+      isOpened: true,
       meId
     });
-    this.refs.dialog.show();
   }
 }
 

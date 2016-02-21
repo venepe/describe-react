@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import styles from './UserView.css';
 import { Paper } from 'material-ui';
 import FileImage from '../FileImage';
-let MenuDivider = require('material-ui/lib/menus/menu-divider');
+import Divider from 'material-ui/lib/divider';
 
 class UserView extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class UserView extends Component {
           <div className="user-container">
             <div className="name">{this.props.user.name}</div>
             <div className="full-name">{fullName}</div>
-            <MenuDivider />
+            <Divider />
             <div className="label">Summary</div>
             <div className="summary">{summary}</div>
           </div>

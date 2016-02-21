@@ -11,9 +11,6 @@ import ProjectRoute from '../../routes/ProjectRoute';
 class CollaboratorFormDialog extends Component {
   constructor(props) {
     super(props);
-    if (props.isVisible === true) {
-      this.refs.dialog.show();
-    }
 
     this.state = {
       isVisible: props.isVisible
@@ -21,13 +18,6 @@ class CollaboratorFormDialog extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isVisible !== undefined) {
-      if (nextProps.isVisible === true) {
-        this.refs.dialog.show();
-      } else {
-        this.refs.dialog.dismiss();
-      }
-    }
     this.setState({
       ...nextProps
     });
@@ -38,6 +28,7 @@ class CollaboratorFormDialog extends Component {
     return (
       <Dialog ref="dialog"
         title="Add Collaborator"
+        open={this.state.isVisible}
         modal={false}>
         <CollaboratorForm project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
       </Dialog>

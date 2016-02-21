@@ -11,20 +11,13 @@ import MeRoute from '../../routes/MeRoute';
 class ProjectFormDialog extends Component {
   constructor(props) {
     super(props);
-    this._onCancel = this._onCancel.bind(this);
-    this._onCreate = this._onCreate.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.show = this.show.bind(this);
 
     this.state = {
-      meId: props.meId
+      meId: props.meId,
+      isOpened: false
     };
-  }
-
-  _onCreate() {
-    this.refs.dialog.dismiss();
-  }
-
-  _onCancel() {
-    this.refs.dialog.dismiss();
   }
 
   render() {
@@ -34,17 +27,24 @@ class ProjectFormDialog extends Component {
     return (
       <Dialog ref="dialog"
         title="Start Project"
+        open={this.state.isOpened}
         modal={false}>
-        <Relay.RootContainer Component={ProjectForm} route={meRoute} renderFetched={data => <ProjectForm {...data} onCancel={this._onCancel} onCreate={this._onCreate} /> } />
+        <Relay.RootContainer Component={ProjectForm} route={meRoute} renderFetched={data => <ProjectForm {...data} onCancel={this.dismiss} onCreate={this.dismiss} /> } />
       </Dialog>
     );
   }
 
   show(meId) {
     this.setState({
+      isOpened: true,
       meId
     });
-    this.refs.dialog.show();
+  }
+
+  dismiss() {
+    this.setState({
+      isOpened: false
+    });
   }
 }
 

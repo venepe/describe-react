@@ -9,6 +9,17 @@ class RegisterFormDialog extends Component {
   constructor(props) {
     super(props);
     this._onRegister = this._onRegister.bind(this);
+    this._getInitialState = this._getInitialState.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.show = this.show.bind(this);
+
+    this.state = this._getInitialState();
+  }
+
+  _getInitialState() {
+    return {
+      isOpened: false
+    };
   }
 
   _onRegister(meId) {
@@ -20,6 +31,8 @@ class RegisterFormDialog extends Component {
     return (
       <Dialog ref="dialog"
         title="Sign Up"
+        open={this.state.isOpened}
+        onRequestClose={this.dismiss}
         modal={false}>
         <RegisterForm onRegister={this._onRegister} />
       </Dialog>
@@ -27,11 +40,13 @@ class RegisterFormDialog extends Component {
   }
 
   show() {
-    this.refs.dialog.show();
+    this.setState({
+      isOpened: true
+    });
   }
 
   dismiss() {
-    this.refs.dialog.dismiss();
+    this.setState(this._getInitialState());
   }
 }
 

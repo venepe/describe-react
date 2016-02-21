@@ -3,7 +3,6 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import { FlatButton, TextField } from 'material-ui';
-let MenuDivider = require('material-ui/lib/menus/menu-divider');
 import styles from './UserUpdateForm.css';
 import {track, Events} from '../../utils/SMTIAnalytics';
 import Utilities from '../../utils/utilities';

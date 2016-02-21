@@ -1,11 +1,11 @@
 'use strict';
 
-import createHashHistory from 'history/lib/createHashHistory';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
-import {Router} from 'react-router';
-import ReactRouterRelay from 'react-router-relay';
+import { Router, useRouterHistory } from 'react-router';
+import { createHashHistory } from 'history';
+import { RelayRouter } from 'react-router-relay';
 import SMTIDefaultNetworkLayer from './utils/SMTIDefaultNetworkLayer';
 import SMTIStorage from './utils/storage';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -16,7 +16,7 @@ let token = SMTIStorage.getTokenFromLocalStorage();
 SMTIDefaultNetworkLayer.init(token);
 injectTapEventPlugin();
 
-const history = createHashHistory({queryKey: false});
+const history = useRouterHistory(createHashHistory)({ queryKey: false })
 
 const mountNode = document.createElement('div');
 document.body.appendChild(mountNode);
@@ -38,9 +38,6 @@ mixpanel.init("2aaf0f688a40c17f7b9fe80ba178de3e");
 
 
 ReactDOM.render(
-    <Router
-      createElement={ReactRouterRelay.createElement}
-      history={history} routes={routes}
-    />,
+  <RelayRouter history={history} routes={routes} />,
   mountNode
 );

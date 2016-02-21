@@ -15,7 +15,8 @@ class LoginFormDialog extends Component {
     this._onShowForgot = this._onShowForgot.bind(this);
     this._onRegister = this._onRegister.bind(this);
     this._onForgot = this._onForgot.bind(this);
-    this._reset = this._reset.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this.show = this.show.bind(this);
 
     this.state = this._getInitialState();
 
@@ -24,7 +25,8 @@ class LoginFormDialog extends Component {
   _getInitialState() {
     return {
       component: (<LoginForm onLogin={this._onLogin} onShowRegister={this._onShowRegister} onShowForgot={this._onShowForgot} />),
-      dialogTitle: 'Log In'
+      dialogTitle: 'Log In',
+      isOpened: false
     };
   }
 
@@ -59,7 +61,8 @@ class LoginFormDialog extends Component {
     return (
       <Dialog ref="dialog"
         title={this.state.dialogTitle}
-        onClickAway={this._reset}
+        open={this.state.isOpened}
+        onRequestClose={this.dismiss}
         modal={false}>
         {this.state.component}
       </Dialog>
@@ -67,17 +70,15 @@ class LoginFormDialog extends Component {
   }
 
   show() {
-    this.refs.dialog.show();
+    this.setState({
+      isOpened: true
+    });
   }
 
   dismiss() {
-    this.refs.dialog.dismiss();
     this.setState(this._getInitialState());
   }
 
-  _reset() {
-    this.setState(this._getInitialState());
-  }
 }
 
 LoginFormDialog.propTypes = {onLogin: PropTypes.func, onRegister: PropTypes.func, onForgot: PropTypes.func};

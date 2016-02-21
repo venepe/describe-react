@@ -13,16 +13,22 @@ class PasswordFormDialog extends Component {
     this._onChangeCurrentPassword = this._onChangeCurrentPassword.bind(this);
     this._onChangeNewPassword = this._onChangeNewPassword.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
-    this._onCancel = this._onCancel.bind(this);
-    this._reset = this._reset.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+    this._getInitialState = this._getInitialState.bind(this);
 
-    this.state = {
+    this.state = this._getInitialState();
+
+  }
+
+  _getInitialState() {
+    return {
       current: '',
       new: '',
       errorMessage: '',
       isCurrentPasswordValid: false,
-      isNewPasswordValid: false
-    }
+      isNewPasswordValid: false,
+      isOpened: false
+    };
   }
 
   _onChangeCurrentPassword(e) {
@@ -51,8 +57,7 @@ class PasswordFormDialog extends Component {
     if (this.state.isNewPasswordValid && this.state.isCurrentPasswordValid) {
       Authenticate.password(currentPassword, newPassword)
         .then(() => {
-          this._reset();
-          this.refs.dialog.dismiss();
+          this.dismiss();
         })
         .catch((err) => {
           this.setState({
@@ -66,25 +71,16 @@ class PasswordFormDialog extends Component {
     }
   }
 
-  _onCancel() {
-    this.refs.dialog.dismiss();
-  }
-
-  _reset() {
-    this.setState({
-      current: '',
-      new: '',
-      errorMessage: '',
-      isCurrentPasswordValid: false,
-      isNewPasswordValid: false
-    });
+  dismiss() {
+    this.setState(this._getInitialState());
   }
 
   render() {
     return (
       <Dialog ref="dialog"
         title="Change Password"
-        onClickAway={this._reset}
+        open={this.state.isOpened}
+        onRequestClose={this.dismiss}
         modal={false}>
         <div>
           <div>
@@ -93,7 +89,7 @@ class PasswordFormDialog extends Component {
           </div>
           <div className="action-container">
             <div className="error-text">{this.state.errorMessage}</div>
-            <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
+            <FlatButton label="Cancel" secondary={true} onTouchTap={this.dismiss} />
             <FlatButton label="Submit" disabled={!(this.state.isNewPasswordValid && this.state.isCurrentPasswordValid)} primary={true} onTouchTap={this._onSubmit} />
           </div>
         </div>
@@ -102,7 +98,9 @@ class PasswordFormDialog extends Component {
   }
 
   show() {
-    this.refs.dialog.show();
+    this.setState({
+      isOpened: true
+    });
   }
 
 }

@@ -11,9 +11,6 @@ import TestCaseRoute from '../../routes/TestCaseRoute';
 class TestCaseUpdateFormDialog extends Component {
   constructor(props) {
     super(props);
-    if (props.isVisible === true) {
-      this.refs.dialog.show();
-    }
 
     this.state = {
       isVisible: props.isVisible
@@ -21,13 +18,6 @@ class TestCaseUpdateFormDialog extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isVisible !== undefined) {
-      if (nextProps.isVisible === true) {
-        this.refs.dialog.show();
-      } else {
-        this.refs.dialog.dismiss();
-      }
-    }
     this.setState({
       ...nextProps
     });
@@ -38,6 +28,7 @@ class TestCaseUpdateFormDialog extends Component {
     return (
       <Dialog ref="dialog"
         title="Update Test Case"
+        open={this.state.isVisible}
         modal={false}>
         <TestCaseUpdateForm testCase={this.props.testCase} onCancel={this.props.onCancel} onUpdate={this.props.onUpdate} />
       </Dialog>
