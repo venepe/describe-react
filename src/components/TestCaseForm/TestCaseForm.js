@@ -53,7 +53,7 @@ class TestCaseForm extends Component {
   _onCreate() {
     var it = this.state.it;
     if (it.length > 0) {
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new IntroduceTestCaseMutation({it, project: this.props.project})
       );
       //Start SMTIAnalytics

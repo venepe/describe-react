@@ -36,7 +36,7 @@ class CollaborationText extends Component {
           break;
         case LEAVE_PROJECT:
             this.props.onDelete(this.props.collaboration.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteCollaborationMutation({collaboration: this.props.collaboration, me: this.props.me})
             );
           break;

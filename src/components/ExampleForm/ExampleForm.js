@@ -17,7 +17,7 @@ class ExampleForm extends Component {
   _onCreate(e) {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new IntroduceExampleMutation({uri, target: this.props.target})
       );
       //Start SMTIAnalytics

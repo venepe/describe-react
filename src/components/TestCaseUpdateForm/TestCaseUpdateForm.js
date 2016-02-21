@@ -40,7 +40,7 @@ class TestCaseUpdateForm extends Component {
   _onUpdate() {
     var it = this.state.it;
     if (it.length > 0) {
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new UpdateTestCaseMutation({it, testCase: this.props.testCase})
       );
       this.props.onUpdate();

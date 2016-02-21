@@ -55,7 +55,7 @@ class UserUpdateForm extends Component {
     let fullName = this.state.fullName;
     let summary = this.state.summary;
     if (name.length > 5) {
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new UpdateUserMutation({name, fullName, summary, user: this.props.me})
       );
       //Start SMTIAnalytics

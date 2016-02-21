@@ -52,7 +52,7 @@ class ProjectText extends Component {
           break;
         case DELETE_PROJECT:
             this.props.onDelete(this.props.project.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteProjectMutation({project: this.props.project, me: this.props.me})
             );
           break;

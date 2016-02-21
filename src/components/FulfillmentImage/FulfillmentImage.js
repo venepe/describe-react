@@ -35,7 +35,7 @@ class FulfillmentImage extends Component {
     switch (value) {
         case DELETE_FULFILLMENT:
             this.props.onDelete(this.props.fulfillment.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project})
             );
           break;

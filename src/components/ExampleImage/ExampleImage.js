@@ -35,7 +35,7 @@ class ExampleImage extends Component {
     switch (value) {
         case DELETE_EXAMPLE:
             this.props.onDelete(this.props.example.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteExampleMutation({example: this.props.example, target: this.props.target})
             );
           break;

@@ -37,7 +37,7 @@ class ProjectUpdateForm extends Component {
   _onUpdate() {
     var title = this.state.title;
     if (title.length > 0) {
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new UpdateProjectMutation({title, project: this.props.project})
       );
       this.props.onUpdate();

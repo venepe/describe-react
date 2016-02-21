@@ -57,7 +57,7 @@ class TestCaseText extends Component {
           break;
         case DELETE_TEST_CASE:
             this.props.onDelete(this.props.testCase.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteTestCaseMutation({testCase: this.props.testCase, project: this.props.project})
             );
           break;

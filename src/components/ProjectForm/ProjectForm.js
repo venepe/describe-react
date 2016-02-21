@@ -38,7 +38,7 @@ class ProjectForm extends Component {
   _onCreate() {
     var title = this.state.title;
     if (title.length > 0) {
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new IntroduceProjectMutation({title, me: this.props.me})
       );
       //Start SMTIAnalytics

@@ -31,7 +31,7 @@ class CollaboratorText extends Component {
     switch (value) {
         case DELETE_COLLABORATOR:
             this.props.onDelete(this.props.project.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteCollaboratorMutation({collaborator: this.props.collaborator, project: this.props.project})
             );
           break;

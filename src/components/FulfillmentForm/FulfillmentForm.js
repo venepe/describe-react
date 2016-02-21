@@ -17,7 +17,7 @@ class FulfillmentForm extends Component {
   _onCreate(e) {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new IntroduceFulfillmentMutation({uri, testCase: this.props.testCase, project: this.props.project})
       );
       //Start SMTIAnalytics

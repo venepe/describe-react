@@ -26,7 +26,7 @@ class CollaboratorForm extends Component {
     let email = this.state.email;
     let isDisabled = this.state.isDisabled;
     if (!isDisabled) {
-      Relay.Store.update(
+      Relay.Store.commitUpdate(
         new IntroduceCollaboratorMutation({email, project: this.props.project})
       );
       //Start SMTIAnalytics

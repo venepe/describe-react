@@ -43,7 +43,7 @@ class CoverImage extends Component {
           break;
         case DELETE_COVER_IMAGE:
             this.props.onDelete(this.props.coverImage.id);
-            Relay.Store.update(
+            Relay.Store.commitUpdate(
               new DeleteCoverImageMutation({coverImage: this.props.coverImage, target: this.props.target})
             );
           break;
