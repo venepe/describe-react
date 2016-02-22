@@ -41,7 +41,7 @@ export default Relay.createContainer(FulfillmentImageView, {
       }
     `,
     project: () => Relay.QL`
-      fragment on TestCase {
+      fragment on Project {
         ${FulfillmentImage.getFragment('project')},
       }
     `,
