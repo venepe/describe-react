@@ -18,7 +18,7 @@ class IntroduceCollaboratorMutation extends Relay.Mutation {
       fragment on IntroduceCollaboratorPayload {
         collaboratorEdge
         project {
-          collaborators
+          id
         },
       }
     `;
