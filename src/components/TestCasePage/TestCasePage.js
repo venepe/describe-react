@@ -13,8 +13,8 @@ class TestCasePage extends Component {
   }
 
   _onDelete() {
-    let projectId = this.props.project.id;
-    this.router.replace(`/projects/${projectId}`);
+    let path = this.props.location.pathname.replace(/\/testCases.*/, '');
+    this.router.replace(path);
   }
 
   render() {

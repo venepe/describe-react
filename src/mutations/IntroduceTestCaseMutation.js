@@ -20,7 +20,6 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
         testCaseEdge
         project {
           numOfTestCases
-          testCases
         },
       }
     `;

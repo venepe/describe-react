@@ -115,6 +115,13 @@ export default (
         onEnter={requireAuth}
       />
     <Route
+        path="collaborations/:projectId/testCases/:testCaseId" component={TestCasePage}
+        queries={TestCaseQueries}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
         path="*/:targetId/examples/:exampleId" component={ExampleImageView}
         queries={ExampleQueries}
         renderLoading={() => <SpinnerView />}

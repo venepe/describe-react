@@ -22,7 +22,9 @@ class DeleteCoverImageMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on DeleteCoverImagePayload {
         deletedCoverImageId,
-        target
+        target {
+          id
+        }
       }
     `;
   }

@@ -22,7 +22,9 @@ class DeleteExampleMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on DeleteExamplePayload {
         deletedExampleId,
-        target
+        target {
+          id
+        }
       }
     `;
   }

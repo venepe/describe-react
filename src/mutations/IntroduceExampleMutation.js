@@ -18,7 +18,9 @@ class IntroduceExampleMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceExamplePayload {
         exampleEdge
-        target
+        target {
+          id
+        }
       }
     `;
   }

@@ -18,7 +18,9 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceCoverImagePayload {
         coverImageEdge
-        target
+        target {
+          id
+        }
       }
     `;
   }
