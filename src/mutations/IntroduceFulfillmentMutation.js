@@ -82,9 +82,7 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
     }
     return {
       fulfillmentEdge: {
-        node: {
-          uri: this.props.uri,
-        },
+        node: {},
       },
       testCase: {
         id: this.props.testCase.id,
