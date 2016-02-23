@@ -22,6 +22,7 @@ class DeleteCoverImageMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on DeleteCoverImagePayload {
         deletedCoverImageId,
+        coverImageEdge,
         target {
           id
         }
@@ -35,7 +36,18 @@ class DeleteCoverImageMutation extends Relay.Mutation {
       parentID: this.props.target.id,
       connectionName: 'coverImages',
       deletedIDFieldName: 'deletedCoverImageId',
-    }];
+    },
+    {
+      type: 'RANGE_ADD',
+      parentName: 'target',
+      parentID: this.props.target.id,
+      connectionName: 'coverImages',
+      edgeName: 'coverImageEdge',
+      rangeBehaviors: {
+        '': 'prepend',
+      },
+    }
+  ];
   }
   getVariables() {
     return {
@@ -44,7 +56,10 @@ class DeleteCoverImageMutation extends Relay.Mutation {
   }
   getOptimisticResponse() {
     return {
-      deletedCoverImageId: this.props.coverImage.id
+      deletedCoverImageId: this.props.coverImage.id,
+      coverImageEdge: {
+        node: {},
+      },
     };
   }
 }

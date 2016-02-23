@@ -3722,6 +3722,18 @@
               "deprecationReason": null
             },
             {
+              "name": "coverImageEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "FileEdge",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "target",
               "description": null,
               "args": [],
