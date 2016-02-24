@@ -2217,7 +2217,7 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "targetId",
+              "name": "projectId",
               "description": null,
               "type": {
                 "kind": "NON_NULL",

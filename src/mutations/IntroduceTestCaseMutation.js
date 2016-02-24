@@ -45,7 +45,7 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
   }
   getVariables() {
     return {
-      targetId: this.props.project.id,
+      projectId: this.props.project.id,
       it: this.props.it,
     };
   }
