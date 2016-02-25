@@ -19,7 +19,7 @@ class UserUpdateForm extends Component {
     this._onChangeFullname = this._onChangeFullname.bind(this);
 
     let isDisabled = true;
-    if (props.me.name.length > 5) {
+    if (Utilities.isValidName(props.me.name)) {
       isDisabled = false;
     }
 
@@ -54,7 +54,7 @@ class UserUpdateForm extends Component {
     let name = this.state.name;
     let fullName = this.state.fullName;
     let summary = this.state.summary;
-    if (name.length > 5) {
+    if (Utilities.isValidName(name)) {
       Relay.Store.commitUpdate(
         new UpdateUserMutation({name, fullName, summary, user: this.props.me})
       );

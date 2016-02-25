@@ -37,7 +37,7 @@ class ProjectForm extends Component {
 
   _onCreate() {
     var title = this.state.title;
-    if (title.length > 0) {
+    if (Utilities.isValidTitle(title)) {
       Relay.Store.commitUpdate(
         new IntroduceProjectMutation({title, me: this.props.me})
       );
@@ -55,7 +55,7 @@ class ProjectForm extends Component {
 
   _onChangeTitle(title) {
     var isDisabled = true;
-    if (title.length > 0) {
+    if (Utilities.isValidTitle(title)) {
       isDisabled = false;
     }
     this.setState({

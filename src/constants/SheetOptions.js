@@ -17,10 +17,10 @@ import {
 
 const projectSheet = {
   options: [
-    {
-      text: 'Add Collaborator',
-      value: INTRODUCE_COLLABORATOR
-    },
+    // {
+    //   text: 'Add Collaborator',
+    //   value: INTRODUCE_COLLABORATOR
+    // },
     {
       text: 'Add Test Case',
       value: INTRODUCE_TEST_CASE

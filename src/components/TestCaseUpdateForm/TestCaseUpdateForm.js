@@ -39,7 +39,7 @@ class TestCaseUpdateForm extends Component {
 
   _onUpdate() {
     var it = this.state.it;
-    if (it.length > 0) {
+    if (Utilities.isValidTestCase(it)) {
       Relay.Store.commitUpdate(
         new UpdateTestCaseMutation({it, testCase: this.props.testCase})
       );
@@ -53,7 +53,7 @@ class TestCaseUpdateForm extends Component {
 
   _onChangeIt(it) {
     var isDisabled = true;
-    if (it.length > 0) {
+    if (Utilities.isValidTestCase(it)) {
       isDisabled = false;
     }
     this.setState({

@@ -10,6 +10,16 @@ function isValidName(name) {
   return isValid;
 }
 
+function isValidTitle(title) {
+  let isValid = title.match(/^.{1,150}$/);
+  return isValid;
+}
+
+function isValidTestCase(testCase) {
+  let isValid = testCase.match(/^.{1,150}$/);
+  return isValid;
+}
+
 function getProjectPlaceholderText() {
   var placeholders = ['my dream house', 'my summer vacation', 'my garden', 'a new dinner table', 'the patio window'];
   var index = getRandomArbitrary(0, placeholders.length);
@@ -28,5 +38,7 @@ function getRandomArbitrary(min, max) {
 
 module.exports.isValidPassword = isValidPassword;
 module.exports.isValidName = isValidName;
+module.exports.isValidTitle = isValidTitle;
+module.exports.isValidTestCase = isValidTestCase;
 module.exports.getProjectPlaceholderText = getProjectPlaceholderText;
 module.exports.getTestCasePlaceholderText = getTestCasePlaceholderText;
