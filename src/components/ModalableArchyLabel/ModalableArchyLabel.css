@@ -1,0 +1,18 @@
+
+.modalable-archy-label {
+  display: inline-block;
+}
+
+.icon-menu {
+  float: left;
+}
+
+.touchable-archy-label {
+  max-width: 90%;
+  margin-top: 10px;
+  padding-left: 5px;
+}
+
+.cont {
+  padding: 20px;
+}

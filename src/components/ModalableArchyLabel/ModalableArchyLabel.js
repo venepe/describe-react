@@ -50,12 +50,12 @@ class ModalableArchyLabel extends Component {
 
     return (
       <div className="modalable-archy-label">
-          <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+          <IconMenu className={'icon-menu'} iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
             {this._buildMenuItem()}
             <Divider />
             <MenuItem primaryText="Close" />
           </IconMenu>
-        <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />
+          <TouchableArchyLabel text={this.state.text} onClick={this._onClick} />
       </div>
     );
   }
