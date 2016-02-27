@@ -9,6 +9,18 @@ import TestCaseUpdateForm from '../TestCaseUpdateForm';
 import TestCaseRoute from '../../routes/TestCaseRoute';
 
 class TestCaseUpdateFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func,
+    onUpdate: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {},
+    onUpdate: function() {}
+  }
+
   constructor(props) {
     super(props);
 
@@ -36,10 +48,7 @@ class TestCaseUpdateFormDialog extends Component {
   }
 }
 
-TestCaseUpdateFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onUpdate: PropTypes.func};
-TestCaseUpdateFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onUpdate: function() {}};
-
-var TestCaseUpdateFormDialogContainer = Relay.createContainer(TestCaseUpdateFormDialog, {
+export default Relay.createContainer(TestCaseUpdateFormDialog, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -48,5 +57,3 @@ var TestCaseUpdateFormDialogContainer = Relay.createContainer(TestCaseUpdateForm
     `,
   },
 });
-
-export default TestCaseUpdateFormDialogContainer;

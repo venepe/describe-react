@@ -6,6 +6,16 @@ import styles from './FulfillmentFormDialog.css';
 import FulfillmentForm from '../FulfillmentForm';
 
 class FulfillmentFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {}
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,10 +40,7 @@ class FulfillmentFormDialog extends Component {
   }
 }
 
-FulfillmentFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func};
-FulfillmentFormDialog.defaultProps = {isVisible: false, onCancel: function() {}};
-
-var FulfillmentFormDialogContainer = Relay.createContainer(FulfillmentFormDialog, {
+export default Relay.createContainer(FulfillmentFormDialog, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -47,5 +54,3 @@ var FulfillmentFormDialogContainer = Relay.createContainer(FulfillmentFormDialog
     `,
   },
 });
-
-export default FulfillmentFormDialogContainer;

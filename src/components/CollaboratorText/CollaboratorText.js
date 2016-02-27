@@ -11,6 +11,16 @@ import ModalTypes, { DELETE_COLLABORATOR } from '../../constants/ModalTypes';
 import DeleteCollaboratorMutation from '../../mutations/DeleteCollaboratorMutation';
 
 class CollaboratorText extends Component {
+  static propTypes = {
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    onClick: function() {},
+    onDelete: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -49,10 +59,7 @@ class CollaboratorText extends Component {
   }
 }
 
-CollaboratorText.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
-CollaboratorText.defaultProps = {onClick: function() {}, onDelete: function() {}};
-
-var CollaboratorTextContainer = Relay.createContainer(CollaboratorText, {
+export default Relay.createContainer(CollaboratorText, {
   fragments: {
     collaborator: () => Relay.QL`
       fragment on User {
@@ -68,5 +75,3 @@ var CollaboratorTextContainer = Relay.createContainer(CollaboratorText, {
     `,
   },
 });
-
-module.exports = CollaboratorTextContainer;

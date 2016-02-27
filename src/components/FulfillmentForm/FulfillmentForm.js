@@ -8,6 +8,16 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 import IntroduceFulfillmentMutation from '../../mutations/IntroduceFulfillmentMutation';
 
 class FulfillmentForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    isOpen: PropTypes.bool
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    isOpen: false
+  }
+
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -48,10 +58,7 @@ class FulfillmentForm extends Component {
   }
 }
 
-FulfillmentForm.propTypes = {onCancel: PropTypes.func, isOpen: PropTypes.bool};
-FulfillmentForm.defaultProps = {onCancel: function() {}, isOpen: false};
-
-var FulfillmentFormContainer = Relay.createContainer(FulfillmentForm, {
+export default Relay.createContainer(FulfillmentForm, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -65,5 +72,3 @@ var FulfillmentFormContainer = Relay.createContainer(FulfillmentForm, {
     `,
   },
 });
-
-export default FulfillmentFormContainer;

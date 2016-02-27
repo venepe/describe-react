@@ -9,6 +9,14 @@ import ProjectForm from '../ProjectForm';
 import MeRoute from '../../routes/MeRoute';
 
 class ProjectFormDialog extends Component {
+  static propTypes = {
+    meId: PropTypes.string
+  }
+
+  static defaultProps = {
+    meId: ''
+  }
+
   constructor(props) {
     super(props);
     this.dismiss = this.dismiss.bind(this);
@@ -47,8 +55,5 @@ class ProjectFormDialog extends Component {
     });
   }
 }
-
-ProjectFormDialog.propTypes = {meId: PropTypes.string};
-ProjectFormDialog.defaultProps = {meId: ''};
 
 export default ProjectFormDialog;

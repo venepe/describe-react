@@ -6,6 +6,16 @@ import styles from './CoverImageFormDialog.css';
 import CoverImageForm from '../CoverImageForm';
 
 class CoverImageFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {}
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,10 +38,7 @@ class CoverImageFormDialog extends Component {
   }
 }
 
-CoverImageFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func};
-CoverImageFormDialog.defaultProps = {isVisible: false, onCancel: function() {}};
-
-var CoverImageFormDialogContainer = Relay.createContainer(CoverImageFormDialog, {
+export default Relay.createContainer(CoverImageFormDialog, {
   fragments: {
     target: () => Relay.QL`
       fragment on Node {
@@ -40,5 +47,3 @@ var CoverImageFormDialogContainer = Relay.createContainer(CoverImageFormDialog, 
     `,
   },
 });
-
-export default CoverImageFormDialogContainer;

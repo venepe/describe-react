@@ -8,6 +8,16 @@ import Authenticate from '../../utils/authenticate';
 const serverErrorMsg = 'Invalid. Please try again';
 
 class PasswordFormDialog extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onChangeCurrentPassword = this._onChangeCurrentPassword.bind(this);
@@ -104,8 +114,5 @@ class PasswordFormDialog extends Component {
   }
 
 }
-
-PasswordFormDialog.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-PasswordFormDialog.defaultProps = {onCancel: function() {}, onCreate: function() {}};
 
 export default PasswordFormDialog;

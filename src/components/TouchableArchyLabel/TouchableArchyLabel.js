@@ -2,11 +2,22 @@
 
 import React, { PropTypes, Component } from 'react';
 import { IconMenu, IconButton, Dialog } from 'material-ui';
-let MenuItem = require('material-ui/lib/menus/menu-item');
 import styles from './TouchableArchyLabel.css';
 import ArchyLabel from '../ArchyLabel';
 
 class TouchableArchyLabel extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    text: PropTypes.string,
+    onClick: PropTypes.func
+  }
+
+  static defaultProps = {
+    id: '',
+    text: '',
+    onClick: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -35,7 +46,4 @@ class TouchableArchyLabel extends Component {
   }
 }
 
-TouchableArchyLabel.propTypes = {id: PropTypes.string, text: PropTypes.string, onClick: PropTypes.func};
-TouchableArchyLabel.defaultProps = {id: '', text: '', onClick: function() {}};
-
-module.exports = TouchableArchyLabel;
+export default TouchableArchyLabel;

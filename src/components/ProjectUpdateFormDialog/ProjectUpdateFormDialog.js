@@ -7,6 +7,18 @@ import styles from './ProjectUpdateFormDialog.css';
 import ProjectUpdateForm from '../ProjectUpdateForm';
 
 class ProjectUpdateFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func,
+    onUpdate: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {},
+    onUpdate: function() {}
+  }
+
   constructor(props) {
     super(props);
 
@@ -34,10 +46,7 @@ class ProjectUpdateFormDialog extends Component {
   }
 }
 
-ProjectUpdateFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onUpdate: PropTypes.func};
-ProjectUpdateFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onUpdate: function() {}};
-
-var ProjectUpdateFormDialogContainer = Relay.createContainer(ProjectUpdateFormDialog, {
+export default Relay.createContainer(ProjectUpdateFormDialog, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
@@ -46,5 +55,3 @@ var ProjectUpdateFormDialogContainer = Relay.createContainer(ProjectUpdateFormDi
     `,
   },
 });
-
-export default ProjectUpdateFormDialogContainer;

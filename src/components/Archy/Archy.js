@@ -10,6 +10,14 @@ function getUUID() {
 }
 
 class Archy extends Component {
+  static propTypes = {
+    archible: PropTypes.object
+  }
+
+  static defaultProps = {
+    archible: {}
+  }
+
   constructor(props) {
     super(props);
 
@@ -75,9 +83,5 @@ class Archy extends Component {
     );
   }
 }
-
-
-Archy.propTypes = {archible: PropTypes.object};
-Archy.defaultProps = {archible: {}};
 
 export default Archy;

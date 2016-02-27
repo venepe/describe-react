@@ -6,6 +6,10 @@ import CoverImage from '../CoverImage';
 import styles from './CoverImageView.css';
 
 class CoverImageView extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -29,10 +33,6 @@ class CoverImageView extends Component {
     );
   }
 }
-
-CoverImageView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(CoverImageView, {
   fragments: {

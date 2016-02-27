@@ -2,10 +2,24 @@
 
 import React, { PropTypes, Component } from 'react';
 import { IconMenu, IconButton, Dialog, CardMedia } from 'material-ui';
-let MenuItem = require('material-ui/lib/menus/menu-item');
 import styles from './TouchableImage.css';
 
 class TouchableImage extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    height: PropTypes.number,
+    width: PropTypes.number,
+    onClick: PropTypes.func
+  }
+
+  static defaultProps = {
+    id: '',
+    src: '',
+    height: 200,
+    width: 200,
+    onClick: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -42,7 +56,4 @@ class TouchableImage extends Component {
   }
 }
 
-TouchableImage.propTypes = {id: PropTypes.string, height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
-TouchableImage.defaultProps = {id: '', src: '', height: 200, width: 200, onClick: function() {}};
-
-module.exports = TouchableImage;
+export default TouchableImage;

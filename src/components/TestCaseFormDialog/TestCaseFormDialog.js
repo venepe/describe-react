@@ -9,6 +9,18 @@ import TestCaseForm from '../TestCaseForm';
 import ProjectRoute from '../../routes/ProjectRoute';
 
 class TestCaseFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
 
@@ -36,10 +48,7 @@ class TestCaseFormDialog extends Component {
   }
 }
 
-TestCaseFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onCreate: PropTypes.func};
-TestCaseFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onCreate: function() {}};
-
-var TestCaseFormDialogContainer = Relay.createContainer(TestCaseFormDialog, {
+export default Relay.createContainer(TestCaseFormDialog, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
@@ -48,5 +57,3 @@ var TestCaseFormDialogContainer = Relay.createContainer(TestCaseFormDialog, {
     `,
   },
 });
-
-export default TestCaseFormDialogContainer;

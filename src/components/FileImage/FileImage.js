@@ -6,6 +6,18 @@ import styles from './FileImage.css';
 import TouchableImage from '../TouchableImage';
 
 class FileImage extends Component {
+  static propTypes = {
+    height: PropTypes.number,
+    width: PropTypes.number,
+    onClick: PropTypes.func
+  }
+
+  static defaultProps = {
+    height: 200,
+    width: 200,
+    onClick: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -38,10 +50,7 @@ class FileImage extends Component {
   }
 }
 
-FileImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func};
-FileImage.defaultProps = {height: 200, width: 200, onClick: function() {}};
-
-var FileImageContainer = Relay.createContainer(FileImage, {
+export default Relay.createContainer(FileImage, {
   fragments: {
     file: () => Relay.QL`
       fragment on File {
@@ -51,5 +60,3 @@ var FileImageContainer = Relay.createContainer(FileImage, {
     `,
   },
 });
-
-module.exports = FileImageContainer;

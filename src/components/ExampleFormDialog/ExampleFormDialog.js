@@ -6,6 +6,16 @@ import styles from './ExampleFormDialog.css';
 import ExampleForm from '../ExampleForm';
 
 class ExampleFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {}
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,10 +38,7 @@ class ExampleFormDialog extends Component {
   }
 }
 
-ExampleFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func};
-ExampleFormDialog.defaultProps = {isVisible: false, onCancel: function() {}};
-
-var ExampleFormDialogContainer = Relay.createContainer(ExampleFormDialog, {
+export default Relay.createContainer(ExampleFormDialog, {
   fragments: {
     target: () => Relay.QL`
       fragment on Node {
@@ -40,5 +47,3 @@ var ExampleFormDialogContainer = Relay.createContainer(ExampleFormDialog, {
     `,
   },
 });
-
-export default ExampleFormDialogContainer;

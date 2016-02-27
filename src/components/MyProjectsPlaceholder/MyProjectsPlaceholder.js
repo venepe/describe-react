@@ -5,6 +5,14 @@ import styles from './MyProjectsPlaceholder.css';
 import { SMTIBaseUrl } from '../../constants';
 
 class MyProjectsPlaceholder extends Component {
+  static propTypes = {
+    text: PropTypes.string
+  }
+
+  static defaultProps = {
+    text: ''
+  }
+
   constructor(props) {
     super(props);
   }
@@ -19,8 +27,5 @@ class MyProjectsPlaceholder extends Component {
     );
   }
 }
-
-MyProjectsPlaceholder.propTypes = {text: PropTypes.string};
-MyProjectsPlaceholder.defaultProps = {text: ''};
 
 export default MyProjectsPlaceholder;

@@ -12,6 +12,22 @@ import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../consta
 import DeleteCoverImageMutation from '../../mutations/DeleteCoverImageMutation';
 
 class CoverImage extends Component {
+  static propTypes = {
+    height: PropTypes.number,
+    width: PropTypes.number,
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    height: 200,
+    width: 200,
+    onClick: function() {},
+    onDelete: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -71,10 +87,7 @@ class CoverImage extends Component {
   }
 }
 
-CoverImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onDelete: PropTypes.func, onCreate: PropTypes.func};
-CoverImage.defaultProps = {height: 200, width: 200, onClick: function() {}, onDelete: function() {}, onCreate: function() {}};
-
-var CoverImageContainer = Relay.createContainer(CoverImage, {
+export default Relay.createContainer(CoverImage, {
   fragments: {
     coverImage: () => Relay.QL`
       fragment on File {
@@ -91,5 +104,3 @@ var CoverImageContainer = Relay.createContainer(CoverImage, {
     `,
   },
 });
-
-module.exports = CoverImageContainer;

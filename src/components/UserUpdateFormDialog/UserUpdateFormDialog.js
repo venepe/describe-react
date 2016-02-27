@@ -10,6 +10,16 @@ import MeRoute from '../../routes/MeRoute';
 import EditUserSettingsModal from '../EditUserSettingsModal';
 
 class UserUpdateFormDialog extends Component {
+  static propTypes = {
+    meId: PropTypes.string,
+    onMenuItemClick: PropTypes.func
+  }
+
+  static defaultProps = {
+    meId: '',
+    onMenuItemClick: function() {}
+  }
+
   constructor(props) {
     super(props);
     this.dismiss = this.dismiss.bind(this);
@@ -59,8 +69,5 @@ class UserUpdateFormDialog extends Component {
     });
   }
 }
-
-UserUpdateFormDialog.propTypes = {meId: PropTypes.string, onMenuItemClick: PropTypes.func};
-UserUpdateFormDialog.defaultProps = {meId: '', onMenuItemClick: function() {}};
 
 export default UserUpdateFormDialog;

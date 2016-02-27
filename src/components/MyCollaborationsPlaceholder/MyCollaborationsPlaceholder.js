@@ -5,6 +5,14 @@ import styles from './MyCollaborationsPlaceholder.css';
 import { SMTIBaseUrl } from '../../constants';
 
 class MyCollaborationsPlaceholder extends Component {
+  static propTypes = {
+    text: PropTypes.string
+  }
+
+  static defaultProps = {
+    text: ''
+  }
+
   constructor(props) {
     super(props);
   }
@@ -19,8 +27,5 @@ class MyCollaborationsPlaceholder extends Component {
     );
   }
 }
-
-MyCollaborationsPlaceholder.propTypes = {text: PropTypes.string};
-MyCollaborationsPlaceholder.defaultProps = {text: ''};
 
 export default MyCollaborationsPlaceholder;

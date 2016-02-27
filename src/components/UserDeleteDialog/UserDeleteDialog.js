@@ -12,6 +12,16 @@ import ArchyInput from '../ArchyInput';
 import IntroduceTestCaseMutation from '../../mutations/IntroduceTestCaseMutation';
 
 class UserDeleteDialog extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onDelete: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -59,8 +69,5 @@ class UserDeleteDialog extends Component {
     });
   }
 }
-
-UserDeleteDialog.propTypes = {onCancel: PropTypes.func, onDelete: PropTypes.func};
-UserDeleteDialog.defaultProps = {onCancel: function() {}, onDelete: function() {}};
 
 export default UserDeleteDialog;

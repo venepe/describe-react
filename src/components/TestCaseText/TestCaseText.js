@@ -14,6 +14,16 @@ import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DEL
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
 
 class TestCaseText extends Component {
+  static propTypes = {
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    onClick: function() {},
+    onDelete: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -96,10 +106,7 @@ class TestCaseText extends Component {
   }
 }
 
-TestCaseText.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
-TestCaseText.defaultProps = {onClick: function() {}, onDelete: function() {}};
-
-var TestCaseTextContainer = Relay.createContainer(TestCaseText, {
+export default Relay.createContainer(TestCaseText, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -121,5 +128,3 @@ var TestCaseTextContainer = Relay.createContainer(TestCaseText, {
     `,
   },
 });
-
-module.exports = TestCaseTextContainer;

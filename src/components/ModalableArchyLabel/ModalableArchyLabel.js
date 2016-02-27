@@ -8,6 +8,18 @@ import styles from './ModalableArchyLabel.css';
 import TouchableArchyLabel from '../TouchableArchyLabel';
 
 class ModalableArchyLabel extends Component {
+  static propTypes = {
+    text: PropTypes.string,
+    onClick: PropTypes.func,
+    onItemTouchTap: PropTypes.func
+  }
+
+  static defaultProps = {
+    text: '',
+    onClick: function() {},
+    onItemTouchTap: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -61,7 +73,4 @@ class ModalableArchyLabel extends Component {
   }
 }
 
-ModalableArchyLabel.propTypes = {text: PropTypes.string, onClick: PropTypes.func, onItemTouchTap: PropTypes.func};
-ModalableArchyLabel.defaultProps = {text: '', onClick: function() {}, onItemTouchTap: function() {}};
-
-module.exports = ModalableArchyLabel;
+export default ModalableArchyLabel;

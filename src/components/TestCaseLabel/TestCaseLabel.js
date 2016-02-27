@@ -38,7 +38,7 @@ class TestCaseLabel extends Component {
   }
 }
 
-var TestCaseLabelContainer = Relay.createContainer(TestCaseLabel, {
+export default Relay.createContainer(TestCaseLabel, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -47,5 +47,3 @@ var TestCaseLabelContainer = Relay.createContainer(TestCaseLabel, {
     `,
   },
 });
-
-module.exports = TestCaseLabelContainer;

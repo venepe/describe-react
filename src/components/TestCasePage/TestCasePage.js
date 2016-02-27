@@ -6,6 +6,10 @@ import styles from './TestCasePage.css';
 import TestCaseView from '../TestCaseView';
 
 class TestCasePage extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -25,10 +29,6 @@ class TestCasePage extends Component {
     );
   }
 }
-
-TestCasePage.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(TestCasePage, {
   fragments: {

@@ -14,6 +14,16 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 import IntroduceTestCaseMutation from '../../mutations/IntroduceTestCaseMutation';
 
 class TestCaseForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
     let testCasePlaceholder = Utilities.getTestCasePlaceholderText();
@@ -96,10 +106,7 @@ class TestCaseForm extends Component {
   }
 }
 
-TestCaseForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-TestCaseForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
-
-var TestCaseFormContainer = Relay.createContainer(TestCaseForm, {
+export default Relay.createContainer(TestCaseForm, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
@@ -109,5 +116,3 @@ var TestCaseFormContainer = Relay.createContainer(TestCaseForm, {
     `,
   },
 });
-
-export default TestCaseFormContainer;

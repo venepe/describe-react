@@ -9,6 +9,14 @@ const serverErrorMsg = 'Invalid email. Please try again';
 const emailErrorMsg = 'Place enter a valid email address.';
 
 class ForgotForm extends Component {
+  static propTypes = {
+    onForgot: PropTypes.func
+  }
+
+  static defaultProps = {
+    onForgot: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onSubmit = this._onSubmit.bind(this);
@@ -94,8 +102,5 @@ class ForgotForm extends Component {
   }
 
 }
-
-ForgotForm.propTypes = {onForgot: PropTypes.func};
-ForgotForm.defaultProps = {onForgot: function() {}};
 
 export default ForgotForm;

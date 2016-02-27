@@ -8,6 +8,18 @@ import RegisterForm from '../RegisterForm';
 import ForgotForm from '../ForgotForm';
 
 class LoginFormDialog extends Component {
+  static propTypes = {
+    onLogin: PropTypes.func,
+    onRegister: PropTypes.func,
+    onForgot: PropTypes.func
+  }
+
+  static defaultProps = {
+    onLogin: function() {},
+    onRegister: function() {},
+    onForgot: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onLogin = this._onLogin.bind(this);
@@ -80,8 +92,5 @@ class LoginFormDialog extends Component {
   }
 
 }
-
-LoginFormDialog.propTypes = {onLogin: PropTypes.func, onRegister: PropTypes.func, onForgot: PropTypes.func};
-LoginFormDialog.defaultProps = {onLogin: function() {}, onRegister: function() {}, onForgot: function() {}};
 
 export default LoginFormDialog;

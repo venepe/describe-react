@@ -11,6 +11,20 @@ import ModalTypes, { DELETE_EXAMPLE } from '../../constants/ModalTypes';
 import DeleteExampleMutation from '../../mutations/DeleteExampleMutation';
 
 class ExampleImage extends Component {
+  static propTypes = {
+    height: PropTypes.number,
+    width: PropTypes.number,
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    height: 200,
+    width: 200,
+    onClick: function() {},
+    onDelete: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -56,10 +70,7 @@ class ExampleImage extends Component {
   }
 }
 
-ExampleImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onDelete: PropTypes.func};
-ExampleImage.defaultProps = {height: 200, width: 200, onClick: function() {}, onDelete: function() {}};
-
-var ExampleImageContainer = Relay.createContainer(ExampleImage, {
+export default Relay.createContainer(ExampleImage, {
   fragments: {
     example: () => Relay.QL`
       fragment on File {
@@ -75,5 +86,3 @@ var ExampleImageContainer = Relay.createContainer(ExampleImage, {
     `,
   },
 });
-
-module.exports = ExampleImageContainer;

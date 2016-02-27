@@ -5,6 +5,20 @@ import { TextField } from 'material-ui';
 import styles from './ArchyInput.css';
 
 class ArchyInput extends Component {
+  static propTypes = {
+    text: PropTypes.string,
+    id: PropTypes.string,
+    onChangeText: PropTypes.func,
+    placeholder: PropTypes.string
+  }
+
+  static defaultProps = {
+    text: '',
+    id: null,
+    onChangeText: function() {},
+    placeholder: ''
+  }
+
   constructor(props) {
     super(props);
     this._onChangeText = this._onChangeText.bind(this);
@@ -29,8 +43,5 @@ class ArchyInput extends Component {
     );
   }
 }
-
-ArchyInput.propTypes = {text: PropTypes.string, id: PropTypes.string, onChangeText: PropTypes.func, placeholder: PropTypes.string};
-ArchyInput.defaultProps = {text: '', id: null, onChangeText: function() {}, placeholder: ''};
 
 export default ArchyInput;

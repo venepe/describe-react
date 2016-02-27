@@ -16,6 +16,20 @@ const _first = 2;
 const _next = 2;
 
 class TestCaseView extends Component {
+  static propTypes = {
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    onClick: function() {},
+    onDelete: function() {}
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -138,13 +152,6 @@ class TestCaseView extends Component {
     );
   }
 }
-
-TestCaseView.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
-TestCaseView.defaultProps = {onClick: function() {}, onDelete: function() {}};
-
-TestCaseView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(TestCaseView, {
   initialVariables: {

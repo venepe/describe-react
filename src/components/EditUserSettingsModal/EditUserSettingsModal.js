@@ -8,6 +8,14 @@ import styles from './EditUserSettingsModal.css';
 import ModalTypes, { DELETE_USER } from '../../constants/ModalTypes';
 
 class EditUserSettingsModal extends Component {
+  static propTypes = {
+    onItemTouchTap: PropTypes.func
+  }
+
+  static defaultProps = {
+    onItemTouchTap: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
@@ -35,7 +43,4 @@ class EditUserSettingsModal extends Component {
   }
 }
 
-EditUserSettingsModal.propTypes = {onItemTouchTap: PropTypes.func};
-EditUserSettingsModal.defaultProps = {onItemTouchTap: function() {}};
-
-module.exports = EditUserSettingsModal;
+export default EditUserSettingsModal;

@@ -12,6 +12,16 @@ import ModalTypes, { INTRODUCE_TEST_CASE, LEAVE_PROJECT } from '../../constants/
 import DeleteCollaborationMutation from '../../mutations/DeleteCollaborationMutation';
 
 class CollaborationText extends Component {
+  static propTypes = {
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    onClick: function() {},
+    onDelete: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
@@ -61,10 +71,7 @@ class CollaborationText extends Component {
   }
 }
 
-CollaborationText.propTypes = {onClick: PropTypes.func, onDelete: PropTypes.func};
-CollaborationText.defaultProps = {onClick: function() {}, onDelete: function() {}};
-
-var CollaborationTextContainer = Relay.createContainer(CollaborationText, {
+export default Relay.createContainer(CollaborationText, {
   fragments: {
     collaboration: () => Relay.QL`
       fragment on Project {
@@ -82,5 +89,3 @@ var CollaborationTextContainer = Relay.createContainer(CollaborationText, {
     `,
   },
 });
-
-module.exports = CollaborationTextContainer;

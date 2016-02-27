@@ -11,6 +11,20 @@ import ModalTypes, { DELETE_FULFILLMENT } from '../../constants/ModalTypes';
 import DeleteFulfillmentMutation from '../../mutations/DeleteFulfillmentMutation';
 
 class FulfillmentImage extends Component {
+  static propTypes = {
+    height: PropTypes.number,
+    width: PropTypes.number,
+    onClick: PropTypes.func,
+    onDelete: PropTypes.func
+  }
+
+  static defaultProps = {
+    height: 200,
+    width: 200,
+    onClick: function() {},
+    onDelete: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -56,10 +70,7 @@ class FulfillmentImage extends Component {
   }
 }
 
-FulfillmentImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onDelete: PropTypes.func};
-FulfillmentImage.defaultProps = {height: 200, width: 200, onClick: function() {}, onDelete: function() {}};
-
-var FulfillmentImageContainer = Relay.createContainer(FulfillmentImage, {
+export default Relay.createContainer(FulfillmentImage, {
   fragments: {
     fulfillment: () => Relay.QL`
       fragment on File {
@@ -80,5 +91,3 @@ var FulfillmentImageContainer = Relay.createContainer(FulfillmentImage, {
     `,
   },
 });
-
-module.exports = FulfillmentImageContainer;

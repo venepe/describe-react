@@ -9,6 +9,16 @@ import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
 import SpinnerView from '../SpinnerView';
 
 class ProjectListView extends Component {
+  static propTypes = {
+    onPressRow: PropTypes.func,
+    onEndReached: PropTypes.func
+  }
+
+  static defaultProps = {
+    onPressRow: function() {},
+    onEndReached: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._getInitialState = this._getInitialState.bind(this);
@@ -98,10 +108,7 @@ class ProjectListView extends Component {
   }
 }
 
-ProjectListView.propTypes = {onPressRow: PropTypes.func, onEndReached: PropTypes.func};
-ProjectListView.defaultProps = {onPressRow: function() {}, onEndReached: function() {}};
-
-let ProjectListViewContainer = Relay.createContainer(ProjectListView, {
+export default Relay.createContainer(ProjectListView, {
   fragments: {
     projects: () => Relay.QL`
       fragment on ProjectConnection {
@@ -128,7 +135,3 @@ let ProjectListViewContainer = Relay.createContainer(ProjectListView, {
     `,
   },
 });
-
-
-
-export default ProjectListViewContainer;

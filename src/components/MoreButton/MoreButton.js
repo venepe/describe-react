@@ -5,6 +5,14 @@ import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './MoreButton.css';
 
 class MoreButton extends Component {
+  static propTypes = {
+    onClick: PropTypes.func
+  }
+
+  static defaultProps = {
+    onClick: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -33,7 +41,4 @@ class MoreButton extends Component {
   }
 }
 
-MoreButton.propTypes = {onClick: PropTypes.func};
-MoreButton.defaultProps = {onClick: function() {}};
-
-module.exports = MoreButton;
+export default MoreButton;

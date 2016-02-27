@@ -6,6 +6,10 @@ import ExampleImage from '../ExampleImage';
 import styles from './ExampleImageView.css';
 
 class ExampleImageView extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -23,10 +27,6 @@ class ExampleImageView extends Component {
     );
   }
 }
-
-ExampleImageView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(ExampleImageView, {
   fragments: {

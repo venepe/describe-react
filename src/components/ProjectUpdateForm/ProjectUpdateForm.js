@@ -12,6 +12,17 @@ import Utilities from '../../utils/utilities';
 import UpdateProjectMutation from '../../mutations/UpdateProjectMutation';
 
 class ProjectUpdateForm extends Component {
+
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onUpdate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onUpdate: function() {}
+  }
+
   constructor(props) {
     super(props);
     let projectPlaceholder = Utilities.getProjectPlaceholderText();
@@ -72,10 +83,7 @@ class ProjectUpdateForm extends Component {
   }
 }
 
-ProjectUpdateForm.propTypes = {onCancel: PropTypes.func, onUpdate: PropTypes.func};
-ProjectUpdateForm.defaultProps = {onCancel: function() {}, onUpdate: function() {}};
-
-var ProjectUpdateFormContainer = Relay.createContainer(ProjectUpdateForm, {
+export default Relay.createContainer(ProjectUpdateForm, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
@@ -85,5 +93,3 @@ var ProjectUpdateFormContainer = Relay.createContainer(ProjectUpdateForm, {
     `,
   },
 });
-
-export default ProjectUpdateFormContainer;

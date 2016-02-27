@@ -13,6 +13,16 @@ import Utilities from '../../utils/utilities';
 import UpdateTestCaseMutation from '../../mutations/UpdateTestCaseMutation';
 
 class TestCaseUpdateForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onUpdate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onUpdate: function() {}
+  }
+
   constructor(props) {
     super(props);
     let testCasePlaceholder = Utilities.getTestCasePlaceholderText();
@@ -79,10 +89,7 @@ class TestCaseUpdateForm extends Component {
   }
 }
 
-TestCaseUpdateForm.propTypes = {onCancel: PropTypes.func, onUpdate: PropTypes.func};
-TestCaseUpdateForm.defaultProps = {onCancel: function() {}, onUpdate: function() {}};
-
-var TestCaseUpdateFormContainer = Relay.createContainer(TestCaseUpdateForm, {
+export default Relay.createContainer(TestCaseUpdateForm, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
@@ -92,5 +99,3 @@ var TestCaseUpdateFormContainer = Relay.createContainer(TestCaseUpdateForm, {
     `,
   },
 });
-
-export default TestCaseUpdateFormContainer;

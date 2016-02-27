@@ -19,6 +19,9 @@ const SMTIRawTheme = require('../../utils/theme');
 import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT, DELETE_USER } from '../../constants/ModalTypes';
 
 class Header extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
 
     constructor(props, context) {
         super(props);
@@ -155,9 +158,5 @@ class Header extends Component {
             );
     }
 }
-
-Header.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Header;

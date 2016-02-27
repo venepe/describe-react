@@ -8,6 +8,16 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 import IntroduceExampleMutation from '../../mutations/IntroduceExampleMutation';
 
 class ExampleForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    isOpen: PropTypes.bool
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    isOpen: false
+  }
+
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -49,10 +59,7 @@ class ExampleForm extends Component {
   }
 }
 
-ExampleForm.propTypes = {onCancel: PropTypes.func, isOpen: PropTypes.bool};
-ExampleForm.defaultProps = {onCancel: function() {}, isOpen: false};
-
-var ExampleFormContainer = Relay.createContainer(ExampleForm, {
+export default Relay.createContainer(ExampleForm, {
   fragments: {
     target: () => Relay.QL`
       fragment on Node {
@@ -61,5 +68,3 @@ var ExampleFormContainer = Relay.createContainer(ExampleForm, {
     `,
   },
 });
-
-export default ExampleFormContainer;

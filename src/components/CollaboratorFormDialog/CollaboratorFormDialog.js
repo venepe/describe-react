@@ -9,6 +9,18 @@ import CollaboratorForm from '../CollaboratorForm';
 import ProjectRoute from '../../routes/ProjectRoute';
 
 class CollaboratorFormDialog extends Component {
+  static propTypes = {
+    isVisible: PropTypes.bool,
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    isVisible: false,
+    onCancel: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
 
@@ -36,10 +48,7 @@ class CollaboratorFormDialog extends Component {
   }
 }
 
-CollaboratorFormDialog.propTypes = {isVisible: PropTypes.bool, onCancel: PropTypes.func, onCreate: PropTypes.func};
-CollaboratorFormDialog.defaultProps = {isVisible: false, onCancel: function() {}, onCreate: function() {}};
-
-var CollaboratorFormDialogContainer = Relay.createContainer(CollaboratorFormDialog, {
+export default Relay.createContainer(CollaboratorFormDialog, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
@@ -48,5 +57,3 @@ var CollaboratorFormDialogContainer = Relay.createContainer(CollaboratorFormDial
     `,
   },
 });
-
-export default CollaboratorFormDialogContainer;

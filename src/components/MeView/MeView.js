@@ -10,6 +10,10 @@ import Divider from 'material-ui/lib/divider';
 import ModalTypes, { INTRODUCE_TEST_CASE, INTRODUCE_PAPER, INTRODUCE_EXAMPLE, FULFILL_PROJECT, UPDATE_PAPER, UPDATE_PROJECT, UPDATE_TEST_CASE, DELETE_PROJECT, DELETE_TEST_CASE, DELETE_EXAMPLE, DELETE_PAPER } from '../../constants/ModalTypes';
 
 class MeView extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -48,10 +52,6 @@ class MeView extends Component {
     }
   }
 }
-
-MeView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(MeView, {
   fragments: {

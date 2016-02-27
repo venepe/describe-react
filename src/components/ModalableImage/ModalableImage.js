@@ -8,6 +8,21 @@ import styles from './ModalableImage.css';
 import TouchableImage from '../TouchableImage';
 
 class ModalableImage extends Component {
+  static propTypes = {
+    height: PropTypes.number,
+    width: PropTypes.number,
+    onClick: PropTypes.func,
+    onItemTouchTap: PropTypes.func
+  }
+
+  static defaultProps = {
+    src: '',
+    height: 200,
+    width: 200,
+    onClick: function() {},
+    onItemTouchTap: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
@@ -67,7 +82,4 @@ class ModalableImage extends Component {
   }
 }
 
-ModalableImage.propTypes = {height: PropTypes.number, width: PropTypes.number, onClick: PropTypes.func, onItemTouchTap: PropTypes.func};
-ModalableImage.defaultProps = {src: '', height: 200, width: 200, onClick: function() {}, onItemTouchTap: function() {}};
-
-module.exports = ModalableImage;
+export default ModalableImage;

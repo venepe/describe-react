@@ -16,7 +16,6 @@ class UnauthenticatedView extends Component {
       </div>
     );
   }
-
 }
 
 export default Unauthenticated;

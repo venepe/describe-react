@@ -10,6 +10,17 @@ import Utilities from '../../utils/utilities';
 import UpdateUserMutation from '../../mutations/UpdateUserMutation';
 
 class UserUpdateForm extends Component {
+
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onUpdate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onUpdate: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -96,10 +107,7 @@ class UserUpdateForm extends Component {
   }
 }
 
-UserUpdateForm.propTypes = {onCancel: PropTypes.func, onUpdate: PropTypes.func};
-UserUpdateForm.defaultProps = {onCancel: function() {}, onUpdate: function() {}};
-
-let UserUpdateFormContainer = Relay.createContainer(UserUpdateForm, {
+export default Relay.createContainer(UserUpdateForm, {
   fragments: {
     me: () => Relay.QL`
       fragment on User {
@@ -112,5 +120,3 @@ let UserUpdateFormContainer = Relay.createContainer(UserUpdateForm, {
     `,
   },
 });
-
-export default UserUpdateFormContainer;

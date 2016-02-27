@@ -10,6 +10,16 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 import IntroduceCollaboratorMutation from '../../mutations/IntroduceCollaboratorMutation';
 
 class CollaboratorForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -73,10 +83,7 @@ class CollaboratorForm extends Component {
 
 }
 
-CollaboratorForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-CollaboratorForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
-
-var CollaboratorFormContainer = Relay.createContainer(CollaboratorForm, {
+export default Relay.createContainer(CollaboratorForm, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
@@ -85,5 +92,3 @@ var CollaboratorFormContainer = Relay.createContainer(CollaboratorForm, {
     `,
   },
 });
-
-export default CollaboratorFormContainer;

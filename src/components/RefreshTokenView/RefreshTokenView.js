@@ -6,6 +6,14 @@ import Authenticate from '../../utils/authenticate';
 import SpinnerView from '../SpinnerView';
 
 class RefreshTokenView extends Component {
+  static propTypes = {
+    didRefreshToken: PropTypes.func
+  }
+
+   static defaultProps = {
+     didRefreshToken: function() {}
+   }
+
   constructor(props) {
     super(props);
     this._refreshToken = this._refreshToken.bind(this);
@@ -29,8 +37,5 @@ class RefreshTokenView extends Component {
     return <SpinnerView />
   }
 }
-
-RefreshTokenView.propTypes = {didRefreshToken: PropTypes.func};
-RefreshTokenView.defaultProps = {didRefreshToken: function() {}};
 
 export default RefreshTokenView;

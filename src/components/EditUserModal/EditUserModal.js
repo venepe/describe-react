@@ -9,6 +9,18 @@ import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT } from
 const SMTIRawTheme = require('../../utils/theme');
 
 class EditUserModal extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    text: PropTypes.string,
+    onItemTouchTap: PropTypes.func
+  }
+
+  static defaultProps = {
+    id: '',
+    text: '',
+    onItemTouchTap: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
@@ -41,7 +53,4 @@ class EditUserModal extends Component {
   }
 }
 
-EditUserModal.propTypes = {id: PropTypes.string, text: PropTypes.string, onItemTouchTap: PropTypes.func};
-EditUserModal.defaultProps = {id: '', text: '', onItemTouchTap: function() {}};
-
-module.exports = EditUserModal;
+export default EditUserModal;

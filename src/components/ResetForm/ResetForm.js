@@ -10,6 +10,18 @@ import Authenticate from '../../utils/authenticate';
 const errorMessage = 'Invalid password. Please try again';
 
 class ResetForm extends Component {
+  static propTypes = {
+    onReset: PropTypes.func
+  }
+
+  static defaultProps = {
+    onReset: function() {}
+  }
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -96,12 +108,5 @@ class ResetForm extends Component {
   }
 
 }
-
-ResetForm.propTypes = {onReset: PropTypes.func};
-ResetForm.defaultProps = {onReset: function() {}};
-
-ResetForm.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
 
 export default ResetForm;

@@ -13,6 +13,14 @@ const emailErrorMsg = 'Please enter a valid email address.';
 const passwordErrorMsg = 'Password must be at least 6 characters long.';
 
 class RegisterForm extends Component {
+  static propTypes = {
+    onRegister: PropTypes.func
+  }
+
+  static defaultProps = {
+    onRegister: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onChangeEmail = this._onChangeEmail.bind(this);
@@ -115,8 +123,5 @@ class RegisterForm extends Component {
   }
 
 }
-
-RegisterForm.propTypes = {onRegister: PropTypes.func};
-RegisterForm.defaultProps = {onRegister: function() {}};
 
 export default RegisterForm;

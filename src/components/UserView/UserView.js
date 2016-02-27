@@ -8,6 +8,10 @@ import FileImage from '../FileImage';
 import Divider from 'material-ui/lib/divider';
 
 class UserView extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -46,10 +50,6 @@ class UserView extends Component {
     }
   }
 }
-
-UserView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(UserView, {
   fragments: {

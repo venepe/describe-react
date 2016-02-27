@@ -6,6 +6,10 @@ import FulfillmentImage from '../FulfillmentImage';
 import styles from './FulfillmentImageView.css';
 
 class FulfillmentImageView extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -23,10 +27,6 @@ class FulfillmentImageView extends Component {
     );
   }
 }
-
-FulfillmentImageView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(FulfillmentImageView, {
   fragments: {

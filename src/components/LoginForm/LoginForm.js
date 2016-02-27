@@ -10,6 +10,18 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 const errorMessage = 'Invalid email or password. Please try again';
 
 class LoginForm extends Component {
+  static propTypes = {
+    onLogin: PropTypes.func,
+    onShowRegister: PropTypes.func,
+    onShowForgot: PropTypes.func
+  }
+
+  static defaultProps = {
+    onLogin: function() {},
+    onShowRegister: function() {},
+    onShowForgot: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onChangeEmail = this._onChangeEmail.bind(this);
@@ -106,8 +118,5 @@ class LoginForm extends Component {
   }
 
 }
-
-LoginForm.propTypes = {onLogin: PropTypes.func, onShowRegister: PropTypes.func, onShowForgot: PropTypes.func};
-LoginForm.defaultProps = {onLogin: function() {}, onShowRegister: function() {}, onShowForgot: function() {}};
 
 export default LoginForm;

@@ -13,6 +13,16 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
 
 class ProjectForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onCreate: function() {}
+  }
+
   constructor(props) {
     super(props);
     let projectPlaceholder = Utilities.getProjectPlaceholderText();
@@ -77,10 +87,7 @@ class ProjectForm extends Component {
   }
 }
 
-ProjectForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func};
-ProjectForm.defaultProps = {onCancel: function() {}, onCreate: function() {}};
-
-var ProjectFormContainer = Relay.createContainer(ProjectForm, {
+export default Relay.createContainer(ProjectForm, {
   fragments: {
     me: () => Relay.QL`
       fragment on User {
@@ -89,5 +96,3 @@ var ProjectFormContainer = Relay.createContainer(ProjectForm, {
     `,
   },
 });
-
-export default ProjectFormContainer;

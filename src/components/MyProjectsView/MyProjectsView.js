@@ -15,6 +15,10 @@ const _first = 10;
 const _next = 10;
 
 class MyProjectsView extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   constructor(props, context) {
     super(props);
     this.router = context.router;
@@ -78,10 +82,6 @@ class MyProjectsView extends Component {
     }
   }
 }
-
-MyProjectsView.contextTypes = {
-    router: React.PropTypes.object.isRequired
-};
 
 export default Relay.createContainer(MyProjectsView, {
   initialVariables: {

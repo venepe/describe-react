@@ -8,6 +8,18 @@ import {track, Events} from '../../utils/SMTIAnalytics';
 import IntroduceCoverImageMutation from '../../mutations/IntroduceCoverImageMutation';
 
 class CoverImageForm extends Component {
+  static propTypes = {
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func,
+    isOpen: PropTypes.bool
+  }
+
+  static defaultProps = {
+    onCancel: function() {},
+    onCreate: function() {},
+    isOpen: false
+  }
+
   constructor(props) {
     super(props);
     this._onCancel = this._onCancel.bind(this);
@@ -50,10 +62,7 @@ class CoverImageForm extends Component {
   }
 }
 
-CoverImageForm.propTypes = {onCancel: PropTypes.func, onCreate: PropTypes.func, isOpen: PropTypes.bool};
-CoverImageForm.defaultProps = {onCancel: function() {}, onCreate: function() {}, isOpen: false};
-
-var CoverImageFormContainer = Relay.createContainer(CoverImageForm, {
+export default Relay.createContainer(CoverImageForm, {
   fragments: {
     target: () => Relay.QL`
       fragment on Node {
@@ -62,5 +71,3 @@ var CoverImageFormContainer = Relay.createContainer(CoverImageForm, {
     `,
   },
 });
-
-export default CoverImageFormContainer;

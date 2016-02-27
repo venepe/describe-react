@@ -4,6 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import styles from './ArchyLabel.css';
 
 class ArchyLabel extends Component {
+  static propTypes = {
+    text: PropTypes.string
+  }
+
+  static defaultProps = {
+    text: ''
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,8 +31,5 @@ class ArchyLabel extends Component {
     );
   }
 }
-
-ArchyLabel.propTypes = {text: PropTypes.string};
-ArchyLabel.defaultProps = {text: ''};
 
 export default ArchyLabel;

@@ -6,6 +6,14 @@ import styles from './RegisterFormDialog.css';
 import RegisterForm from '../RegisterForm';
 
 class RegisterFormDialog extends Component {
+  static propTypes = {
+    onRegister: PropTypes.func
+  }
+
+  static defaultProps = {
+    onRegister: function() {}
+  }
+
   constructor(props) {
     super(props);
     this._onRegister = this._onRegister.bind(this);
@@ -49,8 +57,5 @@ class RegisterFormDialog extends Component {
     this.setState(this._getInitialState());
   }
 }
-
-RegisterFormDialog.propTypes = {onRegister: PropTypes.func};
-RegisterFormDialog.defaultProps = {onRegister: function() {}};
 
 export default RegisterFormDialog;
