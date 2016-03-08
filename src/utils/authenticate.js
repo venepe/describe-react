@@ -2,7 +2,7 @@
 
 import SMTIStorage from './storage';
 import SMTIConstants, { SMTIBaseUrl } from '../constants';
-import SMTIDefaultNetworkLayer from './SMTIDefaultNetworkLayer';
+import { initNetwork } from './initNetwork';
 
 function login(email, password) {
   let authenticate = {email, password};
@@ -26,7 +26,7 @@ function login(email, password) {
       .then((result) => {
         let token = result[0];
         let meId = result[1];
-        SMTIDefaultNetworkLayer.init(token);
+        initNetwork(token);
         resolve(meId);
       }).catch((error) => {
         reject();
@@ -56,7 +56,7 @@ function register(email, password) {
       .then((result) => {
         let token = result[0];
         let meId = result[1];
-        SMTIDefaultNetworkLayer.init(token);
+        initNetwork(token);
         resolve(meId);
       }).catch((error) => {
         reject();
@@ -85,11 +85,11 @@ function refreshToken() {
         return SMTIStorage.saveToken(token);
       })
       .then((token) => {
-        SMTIDefaultNetworkLayer.init(token);
+        initNetwork(token);
         resolve(token);
       }).catch((error) => {
         console.log('did fail');
-        SMTIDefaultNetworkLayer.init();
+        initNetwork();
         reject();
       })
   });
@@ -198,10 +198,10 @@ function logoff() {
   return new Promise((resolve, reject) => {
     SMTIStorage.clearCredentials()
       .then(() => {
-        SMTIDefaultNetworkLayer.init();
+        initNetwork();
         resolve();
       }).catch((error) => {
-        SMTIDefaultNetworkLayer.init();
+        initNetwork();
         reject();
       })
   });

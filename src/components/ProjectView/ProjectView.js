@@ -12,6 +12,9 @@ import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 
+import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
+import DidIntroduceTestCaseSubscription from '../../subscriptions/DidIntroduceTestCaseSubscription';
+
 const _first = 10;
 const _next = 10;
 
@@ -56,6 +59,42 @@ class ProjectView extends Component {
       first: first + _next,
       after: cursor
     });
+  }
+
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.projectSubscription) {
+      this.projectSubscription = Relay.Store.subscribe(
+        new DidUpdateProjectSubscription({project: this.props.project})
+      );
+    }
+    if (!this.testCaseSubscription) {
+      this.testCaseSubscription = Relay.Store.subscribe(
+        new DidIntroduceTestCaseSubscription({project: this.props.project})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.projectSubscription) {
+      this.projectSubscription.dispose();
+      this.projectSubscription = null;
+    }
+    if (this.testCaseSubscription) {
+      this.testCaseSubscription.dispose();
+      this.testCaseSubscription = null;
+    }
   }
 
   render() {
@@ -178,6 +217,8 @@ export default Relay.createContainer(ProjectView, {
         ${ProjectText.getFragment('project')},
         ${TestCaseView.getFragment('project')},
         ${CollaboratorText.getFragment('project')},
+        ${DidUpdateProjectSubscription.getFragment('project')},
+        ${DidIntroduceTestCaseSubscription.getFragment('project')},
       }
     `,
     me: () => Relay.QL`

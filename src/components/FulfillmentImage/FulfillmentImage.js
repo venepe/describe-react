@@ -9,6 +9,7 @@ import SheetOptions from '../../constants/SheetOptions';
 import ModalTypes, { DELETE_FULFILLMENT } from '../../constants/ModalTypes';
 
 import DeleteFulfillmentMutation from '../../mutations/DeleteFulfillmentMutation';
+import DidDeleteFulfillmentSubscription from '../../subscriptions/DidDeleteFulfillmentSubscription';
 
 class FulfillmentImage extends Component {
   static propTypes = {
@@ -57,6 +58,32 @@ class FulfillmentImage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.fulfillmentSubscription) {
+      this.fulfillmentSubscription = Relay.Store.subscribe(
+        new DidDeleteFulfillmentSubscription({fulfillment: this.props.fulfillment, testCase: this.props.testCase})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.fulfillmentSubscription) {
+      this.fulfillmentSubscription.dispose();
+    }
+  }
+
   render() {
     let uri = '';
     if (this.props.fulfillment) {
@@ -77,11 +104,13 @@ export default Relay.createContainer(FulfillmentImage, {
         id
         uri
         ${DeleteFulfillmentMutation.getFragment('fulfillment')},
+        ${DidDeleteFulfillmentSubscription.getFragment('fulfillment')},
       }
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
         ${DeleteFulfillmentMutation.getFragment('testCase')},
+        ${DidDeleteFulfillmentSubscription.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`

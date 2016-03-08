@@ -9,6 +9,7 @@ import SheetOptions from '../../constants/SheetOptions';
 import ModalTypes, { DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
 import DeleteExampleMutation from '../../mutations/DeleteExampleMutation';
+import DidDeleteExampleSubscription from '../../subscriptions/DidDeleteExampleSubscription';
 
 class ExampleImage extends Component {
   static propTypes = {
@@ -57,6 +58,33 @@ class ExampleImage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.exampleSubscription) {
+      this.exampleSubscription = Relay.Store.subscribe(
+        new DidDeleteExampleSubscription({example: this.props.example, target: this.props.target})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.exampleSubscription) {
+      this.exampleSubscription.dispose();
+    }
+  }
+
+
   render() {
     let uri = '';
     if (this.props.example) {
@@ -77,11 +105,13 @@ export default Relay.createContainer(ExampleImage, {
         id
         uri
         ${DeleteExampleMutation.getFragment('example')},
+        ${DidDeleteExampleSubscription.getFragment('example')},
       }
     `,
     target: () => Relay.QL`
       fragment on Node {
         ${DeleteExampleMutation.getFragment('target')},
+        ${DidDeleteExampleSubscription.getFragment('target')},
       }
     `,
   },

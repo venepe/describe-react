@@ -12,6 +12,9 @@ import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
 import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
+import DidDeleteTestCaseSubscription from '../../subscriptions/DidDeleteTestCaseSubscription';
+import DidUpdateTestCaseSubscription from '../../subscriptions/DidUpdateTestCaseSubscription';
+import DidIntroduceExampleSubscription from '../../subscriptions/DidIntroduceExampleSubscription';
 
 class TestCaseText extends Component {
   static propTypes = {
@@ -93,6 +96,45 @@ class TestCaseText extends Component {
     });
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.deleteTestCaseSubscription) {
+      this.deleteTestCaseSubscription = Relay.Store.subscribe(
+        new DidDeleteTestCaseSubscription({testCase: this.props.testCase, project: this.props.project})
+      );
+    }
+    if (!this.updateTestCaseSubscription) {
+      this.updateTestCaseSubscription = Relay.Store.subscribe(
+        new DidUpdateTestCaseSubscription({testCase: this.props.testCase})
+      );
+    }
+    if (!this.introduceExampleSubscription) {
+      this.introduceExampleSubscription = Relay.Store.subscribe(
+        new DidIntroduceExampleSubscription({target: this.props.testCase})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.deleteTestCaseSubscription) {
+      this.deleteTestCaseSubscription.dispose();
+    }
+    if (this.updateTestCaseSubscription) {
+      this.updateTestCaseSubscription.dispose();
+    }
+  }
+
   render() {
 
     return (
@@ -116,6 +158,9 @@ export default Relay.createContainer(TestCaseText, {
         ${TestCaseUpdateFormDialog.getFragment('testCase')},
         ${ExampleFormDialog.getFragment('target')},
         ${FulfillmentFormDialog.getFragment('testCase')},
+        ${DidDeleteTestCaseSubscription.getFragment('testCase')},
+        ${DidUpdateTestCaseSubscription.getFragment('testCase')},
+        ${DidIntroduceExampleSubscription.getFragment('target')},
       }
 
     `,
@@ -124,6 +169,7 @@ export default Relay.createContainer(TestCaseText, {
         id,
         ${DeleteTestCaseMutation.getFragment('project')},
         ${FulfillmentFormDialog.getFragment('project')},
+        ${DidDeleteTestCaseSubscription.getFragment('project')},
       }
     `,
   },
