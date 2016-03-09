@@ -13,6 +13,11 @@ import FileImage from '../FileImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 
+import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
+import DidIntroduceTestCaseSubscription from '../../subscriptions/DidIntroduceTestCaseSubscription';
+import DidIntroduceCoverImageSubscription from '../../subscriptions/DidIntroduceCoverImageSubscription';
+import DidIntroduceCollaboratorSubscription from '../../subscriptions/DidIntroduceCollaboratorSubscription';
+
 const _first = 10;
 const _next = 10;
 
@@ -57,6 +62,60 @@ class CollaborationView extends Component {
       first: first + _next,
       after: cursor
     });
+  }
+
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.projectSubscription) {
+      this.projectSubscription = Relay.Store.subscribe(
+        new DidUpdateProjectSubscription({project: this.props.collaboration})
+      );
+    }
+    if (!this.testCaseSubscription) {
+      this.testCaseSubscription = Relay.Store.subscribe(
+        new DidIntroduceTestCaseSubscription({project: this.props.collaboration})
+      );
+    }
+    if (!this.coverImageSubscription) {
+      this.coverImageSubscription = Relay.Store.subscribe(
+        new DidIntroduceCoverImageSubscription({target: this.props.collaboration})
+      );
+    }
+    if (!this.collaboratorSubscription) {
+      this.collaboratorSubscription = Relay.Store.subscribe(
+        new DidIntroduceCollaboratorSubscription({project: this.props.collaboration})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.projectSubscription) {
+      this.projectSubscription.dispose();
+      this.projectSubscription = null;
+    }
+    if (this.testCaseSubscription) {
+      this.testCaseSubscription.dispose();
+      this.testCaseSubscription = null;
+    }
+    if (this.coverImageSubscription) {
+      this.coverImageSubscription.dispose();
+      this.coverImageSubscription = null;
+    }
+    if (this.collaboratorSubscription) {
+      this.collaboratorSubscription.dispose();
+      this.collaboratorSubscription = null;
+    }
   }
 
   render() {
@@ -204,6 +263,10 @@ export default Relay.createContainer(CollaborationView, {
         }
         ${CollaborationText.getFragment('collaboration')},
         ${TestCaseView.getFragment('project')},
+        ${DidUpdateProjectSubscription.getFragment('project')},
+        ${DidIntroduceTestCaseSubscription.getFragment('project')},
+        ${DidIntroduceCoverImageSubscription.getFragment('target')},
+        ${DidIntroduceCollaboratorSubscription.getFragment('project')},
       }
     `,
     me: () => Relay.QL`

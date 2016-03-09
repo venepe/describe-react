@@ -10,6 +10,7 @@ import SheetOptions from '../../constants/SheetOptions';
 import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../constants/ModalTypes';
 
 import DeleteCoverImageMutation from '../../mutations/DeleteCoverImageMutation';
+import DidDeleteCoverImageSubscription from '../../subscriptions/DidDeleteCoverImageSubscription';
 
 class CoverImage extends Component {
   static propTypes = {
@@ -73,6 +74,32 @@ class CoverImage extends Component {
     });
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.coverImageSubscription) {
+      this.coverImageSubscription = Relay.Store.subscribe(
+        new DidDeleteCoverImageSubscription({coverImage: this.props.coverImage, target: this.props.target})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.coverImageSubscription) {
+      this.coverImageSubscription.dispose();
+    }
+  }
+
   render() {
     let uri = '';
     if (this.props.coverImage) {
@@ -94,12 +121,14 @@ export default Relay.createContainer(CoverImage, {
         id
         uri
         ${DeleteCoverImageMutation.getFragment('coverImage')},
+        ${DidDeleteCoverImageSubscription.getFragment('coverImage')},
       }
     `,
     target: () => Relay.QL`
       fragment on Node {
         ${CoverImageFormDialog.getFragment('target')},
         ${DeleteCoverImageMutation.getFragment('target')},
+        ${DidDeleteCoverImageSubscription.getFragment('target')},
       }
     `,
   },

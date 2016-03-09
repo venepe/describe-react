@@ -9,6 +9,7 @@ import SheetOptions from '../../constants/SheetOptions';
 import ModalTypes, { DELETE_COLLABORATOR } from '../../constants/ModalTypes';
 
 import DeleteCollaboratorMutation from '../../mutations/DeleteCollaboratorMutation';
+import DidDeleteCollaboratorSubscription from '../../subscriptions/DidDeleteCollaboratorSubscription';
 
 class CollaboratorText extends Component {
   static propTypes = {
@@ -49,6 +50,32 @@ class CollaboratorText extends Component {
     }
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.collaboratorSubscription) {
+      this.collaboratorSubscription = Relay.Store.subscribe(
+        new DidDeleteCollaboratorSubscription({collaborator: this.props.collaborator, project: this.props.project})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.collaboratorSubscription) {
+      this.collaboratorSubscription.dispose();
+    }
+  }
+
   render() {
 
     return (
@@ -66,11 +93,13 @@ export default Relay.createContainer(CollaboratorText, {
         id
         name
         ${DeleteCollaboratorMutation.getFragment('collaborator')},
+        ${DidDeleteCollaboratorSubscription.getFragment('collaborator')},
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
         ${DeleteCollaboratorMutation.getFragment('project')},
+        ${DidDeleteCollaboratorSubscription.getFragment('project')},
       }
     `,
   },

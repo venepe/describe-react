@@ -33,8 +33,7 @@ class IntroduceCollaboratorMutation extends Relay.Mutation {
         rangeBehaviors: {
           '': 'prepend',
         }
-      }
-    ];
+      }];
   }
   getVariables() {
     return {
