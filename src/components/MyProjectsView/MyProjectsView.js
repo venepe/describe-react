@@ -51,7 +51,7 @@ class MyProjectsView extends Component {
       if (me.originalProjects.edges.length > 0) {
         return (
           <div className="MyProjects-container">
-            <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
+            <ProjectListView projects={this.props.me.originalProjects} me={this.props.me} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
               <div className="add-project-button">
                 <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
               </div>
@@ -101,6 +101,7 @@ export default Relay.createContainer(MyProjectsView, {
         ${ProjectListView.getFragment('projects')},
       }
       ${IntroduceProjectMutation.getFragment('me')},
+      ${ProjectListView.getFragment('me')},
     }
     `,
   },

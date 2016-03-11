@@ -24,8 +24,14 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceFulfillmentPayload {
-        fulfillmentEdge
+        fulfillmentEdge {
+          node {
+            id
+            uri
+          }
+        }
         testCase {
+          id
           isFulfilled,
           fulfillments
         },

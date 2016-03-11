@@ -17,7 +17,13 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceTestCasePayload {
-        testCaseEdge
+        testCaseEdge {
+          cursor
+          node {
+            id
+            it
+          }
+        }
         project {
           numOfTestCases
         },

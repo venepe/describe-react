@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import styles from './ExampleImage.css';
 import ModalableImage from '../ModalableImage';
 import SheetOptions from '../../constants/SheetOptions';
+import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
@@ -71,7 +72,7 @@ class ExampleImage extends Component {
   }
 
   subscribe() {
-    if (!this.exampleSubscription) {
+    if (!this.exampleSubscription && !isClientID(this.props.example.id)) {
       this.exampleSubscription = Relay.Store.subscribe(
         new DidDeleteExampleSubscription({example: this.props.example, target: this.props.target})
       );

@@ -4,9 +4,11 @@ import React, { Component } from 'react';
 import Relay from 'react-relay';
 import styles from './MyCollaborationsView.css';
 import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
-import ProjectListView from '../ProjectListView';
+import CollaborationListView from '../CollaborationListView';
 import MyCollaborationsPlaceholder from '../MyCollaborationsPlaceholder';
 import SMTIStorage from '../../utils/storage';
+
+import DidIntroduceCollaborationSubscription from '../../subscriptions/DidIntroduceCollaborationSubscription';
 
 const _first = 10;
 const _next = 10;
@@ -35,14 +37,41 @@ class MyCollaborationsView extends Component {
     });
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.subscribe(prevProps);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    if (!this.collaborationSubscription) {
+      this.collaborationSubscription = Relay.Store.subscribe(
+        new DidIntroduceCollaborationSubscription({me: this.props.me})
+      );
+    }
+  }
+
+  unsubscribe() {
+    if (this.collaborationSubscription) {
+      this.collaborationSubscription.dispose();
+    }
+  }
+
+
   render() {
 
     if(this.props.me) {
       var me = this.props.me;
-      if (me.originalProjects.edges.length > 0) {
+      if (me.originalCollaborations.edges.length > 0) {
         return (
           <div className="MyCollaborations-container">
-            <ProjectListView projects={this.props.me.originalProjects} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
+            <CollaborationListView collaborations={this.props.me.originalCollaborations} me={this.props.me} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
           </div>
         );
       } else {
@@ -72,13 +101,15 @@ export default Relay.createContainer(MyCollaborationsView, {
     me: () => Relay.QL`
     fragment on User {
       id
-      originalProjects: collaborations(first: $first) {
+      originalCollaborations: collaborations(first: $first) {
         edges
-        ${ProjectListView.getFragment('projects')},
+        ${CollaborationListView.getFragment('collaborations')},
       }
-      moreProjects: collaborations(first: $moreFirst, after: $after) {
-        ${ProjectListView.getFragment('projects')},
+      moreCollaborations: collaborations(first: $moreFirst, after: $after) {
+        ${CollaborationListView.getFragment('collaborations')},
       }
+      ${DidIntroduceCollaborationSubscription.getFragment('me')},
+      ${CollaborationListView.getFragment('me')},
     }
     `,
   },

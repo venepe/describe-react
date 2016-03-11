@@ -12,8 +12,6 @@ import ExampleImage from '../ExampleImage';
 import FulfillmentImage from '../FulfillmentImage';
 import MoreButton from '../MoreButton';
 
-import DidIntroduceFulfillmentSubscription from '../../subscriptions/DidIntroduceFulfillmentSubscription';
-
 const _first = 2;
 const _next = 2;
 
@@ -71,32 +69,6 @@ class TestCaseView extends Component {
       firstFulfillment: first + _next,
       afterFulfillment: cursor
     });
-  }
-
-  componentDidMount() {
-    this.subscribe();
-  }
-
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  subscribe() {
-    if (!this.fulfillmentSubscription) {
-      this.fulfillmentSubscription = Relay.Store.subscribe(
-        new DidIntroduceFulfillmentSubscription({testCase: this.props.testCase})
-      );
-    }
-  }
-
-  unsubscribe() {
-    if (this.fulfillmentSubscription) {
-      this.fulfillmentSubscription.dispose();
-    }
   }
 
   render() {
@@ -247,7 +219,6 @@ export default Relay.createContainer(TestCaseView, {
         ${TestCaseText.getFragment('testCase')},
         ${TestCaseLabel.getFragment('testCase')},
         ${FulfillmentImage.getFragment('testCase')},
-        ${DidIntroduceFulfillmentSubscription.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`

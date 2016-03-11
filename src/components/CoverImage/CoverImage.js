@@ -6,6 +6,7 @@ import styles from './CoverImage.css';
 import ModalableImage from '../ModalableImage';
 import CoverImageFormDialog from '../CoverImageFormDialog';
 import SheetOptions from '../../constants/SheetOptions';
+import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../constants/ModalTypes';
 
@@ -87,7 +88,7 @@ class CoverImage extends Component {
   }
 
   subscribe() {
-    if (!this.coverImageSubscription) {
+    if (!this.coverImageSubscription && !isClientID(this.props.coverImage.id)) {
       this.coverImageSubscription = Relay.Store.subscribe(
         new DidDeleteCoverImageSubscription({coverImage: this.props.coverImage, target: this.props.target})
       );

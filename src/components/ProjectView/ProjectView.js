@@ -11,6 +11,7 @@ import CollaboratorText from '../CollaboratorText';
 import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
+import { isClientID } from '../../utils/isClientID';
 
 import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
 import DidIntroduceTestCaseSubscription from '../../subscriptions/DidIntroduceTestCaseSubscription';
@@ -76,22 +77,22 @@ class ProjectView extends Component {
   }
 
   subscribe() {
-    if (!this.projectSubscription) {
+    if (!this.projectSubscription && !isClientID(this.props.project.id)) {
       this.projectSubscription = Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project: this.props.project})
       );
     }
-    if (!this.testCaseSubscription) {
+    if (!this.testCaseSubscription && !isClientID(this.props.project.id)) {
       this.testCaseSubscription = Relay.Store.subscribe(
         new DidIntroduceTestCaseSubscription({project: this.props.project})
       );
     }
-    if (!this.coverImageSubscription) {
+    if (!this.coverImageSubscription && !isClientID(this.props.project.id)) {
       this.coverImageSubscription = Relay.Store.subscribe(
         new DidIntroduceCoverImageSubscription({target: this.props.project})
       );
     }
-    if (!this.collaboratorSubscription) {
+    if (!this.collaboratorSubscription && !isClientID(this.props.project.id)) {
       this.collaboratorSubscription = Relay.Store.subscribe(
         new DidIntroduceCollaboratorSubscription({project: this.props.project})
       );

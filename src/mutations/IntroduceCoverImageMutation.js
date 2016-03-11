@@ -17,7 +17,12 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceCoverImagePayload {
-        coverImageEdge
+        coverImageEdge {
+          node {
+            id
+            uri
+          }
+        }
         target {
           id
         }

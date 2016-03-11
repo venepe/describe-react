@@ -4,11 +4,11 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import { Link } from 'react-router';
 import Infinite from 'react-infinite';
-import styles from './ProjectListView.css';
-import ProjectListCellView from '../ProjectListCellView';
+import styles from './CollaborationListView.css';
+import CollaborationListCellView from '../CollaborationListCellView';
 import SpinnerView from '../SpinnerView';
 
-class ProjectListView extends Component {
+class CollaborationListView extends Component {
   static propTypes = {
     onPressRow: PropTypes.func,
     onEndReached: PropTypes.func
@@ -33,45 +33,45 @@ class ProjectListView extends Component {
   _getInitialState() {
     return {
       hasNextPage: false,
-      elements: this.buildElements(this.props.projects)
+      elements: this.buildElements(this.props.collaborations)
     };
   }
 
-  _getUpdatedState(projects) {
+  _getUpdatedState(collaborations) {
     return {
       hasNextPage: false,
-      elements: this.buildElements(projects)
+      elements: this.buildElements(collaborations)
     };
   }
 
-  _onClick(project) {
-    this.props.onPressRow(project);
+  _onClick(collaboration) {
+    this.props.onPressRow(collaboration);
   }
 
-  buildElements(projects) {
-    return projects.edges.map(function (object, index) {
-      let project = object.node;
-      let projectComponent = this.buildElement(project, index);
-      return projectComponent;
+  buildElements(collaborations) {
+    return collaborations.edges.map(function (object, index) {
+      let collaboration = object.node;
+      let collaborationComponent = this.buildElement(collaboration, index);
+      return collaborationComponent;
     }.bind(this));
   }
 
-  buildElement(project, index) {
+  buildElement(collaboration, index) {
     return (
-      <ProjectListCellView project={project} me={this.props.me} key={index} onClick={this._onClick}></ProjectListCellView>
+      <CollaborationListCellView collaboration={collaboration} me={this.props.me} key={index} onClick={this._onClick}></CollaborationListCellView>
     );
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.projects) {
-      this.setState(this._getUpdatedState(nextProps.projects));
+    if (nextProps.collaborations) {
+      this.setState(this._getUpdatedState(nextProps.collaborations));
     }
   }
 
   _onEndReached() {
-    let hasNextPage = this.props.projects.pageInfo.hasNextPage;
+    let hasNextPage = this.props.collaborations.pageInfo.hasNextPage;
     this.setState({hasNextPage});
-    let edges = this.props.projects.edges;
+    let edges = this.props.collaborations.edges;
     if (edges.length > 0) {
       this.props.onEndReached(edges[edges.length - 1].cursor);
     }
@@ -99,9 +99,9 @@ class ProjectListView extends Component {
   }
 }
 
-export default Relay.createContainer(ProjectListView, {
+export default Relay.createContainer(CollaborationListView, {
   fragments: {
-    projects: () => Relay.QL`
+    collaborations: () => Relay.QL`
       fragment on ProjectConnection {
         pageInfo {
           hasNextPage
@@ -109,14 +109,14 @@ export default Relay.createContainer(ProjectListView, {
         edges {
           cursor
           node {
-            ${ProjectListCellView.getFragment('project')},
+            ${CollaborationListCellView.getFragment('collaboration')},
           }
         }
       }
     `,
     me: () => Relay.QL`
       fragment on User {
-        ${ProjectListCellView.getFragment('me')},
+        ${CollaborationListCellView.getFragment('me')},
       }
     `,
   },

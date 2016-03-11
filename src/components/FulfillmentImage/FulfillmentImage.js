@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
 import SheetOptions from '../../constants/SheetOptions';
+import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_FULFILLMENT } from '../../constants/ModalTypes';
 
@@ -71,7 +72,7 @@ class FulfillmentImage extends Component {
   }
 
   subscribe() {
-    if (!this.fulfillmentSubscription) {
+    if (!this.fulfillmentSubscription && !isClientID(this.props.fulfillment.id)) {
       this.fulfillmentSubscription = Relay.Store.subscribe(
         new DidDeleteFulfillmentSubscription({fulfillment: this.props.fulfillment, testCase: this.props.testCase})
       );

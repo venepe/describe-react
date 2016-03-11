@@ -2,8 +2,13 @@
 
 import Relay from 'react-relay';
 
-export default class DidIntroduceCollaborationSubscription extends Relay.Subscription {
+export default class DidDeleteCollaborationSubscription extends Relay.Subscription {
   static fragments = {
+    collaboration: () => Relay.QL`
+      fragment on Project {
+        id
+      }
+    `,
     me: () => Relay.QL`
       fragment on User {
         id
@@ -13,15 +18,8 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
   getSubscription() {
     return Relay.QL`
       subscription {
-        didIntroduceCollaboration (input: $didIntroduceCollaboration) {
-          collaborationEdge {
-            node {
-              id
-              title
-              numOfTestCases
-              numOfTestCasesFulfilled
-            }
-          }
+        didDeleteCollaboration (input: $didDeleteCollaboration) {
+          deletedCollaborationId,
           me {
             id
           },
@@ -30,18 +28,16 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
   }
   getConfigs() {
     return [{
-      type: 'RANGE_ADD',
+      type: 'NODE_DELETE',
       parentName: 'me',
       parentID: this.props.me.id,
       connectionName: 'collaborations',
-      edgeName: 'collaborationEdge',
-      rangeBehaviors: {
-        '': 'prepend',
-      },
-    }];
+      deletedIDFieldName: 'deletedCollaborationId',
+      }];
   }
   getVariables() {
     return {
+      id: this.props.collaboration.id,
       meId: this.props.me.id,
     };
   }

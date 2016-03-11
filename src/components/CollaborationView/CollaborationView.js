@@ -12,6 +12,7 @@ import TouchableArchyLabel from '../TouchableArchyLabel';
 import FileImage from '../FileImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
+import { isClientID } from '../../utils/isClientID';
 
 import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
 import DidIntroduceTestCaseSubscription from '../../subscriptions/DidIntroduceTestCaseSubscription';
@@ -77,22 +78,22 @@ class CollaborationView extends Component {
   }
 
   subscribe() {
-    if (!this.projectSubscription) {
+    if (!this.projectSubscription && !isClientID(this.props.collaboration.id)) {
       this.projectSubscription = Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project: this.props.collaboration})
       );
     }
-    if (!this.testCaseSubscription) {
+    if (!this.testCaseSubscription && !isClientID(this.props.collaboration.id)) {
       this.testCaseSubscription = Relay.Store.subscribe(
         new DidIntroduceTestCaseSubscription({project: this.props.collaboration})
       );
     }
-    if (!this.coverImageSubscription) {
+    if (!this.coverImageSubscription && !isClientID(this.props.collaboration.id)) {
       this.coverImageSubscription = Relay.Store.subscribe(
         new DidIntroduceCoverImageSubscription({target: this.props.collaboration})
       );
     }
-    if (!this.collaboratorSubscription) {
+    if (!this.collaboratorSubscription && !isClientID(this.props.collaboration.id)) {
       this.collaboratorSubscription = Relay.Store.subscribe(
         new DidIntroduceCollaboratorSubscription({project: this.props.collaboration})
       );

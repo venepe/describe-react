@@ -8,6 +8,7 @@ import SheetOptions from '../../constants/SheetOptions';
 import ExampleFormDialog from '../ExampleFormDialog';
 import FulfillmentFormDialog from '../FulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
+import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
@@ -15,6 +16,7 @@ import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
 import DidDeleteTestCaseSubscription from '../../subscriptions/DidDeleteTestCaseSubscription';
 import DidUpdateTestCaseSubscription from '../../subscriptions/DidUpdateTestCaseSubscription';
 import DidIntroduceExampleSubscription from '../../subscriptions/DidIntroduceExampleSubscription';
+import DidIntroduceFulfillmentSubscription from '../../subscriptions/DidIntroduceFulfillmentSubscription';
 
 class TestCaseText extends Component {
   static propTypes = {
@@ -109,19 +111,24 @@ class TestCaseText extends Component {
   }
 
   subscribe() {
-    if (!this.deleteTestCaseSubscription) {
+    if (!this.deleteTestCaseSubscription && !isClientID(this.props.testCase.id)) {
       this.deleteTestCaseSubscription = Relay.Store.subscribe(
         new DidDeleteTestCaseSubscription({testCase: this.props.testCase, project: this.props.project})
       );
     }
-    if (!this.updateTestCaseSubscription) {
+    if (!this.updateTestCaseSubscription && !isClientID(this.props.testCase.id)) {
       this.updateTestCaseSubscription = Relay.Store.subscribe(
         new DidUpdateTestCaseSubscription({testCase: this.props.testCase})
       );
     }
-    if (!this.introduceExampleSubscription) {
+    if (!this.introduceExampleSubscription && !isClientID(this.props.testCase.id)) {
       this.introduceExampleSubscription = Relay.Store.subscribe(
         new DidIntroduceExampleSubscription({target: this.props.testCase})
+      );
+    }
+    if (!this.fulfillmentSubscription && !isClientID(this.props.testCase.id)) {
+      this.fulfillmentSubscription = Relay.Store.subscribe(
+        new DidIntroduceFulfillmentSubscription({testCase: this.props.testCase})
       );
     }
   }
@@ -132,6 +139,12 @@ class TestCaseText extends Component {
     }
     if (this.updateTestCaseSubscription) {
       this.updateTestCaseSubscription.dispose();
+    }
+    if (this.introduceExampleSubscription) {
+      this.introduceExampleSubscription.dispose();
+    }
+    if (this.fulfillmentSubscription) {
+      this.fulfillmentSubscription.dispose();
     }
   }
 
@@ -161,6 +174,7 @@ export default Relay.createContainer(TestCaseText, {
         ${DidDeleteTestCaseSubscription.getFragment('testCase')},
         ${DidUpdateTestCaseSubscription.getFragment('testCase')},
         ${DidIntroduceExampleSubscription.getFragment('target')},
+        ${DidIntroduceFulfillmentSubscription.getFragment('testCase')},
       }
 
     `,
