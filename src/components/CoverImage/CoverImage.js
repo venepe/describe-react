@@ -87,11 +87,19 @@ class CoverImage extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.coverImageSubscription && !isClientID(this.props.coverImage.id)) {
-      this.coverImageSubscription = Relay.Store.subscribe(
-        new DidDeleteCoverImageSubscription({coverImage: this.props.coverImage, target: this.props.target})
-      );
+  subscribe(prevProps = {}) {
+    let coverImage = this.props.coverImage;
+    if (!isClientID(coverImage.id)) {
+      if (prevProps.coverImage && prevProps.coverImage.id !== coverImage.id) {
+        this.unsubscribe();
+        this.coverImageSubscription = Relay.Store.subscribe(
+          new DidDeleteCoverImageSubscription({coverImage: coverImage, target: this.props.target})
+        );
+      } else {
+        this.coverImageSubscription = Relay.Store.subscribe(
+          new DidDeleteCoverImageSubscription({coverImage: coverImage, target: this.props.target})
+        );
+      }
     }
   }
 

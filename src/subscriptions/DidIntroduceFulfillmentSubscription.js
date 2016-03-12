@@ -15,6 +15,7 @@ export default class DidIntroduceFulfillmentSubscription extends Relay.Subscript
       subscription {
         didIntroduceFulfillment (input: $didIntroduceFulfillment) {
           fulfillmentEdge {
+            cursor
             node {
               id
               uri

@@ -25,6 +25,7 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceFulfillmentPayload {
         fulfillmentEdge {
+          cursor
           node {
             id
             uri

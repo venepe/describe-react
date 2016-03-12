@@ -9,7 +9,7 @@ import ArchyLabel from '../ArchyLabel';
 import CollaborationText from '../CollaborationText';
 import CollaboratorText from '../CollaboratorText';
 import TouchableArchyLabel from '../TouchableArchyLabel';
-import FileImage from '../FileImage';
+import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 import { isClientID } from '../../utils/isClientID';
@@ -42,9 +42,9 @@ class CollaborationView extends Component {
     this.router.push(`/collaborations/${collaborationId}/testCases/${testCaseId}`);
   }
 
-  _pushCoverImage(fileId) {
+  _pushCoverImage(coverImageId) {
     let collaborationId = this.props.collaboration.id;
-    this.router.push(`/collaborations/${collaborationId}/files/${fileId}`);
+    this.router.push(`/collaborations/${collaborationId}/coverImages/${coverImageId}`);
   }
 
   _pushCollaborator(userId) {
@@ -195,7 +195,7 @@ class CollaborationView extends Component {
 
     return (
       <div className="CollaborationView-container">
-        <FileImage file={coverImage} height={400} width={null} onClick={this._pushCoverImage}/>
+        <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.collaboration} onClick={this._pushCoverImage}/>
         <div className="CollaborationArchy-container">
           <Archy archible={object}/>
         </div>
@@ -242,7 +242,7 @@ export default Relay.createContainer(CollaborationView, {
         coverImages(first: 1) {
           edges {
             node {
-              ${FileImage.getFragment('file')},
+              ${CoverImage.getFragment('coverImage')},
             }
           }
         }
@@ -262,6 +262,7 @@ export default Relay.createContainer(CollaborationView, {
             }
           }
         }
+        ${CoverImage.getFragment('target')},
         ${CollaborationText.getFragment('collaboration')},
         ${TestCaseView.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},

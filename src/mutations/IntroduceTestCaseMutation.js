@@ -18,7 +18,6 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceTestCasePayload {
         testCaseEdge {
-          cursor
           node {
             id
             it

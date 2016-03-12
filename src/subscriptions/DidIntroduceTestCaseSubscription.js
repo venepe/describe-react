@@ -15,9 +15,26 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
       subscription {
         didIntroduceTestCase (input: $didIntroduceTestCase) {
           testCaseEdge {
+            cursor
             node {
               id
               it
+              fulfillments(first: 1) {
+                edges {
+                  node {
+                    id
+                    uri
+                  }
+                }
+              }
+              examples(first: 1) {
+                edges {
+                  node {
+                    id
+                    uri
+                  }
+                }
+              }
             }
           }
           project {
