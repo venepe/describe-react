@@ -152,7 +152,7 @@ class CollaborationView extends Component {
      let collaboratorNodes = this.props.collaboration.collaborators.edges.map(function (object, index) {
        let collaborator = object.node;
            let collaboratorComponent = {
-              component: (<TouchableArchyLabel id={collaborator.id} text={collaborator.name} onClick={this._pushCollaborator}/>),
+              component: (<CollaboratorText collaborator={collaborator} project={this.props.collaboration} onClick={this._pushCollaborator}/>),
               nodes: []
             };
            return collaboratorComponent;
@@ -249,8 +249,7 @@ export default Relay.createContainer(CollaborationView, {
         collaborators(first: 10) {
           edges {
             node {
-              id
-              name
+              ${CollaboratorText.getFragment('collaborator')},
             }
           }
         }
@@ -265,6 +264,7 @@ export default Relay.createContainer(CollaborationView, {
         ${CoverImage.getFragment('target')},
         ${CollaborationText.getFragment('collaboration')},
         ${TestCaseView.getFragment('project')},
+        ${CollaboratorText.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceTestCaseSubscription.getFragment('project')},
         ${DidIntroduceCoverImageSubscription.getFragment('target')},
