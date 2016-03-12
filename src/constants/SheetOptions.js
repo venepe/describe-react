@@ -39,8 +39,16 @@ const projectSheet = {
 const collaborativeProjectSheet = {
   options: [
     {
+      text: 'Add Collaborator',
+      value: INTRODUCE_COLLABORATOR
+    },
+    {
       text: 'Add Test Case',
       value: INTRODUCE_TEST_CASE
+    },
+    {
+      text: 'Update Project',
+      value: UPDATE_PROJECT
     },
     {
       text: 'Leave Project',
