@@ -20,6 +20,14 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
               title
               numOfTestCases
               numOfTestCasesFulfilled
+              testCases(first: 1) {
+                edges {
+                  node {
+                    id
+                    it
+                  }
+                }
+              }
             }
           }
           me {
