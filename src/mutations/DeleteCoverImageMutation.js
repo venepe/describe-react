@@ -44,7 +44,7 @@ class DeleteCoverImageMutation extends Relay.Mutation {
       connectionName: 'coverImages',
       edgeName: 'coverImageEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }
   ];

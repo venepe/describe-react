@@ -38,7 +38,7 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
       connectionName: 'coverImages',
       edgeName: 'coverImageEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }];
   }

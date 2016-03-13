@@ -110,41 +110,51 @@ class TestCaseText extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.deleteTestCaseSubscription && !isClientID(this.props.testCase.id)) {
-      this.deleteTestCaseSubscription = Relay.Store.subscribe(
-        new DidDeleteTestCaseSubscription({testCase: this.props.testCase, project: this.props.project})
-      );
-    }
-    if (!this.updateTestCaseSubscription && !isClientID(this.props.testCase.id)) {
-      this.updateTestCaseSubscription = Relay.Store.subscribe(
-        new DidUpdateTestCaseSubscription({testCase: this.props.testCase})
-      );
-    }
-    if (!this.introduceExampleSubscription && !isClientID(this.props.testCase.id)) {
-      this.introduceExampleSubscription = Relay.Store.subscribe(
-        new DidIntroduceExampleSubscription({target: this.props.testCase})
-      );
-    }
-    if (!this.fulfillmentSubscription && !isClientID(this.props.testCase.id)) {
-      this.fulfillmentSubscription = Relay.Store.subscribe(
-        new DidIntroduceFulfillmentSubscription({testCase: this.props.testCase})
-      );
+  subscribe(prevProps = {}) {
+    if(!isClientID(this.props.testCase.id)) {
+      if (prevProps.testCase !== undefined && prevProps.testCase.id !== this.props.testCase.id) {
+        this.unsubscribe();
+      }
+
+      if (!this.deleteTestCaseSubscription) {
+        this.deleteTestCaseSubscription = Relay.Store.subscribe(
+          new DidDeleteTestCaseSubscription({testCase: this.props.testCase, project: this.props.project})
+        );
+      }
+      if (!this.updateTestCaseSubscription) {
+        this.updateTestCaseSubscription = Relay.Store.subscribe(
+          new DidUpdateTestCaseSubscription({testCase: this.props.testCase})
+        );
+      }
+      if (!this.introduceExampleSubscription) {
+        this.introduceExampleSubscription = Relay.Store.subscribe(
+          new DidIntroduceExampleSubscription({target: this.props.testCase})
+        );
+      }
+      if (!this.fulfillmentSubscription) {
+        this.fulfillmentSubscription = Relay.Store.subscribe(
+          new DidIntroduceFulfillmentSubscription({testCase: this.props.testCase})
+        );
+      }
     }
   }
 
   unsubscribe() {
     if (this.deleteTestCaseSubscription) {
       this.deleteTestCaseSubscription.dispose();
+      this.deleteTestCaseSubscription = null;
     }
     if (this.updateTestCaseSubscription) {
       this.updateTestCaseSubscription.dispose();
+      this.updateTestCaseSubscription = null;
     }
     if (this.introduceExampleSubscription) {
       this.introduceExampleSubscription.dispose();
+      this.introduceExampleSubscription = null;
     }
     if (this.fulfillmentSubscription) {
       this.fulfillmentSubscription.dispose();
+      this.fulfillmentSubscription = null;
     }
   }
 

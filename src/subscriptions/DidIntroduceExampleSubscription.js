@@ -34,7 +34,7 @@ export default class DidIntroduceExampleSubscription extends Relay.Subscription 
       connectionName: 'examples',
       edgeName: 'exampleEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }];
   }

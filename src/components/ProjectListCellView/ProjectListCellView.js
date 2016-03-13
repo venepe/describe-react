@@ -4,8 +4,10 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ProjectListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
+import { isClientID } from '../../utils/isClientID';
 
 import DidDeleteProjectSubscription from '../../subscriptions/DidDeleteProjectSubscription';
+import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
 
 class ProjectListCellView extends Component {
   static propTypes = {
@@ -45,17 +47,35 @@ class ProjectListCellView extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.projectSubscription) {
-      this.projectSubscription = Relay.Store.subscribe(
-        new DidDeleteProjectSubscription({project: this.props.project, me: this.props.me})
-      );
+  subscribe(prevProps = {}) {
+    if(!isClientID(this.props.project.id)) {
+      if (prevProps.project !== undefined && prevProps.project.id !== this.props.project.id) {
+        this.unsubscribe();
+      }
+
+      if (!this.projectSubscriptionDelete) {
+        this.projectSubscriptionDelete = Relay.Store.subscribe(
+          new DidDeleteProjectSubscription({project: this.props.project, me: this.props.me})
+        );
+      }
+
+      if (!this.projectSubscriptionUpdate) {
+        this.projectSubscriptionUpdate = Relay.Store.subscribe(
+          new DidUpdateProjectSubscription({project: this.props.project})
+        );
+      }
     }
   }
 
   unsubscribe() {
-    if (this.projectSubscription) {
-      this.projectSubscription.dispose();
+    if (this.projectSubscriptionDelete) {
+      this.projectSubscriptionDelete.dispose();
+      this.projectSubscriptionDelete = null;
+    }
+
+    if (this.projectSubscriptionUpdate) {
+      this.projectSubscriptionUpdate.dispose();
+      this.projectSubscriptionUpdate = null;
     }
   }
 
@@ -87,7 +107,7 @@ export default Relay.createContainer(ProjectListCellView, {
         title
         numOfTestCases
         numOfTestCasesFulfilled
-        coverImages(first: 1) {
+        coverImages(last: 1) {
           edges {
             node {
               uri
@@ -95,6 +115,7 @@ export default Relay.createContainer(ProjectListCellView, {
           }
         }
         ${DidDeleteProjectSubscription.getFragment('project')},
+        ${DidUpdateProjectSubscription.getFragment('project')},
       }
     `,
     me: () => Relay.QL`

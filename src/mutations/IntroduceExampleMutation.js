@@ -33,7 +33,7 @@ class IntroduceExampleMutation extends Relay.Mutation {
       connectionName: 'examples',
       edgeName: 'exampleEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }];
   }

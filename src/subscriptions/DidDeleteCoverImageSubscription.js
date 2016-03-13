@@ -47,7 +47,7 @@ export default class DidDeleteCoverImageSubscription extends Relay.Subscription 
       connectionName: 'coverImages',
       edgeName: 'coverImageEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }
   ];

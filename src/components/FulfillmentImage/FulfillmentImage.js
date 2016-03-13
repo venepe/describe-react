@@ -71,17 +71,24 @@ class FulfillmentImage extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.fulfillmentSubscription && !isClientID(this.props.fulfillment.id)) {
-      this.fulfillmentSubscription = Relay.Store.subscribe(
-        new DidDeleteFulfillmentSubscription({fulfillment: this.props.fulfillment, testCase: this.props.testCase})
-      );
+  subscribe(prevProps = {}) {
+    if(!isClientID(this.props.fulfillment.id)) {
+      if (prevProps.fulfillment !== undefined && prevProps.fulfillment.id !== this.props.fulfillment.id) {
+        this.unsubscribe();
+      }
+
+      if (!this.fulfillmentSubscription) {
+        this.fulfillmentSubscription = Relay.Store.subscribe(
+          new DidDeleteFulfillmentSubscription({fulfillment: this.props.fulfillment, testCase: this.props.testCase})
+        );
+      }
     }
   }
 
   unsubscribe() {
     if (this.fulfillmentSubscription) {
       this.fulfillmentSubscription.dispose();
+      this.fulfillmentSubscription = null;
     }
   }
 

@@ -77,7 +77,7 @@ class CollaborationView extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
+  subscribe(prevProps) {
     if (!this.projectSubscription && !isClientID(this.props.collaboration.id)) {
       this.projectSubscription = Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project: this.props.collaboration})
@@ -239,7 +239,7 @@ export default Relay.createContainer(CollaborationView, {
             }
           }
         }
-        coverImages(first: 1) {
+        coverImages(last: 1) {
           edges {
             node {
               ${CoverImage.getFragment('coverImage')},
@@ -248,6 +248,7 @@ export default Relay.createContainer(CollaborationView, {
         }
         collaborators(first: 10) {
           edges {
+            cursor
             node {
               ${CollaboratorText.getFragment('collaborator')},
             }

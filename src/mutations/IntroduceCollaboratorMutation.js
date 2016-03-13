@@ -16,7 +16,13 @@ class IntroduceCollaboratorMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceCollaboratorPayload {
-        collaboratorEdge
+        collaboratorEdge {
+          cursor
+          node {
+            id
+            name
+          }
+        }
         project {
           id
         },
@@ -31,7 +37,7 @@ class IntroduceCollaboratorMutation extends Relay.Mutation {
         connectionName: 'collaborators',
         edgeName: 'collaboratorEdge',
         rangeBehaviors: {
-          '': 'prepend',
+          '': 'append',
         }
       }];
   }
@@ -44,9 +50,7 @@ class IntroduceCollaboratorMutation extends Relay.Mutation {
   getOptimisticResponse() {
     return {
       collaboratorEdge: {
-        node: {
-          email: this.props.email,
-        },
+        node: {},
       },
       project: {
         id: this.props.project.id,

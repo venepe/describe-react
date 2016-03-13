@@ -51,7 +51,7 @@ class IntroduceFulfillmentMutation extends Relay.Mutation {
       connectionName: 'fulfillments',
       edgeName: 'fulfillmentEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     },
     {

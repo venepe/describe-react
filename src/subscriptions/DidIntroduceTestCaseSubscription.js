@@ -51,7 +51,7 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
         connectionName: 'testCases',
         edgeName: 'testCaseEdge',
         rangeBehaviors: {
-          '': 'prepend',
+          '': 'append',
         }
       }];
   }

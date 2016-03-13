@@ -71,17 +71,24 @@ class ExampleImage extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.exampleSubscription && !isClientID(this.props.example.id)) {
-      this.exampleSubscription = Relay.Store.subscribe(
-        new DidDeleteExampleSubscription({example: this.props.example, target: this.props.target})
-      );
+  subscribe(prevProps = {}) {
+    if(!isClientID(this.props.example.id)) {
+      if (prevProps.example !== undefined && prevProps.example.id !== this.props.example.id) {
+        this.unsubscribe();
+      }
+
+      if (!this.exampleSubscription) {
+        this.exampleSubscription = Relay.Store.subscribe(
+          new DidDeleteExampleSubscription({example: this.props.example, target: this.props.target})
+        );
+      }
     }
   }
 
   unsubscribe() {
     if (this.exampleSubscription) {
       this.exampleSubscription.dispose();
+      this.exampleSubscription = null;
     }
   }
 

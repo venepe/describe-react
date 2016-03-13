@@ -34,7 +34,7 @@ export default class DidIntroduceCoverImageSubscription extends Relay.Subscripti
       connectionName: 'coverImages',
       edgeName: 'coverImageEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }];
   }

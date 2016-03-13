@@ -15,6 +15,7 @@ export default class DidIntroduceCollaboratorSubscription extends Relay.Subscrip
       subscription {
         didIntroduceCollaborator (input: $didIntroduceCollaborator) {
           collaboratorEdge {
+            cursor
             node {
               id
               name
@@ -34,7 +35,7 @@ export default class DidIntroduceCollaboratorSubscription extends Relay.Subscrip
         connectionName: 'collaborators',
         edgeName: 'collaboratorEdge',
         rangeBehaviors: {
-          '': 'prepend',
+          '': 'append',
         }
       }];
   }

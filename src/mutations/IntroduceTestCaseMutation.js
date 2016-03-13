@@ -37,7 +37,7 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
         connectionName: 'testCases',
         edgeName: 'testCaseEdge',
         rangeBehaviors: {
-          '': 'prepend',
+          '': 'append',
         }
       },
       {

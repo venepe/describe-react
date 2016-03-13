@@ -38,7 +38,7 @@ export default class DidIntroduceFulfillmentSubscription extends Relay.Subscript
       connectionName: 'fulfillments',
       edgeName: 'fulfillmentEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }];
   }

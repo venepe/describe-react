@@ -90,12 +90,11 @@ class CoverImage extends Component {
   subscribe(prevProps = {}) {
     let coverImage = this.props.coverImage;
     if (!isClientID(coverImage.id)) {
-      if (prevProps.coverImage && prevProps.coverImage.id !== coverImage.id) {
+      if (prevProps.coverImage !== undefined && prevProps.coverImage.id !== coverImage.id) {
         this.unsubscribe();
-        this.coverImageSubscription = Relay.Store.subscribe(
-          new DidDeleteCoverImageSubscription({coverImage: coverImage, target: this.props.target})
-        );
-      } else {
+      }
+
+      if (!this.coverImageSubscription) {
         this.coverImageSubscription = Relay.Store.subscribe(
           new DidDeleteCoverImageSubscription({coverImage: coverImage, target: this.props.target})
         );
@@ -106,6 +105,7 @@ class CoverImage extends Component {
   unsubscribe() {
     if (this.coverImageSubscription) {
       this.coverImageSubscription.dispose();
+      this.coverImageSubscription = null;
     }
   }
 

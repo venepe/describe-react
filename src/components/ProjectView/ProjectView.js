@@ -76,7 +76,7 @@ class ProjectView extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
+  subscribe(prevProps) {
     if (!this.projectSubscription && !isClientID(this.props.project.id)) {
       this.projectSubscription = Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project: this.props.project})
@@ -220,7 +220,7 @@ export default Relay.createContainer(ProjectView, {
             }
           }
         }
-        coverImages(first: 1) {
+        coverImages(last: 1) {
           edges {
             node {
               ${CoverImage.getFragment('coverImage')},
@@ -229,6 +229,7 @@ export default Relay.createContainer(ProjectView, {
         }
         collaborators(first: 10) {
           edges {
+            cursor
             node {
               ${CollaboratorText.getFragment('collaborator')},
             }

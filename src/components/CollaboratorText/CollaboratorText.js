@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import styles from './CollaboratorText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import SheetOptions from '../../constants/SheetOptions';
+import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_COLLABORATOR } from '../../constants/ModalTypes';
 
@@ -62,17 +63,24 @@ class CollaboratorText extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.collaboratorSubscription) {
-      this.collaboratorSubscription = Relay.Store.subscribe(
-        new DidDeleteCollaboratorSubscription({collaborator: this.props.collaborator, project: this.props.project})
-      );
+  subscribe(prevProps = {}) {
+    if(!isClientID(this.props.collaborator.id)) {
+      if (prevProps.collaborator !== undefined && prevProps.collaborator.id !== this.props.collaborator.id) {
+        this.unsubscribe();
+      }
+
+      if (!this.collaboratorSubscription) {
+        this.collaboratorSubscription = Relay.Store.subscribe(
+          new DidDeleteCollaboratorSubscription({collaborator: this.props.collaborator, project: this.props.project})
+        );
+      }
     }
   }
 
   unsubscribe() {
     if (this.collaboratorSubscription) {
       this.collaboratorSubscription.dispose();
+      this.collaboratorSubscription = null;
     }
   }
 

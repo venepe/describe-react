@@ -4,8 +4,10 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CollaborationListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
+import { isClientID } from '../../utils/isClientID';
 
 import DidDeleteCollaborationSubscription from '../../subscriptions/DidDeleteCollaborationSubscription';
+import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
 
 class CollaborationListCellView extends Component {
   static propTypes = {
@@ -45,17 +47,35 @@ class CollaborationListCellView extends Component {
     this.unsubscribe();
   }
 
-  subscribe() {
-    if (!this.collaborationSubscription) {
-      this.collaborationSubscription = Relay.Store.subscribe(
-        new DidDeleteCollaborationSubscription({collaboration: this.props.collaboration, me: this.props.me})
-      );
+  subscribe(prevProps = {}) {
+    if(!isClientID(this.props.collaboration.id)) {
+      if (prevProps.collaboration !== undefined && prevProps.collaboration.id !== this.props.collaboration.id) {
+        this.unsubscribe();
+      }
+
+      if (!this.collaborationSubscription) {
+        this.collaborationSubscription = Relay.Store.subscribe(
+          new DidDeleteCollaborationSubscription({collaboration: this.props.collaboration, me: this.props.me})
+        );
+      }
+
+      if (!this.projectSubscription) {
+        this.projectSubscription = Relay.Store.subscribe(
+          new DidUpdateProjectSubscription({project: this.props.collaboration})
+        );
+      }
     }
   }
 
   unsubscribe() {
     if (this.collaborationSubscription) {
       this.collaborationSubscription.dispose();
+      this.collaborationSubscription = null;
+    }
+
+    if (this.projectSubscription) {
+      this.projectSubscription.dispose();
+      this.projectSubscription = null;
     }
   }
 
@@ -87,7 +107,7 @@ export default Relay.createContainer(CollaborationListCellView, {
         title
         numOfTestCases
         numOfTestCasesFulfilled
-        coverImages(first: 1) {
+        coverImages(last: 1) {
           edges {
             node {
               uri
@@ -95,6 +115,7 @@ export default Relay.createContainer(CollaborationListCellView, {
           }
         }
         ${DidDeleteCollaborationSubscription.getFragment('collaboration')},
+        ${DidUpdateProjectSubscription.getFragment('project')},
       }
     `,
     me: () => Relay.QL`

@@ -22,7 +22,9 @@ class DeleteCollaboratorMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on DeleteCollaboratorPayload {
         deletedCollaboratorId
-        project
+        project {
+          id
+        }
       }
     `;
   }

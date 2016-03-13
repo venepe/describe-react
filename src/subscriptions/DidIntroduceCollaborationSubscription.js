@@ -44,7 +44,7 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
       connectionName: 'collaborations',
       edgeName: 'collaborationEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       },
     }];
   }

@@ -60,7 +60,7 @@ export default Relay.createContainer(UserView, {
         email
         fullName
         summary
-        coverImages(first: 1) {
+        coverImages(last: 1) {
           edges {
             node {
               ${FileImage.getFragment('file')},
