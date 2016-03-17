@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class CoverImageRoute extends Relay.Route {
+export default class CoverImageRoute extends Relay.Route {
   static queries = {
     coverImage: (Component) => Relay.QL`
       query {
@@ -26,5 +26,3 @@ class CoverImageRoute extends Relay.Route {
 
   static routeName = 'CoverImageRoute';
 }
-
-module.exports = CoverImageRoute;

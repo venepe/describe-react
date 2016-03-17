@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export default class DidDeleteCoverImageSubscription extends Relay.Subscription {
+export class DidDeleteCoverImageSubscription extends Relay.Subscription {
   static fragments = {
     coverImage: () => Relay.QL`
       fragment on File {

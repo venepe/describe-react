@@ -4,13 +4,13 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CollaboratorText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
-import SheetOptions from '../../constants/SheetOptions';
+import { CollaboratorSheetOptions } from '../../constants/SheetOptions';
 import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_COLLABORATOR } from '../../constants/ModalTypes';
 
-import DeleteCollaboratorMutation from '../../mutations/DeleteCollaboratorMutation';
-import DidDeleteCollaboratorSubscription from '../../subscriptions/DidDeleteCollaboratorSubscription';
+import { DeleteCollaboratorMutation } from '../../mutations';
+import { DidDeleteCollaboratorSubscription } from '../../subscriptions';
 
 class CollaboratorText extends Component {
   static propTypes = {
@@ -88,7 +88,7 @@ class CollaboratorText extends Component {
 
     return (
       <div className="CollaboratorText-container">
-        <ModalableArchyLabel text={this.props.collaborator.name} sheetOptions={SheetOptions.collaboratorSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={this.props.collaborator.name} sheetOptions={CollaboratorSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
       </div>
     );
   }

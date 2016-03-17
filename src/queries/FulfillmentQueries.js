@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-const FulfillmentQueries = {
+export const FulfillmentQueries = {
   fulfillment: () => Relay.QL`
     query {
       node(id: $fulfillmentId)
@@ -19,5 +19,3 @@ const FulfillmentQueries = {
     }
   `
 }
-
-export default FulfillmentQueries;

@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export default class DidIntroduceCoverImageSubscription extends Relay.Subscription {
+export class DidIntroduceCoverImageSubscription extends Relay.Subscription {
   static fragments = {
     target: () => Relay.QL`
       fragment on Node {

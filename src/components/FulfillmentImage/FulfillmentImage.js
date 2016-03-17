@@ -4,13 +4,13 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
-import SheetOptions from '../../constants/SheetOptions';
+import { FulfillmentSheetOptions } from '../../constants/SheetOptions';
 import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_FULFILLMENT } from '../../constants/ModalTypes';
 
-import DeleteFulfillmentMutation from '../../mutations/DeleteFulfillmentMutation';
-import DidDeleteFulfillmentSubscription from '../../subscriptions/DidDeleteFulfillmentSubscription';
+import { DeleteFulfillmentMutation } from '../../mutations';
+import { DidDeleteFulfillmentSubscription } from '../../subscriptions';
 
 class FulfillmentImage extends Component {
   static propTypes = {
@@ -99,7 +99,7 @@ class FulfillmentImage extends Component {
     }
     return (
       <div className="FulfillmentImage-container">
-        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.fulfillmentSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={FulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
       </div>
     );
   }

@@ -1,25 +1,17 @@
 'use strict';
 
-import AuthenticatedTypes from '../constants/AuthenticatedTypes';
+import { AUTHENTICATED, NOT_AUTHENTICATED } from '../constants/AuthenticatedTypes';
 
-var {
-  AUTHENTICATED,
-  NOT_AUTHENTICATED
-} = AuthenticatedTypes;
-
-function authenticated(meId) {
+export const authenticated = (meId) => {
   return {
     type: AUTHENTICATED,
     meId
   };
 }
 
-function notAuthenticated() {
+export const notAuthenticated = () => {
   return {
     type: NOT_AUTHENTICATED,
     meId: null
   };
 }
-
-module.exports.authenticated = authenticated;
-module.exports.notAuthenticated = notAuthenticated;

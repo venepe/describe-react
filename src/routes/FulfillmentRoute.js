@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class FulfillmentRoute extends Relay.Route {
+export default class FulfillmentRoute extends Relay.Route {
   static queries = {
     fulfillment: (Component) => Relay.QL`
       query {
@@ -26,5 +26,3 @@ class FulfillmentRoute extends Relay.Route {
 
   static routeName = 'FulfillmentRoute';
 }
-
-module.exports = FulfillmentRoute;

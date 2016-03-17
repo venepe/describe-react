@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export default class DidDeleteFulfillmentSubscription extends Relay.Subscription {
+export class DidDeleteFulfillmentSubscription extends Relay.Subscription {
   static fragments = {
     fulfillment: () => Relay.QL`
       fragment on File {

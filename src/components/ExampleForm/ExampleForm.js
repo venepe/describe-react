@@ -3,9 +3,9 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ExampleForm.css';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
-import IntroduceExampleMutation from '../../mutations/IntroduceExampleMutation';
+import { IntroduceExampleMutation } from '../../mutations';
 
 class ExampleForm extends Component {
   static propTypes = {

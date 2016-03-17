@@ -4,10 +4,10 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import { FlatButton, TextField } from 'material-ui';
 import styles from './UserUpdateForm.css';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 import Utilities from '../../utils/utilities';
 
-import UpdateUserMutation from '../../mutations/UpdateUserMutation';
+import { UpdateUserMutation } from '../../mutations';
 
 class UserUpdateForm extends Component {
 

@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-const CoverImageQueries = {
+export const CoverImageQueries = {
   coverImage: () => Relay.QL`
     query {
       node(id: $coverImageId)
@@ -14,5 +14,3 @@ const CoverImageQueries = {
     }
   `
 }
-
-export default CoverImageQueries;

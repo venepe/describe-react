@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class IntroduceCoverImageMutation extends Relay.Mutation {
+export class IntroduceCoverImageMutation extends Relay.Mutation {
   static fragments = {
     target: () => Relay.QL`
       fragment on Node {
@@ -64,5 +64,3 @@ class IntroduceCoverImageMutation extends Relay.Mutation {
     };
   }
 }
-
-module.exports = IntroduceCoverImageMutation;

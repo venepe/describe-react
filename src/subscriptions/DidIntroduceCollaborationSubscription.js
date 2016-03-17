@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export default class DidIntroduceCollaborationSubscription extends Relay.Subscription {
+export class DidIntroduceCollaborationSubscription extends Relay.Subscription {
   static fragments = {
     me: () => Relay.QL`
       fragment on User {

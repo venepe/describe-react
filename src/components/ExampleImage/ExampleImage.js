@@ -4,13 +4,13 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ExampleImage.css';
 import ModalableImage from '../ModalableImage';
-import SheetOptions from '../../constants/SheetOptions';
+import { ExampleSheetOptions } from '../../constants/SheetOptions';
 import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
-import DeleteExampleMutation from '../../mutations/DeleteExampleMutation';
-import DidDeleteExampleSubscription from '../../subscriptions/DidDeleteExampleSubscription';
+import { DeleteExampleMutation } from '../../mutations';
+import { DidDeleteExampleSubscription } from '../../subscriptions';
 
 class ExampleImage extends Component {
   static propTypes = {
@@ -100,7 +100,7 @@ class ExampleImage extends Component {
     }
     return (
       <div className="ExampleImage-container">
-        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.exampleSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={ExampleSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
       </div>
     );
   }

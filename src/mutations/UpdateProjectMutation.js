@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class UpdateProjectMutation extends Relay.Mutation {
+export class UpdateProjectMutation extends Relay.Mutation {
   static fragments = {
     project: () => Relay.QL`
       fragment on Project {
@@ -45,5 +45,3 @@ class UpdateProjectMutation extends Relay.Mutation {
     };
   }
 }
-
-module.exports = UpdateProjectMutation;

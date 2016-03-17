@@ -9,7 +9,7 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 
-import IntroduceTestCaseMutation from '../../mutations/IntroduceTestCaseMutation';
+import { IntroduceTestCaseMutation } from '../../mutations';
 
 class UserDeleteDialog extends Component {
   static propTypes = {

@@ -1,7 +1,7 @@
 'use strict';
 
 import SMTIStorage from './storage';
-import SMTIConstants, { SMTIBaseUrl } from '../constants';
+import { SMTIBaseUrl } from '../constants';
 import { initNetwork } from './initNetwork';
 
 function login(email, password) {

@@ -4,14 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CollaborationText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
-import SheetOptions from '../../constants/SheetOptions';
+import { CollaborativeProjectSheetOptions } from '../../constants/SheetOptions';
 import TestCaseFormDialog from '../TestCaseFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
 import CollaboratorFormDialog from '../CollaboratorFormDialog';
 
 import ModalTypes, { INTRODUCE_COLLABORATOR, INTRODUCE_TEST_CASE, UPDATE_PROJECT, LEAVE_PROJECT } from '../../constants/ModalTypes';
 
-import DeleteCollaborationMutation from '../../mutations/DeleteCollaborationMutation';
+import { DeleteCollaborationMutation } from '../../mutations';
 
 class CollaborationText extends Component {
   static propTypes = {
@@ -90,7 +90,7 @@ class CollaborationText extends Component {
 
     return (
       <div className="CollaborationText-container">
-        <ModalableArchyLabel text={this.props.collaboration.title} sheetOptions={SheetOptions.collaborativeProjectSheet} onItemTouchTap={this._onItemTouchTap} />
+        <ModalableArchyLabel text={this.props.collaboration.title} sheetOptions={CollaborativeProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} />
           <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.collaboration} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
           <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.collaboration} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
           <CollaboratorFormDialog isVisible={this.state.showCollaboratorForm} project={this.props.collaboration} onCancel={this._dismissCollaboratorForm} onCreate={this._dismissCollaboratorForm} />

@@ -8,7 +8,7 @@ import CollaborationListView from '../CollaborationListView';
 import MyCollaborationsPlaceholder from '../MyCollaborationsPlaceholder';
 import SMTIStorage from '../../utils/storage';
 
-import DidIntroduceCollaborationSubscription from '../../subscriptions/DidIntroduceCollaborationSubscription';
+import { DidIntroduceCollaborationSubscription } from '../../subscriptions';
 
 const _first = 10;
 const _next = 10;

@@ -9,7 +9,7 @@ import ProjectFormDialog from '../ProjectFormDialog';
 import MyProjectsPlaceholder from '../MyProjectsPlaceholder';
 import SMTIStorage from '../../utils/storage';
 
-import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
+import { IntroduceProjectMutation } from '../../mutations';
 
 const _first = 10;
 const _next = 10;

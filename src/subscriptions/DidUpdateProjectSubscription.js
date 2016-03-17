@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export default class DidUpdateProjectSubscription extends Relay.Subscription {
+export class DidUpdateProjectSubscription extends Relay.Subscription {
   static fragments = {
     project: () => Relay.QL`
       fragment on Project {

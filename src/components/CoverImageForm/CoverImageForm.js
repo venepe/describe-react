@@ -3,9 +3,9 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CoverImageForm.css';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
-import IntroduceCoverImageMutation from '../../mutations/IntroduceCoverImageMutation';
+import { IntroduceCoverImageMutation } from '../../mutations';
 
 class CoverImageForm extends Component {
   static propTypes = {

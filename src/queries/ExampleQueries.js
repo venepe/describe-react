@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-const ExampleQueries = {
+export const ExampleQueries = {
   example: () => Relay.QL`
     query {
       node(id: $exampleId)
@@ -14,5 +14,3 @@ const ExampleQueries = {
     }
   `
 }
-
-export default ExampleQueries;

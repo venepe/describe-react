@@ -6,8 +6,7 @@ import styles from './ProjectListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
 import { isClientID } from '../../utils/isClientID';
 
-import DidDeleteProjectSubscription from '../../subscriptions/DidDeleteProjectSubscription';
-import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
+import { DidDeleteProjectSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
 class ProjectListCellView extends Component {
   static propTypes = {

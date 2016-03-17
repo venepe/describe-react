@@ -15,7 +15,7 @@ import {
   LEAVE_PROJECT
 } from './ModalTypes';
 
-const projectSheet = {
+export const ProjectSheetOptions = {
   options: [
     {
       text: 'Add Collaborator',
@@ -36,7 +36,7 @@ const projectSheet = {
   ],
 };
 
-const collaborativeProjectSheet = {
+export const CollaborativeProjectSheetOptions = {
   options: [
     {
       text: 'Add Collaborator',
@@ -58,7 +58,7 @@ const collaborativeProjectSheet = {
 }
 
 
-const testCaseSheet = {
+export const TestCaseSheetOptions = {
   options: [
     {
       text: 'Add Example',
@@ -79,7 +79,7 @@ const testCaseSheet = {
   ],
 };
 
-const exampleSheet = {
+export const ExampleSheetOptions = {
   options: [
     {
       text: 'Delete Example',
@@ -88,7 +88,7 @@ const exampleSheet = {
   ],
 };
 
-const fulfillmentSheet = {
+export const FulfillmentSheetOptions = {
   options: [
     {
       text: 'Delete Fulfillment',
@@ -97,7 +97,7 @@ const fulfillmentSheet = {
   ],
 };
 
-const collaboratorSheet = {
+export const CollaboratorSheetOptions = {
   options: [
     {
       text: 'Delete Collaborator',
@@ -106,7 +106,7 @@ const collaboratorSheet = {
   ],
 }
 
-const coverImageSheet = {
+export const CoverImageSheetOptions = {
   options: [
     {
       text: 'Change Cover Image',
@@ -118,13 +118,3 @@ const coverImageSheet = {
     }
   ],
 };
-
-module.exports = {
-  collaboratorSheet: collaboratorSheet,
-  collaborativeProjectSheet: collaborativeProjectSheet,
-  projectSheet: projectSheet,
-  testCaseSheet: testCaseSheet,
-  exampleSheet: exampleSheet,
-  fulfillmentSheet: fulfillmentSheet,
-  coverImageSheet: coverImageSheet
-}

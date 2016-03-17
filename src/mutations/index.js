@@ -1,19 +1,19 @@
-module.exports = {
-  DeleteCollaborationMutation: require('./DeleteCollaborationMutation.js'),
-  DeleteCollaboratorMutation: require('./DeleteCoverImageMutation.js'),
-  DeleteCoverImageMutation: require('./DeleteCoverImageMutation.js'),
-  DeleteFulfillmentMutation: require('./DeleteFulfillmentMutation.js'),
-  DeleteExampleMutation: require('./DeleteExampleMutation.js'),
-  DeleteProjectMutation: require('./DeleteProjectMutation.js'),
-  DeleteTestCaseMutation: require('./DeleteTestCaseMutation.js'),
-  DeleteUserMutation: require('./DeleteUserMutation.js'),
-  FulfillImageMutation: require('./FulfillImageMutation.js'),
-  IntroduceCollaboratorMutation: require('./IntroduceCollaboratorMutation.js'),
-  IntroduceCoverImageMutation: require('./IntroduceCoverImageMutation.js'),
-  IntroduceImageMutation:  require('./IntroduceImageMutation.js'),
-  IntroduceProjectMutation:  require('./IntroduceProjectMutation.js'),
-  IntroduceTestCaseMutation:  require('./IntroduceTestCaseMutation.js'),
-  UpdateProjectMutation:  require('./UpdateProjectMutation.js'),
-  UpdateTestCaseMutation:  require('./UpdateTestCaseMutation.js'),
-  UpdateUserMutation:  require('./UpdateUserMutation.js')
-};
+'use strict';
+
+export { DeleteCollaborationMutation } from './DeleteCollaborationMutation';
+export { DeleteCollaboratorMutation } from './DeleteCollaboratorMutation';
+export { DeleteCoverImageMutation } from './DeleteCoverImageMutation';
+export { DeleteFulfillmentMutation } from './DeleteFulfillmentMutation';
+export { DeleteExampleMutation } from './DeleteExampleMutation';
+export { DeleteProjectMutation } from './DeleteProjectMutation';
+export { DeleteTestCaseMutation } from './DeleteTestCaseMutation';
+export { DeleteUserMutation } from './DeleteUserMutation';
+export { IntroduceCollaboratorMutation } from './IntroduceCollaboratorMutation';
+export { IntroduceCoverImageMutation } from './IntroduceCoverImageMutation';
+export { IntroduceExampleMutation } from './IntroduceExampleMutation';
+export { IntroduceFulfillmentMutation } from './IntroduceFulfillmentMutation';
+export { IntroduceProjectMutation } from './IntroduceProjectMutation';
+export { IntroduceTestCaseMutation } from './IntroduceTestCaseMutation';
+export { UpdateProjectMutation } from './UpdateProjectMutation';
+export { UpdateTestCaseMutation } from './UpdateTestCaseMutation';
+export { UpdateUserMutation } from './UpdateUserMutation';

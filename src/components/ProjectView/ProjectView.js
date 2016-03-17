@@ -13,17 +13,14 @@ import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 import { isClientID } from '../../utils/isClientID';
 
-import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
-import DidIntroduceTestCaseSubscription from '../../subscriptions/DidIntroduceTestCaseSubscription';
-import DidIntroduceCoverImageSubscription from '../../subscriptions/DidIntroduceCoverImageSubscription';
-import DidIntroduceCollaboratorSubscription from '../../subscriptions/DidIntroduceCollaboratorSubscription';
+import { DidUpdateProjectSubscription, DidIntroduceTestCaseSubscription, DidIntroduceCoverImageSubscription, DidIntroduceCollaboratorSubscription } from '../../subscriptions';
 
 const _first = 10;
 const _next = 10;
 
 class ProjectView extends Component {
   static contextTypes = {
-      router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
   }
 
   constructor(props, context) {

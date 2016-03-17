@@ -6,8 +6,7 @@ import styles from './CollaborationListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
 import { isClientID } from '../../utils/isClientID';
 
-import DidDeleteCollaborationSubscription from '../../subscriptions/DidDeleteCollaborationSubscription';
-import DidUpdateProjectSubscription from '../../subscriptions/DidUpdateProjectSubscription';
+import { DidDeleteCollaborationSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
 class CollaborationListCellView extends Component {
   static propTypes = {

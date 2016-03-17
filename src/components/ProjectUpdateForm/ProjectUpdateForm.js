@@ -9,7 +9,7 @@ import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 import Utilities from '../../utils/utilities';
 
-import UpdateProjectMutation from '../../mutations/UpdateProjectMutation';
+import { UpdateProjectMutation } from '../../mutations';
 
 class ProjectUpdateForm extends Component {
 

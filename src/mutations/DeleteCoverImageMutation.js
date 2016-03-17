@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class DeleteCoverImageMutation extends Relay.Mutation {
+export class DeleteCoverImageMutation extends Relay.Mutation {
   static fragments = {
     coverImage: () => Relay.QL`
       fragment on File {
@@ -63,5 +63,3 @@ class DeleteCoverImageMutation extends Relay.Mutation {
     };
   }
 }
-
-module.exports = DeleteCoverImageMutation;

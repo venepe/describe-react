@@ -5,13 +5,13 @@ import Relay from 'react-relay';
 import styles from './CoverImage.css';
 import ModalableImage from '../ModalableImage';
 import CoverImageFormDialog from '../CoverImageFormDialog';
-import SheetOptions from '../../constants/SheetOptions';
+import { CoverImageSheetOptions } from '../../constants/SheetOptions';
 import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../constants/ModalTypes';
 
-import DeleteCoverImageMutation from '../../mutations/DeleteCoverImageMutation';
-import DidDeleteCoverImageSubscription from '../../subscriptions/DidDeleteCoverImageSubscription';
+import { DeleteCoverImageMutation } from '../../mutations';
+import { DidDeleteCoverImageSubscription } from '../../subscriptions';
 
 class CoverImage extends Component {
   static propTypes = {
@@ -116,7 +116,7 @@ class CoverImage extends Component {
     }
     return (
       <div className="CoverImage-container">
-        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SheetOptions.coverImageSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={CoverImageSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <CoverImageFormDialog isVisible={this.state.showCoverImageForm} target={this.props.target} onCancel={this._dismissCoverImageForm} onCreate={this.props.onCreate} />
       </div>
     );

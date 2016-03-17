@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-const ProjectQueries = {
+export const ProjectQueries = {
   project: () => Relay.QL`
     query {
       node(id: $projectId)
@@ -14,5 +14,3 @@ const ProjectQueries = {
     }
   `
 }
-
-export default ProjectQueries;

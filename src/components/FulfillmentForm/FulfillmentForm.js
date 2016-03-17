@@ -3,9 +3,9 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './FulfillmentForm.css';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
-import IntroduceFulfillmentMutation from '../../mutations/IntroduceFulfillmentMutation';
+import { IntroduceFulfillmentMutation } from '../../mutations';
 
 class FulfillmentForm extends Component {
   static propTypes = {

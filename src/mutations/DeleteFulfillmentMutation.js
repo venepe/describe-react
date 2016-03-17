@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class DeleteFulfillmentMutation extends Relay.Mutation {
+export class DeleteFulfillmentMutation extends Relay.Mutation {
   static fragments = {
     fulfillment: () => Relay.QL`
       fragment on File {
@@ -87,5 +87,3 @@ class DeleteFulfillmentMutation extends Relay.Mutation {
     };
   }
 }
-
-module.exports = DeleteFulfillmentMutation;

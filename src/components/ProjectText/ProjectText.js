@@ -4,14 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ProjectText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
-import SheetOptions from '../../constants/SheetOptions';
+import { ProjectSheetOptions } from '../../constants/SheetOptions';
 import TestCaseFormDialog from '../TestCaseFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
 import CollaboratorFormDialog from '../CollaboratorFormDialog';
 
 import ModalTypes, { INTRODUCE_COLLABORATOR, INTRODUCE_TEST_CASE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
-import DeleteProjectMutation from '../../mutations/DeleteProjectMutation';
+import { DeleteProjectMutation } from '../../mutations';
 
 class ProjectText extends Component {
   static propTypes = {
@@ -92,7 +92,7 @@ class ProjectText extends Component {
 
     return (
       <div className="ProjectText-container">
-        <ModalableArchyLabel text={this.props.project.title} sheetOptions={SheetOptions.projectSheet} onItemTouchTap={this._onItemTouchTap} />
+        <ModalableArchyLabel text={this.props.project.title} sheetOptions={ProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} />
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.project} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
         <CollaboratorFormDialog isVisible={this.state.showCollaboratorForm} project={this.props.project} onCancel={this._dismissCollaboratorForm} onCreate={this._dismissCollaboratorForm} />

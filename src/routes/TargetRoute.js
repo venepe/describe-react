@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class NodeRoute extends Relay.Route {
+export default class NodeRoute extends Relay.Route {
   static queries = {
     target: (Component) => Relay.QL`
       query {
@@ -19,5 +19,3 @@ class NodeRoute extends Relay.Route {
 
   static routeName = 'NodeRoute';
 }
-
-module.exports = NodeRoute;

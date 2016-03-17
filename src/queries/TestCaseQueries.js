@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-const TestCaseQueries = {
+export const TestCaseQueries = {
   testCase: () => Relay.QL`
     query {
       node(id: $testCaseId)
@@ -14,5 +14,3 @@ const TestCaseQueries = {
     }
   `,
 }
-
-export default TestCaseQueries;

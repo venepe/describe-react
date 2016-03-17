@@ -5,9 +5,9 @@ import Relay from 'react-relay';
 import styles from './CollaboratorForm.css';
 import { FlatButton, TextField } from 'material-ui';
 import validator from 'validator';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
-import IntroduceCollaboratorMutation from '../../mutations/IntroduceCollaboratorMutation';
+import { IntroduceCollaboratorMutation } from '../../mutations';
 
 class CollaboratorForm extends Component {
   static propTypes = {

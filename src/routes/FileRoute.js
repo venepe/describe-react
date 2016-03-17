@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class FileRoute extends Relay.Route {
+export default class FileRoute extends Relay.Route {
   static queries = {
     file: (Component) => Relay.QL`
       query {
@@ -19,5 +19,3 @@ class FileRoute extends Relay.Route {
 
   static routeName = 'FileRoute';
 }
-
-module.exports = FileRoute;

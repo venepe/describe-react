@@ -10,7 +10,7 @@ import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 import Utilities from '../../utils/utilities';
 
-import UpdateTestCaseMutation from '../../mutations/UpdateTestCaseMutation';
+import { UpdateTestCaseMutation } from '../../mutations';
 
 class TestCaseUpdateForm extends Component {
   static propTypes = {

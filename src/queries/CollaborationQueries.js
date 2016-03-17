@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-const CollaborationQueries = {
+export const CollaborationQueries = {
   collaboration: () => Relay.QL`
     query {
       node(id: $collaborationId)
@@ -14,5 +14,3 @@ const CollaborationQueries = {
     }
   `
 }
-
-export default CollaborationQueries;

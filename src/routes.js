@@ -20,15 +20,17 @@ import MeView from './components/MeView';
 import UserView from './components/UserView';
 import ResetForm from './components/ResetForm';
 
-import ProjectQueries from './queries/ProjectQueries';
-import CollaborationQueries from './queries/CollaborationQueries';
-import TestCaseQueries from './queries/TestCaseQueries';
-import CoverImageQueries from './queries/CoverImageQueries';
-import ExampleQueries from './queries/ExampleQueries';
-import FileQueries from './queries/FileQueries';
-import FulfillmentQueries from './queries/FulfillmentQueries';
-import MeQueries from './queries/MeQueries';
-import UserQueries from './queries/UserQueries';
+import {
+  CollaborationQueries,
+  CoverImageQueries,
+  ExampleQueries,
+  FileQueries,
+  FulfillmentQueries,
+  MeQueries,
+  ProjectQueries,
+  TestCaseQueries,
+  UserQueries
+} from './queries';
 
 import SMTIStorage from './utils/storage';
 import Authenticate from './utils/authenticate';

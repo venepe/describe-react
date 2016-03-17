@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class IntroduceTestCaseMutation extends Relay.Mutation {
+export class IntroduceTestCaseMutation extends Relay.Mutation {
   static fragments = {
     project: () => Relay.QL`
       fragment on Project {
@@ -70,5 +70,3 @@ class IntroduceTestCaseMutation extends Relay.Mutation {
     };
   }
 }
-
-module.exports = IntroduceTestCaseMutation;

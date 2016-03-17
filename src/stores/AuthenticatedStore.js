@@ -1,11 +1,6 @@
 'use strict';
 
-import AuthenticatedTypes from '../constants/AuthenticatedTypes';
-
-const {
-  AUTHENTICATED,
-  NOT_AUTHENTICATED
-} = AuthenticatedTypes;
+import { AUTHENTICATED, NOT_AUTHENTICATED } from '../constants/AuthenticatedTypes';
 
 const initialState = {
   isAuthenticated: false,

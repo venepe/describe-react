@@ -6,7 +6,7 @@ import { RaisedButton, TextField } from 'material-ui';
 import validator from 'validator';
 import Utilities from '../../utils/utilities';
 import Authenticate from '../../utils/authenticate';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
 const serverErrorMsg = 'Invalid email or password. Please try again';
 const emailErrorMsg = 'Please enter a valid email address.';

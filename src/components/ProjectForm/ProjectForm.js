@@ -8,9 +8,9 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 import Utilities from '../../utils/utilities';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
-import IntroduceProjectMutation from '../../mutations/IntroduceProjectMutation';
+import { IntroduceProjectMutation } from '../../mutations';
 
 class ProjectForm extends Component {
   static propTypes = {

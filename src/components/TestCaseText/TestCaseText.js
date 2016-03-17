@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './TestCaseText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
-import SheetOptions from '../../constants/SheetOptions';
+import { TestCaseSheetOptions } from '../../constants/SheetOptions';
 import ExampleFormDialog from '../ExampleFormDialog';
 import FulfillmentFormDialog from '../FulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
@@ -12,11 +12,8 @@ import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
-import DeleteTestCaseMutation from '../../mutations/DeleteTestCaseMutation';
-import DidDeleteTestCaseSubscription from '../../subscriptions/DidDeleteTestCaseSubscription';
-import DidUpdateTestCaseSubscription from '../../subscriptions/DidUpdateTestCaseSubscription';
-import DidIntroduceExampleSubscription from '../../subscriptions/DidIntroduceExampleSubscription';
-import DidIntroduceFulfillmentSubscription from '../../subscriptions/DidIntroduceFulfillmentSubscription';
+import { DeleteTestCaseMutation } from '../../mutations';
+import { DidDeleteTestCaseSubscription, DidUpdateTestCaseSubscription, DidIntroduceExampleSubscription, DidIntroduceFulfillmentSubscription } from '../../subscriptions';
 
 class TestCaseText extends Component {
   static propTypes = {
@@ -162,7 +159,7 @@ class TestCaseText extends Component {
 
     return (
       <div className="TestCaseText-container">
-        <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={SheetOptions.testCaseSheet} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <ExampleFormDialog isVisible={this.state.showExampleForm} target={this.props.testCase} onCancel={this._dismissExampleForm} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />

@@ -9,9 +9,9 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
 import Utilities from '../../utils/utilities';
-import {track, Events} from '../../utils/SMTIAnalytics';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
-import IntroduceTestCaseMutation from '../../mutations/IntroduceTestCaseMutation';
+import { IntroduceTestCaseMutation } from '../../mutations';
 
 class TestCaseForm extends Component {
   static propTypes = {

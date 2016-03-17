@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-class DeleteExampleMutation extends Relay.Mutation {
+export class DeleteExampleMutation extends Relay.Mutation {
   static fragments = {
     example: () => Relay.QL`
       fragment on File {
@@ -49,5 +49,3 @@ class DeleteExampleMutation extends Relay.Mutation {
     };
   }
 }
-
-module.exports = DeleteExampleMutation;

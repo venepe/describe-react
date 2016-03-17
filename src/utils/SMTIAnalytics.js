@@ -1,6 +1,6 @@
 'use strict';
 
-let Events = {
+export const Events = {
   OPENED_APP: 'opened the app',
   SIGNED_IN: 'signed in',
   REGISTERED: 'registered',
@@ -12,7 +12,7 @@ let Events = {
   UPDATED_PROFILE: 'updated their profile'
 }
 
-function setIdentity(token) {
+export const setIdentity = (token) => {
   if (process.env.NODE_ENV !== 'production') {
     return;
   }
@@ -33,7 +33,7 @@ function setIdentity(token) {
   }
 }
 
-function track(event, properties) {
+export const track = (event, properties) => {
   if (process.env.NODE_ENV !== 'production') {
     return;
   }
@@ -42,7 +42,3 @@ function track(event, properties) {
     properties
   );
 }
-
-module.exports.Events = Events;
-module.exports.setIdentity = setIdentity;
-module.exports.track = track;
