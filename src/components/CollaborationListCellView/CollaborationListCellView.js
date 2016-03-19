@@ -24,12 +24,6 @@ class CollaborationListCellView extends Component {
     this._onClick = this._onClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      ...nextProps
-    });
-  }
-
   _onClick() {
     this.props.onClick(this.props.collaboration);
   }

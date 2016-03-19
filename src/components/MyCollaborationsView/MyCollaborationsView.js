@@ -7,6 +7,7 @@ import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import CollaborationListView from '../CollaborationListView';
 import MyCollaborationsPlaceholder from '../MyCollaborationsPlaceholder';
 import SMTIStorage from '../../utils/storage';
+import { isClientID } from '../../utils/isClientID';
 
 import { DidIntroduceCollaborationSubscription } from '../../subscriptions';
 
@@ -50,7 +51,7 @@ class MyCollaborationsView extends Component {
   }
 
   subscribe() {
-    if (!this.collaborationSubscription) {
+    if (!this.collaborationSubscription && !isClientID(this.props.me.id)) {
       this.collaborationSubscription = Relay.Store.subscribe(
         new DidIntroduceCollaborationSubscription({me: this.props.me})
       );
