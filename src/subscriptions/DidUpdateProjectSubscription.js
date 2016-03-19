@@ -17,6 +17,8 @@ export class DidUpdateProjectSubscription extends Relay.Subscription {
           project {
             id
             title
+            numOfTestCases
+            numOfTestCasesFulfilled
           }
         }
       }`;
