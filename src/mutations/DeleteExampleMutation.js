@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class DeleteExampleMutation extends Relay.Mutation {
+export default class DeleteExampleMutation extends Relay.Mutation {
   static fragments = {
     example: () => Relay.QL`
       fragment on File {

@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class IntroduceProjectMutation extends Relay.Mutation {
+export default class IntroduceProjectMutation extends Relay.Mutation {
   static fragments = {
     me: () => Relay.QL`
       fragment on User {

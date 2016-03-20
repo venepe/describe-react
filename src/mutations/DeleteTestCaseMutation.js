@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class DeleteTestCaseMutation extends Relay.Mutation {
+export default class DeleteTestCaseMutation extends Relay.Mutation {
   static fragments = {
     testCase: () => Relay.QL`
       fragment on TestCase {

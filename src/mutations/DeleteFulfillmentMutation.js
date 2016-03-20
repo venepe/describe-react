@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class DeleteFulfillmentMutation extends Relay.Mutation {
+export default class DeleteFulfillmentMutation extends Relay.Mutation {
   static fragments = {
     fulfillment: () => Relay.QL`
       fragment on File {

@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class DeleteCollaborationMutation extends Relay.Mutation {
+export default class DeleteCollaborationMutation extends Relay.Mutation {
   static fragments = {
     collaboration: () => Relay.QL`
       fragment on Project {

@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class DidDeleteTestCaseSubscription extends Relay.Subscription {
+export default class DidDeleteTestCaseSubscription extends Relay.Subscription {
   static fragments = {
     testCase: () => Relay.QL`
       fragment on TestCase {

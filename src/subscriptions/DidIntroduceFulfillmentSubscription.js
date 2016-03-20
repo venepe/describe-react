@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export class DidIntroduceFulfillmentSubscription extends Relay.Subscription {
+export default class DidIntroduceFulfillmentSubscription extends Relay.Subscription {
   static fragments = {
     testCase: () => Relay.QL`
       fragment on TestCase {
