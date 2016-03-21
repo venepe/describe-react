@@ -4,7 +4,7 @@ import SMTIStorage from './storage';
 import { SMTIBaseUrl } from '../constants';
 import { initNetwork } from './initNetwork';
 
-function login(email, password) {
+const login = (email, password) => {
   let authenticate = {email, password};
   return new Promise((resolve, reject) => {
     fetch(SMTIBaseUrl + '/authenticate', {
@@ -34,7 +34,7 @@ function login(email, password) {
   });
 }
 
-function register(email, password) {
+const register = (email, password) => {
   let register = {email, password};
   return new Promise((resolve, reject) => {
     fetch(SMTIBaseUrl + '/register', {
@@ -64,7 +64,7 @@ function register(email, password) {
   });
 }
 
-function refreshToken() {
+const refreshToken = () => {
   return new Promise((resolve, reject) => {
     SMTIStorage.getToken()
       .then((token) => {
@@ -95,7 +95,7 @@ function refreshToken() {
   });
 }
 
-function password(currentPassword, newPassword) {
+const password = (currentPassword, newPassword) => {
   let password = {current: currentPassword, new: newPassword};
   return new Promise((resolve, reject) => {
     SMTIStorage.getToken()
@@ -121,7 +121,7 @@ function password(currentPassword, newPassword) {
   });
 }
 
-function forgot(email) {
+const forgot = (email) => {
   let forgot = {email};
   return new Promise((resolve, reject) => {
     fetch(SMTIBaseUrl + '/forgot', {
@@ -142,7 +142,7 @@ function forgot(email) {
   });
 }
 
-function reset(token, id, password) {
+const reset = (token, id, password) => {
   let reset = {id, password};
   return new Promise((resolve, reject) => {
     fetch(SMTIBaseUrl + '/reset', {
@@ -164,7 +164,7 @@ function reset(token, id, password) {
   });
 }
 
-function unregister() {
+const unregister = () => {
   return new Promise((resolve, reject) => {
     SMTIStorage.getTokenAndMeId()
       .then((result) => {
@@ -194,7 +194,7 @@ function unregister() {
   });
 }
 
-function logoff() {
+const logoff = () => {
   return new Promise((resolve, reject) => {
     SMTIStorage.clearCredentials()
       .then(() => {
@@ -207,27 +207,31 @@ function logoff() {
   });
 }
 
-function isLoggedIn() {
+const isLoggedIn = () => {
   return !!SMTIStorage.getTokenFromLocalStorage();
 }
 
-function status(response) {
+const status = (response) => {
   if (response.status >= 200 && response.status < 300) {
     return response
   }
   throw new Error(response.statusText)
 }
 
-function json(response) {
+const json = (response) => {
   return response.json()
 }
 
-module.exports.login = login;
-module.exports.logoff = logoff;
-module.exports.register = register;
-module.exports.refreshToken = refreshToken;
-module.exports.password = password;
-module.exports.forgot = forgot;
-module.exports.isLoggedIn = isLoggedIn;
-module.exports.unregister = unregister;
-module.exports.reset = reset;
+const Authenticate = {
+  login,
+  logoff,
+  register,
+  refreshToken,
+  password,
+  forgot,
+  isLoggedIn,
+  unregister,
+  reset,
+}
+
+export default Authenticate;
