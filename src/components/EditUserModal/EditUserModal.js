@@ -40,7 +40,7 @@ class EditUserModal extends Component {
   }
 
   render() {
-    let iconButtonElement = (<FlatButton label="User" style={{height: 64, backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} />);
+    let iconButtonElement = (<FlatButton label="Me" style={{height: 64, backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} />);
     return (
         <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-left'} onItemTouchTap={this._onItemTouchTap}>
           <MenuItem primaryText="View Profile" value={VIEW_PROFILE} />
