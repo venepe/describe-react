@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import styles from './RegisterForm.css';
 import { RaisedButton, TextField } from 'material-ui';
 import validator from 'validator';
-import Utilities from '../../utils/utilities';
+import { isValidPassword } from '../../utils/utilities';
 import Authenticate from '../../utils/authenticate';
 import { track, Events } from '../../utils/SMTIAnalytics';
 
@@ -59,7 +59,7 @@ class RegisterForm extends Component {
     let password = e.target.value;
     let isPasswordValid = false;
     let errorMessage = this.state.errorMessage;
-    if (Utilities.isValidPassword(password)) {
+    if (isValidPassword(password)) {
       isPasswordValid = true;
       if (errorMessage === passwordErrorMsg) {
         errorMessage = '';
@@ -79,7 +79,7 @@ class RegisterForm extends Component {
       this.setState({
         errorMessage: emailErrorMsg
       });
-    } else if (!Utilities.isValidPassword(password)) {
+    } else if (!isValidPassword(password)) {
       this.setState({
         errorMessage: passwordErrorMsg
       });

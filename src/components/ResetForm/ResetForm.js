@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import styles from './ResetForm.css';
 import { RaisedButton, TextField, FlatButton } from 'material-ui';
 import validator from 'validator';
-import Utilities from '../../utils/utilities';
+import { isValidPassword } from '../../utils/utilities';
 import Authenticate from '../../utils/authenticate';
 
 const errorMessage = 'Invalid password. Please try again';
@@ -43,7 +43,7 @@ class ResetForm extends Component {
   _onChangePassword(e) {
     let password = e.target.value;
     let isPasswordValid = false;
-    if (Utilities.isValidPassword(password)) {
+    if (isValidPassword(password)) {
       isPasswordValid = true;
     }
     this.setState({

@@ -7,7 +7,7 @@ import styles from './ProjectUpdateForm.css';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
-import Utilities from '../../utils/utilities';
+import { getProjectPlaceholderText, isValidTitle } from '../../utils/utilities';
 
 import { UpdateProjectMutation } from '../../mutations';
 
@@ -25,7 +25,7 @@ class ProjectUpdateForm extends Component {
 
   constructor(props) {
     super(props);
-    let projectPlaceholder = Utilities.getProjectPlaceholderText();
+    let projectPlaceholder = getProjectPlaceholderText();
     this._onCancel = this._onCancel.bind(this);
     this._onUpdate = this._onUpdate.bind(this);
     this._onChangeTitle = this._onChangeTitle.bind(this);
@@ -47,7 +47,7 @@ class ProjectUpdateForm extends Component {
 
   _onUpdate() {
     var title = this.state.title;
-    if (Utilities.isValidTitle(title)) {
+    if (isValidTitle(title)) {
       Relay.Store.commitUpdate(
         new UpdateProjectMutation({title, project: this.props.project})
       );
@@ -61,7 +61,7 @@ class ProjectUpdateForm extends Component {
 
   _onChangeTitle(title) {
     var isDisabled = true;
-    if (Utilities.isValidTitle(title)) {
+    if (isValidTitle(title)) {
       isDisabled = false;
     }
     this.setState({

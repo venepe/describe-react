@@ -8,7 +8,7 @@ import styles from './TestCaseUpdateForm.css';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ArchyInput from '../ArchyInput';
-import Utilities from '../../utils/utilities';
+import { getTestCasePlaceholderText, isValidTestCase } from '../../utils/utilities';
 
 import { UpdateTestCaseMutation } from '../../mutations';
 
@@ -25,7 +25,7 @@ class TestCaseUpdateForm extends Component {
 
   constructor(props) {
     super(props);
-    let testCasePlaceholder = Utilities.getTestCasePlaceholderText();
+    let testCasePlaceholder = getTestCasePlaceholderText();
     this._onCancel = this._onCancel.bind(this);
     this._onUpdate = this._onUpdate.bind(this);
     this._onChangeIt = this._onChangeIt.bind(this);
@@ -49,7 +49,7 @@ class TestCaseUpdateForm extends Component {
 
   _onUpdate() {
     var it = this.state.it;
-    if (Utilities.isValidTestCase(it)) {
+    if (isValidTestCase(it)) {
       Relay.Store.commitUpdate(
         new UpdateTestCaseMutation({it, testCase: this.props.testCase})
       );
@@ -63,7 +63,7 @@ class TestCaseUpdateForm extends Component {
 
   _onChangeIt(it) {
     var isDisabled = true;
-    if (Utilities.isValidTestCase(it)) {
+    if (isValidTestCase(it)) {
       isDisabled = false;
     }
     this.setState({

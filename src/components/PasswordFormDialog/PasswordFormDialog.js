@@ -3,7 +3,7 @@
 import React, { PropTypes, Component } from 'react';
 import { FlatButton, TextField, Dialog } from 'material-ui';
 import styles from './PasswordFormDialog.css';
-import Utilities from '../../utils/utilities';
+import { isValidPassword } from '../../utils/utilities';
 import Authenticate from '../../utils/authenticate';
 const serverErrorMsg = 'Invalid. Please try again';
 
@@ -43,7 +43,7 @@ class PasswordFormDialog extends Component {
 
   _onChangeCurrentPassword(e) {
     let password = e.target.value;
-    let isPasswordValid = Utilities.isValidPassword(password);
+    let isPasswordValid = isValidPassword(password);
     this.setState({
       current: password,
       isCurrentPasswordValid: isPasswordValid,
@@ -53,7 +53,7 @@ class PasswordFormDialog extends Component {
 
   _onChangeNewPassword(e) {
     let password = e.target.value;
-    let isPasswordValid = Utilities.isValidPassword(password);
+    let isPasswordValid = isValidPassword(password);
     this.setState({
       new: password,
       isNewPasswordValid: isPasswordValid,

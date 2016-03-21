@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import { FlatButton, TextField } from 'material-ui';
 import styles from './UserUpdateForm.css';
 import { track, Events } from '../../utils/SMTIAnalytics';
-import Utilities from '../../utils/utilities';
+import { isValidName } from '../../utils/utilities';
 
 import { UpdateUserMutation } from '../../mutations';
 
@@ -30,7 +30,7 @@ class UserUpdateForm extends Component {
     this._onChangeFullname = this._onChangeFullname.bind(this);
 
     let isDisabled = true;
-    if (Utilities.isValidName(props.me.name)) {
+    if (isValidName(props.me.name)) {
       isDisabled = false;
     }
 
@@ -45,7 +45,7 @@ class UserUpdateForm extends Component {
   _onChangeName(e) {
     let name = e.target.value;
     let isDisabled = true;
-    if (Utilities.isValidName(name)) {
+    if (isValidName(name)) {
       isDisabled = false;
     }
     this.setState({name, isDisabled});
@@ -65,7 +65,7 @@ class UserUpdateForm extends Component {
     let name = this.state.name;
     let fullName = this.state.fullName;
     let summary = this.state.summary;
-    if (Utilities.isValidName(name)) {
+    if (isValidName(name)) {
       Relay.Store.commitUpdate(
         new UpdateUserMutation({name, fullName, summary, user: this.props.me})
       );
