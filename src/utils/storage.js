@@ -3,14 +3,14 @@
 const tokenKey = 'SMTITokenKey';
 const meIdKey = 'SMTIUserIdKey';
 
-function saveToken(token) {
+const saveToken = (token) => {
   return new Promise((resolve, reject) => {
     localStorage.setItem(tokenKey, token);
     resolve(token);
   });
 }
 
-function saveTokenAndMeId(token, meId) {
+const saveTokenAndMeId = (token, meId) => {
   return new Promise((resolve, reject) => {
     localStorage.setItem(tokenKey, token);
     localStorage.setItem(meIdKey, meId);
@@ -18,21 +18,21 @@ function saveTokenAndMeId(token, meId) {
   });
 }
 
-function getToken() {
+const getToken = () => {
   return new Promise((resolve, reject) => {
     let token = localStorage.getItem(tokenKey);
     resolve(token);
   });
 }
 
-function getMeId() {
+const getMeId = () => {
   return new Promise((resolve, reject) => {
     let meId = localStorage.getItem(meIdKey);
     resolve(meId);
   });
 }
 
-function getTokenAndMeId() {
+const getTokenAndMeId = () => {
   return new Promise((resolve, reject) => {
     let token = localStorage.getItem(tokenKey);
     let meId = localStorage.getItem(meIdKey);
@@ -40,7 +40,7 @@ function getTokenAndMeId() {
   });
 }
 
-function clearCredentials() {
+const clearCredentials = () => {
   return new Promise((resolve, reject) => {
     localStorage.removeItem(tokenKey);
     localStorage.removeItem(meIdKey);
@@ -48,19 +48,23 @@ function clearCredentials() {
   });
 }
 
-function getMeIdFromLocalStorage() {
+const getMeIdFromLocalStorage = () => {
   return localStorage.getItem(meIdKey);
 }
 
-function getTokenFromLocalStorage() {
+const getTokenFromLocalStorage = () => {
   return localStorage.getItem(tokenKey);
 }
 
-module.exports.saveToken = saveToken;
-module.exports.saveTokenAndMeId = saveTokenAndMeId;
-module.exports.getToken = getToken;
-module.exports.getMeId = getMeId;
-module.exports.getTokenAndMeId = getTokenAndMeId;
-module.exports.clearCredentials = clearCredentials;
-module.exports.getMeIdFromLocalStorage = getMeIdFromLocalStorage;
-module.exports.getTokenFromLocalStorage = getTokenFromLocalStorage;
+const Storage = {
+  saveToken,
+  saveTokenAndMeId,
+  getToken,
+  getMeId,
+  getTokenAndMeId,
+  clearCredentials,
+  getMeIdFromLocalStorage,
+  getTokenFromLocalStorage,
+}
+
+export default Storage
