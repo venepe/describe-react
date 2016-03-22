@@ -19,6 +19,7 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
             node {
               id
               it
+              isFulfilled
               fulfillments(first: 1) {
                 edges {
                   node {
