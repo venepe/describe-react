@@ -66,11 +66,11 @@ class CollaborationView extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps) {
+  subscribe() {
     let project = this.props.collaboration;
     registerDidUpdateProject({project}, () => {
       return Relay.Store.subscribe(

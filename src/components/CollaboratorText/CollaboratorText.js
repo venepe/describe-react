@@ -55,11 +55,11 @@ class CollaboratorText extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let collaborator = this.props.collaborator;
     let project = this.props.project;
 

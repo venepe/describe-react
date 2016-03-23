@@ -42,8 +42,8 @@ class MyCollaborationsView extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
   subscribe() {

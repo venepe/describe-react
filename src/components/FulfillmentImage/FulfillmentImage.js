@@ -63,11 +63,11 @@ class FulfillmentImage extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let fulfillment = this.props.fulfillment;
     let testCase = this.props.testCase;
     registerDidDeleteFulfillment({fulfillment, testCase}, () => {

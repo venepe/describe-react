@@ -32,11 +32,11 @@ class ProjectListCellView extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let project = this.props.project;
     let me = this.props.me;
     registerDidUpdateProject({project}, () => {

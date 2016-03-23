@@ -32,11 +32,11 @@ class CollaborationListCellView extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let collaboration = this.props.collaboration;
     let me = this.props.me;
     registerDidUpdateProject({project: collaboration}, () => {

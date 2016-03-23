@@ -99,11 +99,11 @@ class TestCaseText extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let project = this.props.project;
     let testCase = this.props.testCase;
     registerDidUpdateTestCase({testCase}, () => {

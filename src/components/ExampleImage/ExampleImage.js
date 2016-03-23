@@ -63,11 +63,11 @@ class ExampleImage extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let example = this.props.example;
     let target = this.props.target;
     registerDidDeleteExample({example, target}, () => {

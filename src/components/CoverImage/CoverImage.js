@@ -79,11 +79,11 @@ class CoverImage extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps = {}) {
+  subscribe() {
     let coverImage = this.props.coverImage;
     let target = this.props.target;
     registerDidDeleteCoverImage({coverImage, target}, () => {

@@ -65,11 +65,11 @@ class ProjectView extends Component {
     this.subscribe();
   }
 
-  componentDidUpdate(prevProps) {
-    this.subscribe(prevProps);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
-  subscribe(prevProps) {
+  subscribe() {
     let project = this.props.project;
     registerDidUpdateProject({project}, () => {
       return Relay.Store.subscribe(
