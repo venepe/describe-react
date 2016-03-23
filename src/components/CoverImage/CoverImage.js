@@ -6,11 +6,11 @@ import styles from './CoverImage.css';
 import ModalableImage from '../ModalableImage';
 import CoverImageFormDialog from '../CoverImageFormDialog';
 import { CoverImageSheetOptions } from '../../constants/SheetOptions';
-import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../constants/ModalTypes';
 
 import { DeleteCoverImageMutation } from '../../mutations';
+import { registerDidDeleteCoverImage } from '../../stores/SubscriptionStore';
 import { DidDeleteCoverImageSubscription } from '../../subscriptions';
 
 class CoverImage extends Component {
@@ -83,30 +83,14 @@ class CoverImage extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps = {}) {
     let coverImage = this.props.coverImage;
-    if (!isClientID(coverImage.id)) {
-      if (prevProps.coverImage !== undefined && prevProps.coverImage.id !== coverImage.id) {
-        this.unsubscribe();
-      }
-
-      if (!this.coverImageSubscription) {
-        this.coverImageSubscription = Relay.Store.subscribe(
-          new DidDeleteCoverImageSubscription({coverImage: coverImage, target: this.props.target})
-        );
-      }
-    }
-  }
-
-  unsubscribe() {
-    if (this.coverImageSubscription) {
-      this.coverImageSubscription.dispose();
-      this.coverImageSubscription = null;
-    }
+    let target = this.props.target;
+    registerDidDeleteCoverImage({coverImage, target}, () => {
+      return Relay.Store.subscribe(
+        new DidDeleteCoverImageSubscription({coverImage, target})
+      );
+    });
   }
 
   render() {

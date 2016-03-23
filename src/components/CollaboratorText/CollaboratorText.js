@@ -5,11 +5,11 @@ import Relay from 'react-relay';
 import styles from './CollaboratorText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import { CollaboratorSheetOptions } from '../../constants/SheetOptions';
-import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_COLLABORATOR } from '../../constants/ModalTypes';
 
 import { DeleteCollaboratorMutation } from '../../mutations';
+import { registerDidDeleteCollaborator } from '../../stores/SubscriptionStore';
 import { DidDeleteCollaboratorSubscription } from '../../subscriptions';
 
 class CollaboratorText extends Component {
@@ -59,29 +59,15 @@ class CollaboratorText extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps = {}) {
-    if(!isClientID(this.props.collaborator.id)) {
-      if (prevProps.collaborator !== undefined && prevProps.collaborator.id !== this.props.collaborator.id) {
-        this.unsubscribe();
-      }
+    let collaborator = this.props.collaborator;
+    let project = this.props.project;
 
-      if (!this.collaboratorSubscription) {
-        this.collaboratorSubscription = Relay.Store.subscribe(
-          new DidDeleteCollaboratorSubscription({collaborator: this.props.collaborator, project: this.props.project})
-        );
-      }
-    }
-  }
-
-  unsubscribe() {
-    if (this.collaboratorSubscription) {
-      this.collaboratorSubscription.dispose();
-      this.collaboratorSubscription = null;
-    }
+    registerDidDeleteCollaborator({collaborator, project}, () => {
+      return Relay.Store.subscribe(
+        new DidDeleteCollaboratorSubscription({collaborator, project})
+      );
+    });
   }
 
   render() {

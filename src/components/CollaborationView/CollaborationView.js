@@ -12,8 +12,8 @@ import TouchableArchyLabel from '../TouchableArchyLabel';
 import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
-import { isClientID } from '../../utils/isClientID';
 
+import { registerDidIntroduceTestCase, registerDidUpdateProject, registerDidIntroduceCoverImage, registerDidIntroduceCollaborator } from '../../stores/SubscriptionStore';
 import { DidUpdateProjectSubscription, DidIntroduceTestCaseSubscription, DidIntroduceCoverImageSubscription, DidIntroduceCollaboratorSubscription } from '../../subscriptions';
 
 const _first = 10;
@@ -70,50 +70,28 @@ class CollaborationView extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps) {
-    if (!this.projectSubscription && !isClientID(this.props.collaboration.id)) {
-      this.projectSubscription = Relay.Store.subscribe(
-        new DidUpdateProjectSubscription({project: this.props.collaboration})
+    let project = this.props.collaboration;
+    registerDidUpdateProject({project}, () => {
+      return Relay.Store.subscribe(
+        new DidUpdateProjectSubscription({project})
       );
-    }
-    if (!this.testCaseSubscription && !isClientID(this.props.collaboration.id)) {
-      this.testCaseSubscription = Relay.Store.subscribe(
-        new DidIntroduceTestCaseSubscription({project: this.props.collaboration})
+    });
+    registerDidIntroduceTestCase({project}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceTestCaseSubscription({project})
+        );
+    });
+    registerDidIntroduceCoverImage({target: project}, () => {
+      return Relay.Store.subscribe(
+        new DidIntroduceCoverImageSubscription({target: project})
       );
-    }
-    if (!this.coverImageSubscription && !isClientID(this.props.collaboration.id)) {
-      this.coverImageSubscription = Relay.Store.subscribe(
-        new DidIntroduceCoverImageSubscription({target: this.props.collaboration})
+    });
+    registerDidIntroduceCollaborator({project}, () => {
+      return Relay.Store.subscribe(
+        new DidIntroduceCollaboratorSubscription({project})
       );
-    }
-    if (!this.collaboratorSubscription && !isClientID(this.props.collaboration.id)) {
-      this.collaboratorSubscription = Relay.Store.subscribe(
-        new DidIntroduceCollaboratorSubscription({project: this.props.collaboration})
-      );
-    }
-  }
-
-  unsubscribe() {
-    if (this.projectSubscription) {
-      this.projectSubscription.dispose();
-      this.projectSubscription = null;
-    }
-    if (this.testCaseSubscription) {
-      this.testCaseSubscription.dispose();
-      this.testCaseSubscription = null;
-    }
-    if (this.coverImageSubscription) {
-      this.coverImageSubscription.dispose();
-      this.coverImageSubscription = null;
-    }
-    if (this.collaboratorSubscription) {
-      this.collaboratorSubscription.dispose();
-      this.collaboratorSubscription = null;
-    }
+    });
   }
 
   render() {

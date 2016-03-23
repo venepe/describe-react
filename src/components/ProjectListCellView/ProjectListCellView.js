@@ -4,8 +4,8 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ProjectListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
-import { isClientID } from '../../utils/isClientID';
 
+import { registerDidDeleteProject, registerDidUpdateProject } from '../../stores/SubscriptionStore';
 import { DidDeleteProjectSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
 class ProjectListCellView extends Component {
@@ -36,40 +36,19 @@ class ProjectListCellView extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps = {}) {
-    if(!isClientID(this.props.project.id)) {
-      if (prevProps.project !== undefined && prevProps.project.id !== this.props.project.id) {
-        this.unsubscribe();
-      }
-
-      if (!this.projectSubscriptionDelete) {
-        this.projectSubscriptionDelete = Relay.Store.subscribe(
-          new DidDeleteProjectSubscription({project: this.props.project, me: this.props.me})
-        );
-      }
-
-      if (!this.projectSubscriptionUpdate) {
-        this.projectSubscriptionUpdate = Relay.Store.subscribe(
-          new DidUpdateProjectSubscription({project: this.props.project})
-        );
-      }
-    }
-  }
-
-  unsubscribe() {
-    if (this.projectSubscriptionDelete) {
-      this.projectSubscriptionDelete.dispose();
-      this.projectSubscriptionDelete = null;
-    }
-
-    if (this.projectSubscriptionUpdate) {
-      this.projectSubscriptionUpdate.dispose();
-      this.projectSubscriptionUpdate = null;
-    }
+    let project = this.props.project;
+    let me = this.props.me;
+    registerDidUpdateProject({project}, () => {
+      return Relay.Store.subscribe(
+        new DidUpdateProjectSubscription({project})
+      );
+    });
+    registerDidDeleteProject({project, me}, () => {
+      return Relay.Store.subscribe(
+        new DidDeleteProjectSubscription({project, me})
+      );
+    });
   }
 
   render() {

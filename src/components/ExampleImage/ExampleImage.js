@@ -5,11 +5,11 @@ import Relay from 'react-relay';
 import styles from './ExampleImage.css';
 import ModalableImage from '../ModalableImage';
 import { ExampleSheetOptions } from '../../constants/SheetOptions';
-import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_EXAMPLE } from '../../constants/ModalTypes';
 
 import { DeleteExampleMutation } from '../../mutations';
+import { registerDidDeleteExample } from '../../stores/SubscriptionStore';
 import { DidDeleteExampleSubscription } from '../../subscriptions';
 
 class ExampleImage extends Component {
@@ -67,31 +67,15 @@ class ExampleImage extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps = {}) {
-    if(!isClientID(this.props.example.id)) {
-      if (prevProps.example !== undefined && prevProps.example.id !== this.props.example.id) {
-        this.unsubscribe();
-      }
-
-      if (!this.exampleSubscription) {
-        this.exampleSubscription = Relay.Store.subscribe(
-          new DidDeleteExampleSubscription({example: this.props.example, target: this.props.target})
-        );
-      }
-    }
+    let example = this.props.example;
+    let target = this.props.target;
+    registerDidDeleteExample({example, target}, () => {
+      return Relay.Store.subscribe(
+        new DidDeleteExampleSubscription({example, target})
+      );
+    });
   }
-
-  unsubscribe() {
-    if (this.exampleSubscription) {
-      this.exampleSubscription.dispose();
-      this.exampleSubscription = null;
-    }
-  }
-
 
   render() {
     let uri = '';

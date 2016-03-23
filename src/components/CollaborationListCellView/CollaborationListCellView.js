@@ -4,8 +4,8 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CollaborationListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
-import { isClientID } from '../../utils/isClientID';
 
+import { registerDidDeleteCollaboration, registerDidUpdateProject } from '../../stores/SubscriptionStore';
 import { DidDeleteCollaborationSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
 class CollaborationListCellView extends Component {
@@ -36,40 +36,19 @@ class CollaborationListCellView extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps = {}) {
-    if(!isClientID(this.props.collaboration.id)) {
-      if (prevProps.collaboration !== undefined && prevProps.collaboration.id !== this.props.collaboration.id) {
-        this.unsubscribe();
-      }
-
-      if (!this.collaborationSubscription) {
-        this.collaborationSubscription = Relay.Store.subscribe(
-          new DidDeleteCollaborationSubscription({collaboration: this.props.collaboration, me: this.props.me})
-        );
-      }
-
-      if (!this.projectSubscription) {
-        this.projectSubscription = Relay.Store.subscribe(
-          new DidUpdateProjectSubscription({project: this.props.collaboration})
-        );
-      }
-    }
-  }
-
-  unsubscribe() {
-    if (this.collaborationSubscription) {
-      this.collaborationSubscription.dispose();
-      this.collaborationSubscription = null;
-    }
-
-    if (this.projectSubscription) {
-      this.projectSubscription.dispose();
-      this.projectSubscription = null;
-    }
+    let collaboration = this.props.collaboration;
+    let me = this.props.me;
+    registerDidUpdateProject({project: collaboration}, () => {
+      return Relay.Store.subscribe(
+        new DidUpdateProjectSubscription({project: collaboration})
+      );
+    });
+    registerDidDeleteCollaboration({collaboration, me}, () => {
+      return Relay.Store.subscribe(
+        new DidDeleteCollaborationSubscription({collaboration, me})
+      );
+    });
   }
 
   render() {

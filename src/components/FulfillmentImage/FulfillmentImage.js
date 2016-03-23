@@ -5,11 +5,11 @@ import Relay from 'react-relay';
 import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
 import { FulfillmentSheetOptions } from '../../constants/SheetOptions';
-import { isClientID } from '../../utils/isClientID';
 
 import ModalTypes, { DELETE_FULFILLMENT } from '../../constants/ModalTypes';
 
 import { DeleteFulfillmentMutation } from '../../mutations';
+import { registerDidDeleteFulfillment } from '../../stores/SubscriptionStore';
 import { DidDeleteFulfillmentSubscription } from '../../subscriptions';
 
 class FulfillmentImage extends Component {
@@ -67,29 +67,14 @@ class FulfillmentImage extends Component {
     this.subscribe(prevProps);
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   subscribe(prevProps = {}) {
-    if(!isClientID(this.props.fulfillment.id)) {
-      if (prevProps.fulfillment !== undefined && prevProps.fulfillment.id !== this.props.fulfillment.id) {
-        this.unsubscribe();
-      }
-
-      if (!this.fulfillmentSubscription) {
-        this.fulfillmentSubscription = Relay.Store.subscribe(
-          new DidDeleteFulfillmentSubscription({fulfillment: this.props.fulfillment, testCase: this.props.testCase})
-        );
-      }
-    }
-  }
-
-  unsubscribe() {
-    if (this.fulfillmentSubscription) {
-      this.fulfillmentSubscription.dispose();
-      this.fulfillmentSubscription = null;
-    }
+    let fulfillment = this.props.fulfillment;
+    let testCase = this.props.testCase;
+    registerDidDeleteFulfillment({fulfillment, testCase}, () => {
+      return Relay.Store.subscribe(
+        new DidDeleteFulfillmentSubscription({fulfillment, testCase})
+      );
+    });
   }
 
   render() {

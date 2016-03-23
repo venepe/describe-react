@@ -2,6 +2,7 @@
 
 import Relay from 'react-relay';
 import { SMTIGraphQLUrl } from '../constants';
+import { cleanSubscriptions } from '../stores/SubscriptionStore';
 
 class SMTIDefaultNetworkLayer {
 
@@ -62,6 +63,7 @@ class SMTIDefaultNetworkLayer {
       } else {
         console.log(payload.data);
         request.onNext({response: payload.data});
+        cleanSubscriptions(payload.data);
       }
     }
   }
