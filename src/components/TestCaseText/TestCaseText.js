@@ -106,25 +106,28 @@ class TestCaseText extends Component {
   subscribe() {
     let project = this.props.project;
     let testCase = this.props.testCase;
-    registerDidUpdateTestCase({testCase}, () => {
+    let projectId = project.id;
+    let testCaseId = testCase.id;
+
+    registerDidUpdateTestCase({testCaseId}, () => {
       return Relay.Store.subscribe(
         new DidUpdateTestCaseSubscription({testCase})
       );
     });
 
-    registerDidDeleteTestCase({testCase, project}, () => {
+    registerDidDeleteTestCase({testCaseId, projectId}, () => {
       return Relay.Store.subscribe(
         new DidDeleteTestCaseSubscription({testCase, project})
       );
     });
 
-    registerDidIntroduceExample({target: testCase}, () => {
+    registerDidIntroduceExample({targetId: testCaseId}, () => {
       return Relay.Store.subscribe(
         new DidIntroduceExampleSubscription({target: testCase})
       );
     });
 
-    registerDidIntroduceFulfillment({testCase}, () => {
+    registerDidIntroduceFulfillment({testCaseId}, () => {
       return Relay.Store.subscribe(
         new DidIntroduceFulfillmentSubscription({testCase, project})
       );

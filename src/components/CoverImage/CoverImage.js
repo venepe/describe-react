@@ -86,7 +86,10 @@ class CoverImage extends Component {
   subscribe() {
     let coverImage = this.props.coverImage;
     let target = this.props.target;
-    registerDidDeleteCoverImage({coverImage, target}, () => {
+    let coverImageId = coverImage.id;
+    let targetId = target.id;
+
+    registerDidDeleteCoverImage({coverImageId, targetId}, () => {
       return Relay.Store.subscribe(
         new DidDeleteCoverImageSubscription({coverImage, target})
       );

@@ -48,7 +48,9 @@ class MyCollaborationsView extends Component {
 
   subscribe() {
     let me = this.props.me;
-    registerDidIntroduceCollaboration({me}, () => {
+    let meId = me.id;
+
+    registerDidIntroduceCollaboration({meId}, () => {
       return Relay.Store.subscribe(
         new DidIntroduceCollaborationSubscription({me})
       );

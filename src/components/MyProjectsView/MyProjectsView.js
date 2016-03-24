@@ -56,7 +56,9 @@ class MyProjectsView extends Component {
 
   subscribe() {
     let me = this.props.me;
-    registerDidIntroduceProject({me}, () => {
+    let meId = me.id;
+
+    registerDidIntroduceProject({meId}, () => {
       return Relay.Store.subscribe(
         new DidIntroduceProjectSubscription({me})
       );

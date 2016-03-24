@@ -29,91 +29,91 @@ function registerStore(store, {id, parentId}, subscribe) {
   }
 }
 
-export const registerDidDeleteCollaboration = ({collaboration, me}, subscribe) => {
-  const id = collaboration.id;
-  const parentId = me.id;
+export const registerDidDeleteCollaboration = ({collaborationId, meId}, subscribe) => {
+  const id = collaborationId;
+  const parentId = meId;
   registerStore(didDeleteCollaborationStore, {id, parentId}, subscribe);
 }
-export const registerDidDeleteCollaborator = ({collaborator, project}, subscribe) => {
-  const id = collaborator.id;
-  const parentId = project.id;
+export const registerDidDeleteCollaborator = ({collaboratorId, projectId}, subscribe) => {
+  const id = collaboratorId;
+  const parentId = projectId;
   registerStore(didDeleteCollaboratorStore, {id, parentId}, subscribe);
 }
-export const registerDidDeleteCoverImage = ({coverImage, target}, subscribe) => {
-  const id = coverImage.id;
-  const parentId = target.id;
+export const registerDidDeleteCoverImage = ({coverImageId, targetId}, subscribe) => {
+  const id = coverImageId;
+  const parentId = targetId;
   registerStore(didDeleteCoverImageStore, {id, parentId}, subscribe);
 }
-export const registerDidDeleteExample = ({example, target}, subscribe) => {
-  const id = example.id;
-  const parentId = target.id;
+export const registerDidDeleteExample = ({exampleId, targetId}, subscribe) => {
+  const id = exampleId;
+  const parentId = targetId;
   registerStore(didDeleteExampleStore, {id, parentId}, subscribe);
 }
-export const registerDidDeleteFulfillment = ({fulfillment, testCase}, subscribe) => {
-  const id = fulfillment.id;
-  const parentId = testCase.id;
+export const registerDidDeleteFulfillment = ({fulfillmentId, testCaseId}, subscribe) => {
+  const id = fulfillmentId;
+  const parentId = testCaseId;
   registerStore(didDeleteFulfillmentStore, {id, parentId}, subscribe);
 }
-export const registerDidDeleteProject = ({project, me}, subscribe) => {
-  const id = project.id;
-  const parentId = me.id;
+export const registerDidDeleteProject = ({projectId, meId}, subscribe) => {
+  const id = projectId;
+  const parentId = meId;
   registerStore(didDeleteProjectStore, {id, parentId}, subscribe);
 }
 
-export const registerDidDeleteTestCase = ({testCase, project}, subscribe) => {
-  const id = testCase.id;
-  const parentId = project.id;
+export const registerDidDeleteTestCase = ({testCaseId, projectId}, subscribe) => {
+  const id = testCaseId;
+  const parentId = projectId;
   registerStore(didDeleteTestCaseStore, {id, parentId}, subscribe);
 }
 
-export const registerDidIntroduceCollaborator = ({project}, subscribe) => {
-  const id = project.id;
+export const registerDidIntroduceCollaborator = ({projectId}, subscribe) => {
+  const id = projectId;
   const parentId = id;
   registerStore(didIntroduceCollaboratorStore, {id, parentId}, subscribe);
 }
-export const registerDidIntroduceCollaboration = ({me}, subscribe) => {
-  const id = me.id;
+export const registerDidIntroduceCollaboration = ({meId}, subscribe) => {
+  const id = meId;
   const parentId = id;
   registerStore(didIntroduceCollaborationStore, {id, parentId}, subscribe);
 }
-export const registerDidIntroduceCoverImage = ({target}, subscribe) => {
-  const id = target.id;
+export const registerDidIntroduceCoverImage = ({targetId}, subscribe) => {
+  const id = targetId;
   const parentId = id;
   registerStore(didIntroduceCoverImageStore, {id, parentId}, subscribe);
 }
 
-export const registerDidIntroduceExample = ({target}, subscribe) => {
-  const id = target.id;
+export const registerDidIntroduceExample = ({targetId}, subscribe) => {
+  const id = targetId;
   const parentId = id;
   registerStore(didIntroduceExampleStore, {id, parentId}, subscribe);
 }
 
-export const registerDidIntroduceFulfillment = ({testCase}, subscribe) => {
-  const id = testCase.id;
+export const registerDidIntroduceFulfillment = ({testCaseId}, subscribe) => {
+  const id = testCaseId;
   const parentId = id;
   registerStore(didIntroduceFulfillmentStore, {id, parentId}, subscribe);
 }
 
-export const registerDidIntroduceProject = ({me}, subscribe) => {
-  const id = me.id;
+export const registerDidIntroduceProject = ({meId}, subscribe) => {
+  const id = meId;
   const parentId = id;
   registerStore(didIntroduceProjectStore, {id, parentId}, subscribe);
 }
 
-export const registerDidIntroduceTestCase = ({project}, subscribe) => {
-  const id = project.id;
+export const registerDidIntroduceTestCase = ({projectId}, subscribe) => {
+  const id = projectId;
   const parentId = id;
   registerStore(didIntroduceTestCaseStore, {id, parentId}, subscribe);
 }
 
-export const registerDidUpdateProject = ({project}, subscribe) => {
-  const id = project.id;
+export const registerDidUpdateProject = ({projectId}, subscribe) => {
+  const id = projectId;
   const parentId = null;
   registerStore(didUpdateProjectStore, {id, parentId}, subscribe);
 }
-export const registerDidUpdateTestCase = ({testCase, project}, subscribe) => {
-  const id = testCase.id;
-  const parentId = null;
+export const registerDidUpdateTestCase = ({testCaseId, projectId}, subscribe) => {
+  const id = testCaseId;
+  const parentId = projectId;
   registerStore(didUpdateTestCaseStore, {id, parentId}, subscribe);
 }
 

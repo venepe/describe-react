@@ -71,22 +71,24 @@ class ProjectView extends Component {
 
   subscribe() {
     let project = this.props.project;
-    registerDidUpdateProject({project}, () => {
+    let projectId = project.id;
+
+    registerDidUpdateProject({projectId}, () => {
       return Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project})
       );
     });
-    registerDidIntroduceTestCase({project}, () => {
+    registerDidIntroduceTestCase({projectId}, () => {
         return Relay.Store.subscribe(
           new DidIntroduceTestCaseSubscription({project})
         );
     });
-    registerDidIntroduceCoverImage({target: project}, () => {
+    registerDidIntroduceCoverImage({targetId: projectId}, () => {
       return Relay.Store.subscribe(
         new DidIntroduceCoverImageSubscription({target: project})
       );
     });
-    registerDidIntroduceCollaborator({project}, () => {
+    registerDidIntroduceCollaborator({projectId}, () => {
       return Relay.Store.subscribe(
         new DidIntroduceCollaboratorSubscription({project})
       );

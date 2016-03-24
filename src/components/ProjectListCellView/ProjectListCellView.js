@@ -39,12 +39,15 @@ class ProjectListCellView extends Component {
   subscribe() {
     let project = this.props.project;
     let me = this.props.me;
-    registerDidUpdateProject({project}, () => {
+    let projectId = project.id;
+    let meId = me.id;
+
+    registerDidUpdateProject({projectId}, () => {
       return Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project})
       );
     });
-    registerDidDeleteProject({project, me}, () => {
+    registerDidDeleteProject({projectId, meId}, () => {
       return Relay.Store.subscribe(
         new DidDeleteProjectSubscription({project, me})
       );

@@ -70,7 +70,10 @@ class ExampleImage extends Component {
   subscribe() {
     let example = this.props.example;
     let target = this.props.target;
-    registerDidDeleteExample({example, target}, () => {
+    let exampleId = example.id;
+    let targetId = target.id;
+
+    registerDidDeleteExample({exampleId, targetId}, () => {
       return Relay.Store.subscribe(
         new DidDeleteExampleSubscription({example, target})
       );

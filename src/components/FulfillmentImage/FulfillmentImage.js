@@ -70,7 +70,10 @@ class FulfillmentImage extends Component {
   subscribe() {
     let fulfillment = this.props.fulfillment;
     let testCase = this.props.testCase;
-    registerDidDeleteFulfillment({fulfillment, testCase}, () => {
+    let fulfillmentId = fulfillment.id;
+    let testCaseId = testCase.id;
+
+    registerDidDeleteFulfillment({fulfillmentId, testCaseId}, () => {
       return Relay.Store.subscribe(
         new DidDeleteFulfillmentSubscription({fulfillment, testCase})
       );

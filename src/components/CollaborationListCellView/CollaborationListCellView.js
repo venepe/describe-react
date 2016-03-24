@@ -39,12 +39,15 @@ class CollaborationListCellView extends Component {
   subscribe() {
     let collaboration = this.props.collaboration;
     let me = this.props.me;
-    registerDidUpdateProject({project: collaboration}, () => {
+    let collaborationId = collaboration.id;
+    let meId = me.id;
+
+    registerDidUpdateProject({projectId: collaborationId}, () => {
       return Relay.Store.subscribe(
         new DidUpdateProjectSubscription({project: collaboration})
       );
     });
-    registerDidDeleteCollaboration({collaboration, me}, () => {
+    registerDidDeleteCollaboration({collaborationId, meId}, () => {
       return Relay.Store.subscribe(
         new DidDeleteCollaborationSubscription({collaboration, me})
       );
