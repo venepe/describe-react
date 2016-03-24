@@ -102,6 +102,7 @@ export default Relay.createContainer(FulfillmentImage, {
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
+        id
         ${DeleteFulfillmentMutation.getFragment('testCase')},
         ${DidDeleteFulfillmentSubscription.getFragment('testCase')},
       }

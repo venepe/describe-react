@@ -102,6 +102,7 @@ export default Relay.createContainer(ExampleImage, {
     `,
     target: () => Relay.QL`
       fragment on Node {
+        id
         ${DeleteExampleMutation.getFragment('target')},
         ${DidDeleteExampleSubscription.getFragment('target')},
       }

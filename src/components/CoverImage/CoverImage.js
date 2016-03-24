@@ -119,6 +119,7 @@ export default Relay.createContainer(CoverImage, {
     `,
     target: () => Relay.QL`
       fragment on Node {
+        id
         ${CoverImageFormDialog.getFragment('target')},
         ${DeleteCoverImageMutation.getFragment('target')},
         ${DidDeleteCoverImageSubscription.getFragment('target')},

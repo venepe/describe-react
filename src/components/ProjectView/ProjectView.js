@@ -222,6 +222,7 @@ export default Relay.createContainer(ProjectView, {
     `,
     me: () => Relay.QL`
       fragment on User {
+        id,
         ${ProjectText.getFragment('me')},
       }
     `,

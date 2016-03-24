@@ -115,6 +115,7 @@ export default Relay.createContainer(ProjectText, {
     `,
     me: () => Relay.QL`
       fragment on User {
+        id
         ${DeleteProjectMutation.getFragment('me')}
       }
     `,

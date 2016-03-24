@@ -12,6 +12,7 @@ export { default as DidIntroduceCollaboratorSubscription } from './DidIntroduceC
 export { default as DidIntroduceCoverImageSubscription } from './DidIntroduceCoverImageSubscription';
 export { default as DidIntroduceExampleSubscription } from './DidIntroduceExampleSubscription';
 export { default as DidIntroduceFulfillmentSubscription } from './DidIntroduceFulfillmentSubscription';
+export { default as DidIntroduceProjectSubscription } from './DidIntroduceProjectSubscription';
 export { default as DidIntroduceTestCaseSubscription } from './DidIntroduceTestCaseSubscription';
 export { default as DidUpdateProjectSubscription } from './DidUpdateProjectSubscription';
 export { default as DidUpdateTestCaseSubscription } from './DidUpdateTestCaseSubscription';

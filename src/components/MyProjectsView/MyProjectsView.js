@@ -10,6 +10,8 @@ import MyProjectsPlaceholder from '../MyProjectsPlaceholder';
 import SMTIStorage from '../../utils/storage';
 
 import { IntroduceProjectMutation } from '../../mutations';
+import { registerDidIntroduceProject } from '../../stores/SubscriptionStore';
+import { DidIntroduceProjectSubscription } from '../../subscriptions';
 
 const _first = 10;
 const _next = 10;
@@ -41,6 +43,23 @@ class MyProjectsView extends Component {
     this.props.relay.setVariables({
       first: first + _next,
       after: cursor
+    });
+  }
+
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate() {
+    this.subscribe();
+  }
+
+  subscribe() {
+    let me = this.props.me;
+    registerDidIntroduceProject({me}, () => {
+      return Relay.Store.subscribe(
+        new DidIntroduceProjectSubscription({me})
+      );
     });
   }
 
@@ -101,6 +120,7 @@ export default Relay.createContainer(MyProjectsView, {
         ${ProjectListView.getFragment('projects')},
       }
       ${IntroduceProjectMutation.getFragment('me')},
+      ${DidIntroduceProjectSubscription.getFragment('me')},
       ${ProjectListView.getFragment('me')},
     }
     `,

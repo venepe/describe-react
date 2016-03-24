@@ -15,111 +15,172 @@ let didIntroduceCollaborationStore = {};
 let didIntroduceCoverImageStore = {};
 let didIntroduceExampleStore = {};
 let didIntroduceFulfillmentStore = {};
+let didIntroduceProjectStore = {};
 let didIntroduceTestCaseStore = {};
 let didUpdateProjectStore = {};
 let didUpdateTestCaseStore = {};
 
-export const registerDidDeleteCollaboration = ({collaboration, me}, subscribe) => {
-  const collaborationId = collaboration.id;
-  if (!didDeleteCollaborationStore[collaborationId] && !isClientID(collaborationId)) {
-    didDeleteCollaborationStore[collaborationId] = subscribe();
+function registerStore(store, {id, parentId}, subscribe) {
+  if (!store[id] && !isClientID(id)) {
+    store[id] = {
+      parentId,
+      subscription: subscribe()
+    }
   }
+}
+
+export const registerDidDeleteCollaboration = ({collaboration, me}, subscribe) => {
+  const id = collaboration.id;
+  const parentId = me.id;
+  registerStore(didDeleteCollaborationStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteCollaborator = ({collaborator, project}, subscribe) => {
-  const collaboratorId = collaborator.id;
-  if (!didDeleteCollaboratorStore[collaboratorId] && !isClientID(collaboratorId)) {
-    didDeleteCollaboratorStore[collaboratorId] = subscribe();
-  }
+  const id = collaborator.id;
+  const parentId = project.id;
+  registerStore(didDeleteCollaboratorStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteCoverImage = ({coverImage, target}, subscribe) => {
-  const coverImageId = coverImage.id;
-  if (!didDeleteCoverImageStore[coverImageId] && !isClientID(coverImageId)) {
-    didDeleteCoverImageStore[coverImageId] = subscribe();
-  }
+  const id = coverImage.id;
+  const parentId = target.id;
+  registerStore(didDeleteCoverImageStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteExample = ({example, target}, subscribe) => {
-  const exampleId = example.id;
-  if (!didDeleteExampleStore[exampleId] && !isClientID(exampleId)) {
-    didDeleteExampleStore[exampleId] = subscribe();
-  }
+  const id = example.id;
+  const parentId = target.id;
+  registerStore(didDeleteExampleStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteFulfillment = ({fulfillment, testCase}, subscribe) => {
-  const fulfillmentId = fulfillment.id;
-  if (!didDeleteFulfillmentStore[fulfillmentId] && !isClientID(fulfillmentId)) {
-    didDeleteFulfillmentStore[fulfillmentId] = subscribe();
-  }
+  const id = fulfillment.id;
+  const parentId = testCase.id;
+  registerStore(didDeleteFulfillmentStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteProject = ({project, me}, subscribe) => {
-  const projectId = project.id;
-  if (!didDeleteProjectStore[projectId] && !isClientID(projectId)) {
-    didDeleteProjectStore[projectId] = subscribe();
-  }
+  const id = project.id;
+  const parentId = me.id;
+  registerStore(didDeleteProjectStore, {id, parentId}, subscribe);
 }
 
 export const registerDidDeleteTestCase = ({testCase, project}, subscribe) => {
-  const testCaseId = testCase.id;
-  if (!didDeleteTestCaseStore[testCaseId] && !isClientID(testCaseId)) {
-    didDeleteTestCaseStore[testCaseId] = subscribe();
-  }
+  const id = testCase.id;
+  const parentId = project.id;
+  registerStore(didDeleteTestCaseStore, {id, parentId}, subscribe);
 }
 
 export const registerDidIntroduceCollaborator = ({project}, subscribe) => {
-  const projectId = project.id;
-  if (!didIntroduceCollaboratorStore[projectId] && !isClientID(projectId)) {
-    didIntroduceCollaboratorStore[projectId] = subscribe();
-  }
+  const id = project.id;
+  const parentId = id;
+  registerStore(didIntroduceCollaboratorStore, {id, parentId}, subscribe);
 }
 export const registerDidIntroduceCollaboration = ({me}, subscribe) => {
-  const meId = me.id;
-  if (!didIntroduceCollaborationStore[meId] && !isClientID(meId)) {
-    didIntroduceCollaborationStore[meId] = subscribe();
-  }
+  const id = me.id;
+  const parentId = id;
+  registerStore(didIntroduceCollaborationStore, {id, parentId}, subscribe);
 }
 export const registerDidIntroduceCoverImage = ({target}, subscribe) => {
-  const targetId = target.id;
-  if (!didIntroduceCoverImageStore[targetId] && !isClientID(targetId)) {
-    didIntroduceCoverImageStore[targetId] = subscribe();
-  }
+  const id = target.id;
+  const parentId = id;
+  registerStore(didIntroduceCoverImageStore, {id, parentId}, subscribe);
 }
 
 export const registerDidIntroduceExample = ({target}, subscribe) => {
-  const targetId = target.id;
-  if (!didIntroduceExampleStore[targetId] && !isClientID(targetId)) {
-    didIntroduceExampleStore[targetId] = subscribe();
-  }
+  const id = target.id;
+  const parentId = id;
+  registerStore(didIntroduceExampleStore, {id, parentId}, subscribe);
 }
 
 export const registerDidIntroduceFulfillment = ({testCase}, subscribe) => {
-  const testCaseId = testCase.id;
-  if (!didIntroduceFulfillmentStore[testCaseId] && !isClientID(testCaseId)) {
-    didIntroduceFulfillmentStore[testCaseId] = subscribe();
-  }
+  const id = testCase.id;
+  const parentId = id;
+  registerStore(didIntroduceFulfillmentStore, {id, parentId}, subscribe);
+}
+
+export const registerDidIntroduceProject = ({me}, subscribe) => {
+  const id = me.id;
+  const parentId = id;
+  registerStore(didIntroduceProjectStore, {id, parentId}, subscribe);
 }
 
 export const registerDidIntroduceTestCase = ({project}, subscribe) => {
-  const projectId = project.id;
-  if (!didIntroduceTestCaseStore[projectId] && !isClientID(projectId)) {
-    didIntroduceTestCaseStore[projectId] = subscribe();
-  }
+  const id = project.id;
+  const parentId = id;
+  registerStore(didIntroduceTestCaseStore, {id, parentId}, subscribe);
 }
 
 export const registerDidUpdateProject = ({project}, subscribe) => {
-  const projectId = project.id;
-  if (!didUpdateProjectStore[projectId] && !isClientID(projectId)) {
-    didUpdateProjectStore[projectId] = subscribe();
-  }
+  const id = project.id;
+  const parentId = null;
+  registerStore(didUpdateProjectStore, {id, parentId}, subscribe);
 }
-export const registerDidUpdateTestCase = ({testCase}, subscribe) => {
-  const testCaseId = testCase.id;
-  if (!didUpdateTestCaseStore[testCaseId] && !isClientID(testCaseId)) {
-    didUpdateTestCaseStore[testCaseId] = subscribe();
-  }
+export const registerDidUpdateTestCase = ({testCase, project}, subscribe) => {
+  const id = testCase.id;
+  const parentId = null;
+  registerStore(didUpdateTestCaseStore, {id, parentId}, subscribe);
 }
 
-export const cleanSubscriptions = (payload) => {
-  console.log(Object.keys(payload)[0]);
+export const cleanSubscriptions = (payload = {}) => {
   const action = Object.keys(payload)[0];
   if (action == 'didDeleteTestCase') {
+    let testCaseId = payload[action].deletedTestCaseId;
 
+    unsubscribe({store: didUpdateTestCaseStore, children: [{store: didDeleteExampleStore}, {store: didDeleteFulfillmentStore}]}, testCaseId);
+    unsubscribe({store: didDeleteTestCaseStore}, testCaseId);
+    unsubscribe({store: didIntroduceFulfillmentStore}, testCaseId);
+    unsubscribe({store: didIntroduceExampleStore}, testCaseId);
+
+  } else if (action == 'didDeleteExample') {
+
+    let exampleId = payload[action].deletedExampleId;
+
+    unsubscribe({store: didDeleteExampleStore}, exampleId);
+
+  } else if (action == 'didDeleteFulfillment') {
+
+    let fulfillmentId = payload[action].deletedFulfillmentId;
+
+    unsubscribe({store: didDeleteFulfillmentStore}, fulfillmentId);
+
+  } else if (action == 'didDeleteCoverImage') {
+
+    let coverImageId = payload[action].deletedCoverImageId;
+
+    unsubscribe({store: didDeleteCoverImageStore}, coverImageId);
+
+  } else if (action == 'didDeleteProject') {
+    let projectId = payload[action].deletedProjectId;
+
+    unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didDeleteExampleStore}, {store: didDeleteFulfillmentStore}]}]}, projectId);
+    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteCoverImageStore}]}, projectId);
+    unsubscribe({store: didIntroduceTestCaseStore}, projectId);
+    unsubscribe({store: didIntroduceCoverImageStore}, projectId);
+    unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
+
+  } else if (action == 'didDeleteCollaboration') {
+    let projectId = payload[action].deletedCollaborationId;
+
+    unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didDeleteExampleStore}, {store: didDeleteFulfillmentStore}]}]}, projectId);
+    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteCoverImageStore}]}, projectId);
+    unsubscribe({store: didIntroduceTestCaseStore}, projectId);
+    unsubscribe({store: didIntroduceCoverImageStore}, projectId);
+    unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
+
+  } else if (action == 'didDeleteCollaborator') {
+    let collaboratorId = payload[action].deletedCollaboratorId;
+
+    unsubscribe({store: didDeleteCollaboratorStore}, collaboratorId);
   }
+}
+
+function unsubscribe(node, id) {
+  let store = node.store;
+  let children = node.children || [];
+  _.forEach(children, node => {
+    let store = node.store;
+    _.forEach(store, (obj, key) => {
+      console.log(obj.parentId);
+      if (obj.parentId === id) {
+        unsubscribe(node, key);
+      }
+    });
+  })
+  store[id].subscription.dispose();
 }

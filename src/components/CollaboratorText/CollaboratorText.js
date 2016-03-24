@@ -92,6 +92,7 @@ export default Relay.createContainer(CollaboratorText, {
     `,
     project: () => Relay.QL`
       fragment on Project {
+        id
         ${DeleteCollaboratorMutation.getFragment('project')},
         ${DidDeleteCollaboratorSubscription.getFragment('project')},
       }

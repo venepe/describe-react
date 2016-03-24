@@ -249,6 +249,7 @@ export default Relay.createContainer(CollaborationView, {
     `,
     me: () => Relay.QL`
       fragment on User {
+        id
         ${CollaborationText.getFragment('me')},
       }
     `,
