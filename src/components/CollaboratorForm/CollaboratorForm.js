@@ -6,6 +6,7 @@ import styles from './CollaboratorForm.css';
 import { FlatButton, TextField } from 'material-ui';
 import validator from 'validator';
 import { track, Events } from '../../utils/SMTIAnalytics';
+const errorText = 'Unable to add collaborator. Verify the email address is correct';
 
 import { IntroduceCollaboratorMutation } from '../../mutations';
 
@@ -28,7 +29,8 @@ class CollaboratorForm extends Component {
 
     this.state = {
       isDisabled: true,
-      email: ''
+      email: '',
+      errorText: ''
     }
   }
 
@@ -36,14 +38,27 @@ class CollaboratorForm extends Component {
     let email = this.state.email;
     let isDisabled = this.state.isDisabled;
     if (!isDisabled) {
-      Relay.Store.commitUpdate(
-        new IntroduceCollaboratorMutation({email, project: this.props.project})
-      );
-      //Start SMTIAnalytics
-      track(Events.ADDED_COLLABORATOR);
-      //End SMTIAnalytics
+      this.setState({
+        isDisabled: true
+      });
 
-      this.props.onCreate();
+      let onSuccess = () => {
+        //Start SMTIAnalytics
+        track(Events.ADDED_COLLABORATOR);
+        //End SMTIAnalytics
+
+        this.props.onCreate();
+      }
+
+      let onFailure = () => {
+        this.setState({
+          errorText
+        });
+      };
+
+      let mutation = new IntroduceCollaboratorMutation({email, project: this.props.project});
+
+      Relay.Store.commitUpdate(mutation, {onFailure, onSuccess});
     }
   }
 
@@ -54,6 +69,7 @@ class CollaboratorForm extends Component {
   _onChangeEmail(e) {
     let email = e.target.value;
     let isDisabled = true;
+    let errorText = '';
     let errorMessage = this.state.errorMessage;
     if (validator.isEmail(email)) {
       isDisabled = false;
@@ -61,7 +77,8 @@ class CollaboratorForm extends Component {
 
     this.setState({
       email,
-      isDisabled
+      isDisabled,
+      errorText
     });
   }
 
@@ -71,7 +88,7 @@ class CollaboratorForm extends Component {
       <div>
         <div className="collaborator-title"> Email <br/></div>
         <div className="collaborator-label">
-          <TextField hintText={'jane@doe.com'} type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
+          <TextField hintText={'jane@doe.com'} errorText={this.state.errorText} type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
         </div>
         <div className="action-container">
           <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
