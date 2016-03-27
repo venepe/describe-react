@@ -68,16 +68,18 @@ class ExampleImage extends Component {
   }
 
   subscribe() {
-    let example = this.props.example;
-    let target = this.props.target;
-    let exampleId = example.id;
-    let targetId = target.id;
+    if (this.props.example && this.props.target) {
+      let example = this.props.example;
+      let target = this.props.target;
+      let exampleId = example.id;
+      let targetId = target.id;
 
-    registerDidDeleteExample({exampleId, targetId}, () => {
-      return Relay.Store.subscribe(
-        new DidDeleteExampleSubscription({example, target})
-      );
-    });
+      registerDidDeleteExample({exampleId, targetId}, () => {
+        return Relay.Store.subscribe(
+          new DidDeleteExampleSubscription({example, target})
+        );
+      });
+    }
   }
 
   render() {

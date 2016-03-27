@@ -71,28 +71,30 @@ class CollaborationView extends Component {
   }
 
   subscribe() {
-    let project = this.props.collaboration;
-    let projectId = this.props.collaboration.id;
-    registerDidUpdateProject({projectId}, () => {
-      return Relay.Store.subscribe(
-        new DidUpdateProjectSubscription({project})
-      );
-    });
-    registerDidIntroduceTestCase({projectId}, () => {
+    if (this.props.collaboration) {
+      let project = this.props.collaboration;
+      let projectId = this.props.collaboration.id;
+      registerDidUpdateProject({projectId}, () => {
         return Relay.Store.subscribe(
-          new DidIntroduceTestCaseSubscription({project})
+          new DidUpdateProjectSubscription({project})
         );
-    });
-    registerDidIntroduceCoverImage({targetId: projectId}, () => {
-      return Relay.Store.subscribe(
-        new DidIntroduceCoverImageSubscription({target: project})
-      );
-    });
-    registerDidIntroduceCollaborator({projectId}, () => {
-      return Relay.Store.subscribe(
-        new DidIntroduceCollaboratorSubscription({project})
-      );
-    });
+      });
+      registerDidIntroduceTestCase({projectId}, () => {
+          return Relay.Store.subscribe(
+            new DidIntroduceTestCaseSubscription({project})
+          );
+      });
+      registerDidIntroduceCoverImage({targetId: projectId}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceCoverImageSubscription({target: project})
+        );
+      });
+      registerDidIntroduceCollaborator({projectId}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceCollaboratorSubscription({project})
+        );
+      });
+    }
   }
 
   render() {

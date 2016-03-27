@@ -55,14 +55,16 @@ class MyProjectsView extends Component {
   }
 
   subscribe() {
-    let me = this.props.me;
-    let meId = me.id;
+    if (this.props.me) {
+      let me = this.props.me;
+      let meId = me.id;
 
-    registerDidIntroduceProject({meId}, () => {
-      return Relay.Store.subscribe(
-        new DidIntroduceProjectSubscription({me})
-      );
-    });
+      registerDidIntroduceProject({meId}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceProjectSubscription({me})
+        );
+      });
+    }
   }
 
   render() {

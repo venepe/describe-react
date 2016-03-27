@@ -84,16 +84,18 @@ class CoverImage extends Component {
   }
 
   subscribe() {
-    let coverImage = this.props.coverImage || {};
-    let target = this.props.target || {};
-    let coverImageId = coverImage.id || '';
-    let targetId = target.id || '';
+    if (this.props.coverImage && this.props.target) {
+      let coverImage = this.props.coverImage || {};
+      let target = this.props.target || {};
+      let coverImageId = coverImage.id || '';
+      let targetId = target.id || '';
 
-    registerDidDeleteCoverImage({coverImageId, targetId}, () => {
-      return Relay.Store.subscribe(
-        new DidDeleteCoverImageSubscription({coverImage, target})
-      );
-    });
+      registerDidDeleteCoverImage({coverImageId, targetId}, () => {
+        return Relay.Store.subscribe(
+          new DidDeleteCoverImageSubscription({coverImage, target})
+        );
+      });
+    }
   }
 
   render() {

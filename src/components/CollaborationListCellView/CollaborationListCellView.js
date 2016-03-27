@@ -37,21 +37,23 @@ class CollaborationListCellView extends Component {
   }
 
   subscribe() {
-    let collaboration = this.props.collaboration;
-    let me = this.props.me;
-    let collaborationId = collaboration.id;
-    let meId = me.id;
+    if (this.props.collaboration && this.props.me) {
+      let collaboration = this.props.collaboration;
+      let me = this.props.me;
+      let collaborationId = collaboration.id;
+      let meId = me.id;
 
-    registerDidUpdateProject({projectId: collaborationId}, () => {
-      return Relay.Store.subscribe(
-        new DidUpdateProjectSubscription({project: collaboration})
-      );
-    });
-    registerDidDeleteCollaboration({collaborationId, meId}, () => {
-      return Relay.Store.subscribe(
-        new DidDeleteCollaborationSubscription({collaboration, me})
-      );
-    });
+      registerDidUpdateProject({projectId: collaborationId}, () => {
+        return Relay.Store.subscribe(
+          new DidUpdateProjectSubscription({project: collaboration})
+        );
+      });
+      registerDidDeleteCollaboration({collaborationId, meId}, () => {
+        return Relay.Store.subscribe(
+          new DidDeleteCollaborationSubscription({collaboration, me})
+        );
+      });
+    }
   }
 
   render() {

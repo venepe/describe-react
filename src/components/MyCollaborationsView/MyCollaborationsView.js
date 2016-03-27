@@ -47,14 +47,16 @@ class MyCollaborationsView extends Component {
   }
 
   subscribe() {
-    let me = this.props.me;
-    let meId = me.id;
+    if (this.props.me) {
+      let me = this.props.me;
+      let meId = me.id;
 
-    registerDidIntroduceCollaboration({meId}, () => {
-      return Relay.Store.subscribe(
-        new DidIntroduceCollaborationSubscription({me})
-      );
-    });
+      registerDidIntroduceCollaboration({meId}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceCollaborationSubscription({me})
+        );
+      });
+    }
   }
 
   render() {

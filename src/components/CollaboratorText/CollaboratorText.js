@@ -60,16 +60,18 @@ class CollaboratorText extends Component {
   }
 
   subscribe() {
-    let collaborator = this.props.collaborator;
-    let project = this.props.project;
-    let collaboratorId = collaborator.id;
-    let projectId = project.id;
+    if (this.props.collaborator && this.props.project) {
+      let collaborator = this.props.collaborator;
+      let project = this.props.project;
+      let collaboratorId = collaborator.id;
+      let projectId = project.id;
 
-    registerDidDeleteCollaborator({collaboratorId, projectId}, () => {
-      return Relay.Store.subscribe(
-        new DidDeleteCollaboratorSubscription({collaborator, project})
-      );
-    });
+      registerDidDeleteCollaborator({collaboratorId, projectId}, () => {
+        return Relay.Store.subscribe(
+          new DidDeleteCollaboratorSubscription({collaborator, project})
+        );
+      });
+    }
   }
 
   render() {
