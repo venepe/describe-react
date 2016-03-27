@@ -138,7 +138,7 @@ class ProjectView extends Component {
       if (collaboratorNodes.length > 0) {
         object.nodes.push(
           {
-            component: (<ArchyLabel text={'in collaboration with'} />),
+            component: (<ArchyLabel text={'in collaboration with:'} />),
             nodes: collaboratorNodes
           }
         )

@@ -147,7 +147,7 @@ class CollaborationView extends Component {
       if (leaderNodes.length > 0) {
         object.nodes.push(
           {
-            component: (<ArchyLabel text={'by'} />),
+            component: (<ArchyLabel text={'by:'} />),
             nodes: leaderNodes
           }
         )
@@ -156,7 +156,7 @@ class CollaborationView extends Component {
       if (collaboratorNodes.length > 0) {
         object.nodes.push(
           {
-            component: (<ArchyLabel text={'in collaboration with'} />),
+            component: (<ArchyLabel text={'in collaboration with:'} />),
             nodes: collaboratorNodes
           }
         )
