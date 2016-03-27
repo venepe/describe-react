@@ -170,8 +170,8 @@ export const cleanSubscriptions = (payload = {}) => {
   }
 }
 
-function unsubscribe(node, id) {
-  let store = node.store;
+function unsubscribe(node = {}, id = '') {
+  let store = node.store || {};
   let children = node.children || [];
   _.forEach(children, node => {
     let store = node.store;
@@ -182,5 +182,7 @@ function unsubscribe(node, id) {
       }
     });
   })
-  store[id].subscription.dispose();
+  if (store[id]) {
+    store[id].subscription.dispose();
+  }
 }
