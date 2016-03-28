@@ -2,7 +2,6 @@
 
 export { CollaborationQueries } from './CollaborationQueries';
 export { CoverImageQueries } from './CoverImageQueries';
-export { ExampleQueries } from './ExampleQueries';
 export { FileQueries } from './FileQueries';
 export { FulfillmentQueries } from './FulfillmentQueries';
 export { MeQueries } from './MeQueries';

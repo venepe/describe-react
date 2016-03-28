@@ -13,7 +13,6 @@ import MyCollaborationsView from './components/MyCollaborationsView';
 import FailureView from './components/FailureView';
 import TestCasePage from './components/TestCasePage';
 import CoverImageView from './components/CoverImageView';
-import ExampleImageView from './components/ExampleImageView';
 import FileImageView from './components/FileImageView';
 import FulfillmentImageView from './components/FulfillmentImageView';
 import MeView from './components/MeView';
@@ -23,7 +22,6 @@ import ResetForm from './components/ResetForm';
 import {
   CollaborationQueries,
   CoverImageQueries,
-  ExampleQueries,
   FileQueries,
   FulfillmentQueries,
   MeQueries,
@@ -119,13 +117,6 @@ export default (
     <Route
         path="collaborations/:projectId/testCases/:testCaseId" component={TestCasePage}
         queries={TestCaseQueries}
-        renderLoading={() => <SpinnerView />}
-        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
-        onEnter={requireAuth}
-      />
-    <Route
-        path="*/:targetId/examples/:exampleId" component={ExampleImageView}
-        queries={ExampleQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}

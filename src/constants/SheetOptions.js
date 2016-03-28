@@ -61,10 +61,6 @@ export const CollaborativeProjectSheetOptions = {
 export const TestCaseSheetOptions = {
   options: [
     {
-      text: 'Add Example',
-      value: INTRODUCE_EXAMPLE
-    },
-    {
       text: 'Fulfill Test Case',
       value: FULFILL_TEST_CASE
     },
@@ -76,15 +72,6 @@ export const TestCaseSheetOptions = {
       text: 'Delete Test Case',
       value:  DELETE_TEST_CASE
     },
-  ],
-};
-
-export const ExampleSheetOptions = {
-  options: [
-    {
-      text: 'Delete Example',
-      value: DELETE_EXAMPLE
-    }
   ],
 };
 

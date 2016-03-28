@@ -8,7 +8,6 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import TestCaseLabel from '../TestCaseLabel';
 import TestCaseText from '../TestCaseText';
-import ExampleImage from '../ExampleImage';
 import FulfillmentImage from '../FulfillmentImage';
 import MoreButton from '../MoreButton';
 
@@ -33,32 +32,14 @@ class TestCaseView extends Component {
   constructor(props, context) {
     super(props);
     this.router = context.router;
-    this._pushExample = this._pushExample.bind(this);
     this._pushFulfillment = this._pushFulfillment.bind(this);
-    this._onLoadMoreExamples = this._onLoadMoreExamples.bind(this);
     this._onLoadMoreFulfillments = this._onLoadMoreFulfillments.bind(this);
-  }
-
-  _pushExample(exampleId) {
-    let projectId = this.props.project.id;
-    let testCaseId = this.props.testCase.id;
-    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/examples/${exampleId}`);
   }
 
   _pushFulfillment(fulfillmentId) {
     let projectId = this.props.project.id;
     let testCaseId = this.props.testCase.id;
     this.router.push(`/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}`);
-  }
-
-  _onLoadMoreExamples() {
-    var first = this.props.relay.variables.firstExample;
-    var edges = this.props.testCase.originalExamples.edges;
-    var cursor = edges[edges.length - 1].cursor;
-    this.props.relay.setVariables({
-      firstExample: first + _next,
-      afterExample: cursor
-    });
   }
 
   _onLoadMoreFulfillments() {
@@ -75,27 +56,7 @@ class TestCaseView extends Component {
     let object = {};
     if (this.props.testCase) {
       let testCase = this.props.testCase;
-      let exampleNodes = [];
       let fulfillmentNodes = [];
-
-      if (testCase.originalExamples) {
-        let hasNextPage = testCase.originalExamples.pageInfo.hasNextPage;
-        exampleNodes = testCase.originalExamples.edges.map(function (object, index) {
-           let image = object.node;
-            let imageComponent = {
-              component: (<ExampleImage example={image} target={this.props.testCase} onClick={this._pushExample} />),
-            };
-            return imageComponent;
-          }.bind(this));
-
-          if (hasNextPage) {
-             let moreComponent = {
-               component: (<MoreButton onClick={this._onLoadMoreExamples} />),
-               nodes: []
-             };
-             exampleNodes.push(moreComponent);
-           }
-      }
 
       if (testCase.originalFulfillments) {
         let hasNextPage = testCase.originalFulfillments.pageInfo.hasNextPage;
@@ -126,15 +87,6 @@ class TestCaseView extends Component {
         ]
       }
 
-      if (exampleNodes.length > 0) {
-        object.nodes[0].nodes.push(
-          {
-            component: (<ArchyLabel text={'as shown in:'}/>),
-            nodes: exampleNodes
-          }
-        )
-      }
-
       if (fulfillmentNodes.length > 0) {
         object.nodes[0].nodes.push(
           {
@@ -155,9 +107,6 @@ class TestCaseView extends Component {
 
 export default Relay.createContainer(TestCaseView, {
   initialVariables: {
-    firstExample: _first,
-    afterExample: null,
-    moreFirstExample: _first,
     firstFulfillment: _first,
     afterFulfillment: null,
     moreFirstFulfillment: _first
@@ -167,28 +116,6 @@ export default Relay.createContainer(TestCaseView, {
       fragment on TestCase {
         id
         it
-        originalExamples: examples(first: $firstExample) {
-          pageInfo {
-            hasNextPage
-          }
-          edges {
-            cursor
-            node {
-              ${ExampleImage.getFragment('example')},
-            }
-          }
-        }
-        moreExamples: examples(first: $moreFirstExample, after: $afterExample) {
-          pageInfo {
-            hasNextPage
-          }
-          edges {
-            cursor
-            node {
-              ${ExampleImage.getFragment('example')},
-            }
-          }
-        }
         originalFulfillments: fulfillments(first: $firstFulfillment) {
           pageInfo {
             hasNextPage
@@ -215,7 +142,6 @@ export default Relay.createContainer(TestCaseView, {
             }
           }
         }
-        ${ExampleImage.getFragment('target')},
         ${TestCaseText.getFragment('testCase')},
         ${TestCaseLabel.getFragment('testCase')},
         ${FulfillmentImage.getFragment('testCase')},
