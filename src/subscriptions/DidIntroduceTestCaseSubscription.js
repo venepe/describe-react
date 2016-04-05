@@ -28,11 +28,11 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
                   }
                 }
               }
-              examples(first: 1) {
+              events(first: 1) {
                 edges {
                   node {
                     id
-                    uri
+                    it
                   }
                 }
               }

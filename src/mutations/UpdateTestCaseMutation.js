@@ -17,7 +17,13 @@ export default class UpdateTestCaseMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on UpdateTestCasePayload {
         testCase {
-          it,
+          it
+        }
+        testCaseEventEdge {
+          node {
+            id
+            it
+          }
         }
       }
     `;
@@ -27,8 +33,19 @@ export default class UpdateTestCaseMutation extends Relay.Mutation {
       type: 'FIELDS_CHANGE',
       fieldIDs: {
         testCase: this.props.testCase.id,
-      },
-    }];
+      }
+    },
+    {
+      type: 'RANGE_ADD',
+      parentName: 'testCase',
+      parentID: this.props.testCase.id,
+      connectionName: 'events',
+      edgeName: 'testCaseEventEdge',
+      rangeBehaviors: {
+        '': 'prepend',
+      }
+    },
+  ];
   }
   getVariables() {
     return {
@@ -42,6 +59,11 @@ export default class UpdateTestCaseMutation extends Relay.Mutation {
         id: this.props.testCase.id,
         it: this.props.it,
       },
+      testCaseEventEdge: {
+        node: {
+          it: this.props.it,
+        }
+      }
     };
   }
 }

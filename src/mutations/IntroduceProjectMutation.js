@@ -16,7 +16,14 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceProjectPayload {
-        projectEdge
+        projectEdge {
+          node {
+            id
+            title
+            numOfTestCases
+            numOfTestCasesFulfilled
+          }
+        }
         me {
           projects
         },

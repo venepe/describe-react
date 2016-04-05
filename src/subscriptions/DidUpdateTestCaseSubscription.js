@@ -19,11 +19,26 @@ export default class DidUpdateTestCaseSubscription extends Relay.Subscription {
             it
             isFulfilled
           }
+          testCaseEventEdge {
+            node {
+              id
+              it
+            }
+          }
         }
       }`;
   }
   getConfigs() {
-    return [];
+    return [{
+      type: 'RANGE_ADD',
+      parentName: 'testCase',
+      parentID: this.props.testCase.id,
+      connectionName: 'events',
+      edgeName: 'testCaseEventEdge',
+      rangeBehaviors: {
+        '': 'prepend',
+      }
+    }];
   }
   getVariables() {
     return {
