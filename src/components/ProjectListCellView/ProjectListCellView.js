@@ -58,18 +58,9 @@ class ProjectListCellView extends Component {
 
   render() {
     let project = this.props.project;
-    let uri = ''
-    if (project.coverImages && project.coverImages.edges.length > 0) {
-      uri = project.coverImages.edges[0].node.uri;
-    }
     let subtitle = `${project.numOfTestCasesFulfilled}/${project.numOfTestCases}`;
     return (
       <Card key={this.props.key} className="clickable" onClick={this._onClick}>
-        <div>
-          <CardMedia className='CoverImage-container' expandable={true}>
-            <img className='CoverImage-img' height={400} src={uri} />
-          </CardMedia>
-        </div>
         <CardTitle title={project.title} subtitle={subtitle} />
       </Card>
     );
@@ -84,13 +75,6 @@ export default Relay.createContainer(ProjectListCellView, {
         title
         numOfTestCases
         numOfTestCasesFulfilled
-        coverImages(last: 1) {
-          edges {
-            node {
-              uri
-            }
-          }
-        }
         ${DidDeleteProjectSubscription.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
       }

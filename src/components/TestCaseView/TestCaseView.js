@@ -10,6 +10,7 @@ import TestCaseLabel from '../TestCaseLabel';
 import TestCaseText from '../TestCaseText';
 import FulfillmentImage from '../FulfillmentImage';
 import MoreButton from '../MoreButton';
+import FileImage from '../FileImage';
 
 const _first = 2;
 const _next = 2;
@@ -34,6 +35,8 @@ class TestCaseView extends Component {
     this.router = context.router;
     this._pushFulfillment = this._pushFulfillment.bind(this);
     this._onLoadMoreFulfillments = this._onLoadMoreFulfillments.bind(this);
+    this._pushRejection = this._pushRejection.bind(this);
+    this._onLoadMoreRejections = this._onLoadMoreRejections.bind(this);
   }
 
   _pushFulfillment(fulfillmentId) {
@@ -52,11 +55,28 @@ class TestCaseView extends Component {
     });
   }
 
+  _pushRejection(rejectionId) {
+    let projectId = this.props.project.id;
+    let testCaseId = this.props.testCase.id;
+    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/files/${rejectionId}`);
+  }
+
+  _onLoadMoreRejections() {
+    var first = this.props.relay.variables.firstRejection;
+    var edges = this.props.testCase.originalRejections.edges;
+    var cursor = edges[edges.length - 1].cursor;
+    this.props.relay.setVariables({
+      firstRejection: first + _next,
+      afterRejection: cursor
+    });
+  }
+
   render() {
     let object = {};
     if (this.props.testCase) {
       let testCase = this.props.testCase;
       let fulfillmentNodes = [];
+      let rejectionNodes = [];
 
       if (testCase.originalFulfillments) {
         let hasNextPage = testCase.originalFulfillments.pageInfo.hasNextPage;
@@ -77,6 +97,25 @@ class TestCaseView extends Component {
          }
       }
 
+      if (testCase.originalRejections) {
+        let hasNextPage = testCase.originalRejections.pageInfo.hasNextPage;
+        rejectionNodes = testCase.originalRejections.edges.map(function (object, index) {
+          let image = object.node;
+           let imageComponent = {
+             component: (<FileImage file={image} onClick={this._pushRejection} />),
+           };
+           return imageComponent;
+        }.bind(this));
+
+        if (hasNextPage) {
+           let moreComponent = {
+             component: (<MoreButton onClick={this._onLoadMoreRejections} />),
+             nodes: []
+           };
+           rejectionNodes.push(moreComponent);
+         }
+      }
+
       object = {
         component: (<TestCaseLabel testCase={this.props.testCase} />),
         nodes: [
@@ -90,8 +129,17 @@ class TestCaseView extends Component {
       if (fulfillmentNodes.length > 0) {
         object.nodes[0].nodes.push(
           {
-            component: (<ArchyLabel text={'as fulfilled in:'} />),
+            component: (<ArchyLabel text={'fulfilled:'} />),
             nodes: fulfillmentNodes
+          }
+        )
+      }
+
+      if (rejectionNodes.length > 0) {
+        object.nodes[0].nodes.push(
+          {
+            component: (<ArchyLabel text={'rejected:'} />),
+            nodes: rejectionNodes
           }
         )
       }
@@ -109,7 +157,10 @@ export default Relay.createContainer(TestCaseView, {
   initialVariables: {
     firstFulfillment: _first,
     afterFulfillment: null,
-    moreFirstFulfillment: _first
+    moreFirstFulfillment: _first,
+    firstRejection: _first,
+    afterRejection: null,
+    moreFirstRejection: _first
   },
   fragments: {
     testCase: () => Relay.QL`
@@ -139,6 +190,32 @@ export default Relay.createContainer(TestCaseView, {
               id
               uri
               ${FulfillmentImage.getFragment('fulfillment')},
+            }
+          }
+        }
+        originalRejections: rejections(first: $firstRejection) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              uri
+              ${FileImage.getFragment('file')},
+            }
+          }
+        }
+        moreRejections: rejections(first: $moreFirstRejection, after: $afterRejection) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              uri
+              ${FileImage.getFragment('file')},
             }
           }
         }

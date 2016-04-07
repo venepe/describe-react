@@ -6,7 +6,7 @@ import _ from 'lodash';
 let didDeleteCollaborationStore = {};
 let didDeleteCollaboratorStore = {};
 let didDeleteCoverImageStore = {};
-let didDeleteFulfillmentStore = {};
+let didRejectFulfillmentStore = {};
 let didDeleteProjectStore = {};
 let didDeleteTestCaseStore = {};
 let didIntroduceCollaboratorStore = {};
@@ -42,10 +42,10 @@ export const registerDidDeleteCoverImage = ({coverImageId, targetId}, subscribe)
   const parentId = targetId;
   registerStore(didDeleteCoverImageStore, {id, parentId}, subscribe);
 }
-export const registerDidDeleteFulfillment = ({fulfillmentId, testCaseId}, subscribe) => {
+export const registerDidRejectFulfillment = ({fulfillmentId, testCaseId}, subscribe) => {
   const id = fulfillmentId;
   const parentId = testCaseId;
-  registerStore(didDeleteFulfillmentStore, {id, parentId}, subscribe);
+  registerStore(didRejectFulfillmentStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteProject = ({projectId, meId}, subscribe) => {
   const id = projectId;
@@ -109,15 +109,15 @@ export const cleanSubscriptions = (payload = {}) => {
   if (action == 'didDeleteTestCase') {
     let testCaseId = payload[action].deletedTestCaseId;
 
-    unsubscribe({store: didUpdateTestCaseStore, children: [{store: didDeleteFulfillmentStore}]}, testCaseId);
+    unsubscribe({store: didUpdateTestCaseStore, children: [{store: didRejectFulfillmentStore}]}, testCaseId);
     unsubscribe({store: didDeleteTestCaseStore}, testCaseId);
     unsubscribe({store: didIntroduceFulfillmentStore}, testCaseId);
 
-  } else if (action == 'didDeleteFulfillment') {
+  } else if (action == 'didRejectFulfillment') {
 
-    let fulfillmentId = payload[action].deletedFulfillmentId;
+    let fulfillmentId = payload[action].rejectedFulfillmentId;
 
-    unsubscribe({store: didDeleteFulfillmentStore}, fulfillmentId);
+    unsubscribe({store: didRejectFulfillmentStore}, fulfillmentId);
 
   } else if (action == 'didDeleteCoverImage') {
 
@@ -128,7 +128,7 @@ export const cleanSubscriptions = (payload = {}) => {
   } else if (action == 'didDeleteProject') {
     let projectId = payload[action].deletedProjectId;
 
-    unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didDeleteFulfillmentStore}]}]}, projectId);
+    unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didRejectFulfillmentStore}]}]}, projectId);
     unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteCoverImageStore}]}, projectId);
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
     unsubscribe({store: didIntroduceCoverImageStore}, projectId);
@@ -137,7 +137,7 @@ export const cleanSubscriptions = (payload = {}) => {
   } else if (action == 'didDeleteCollaboration') {
     let projectId = payload[action].deletedCollaborationId;
 
-    unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didDeleteFulfillmentStore}]}]}, projectId);
+    unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didRejectFulfillmentStore}]}]}, projectId);
     unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteCoverImageStore}]}, projectId);
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
     unsubscribe({store: didIntroduceCoverImageStore}, projectId);

@@ -27,13 +27,10 @@ class UserView extends Component {
     if (this.props.user) {
       let fullName = this.props.user.fullName || ' ';
       let summary = this.props.user.summary || 'No summary';
-      let coverImage = null;
-      if (this.props.user && this.props.user.coverImages && this.props.user.coverImages.edges.length > 0) {
-        coverImage = this.props.user.coverImages.edges[0].node;
-      }
+
       return (
         <div className="UserView-container">
-          <FileImage file={coverImage} height={400} width={null} onClick={this._pushCoverImage}/>
+          <FileImage file={this.props.user.cover} height={400} width={null} onClick={this._pushCoverImage}/>
           <div className="user-container">
             <div className="name">{this.props.user.name}</div>
             <div className="full-name">{fullName}</div>
@@ -60,12 +57,8 @@ export default Relay.createContainer(UserView, {
         email
         fullName
         summary
-        coverImages(last: 1) {
-          edges {
-            node {
-              ${FileImage.getFragment('file')},
-            }
-          }
+        cover {
+          ${FileImage.getFragment('file')},
         }
       }
     `,

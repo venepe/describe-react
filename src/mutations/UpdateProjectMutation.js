@@ -19,6 +19,12 @@ export default class UpdateProjectMutation extends Relay.Mutation {
         project {
           title,
         }
+        projectEventEdge {
+          node {
+            id
+            title
+          }
+        }
       }
     `;
   }
@@ -28,7 +34,18 @@ export default class UpdateProjectMutation extends Relay.Mutation {
       fieldIDs: {
         project: this.props.project.id,
       },
-    }];
+    },
+    {
+      type: 'RANGE_ADD',
+      parentName: 'project',
+      parentID: this.props.project.id,
+      connectionName: 'events',
+      edgeName: 'projectEventEdge',
+      rangeBehaviors: {
+        '': 'prepend',
+      }
+    },
+  ];
   }
   getVariables() {
     return {
@@ -42,6 +59,11 @@ export default class UpdateProjectMutation extends Relay.Mutation {
         id: this.props.project.id,
         title: this.props.title,
       },
+      projectEventEdge: {
+        node: {
+          title: this.props.title,
+        }
+      }
     };
   }
 }

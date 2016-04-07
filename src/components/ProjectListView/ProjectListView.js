@@ -2,7 +2,6 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import { Link } from 'react-router';
 import Infinite from 'react-infinite';
 import styles from './ProjectListView.css';
 import ProjectListCellView from '../ProjectListCellView';

@@ -6,11 +6,11 @@ import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
 import { FulfillmentSheetOptions } from '../../constants/SheetOptions';
 
-import ModalTypes, { DELETE_FULFILLMENT } from '../../constants/ModalTypes';
+import ModalTypes, { REJECT_FULFILLMENT } from '../../constants/ModalTypes';
 
-import { DeleteFulfillmentMutation } from '../../mutations';
-import { registerDidDeleteFulfillment } from '../../stores/SubscriptionStore';
-import { DidDeleteFulfillmentSubscription } from '../../subscriptions';
+import { RejectFulfillmentMutation } from '../../mutations';
+import { registerDidRejectFulfillment } from '../../stores/SubscriptionStore';
+import { DidRejectFulfillmentSubscription } from '../../subscriptions';
 
 class FulfillmentImage extends Component {
   static propTypes = {
@@ -49,10 +49,10 @@ class FulfillmentImage extends Component {
 
   _onItemTouchTap(value) {
     switch (value) {
-        case DELETE_FULFILLMENT:
+        case REJECT_FULFILLMENT:
             this.props.onDelete(this.props.fulfillment.id);
             Relay.Store.commitUpdate(
-              new DeleteFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project})
+              new RejectFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project})
             );
           break;
       default:
@@ -74,9 +74,9 @@ class FulfillmentImage extends Component {
       let fulfillmentId = fulfillment.id;
       let testCaseId = testCase.id;
 
-      registerDidDeleteFulfillment({fulfillmentId, testCaseId}, () => {
+      registerDidRejectFulfillment({fulfillmentId, testCaseId}, () => {
         return Relay.Store.subscribe(
-          new DidDeleteFulfillmentSubscription({fulfillment, testCase})
+          new DidRejectFulfillmentSubscription({fulfillment, testCase})
         );
       });
     }
@@ -101,20 +101,20 @@ export default Relay.createContainer(FulfillmentImage, {
       fragment on File {
         id
         uri
-        ${DeleteFulfillmentMutation.getFragment('fulfillment')},
-        ${DidDeleteFulfillmentSubscription.getFragment('fulfillment')},
+        ${RejectFulfillmentMutation.getFragment('fulfillment')},
+        ${DidRejectFulfillmentSubscription.getFragment('fulfillment')},
       }
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        ${DeleteFulfillmentMutation.getFragment('testCase')},
-        ${DidDeleteFulfillmentSubscription.getFragment('testCase')},
+        ${RejectFulfillmentMutation.getFragment('testCase')},
+        ${DidRejectFulfillmentSubscription.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
-        ${DeleteFulfillmentMutation.getFragment('project')},
+        ${RejectFulfillmentMutation.getFragment('project')},
       }
     `,
   },

@@ -1,0 +1,13 @@
+
+.FulfillmentImage-img {
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
+.modal {
+    display: none;
+}
+
+.FulfillmentImage-container:hover .modal {
+    display: block;
+}

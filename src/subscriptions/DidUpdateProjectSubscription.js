@@ -20,11 +20,26 @@ export default class DidUpdateProjectSubscription extends Relay.Subscription {
             numOfTestCases
             numOfTestCasesFulfilled
           }
+          projectEventEdge {
+            node {
+              id
+              title
+            }
+          }
         }
       }`;
   }
   getConfigs() {
-    return [];
+    return [{
+      type: 'RANGE_ADD',
+      parentName: 'project',
+      parentID: this.props.project.id,
+      connectionName: 'events',
+      edgeName: 'projectEventEdge',
+      rangeBehaviors: {
+        '': 'prepend',
+      }
+    }];
   }
   getVariables() {
     return {

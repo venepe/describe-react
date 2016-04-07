@@ -9,12 +9,11 @@ import ArchyLabel from '../ArchyLabel';
 import CollaborationText from '../CollaborationText';
 import CollaboratorText from '../CollaboratorText';
 import TouchableArchyLabel from '../TouchableArchyLabel';
-import CoverImage from '../CoverImage';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 
-import { registerDidIntroduceTestCase, registerDidUpdateProject, registerDidIntroduceCoverImage, registerDidIntroduceCollaborator } from '../../stores/SubscriptionStore';
-import { DidUpdateProjectSubscription, DidIntroduceTestCaseSubscription, DidIntroduceCoverImageSubscription, DidIntroduceCollaboratorSubscription } from '../../subscriptions';
+import { registerDidIntroduceTestCase, registerDidUpdateProject, registerDidIntroduceCollaborator } from '../../stores/SubscriptionStore';
+import { DidUpdateProjectSubscription, DidIntroduceTestCaseSubscription, DidIntroduceCollaboratorSubscription } from '../../subscriptions';
 
 const _first = 10;
 const _next = 10;
@@ -28,7 +27,6 @@ class CollaborationView extends Component {
     super(props);
     this.router = context.router;
     this._pushTestCase = this._pushTestCase.bind(this);
-    this._pushCoverImage = this._pushCoverImage.bind(this);
     this._pushCollaborator = this._pushCollaborator.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
@@ -37,11 +35,6 @@ class CollaborationView extends Component {
   _pushTestCase(testCaseId) {
     let collaborationId = this.props.collaboration.id;
     this.router.push(`/collaborations/${collaborationId}/testCases/${testCaseId}`);
-  }
-
-  _pushCoverImage(coverImageId) {
-    let collaborationId = this.props.collaboration.id;
-    this.router.push(`/collaborations/${collaborationId}/coverImages/${coverImageId}`);
   }
 
   _pushCollaborator(userId) {
@@ -83,11 +76,6 @@ class CollaborationView extends Component {
           return Relay.Store.subscribe(
             new DidIntroduceTestCaseSubscription({project})
           );
-      });
-      registerDidIntroduceCoverImage({targetId: projectId}, () => {
-        return Relay.Store.subscribe(
-          new DidIntroduceCoverImageSubscription({target: project})
-        );
       });
       registerDidIntroduceCollaborator({projectId}, () => {
         return Relay.Store.subscribe(
@@ -158,7 +146,7 @@ class CollaborationView extends Component {
       if (collaboratorNodes.length > 0) {
         object.nodes.push(
           {
-            component: (<ArchyLabel text={'in collaboration with:'} />),
+            component: (<ArchyLabel text={'collaborating with:'} />),
             nodes: collaboratorNodes
           }
         )
@@ -166,14 +154,8 @@ class CollaborationView extends Component {
 
     }
 
-    let coverImage = null;
-    if (this.props.collaboration && this.props.collaboration.coverImages && this.props.collaboration.coverImages.edges.length > 0) {
-      coverImage = this.props.collaboration.coverImages.edges[0].node;
-    }
-
     return (
       <div className="CollaborationView-container">
-        <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.collaboration} onClick={this._pushCoverImage}/>
         <div className="CollaborationArchy-container">
           <Archy archible={object}/>
         </div>
@@ -217,13 +199,6 @@ export default Relay.createContainer(CollaborationView, {
             }
           }
         }
-        coverImages(last: 1) {
-          edges {
-            node {
-              ${CoverImage.getFragment('coverImage')},
-            }
-          }
-        }
         collaborators(first: 10) {
           edges {
             cursor
@@ -240,13 +215,11 @@ export default Relay.createContainer(CollaborationView, {
             }
           }
         }
-        ${CoverImage.getFragment('target')},
         ${CollaborationText.getFragment('collaboration')},
         ${TestCaseView.getFragment('project')},
         ${CollaboratorText.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceTestCaseSubscription.getFragment('project')},
-        ${DidIntroduceCoverImageSubscription.getFragment('target')},
         ${DidIntroduceCollaboratorSubscription.getFragment('project')},
       }
     `,

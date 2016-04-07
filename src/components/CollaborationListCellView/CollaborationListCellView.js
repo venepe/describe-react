@@ -58,18 +58,9 @@ class CollaborationListCellView extends Component {
 
   render() {
     let collaboration = this.props.collaboration;
-    let uri = ''
-    if (collaboration.coverImages && collaboration.coverImages.edges.length > 0) {
-      uri = collaboration.coverImages.edges[0].node.uri;
-    }
     let subtitle = `${collaboration.numOfTestCasesFulfilled}/${collaboration.numOfTestCases}`;
     return (
       <Card key={this.props.key} className="clickable" onClick={this._onClick}>
-        <div>
-          <CardMedia className='CoverImage-container' expandable={true}>
-            <img className='CoverImage-img' height={400} src={uri} />
-          </CardMedia>
-        </div>
         <CardTitle title={collaboration.title} subtitle={subtitle} />
       </Card>
     );
@@ -84,13 +75,6 @@ export default Relay.createContainer(CollaborationListCellView, {
         title
         numOfTestCases
         numOfTestCasesFulfilled
-        coverImages(last: 1) {
-          edges {
-            node {
-              uri
-            }
-          }
-        }
         ${DidDeleteCollaborationSubscription.getFragment('collaboration')},
         ${DidUpdateProjectSubscription.getFragment('project')},
       }

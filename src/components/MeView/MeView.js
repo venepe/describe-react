@@ -29,13 +29,9 @@ class MeView extends Component {
     if (this.props.me) {
       let fullName = this.props.me.fullName || ' ';
       let summary = this.props.me.summary || 'No summary';
-      let coverImage = null;
-      if (this.props.me && this.props.me.coverImages && this.props.me.coverImages.edges.length > 0) {
-        coverImage = this.props.me.coverImages.edges[0].node;
-      }
       return (
         <div className="MeView-container">
-          <CoverImage coverImage={coverImage} height={400} width={null} target={this.props.me} onClick={this._pushCoverImage}/>
+          <CoverImage coverImage={this.props.me.cover} height={400} width={null} target={this.props.me} onClick={this._pushCoverImage}/>
           <div className="me-container">
             <div className="name">{this.props.me.name}</div>
             <div className="full-name">{fullName}</div>
@@ -62,12 +58,8 @@ export default Relay.createContainer(MeView, {
         email
         fullName
         summary
-        coverImages(last: 1) {
-          edges {
-            node {
-              ${CoverImage.getFragment('coverImage')},
-            }
-          }
+        cover {
+          ${CoverImage.getFragment('coverImage')},
         }
         ${CoverImage.getFragment('target')},
       }

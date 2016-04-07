@@ -2,7 +2,7 @@
 
 import Relay from 'react-relay';
 
-export default class DidDeleteFulfillmentSubscription extends Relay.Subscription {
+export default class DidRejectFulfillmentSubscription extends Relay.Subscription {
   static fragments = {
     fulfillment: () => Relay.QL`
       fragment on File {
@@ -18,8 +18,15 @@ export default class DidDeleteFulfillmentSubscription extends Relay.Subscription
   getSubscription() {
     return Relay.QL`
       subscription {
-        didDeleteFulfillment (input: $didDeleteFulfillment) {
-          deletedFulfillmentId
+        didRejectFulfillment (input: $didRejectFulfillment) {
+          rejectedFulfillmentId
+          rejectionEdge {
+            cursor
+            node {
+              id
+              uri
+            }
+          }
           testCase {
             id
             isFulfilled
@@ -37,7 +44,17 @@ export default class DidDeleteFulfillmentSubscription extends Relay.Subscription
       parentName: 'testCase',
       parentID: this.props.testCase.id,
       connectionName: 'fulfillments',
-      deletedIDFieldName: 'deletedFulfillmentId',
+      deletedIDFieldName: 'rejectedFulfillmentId',
+    },
+    {
+      type: 'RANGE_ADD',
+      parentName: 'testCase',
+      parentID: this.props.testCase.id,
+      connectionName: 'rejections',
+      edgeName: 'rejectionEdge',
+      rangeBehaviors: {
+        '': 'append',
+      },
     }];
   }
   getVariables() {

@@ -213,53 +213,12 @@
               "deprecationReason": null
             },
             {
-              "name": "coverImages",
-              "description": "The cover images of the user.",
-              "args": [
-                {
-                  "name": "before",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "first",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
+              "name": "cover",
+              "description": "The cover image of the user.",
+              "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "CoverImageConnection",
+                "name": "File",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -518,59 +477,6 @@
               "deprecationReason": null
             },
             {
-              "name": "coverImages",
-              "description": "The cover images of the project.",
-              "args": [
-                {
-                  "name": "before",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "first",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "CoverImageConnection",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "collaborators",
               "description": "The collaborators of the project.",
               "args": [
@@ -671,6 +577,116 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "LeaderConnection",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "events",
+              "description": "The changes made on the project.",
+              "args": [
+                {
+                  "name": "before",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ProjectEventConnection",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "ofType": null
+            }
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "ProjectEvent",
+          "description": "Project event object",
+          "fields": [
+            {
+              "name": "id",
+              "description": "The ID of an object",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "title",
+              "description": "The title of the project.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "The timestamp when the project was created.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -805,6 +821,59 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "FulfillmentConnection",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "rejections",
+              "description": "The files not fulfilling the test case.",
+              "args": [
+                {
+                  "name": "before",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "RejectionConnection",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1132,6 +1201,49 @@
         },
         {
           "kind": "OBJECT",
+          "name": "RejectionConnection",
+          "description": "A connection to a list of fulfillments.",
+          "fields": [
+            {
+              "name": "pageInfo",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PageInfo",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "edges",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "FileEdge",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "CoverImageConnection",
           "description": "A connection to a list of cover images.",
           "fields": [
@@ -1204,6 +1316,49 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "ProjectEdge",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "ProjectEventConnection",
+          "description": "A connection to a list of project events.",
+          "fields": [
+            {
+              "name": "pageInfo",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PageInfo",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "edges",
+              "description": "Information to aid in pagination.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "ProjectEventEdge",
                   "ofType": null
                 }
               },
@@ -1497,6 +1652,45 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "Project",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "cursor",
+              "description": "A cursor for use in pagination",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "ProjectEventEdge",
+          "description": "An edge in a connection.",
+          "fields": [
+            {
+              "name": "node",
+              "description": "The item at the end of the edge",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ProjectEvent",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1983,7 +2177,7 @@
               "deprecationReason": null
             },
             {
-              "name": "deleteFulfillment",
+              "name": "rejectFulfillment",
               "description": null,
               "args": [
                 {
@@ -1994,7 +2188,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "DeleteFulfillmentInput",
+                      "name": "RejectFulfillmentInput",
                       "ofType": null
                     }
                   },
@@ -2003,7 +2197,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "DeleteFulfillmentPayload",
+                "name": "RejectFulfillmentPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2183,7 +2377,7 @@
             "deprecationReason": null
           },
           {
-            "name": "didDeleteFulfillment",
+            "name": "didRejectFulfillment",
             "description": null,
             "args": [
               {
@@ -2194,7 +2388,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DidDeleteFulfillmentInput",
+                    "name": "DidRejectFulfillmentInput",
                     "ofType": null
                   }
                 },
@@ -2203,7 +2397,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "DidDeleteFulfillmentPayload",
+              "name": "DidRejectFulfillmentPayload",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3083,7 +3277,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "DeleteFulfillmentInput",
+          "name": "RejectFulfillmentInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -3582,7 +3776,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "DidDeleteFulfillmentInput",
+          "name": "DidRejectFulfillmentInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -4282,6 +4476,18 @@
               "deprecationReason": null
             },
             {
+              "name": "projectEventEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ProjectEventEdge",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "clientMutationId",
               "description": null,
               "args": [],
@@ -4497,16 +4703,28 @@
         },
         {
           "kind": "OBJECT",
-          "name": "DeleteFulfillmentPayload",
+          "name": "RejectFulfillmentPayload",
           "description": null,
           "fields": [
             {
-              "name": "deletedFulfillmentId",
+              "name": "rejectedFulfillmentId",
               "description": null,
               "args": [],
               "type": {
                 "kind": "SCALAR",
                 "name": "ID",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "rejectionEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "FileEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4945,6 +5163,18 @@
               "deprecationReason": null
             },
             {
+              "name": "projectEventEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "ProjectEventEdge",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "clientSubscriptionId",
               "description": null,
               "args": [],
@@ -5082,16 +5312,28 @@
         },
         {
           "kind": "OBJECT",
-          "name": "DidDeleteFulfillmentPayload",
+          "name": "DidRejectFulfillmentPayload",
           "description": null,
           "fields": [
             {
-              "name": "deletedFulfillmentId",
+              "name": "rejectedFulfillmentId",
               "description": null,
               "args": [],
               "type": {
                 "kind": "SCALAR",
                 "name": "ID",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "rejectionEdge",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "FileEdge",
                 "ofType": null
               },
               "isDeprecated": false,

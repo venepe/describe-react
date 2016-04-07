@@ -8,7 +8,7 @@ import {
   DELETE_TEST_CASE,
   DELETE_PROJECT,
   DELETE_EXAMPLE,
-  DELETE_FULFILLMENT,
+  REJECT_FULFILLMENT,
   DELETE_COVER_IMAGE,
   CHANGE_COVER_IMAGE,
   DELETE_COLLABORATOR,
@@ -78,8 +78,8 @@ export const TestCaseSheetOptions = {
 export const FulfillmentSheetOptions = {
   options: [
     {
-      text: 'Delete Fulfillment',
-      value: DELETE_FULFILLMENT
+      text: 'Reject Fulfillment',
+      value: REJECT_FULFILLMENT
     }
   ],
 };

@@ -7,6 +7,7 @@ import ModalableArchyLabel from '../ModalableArchyLabel';
 import { TestCaseSheetOptions } from '../../constants/SheetOptions';
 import FulfillmentFormDialog from '../FulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
+import { diffWords } from 'diff';
 
 import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
@@ -117,10 +118,24 @@ class TestCaseText extends Component {
   }
 
   render() {
+    let currentIt = this.props.testCase.it;
+    let previousIt = this.props.testCase.it;
+    if (this.props.testCase.events && this.props.testCase.events.edges && this.props.testCase.events.edges.length > 1) {
+      let testCaseEvent = this.props.testCase.events.edges[1].node;
+      previousIt = testCaseEvent.it;
+    }
+    let diff = diffWords(previousIt, currentIt);
+    let it = diff.map(part => {
+      let added = part.added;
+      let removed = part.removed;
+      let backgroundColor = added ? '#69F0AE' : removed ? '#FF5252' : '#FFFFFF';
+      let value = part.value;
+      return (<span style={{backgroundColor}}>{value}</span>);
+    });
 
     return (
       <div className="TestCaseText-container">
-        <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={it} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
       </div>
@@ -134,6 +149,15 @@ export default Relay.createContainer(TestCaseText, {
       fragment on TestCase {
         id
         it
+        events(first: 2) {
+          edges {
+            node {
+              id
+              it
+              createdAt
+            }
+          }
+        }
         ${DeleteTestCaseMutation.getFragment('testCase')},
         ${TestCaseUpdateFormDialog.getFragment('testCase')},
         ${FulfillmentFormDialog.getFragment('testCase')},
