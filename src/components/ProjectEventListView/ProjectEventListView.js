@@ -2,13 +2,14 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import { Link } from 'react-router';
 import Infinite from 'react-infinite';
-import styles from './CollaborationListView.css';
-import CollaborationListCellView from '../CollaborationListCellView';
+import styles from './ProjectEventListView.css';
+import DiffLabel from '../DiffLabel';
 import SpinnerView from '../SpinnerView';
+import { Card } from 'material-ui';
+import moment from 'moment';
 
-class CollaborationListView extends Component {
+class ProjectEventListView extends Component {
   static propTypes = {
     onPressRow: PropTypes.func,
     onEndReached: PropTypes.func
@@ -23,7 +24,6 @@ class CollaborationListView extends Component {
     super(props);
     this._getInitialState = this._getInitialState.bind(this);
     this.buildElements = this.buildElements.bind(this);
-    this._onClick = this._onClick.bind(this);
     this._onEndReached = this._onEndReached.bind(this);
 
     //
@@ -33,45 +33,43 @@ class CollaborationListView extends Component {
   _getInitialState() {
     return {
       hasNextPage: false,
-      elements: this.buildElements(this.props.collaborations)
+      elements: this.buildElements(this.props.project.events)
     };
   }
 
-  _getUpdatedState(collaborations) {
+  _getUpdatedState(events) {
     return {
       hasNextPage: false,
-      elements: this.buildElements(collaborations)
+      elements: this.buildElements(events)
     };
   }
 
-  _onClick(collaboration) {
-    this.props.onPressRow(collaboration);
-  }
-
-  buildElements(collaborations) {
-    return collaborations.edges.map(function (object, index) {
-      let collaboration = object.node;
-      let collaborationComponent = this.buildElement(collaboration, index);
-      return collaborationComponent;
-    }.bind(this));
-  }
-
-  buildElement(collaboration, index) {
-    return (
-      <CollaborationListCellView collaboration={collaboration} me={this.props.me} key={index} onClick={this._onClick}></CollaborationListCellView>
-    );
+  buildElements(events) {
+    return events.edges.map((object, index) => {
+      let current = object.node.title;
+      let previous = (index === 0) ? current : events.edges[index - 1].node.title;
+      return (
+        <Card key={index} className="event-row">
+          <DiffLabel previous={previous} current={current}></DiffLabel>
+          <div className="sub-container">
+            <div className="author">{object.node.author.name}</div>
+            <div className="date-created">{moment(object.node.createdAt).format('MMM DD, YYYY hh:mm A')}</div>
+          </div>
+        </Card>
+      );
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.collaborations) {
-      this.setState(this._getUpdatedState(nextProps.collaborations));
+    if (nextProps.events) {
+      this.setState(this._getUpdatedState(nextProps.events));
     }
   }
 
   _onEndReached() {
-    let hasNextPage = this.props.collaborations.pageInfo.hasNextPage;
+    let hasNextPage = this.props.project.events.pageInfo.hasNextPage;
     this.setState({hasNextPage});
-    let edges = this.props.collaborations.edges;
+    let edges = this.props.project.events.edges;
     if (edges.length > 0) {
       this.props.onEndReached(edges[edges.length - 1].cursor);
     }
@@ -85,7 +83,7 @@ class CollaborationListView extends Component {
 
   render() {
     return (
-      <Infinite elementHeight={84}
+      <Infinite elementHeight={97}
                        containerHeight={window.screen.height}
                        infiniteLoadBeginBottomOffset={200}
                        onInfiniteLoad={this._onEndReached}
@@ -99,24 +97,31 @@ class CollaborationListView extends Component {
   }
 }
 
-export default Relay.createContainer(CollaborationListView, {
+export default Relay.createContainer(ProjectEventListView, {
   fragments: {
-    collaborations: () => Relay.QL`
-      fragment on ProjectConnection {
-        pageInfo {
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            ${CollaborationListCellView.getFragment('collaboration')},
+    project: () => Relay.QL`
+      fragment on Project {
+        events (first: 10) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              title
+              createdAt
+              author {
+                name
+              }
+            }
           }
         }
       }
     `,
     me: () => Relay.QL`
       fragment on User {
-        ${CollaborationListCellView.getFragment('me')},
+        id
       }
     `,
   },

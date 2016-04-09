@@ -84,7 +84,7 @@ class ProjectListView extends Component {
 
   render() {
     return (
-      <Infinite elementHeight={468}
+      <Infinite elementHeight={84}
                        containerHeight={window.screen.height}
                        infiniteLoadBeginBottomOffset={200}
                        onInfiniteLoad={this._onEndReached}

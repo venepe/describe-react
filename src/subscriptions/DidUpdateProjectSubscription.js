@@ -37,7 +37,7 @@ export default class DidUpdateProjectSubscription extends Relay.Subscription {
       connectionName: 'events',
       edgeName: 'projectEventEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       }
     }];
   }

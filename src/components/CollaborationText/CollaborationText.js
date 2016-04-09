@@ -26,6 +26,7 @@ class CollaborationText extends Component {
 
   constructor(props) {
     super(props);
+    this._onClick = this._onClick.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissProjectUpdateForm = this._dismissProjectUpdateForm.bind(this);
     this._dismissTestCaseForm = this._dismissTestCaseForm.bind(this);
@@ -39,6 +40,10 @@ class CollaborationText extends Component {
     this.setState({
       ...nextProps
     });
+  }
+
+  _onClick() {
+    this.props.onClick(this.props.collaboration.id);
   }
 
   _onItemTouchTap(value) {
@@ -90,7 +95,7 @@ class CollaborationText extends Component {
 
     return (
       <div className="CollaborationText-container">
-        <ModalableArchyLabel text={this.props.collaboration.title} sheetOptions={CollaborativeProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} />
+        <ModalableArchyLabel text={this.props.collaboration.title} sheetOptions={CollaborativeProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
           <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.collaboration} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
           <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.collaboration} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
           <CollaboratorFormDialog isVisible={this.state.showCollaboratorForm} project={this.props.collaboration} onCancel={this._dismissCollaboratorForm} onCreate={this._dismissCollaboratorForm} />

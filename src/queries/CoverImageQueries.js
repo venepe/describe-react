@@ -8,9 +8,9 @@ export const CoverImageQueries = {
       node(id: $coverImageId)
     }
   `,
-  target: () => Relay.QL`
+  user: () => Relay.QL`
     query {
-      node(id: $targetId)
+      node(id: $userId)
     }
   `
 }

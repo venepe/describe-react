@@ -28,6 +28,7 @@
     "keycode": "^2.1.0",
     "lodash": "^3.10.1",
     "material-ui": "^0.14.4",
+    "moment": "^2.12.0",
     "node-uuid": "^1.4.3",
     "react": "^0.14.0",
     "react-addons-create-fragment": "^0.14.0",

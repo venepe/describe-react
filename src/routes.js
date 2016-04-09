@@ -18,6 +18,8 @@ import FulfillmentImageView from './components/FulfillmentImageView';
 import MeView from './components/MeView';
 import UserView from './components/UserView';
 import ResetForm from './components/ResetForm';
+import ProjectEventListView from './components/ProjectEventListView';
+import TestCaseEventListView from './components/TestCaseEventListView';
 
 import {
   CollaborationQueries,
@@ -93,9 +95,25 @@ export default (
         onEnter={requireAuth}
       />
     <Route
+        path="projects/:projectId/events" component={ProjectEventListView}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
         path="collaborations/:collaborationId" component={CollaborationView}
         queries={CollaborationQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), collaborationId: params.collaborationId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="collaborations/:projectId/events" component={ProjectEventListView}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}
@@ -115,7 +133,21 @@ export default (
         onEnter={requireAuth}
       />
     <Route
+        path="projects/:projectId/testCases/:testCaseId/events" component={TestCaseEventListView}
+        queries={TestCaseQueries}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
         path="collaborations/:projectId/testCases/:testCaseId" component={TestCasePage}
+        queries={TestCaseQueries}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="collaborations/:projectId/testCases/:testCaseId/events" component={TestCasePage}
         queries={TestCaseQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
@@ -129,7 +161,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="*/:targetId/coverImages/:coverImageId" component={CoverImageView}
+        path="*/:userId/coverImages/:coverImageId" component={CoverImageView}
         queries={CoverImageQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}

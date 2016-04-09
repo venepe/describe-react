@@ -5,13 +5,11 @@ import _ from 'lodash';
 
 let didDeleteCollaborationStore = {};
 let didDeleteCollaboratorStore = {};
-let didDeleteCoverImageStore = {};
 let didRejectFulfillmentStore = {};
 let didDeleteProjectStore = {};
 let didDeleteTestCaseStore = {};
 let didIntroduceCollaboratorStore = {};
 let didIntroduceCollaborationStore = {};
-let didIntroduceCoverImageStore = {};
 let didIntroduceFulfillmentStore = {};
 let didIntroduceProjectStore = {};
 let didIntroduceTestCaseStore = {};
@@ -36,11 +34,6 @@ export const registerDidDeleteCollaborator = ({collaboratorId, projectId}, subsc
   const id = collaboratorId;
   const parentId = projectId;
   registerStore(didDeleteCollaboratorStore, {id, parentId}, subscribe);
-}
-export const registerDidDeleteCoverImage = ({coverImageId, targetId}, subscribe) => {
-  const id = coverImageId;
-  const parentId = targetId;
-  registerStore(didDeleteCoverImageStore, {id, parentId}, subscribe);
 }
 export const registerDidRejectFulfillment = ({fulfillmentId, testCaseId}, subscribe) => {
   const id = fulfillmentId;
@@ -68,11 +61,6 @@ export const registerDidIntroduceCollaboration = ({meId}, subscribe) => {
   const id = meId;
   const parentId = id;
   registerStore(didIntroduceCollaborationStore, {id, parentId}, subscribe);
-}
-export const registerDidIntroduceCoverImage = ({targetId}, subscribe) => {
-  const id = targetId;
-  const parentId = id;
-  registerStore(didIntroduceCoverImageStore, {id, parentId}, subscribe);
 }
 
 export const registerDidIntroduceFulfillment = ({testCaseId}, subscribe) => {
@@ -119,28 +107,20 @@ export const cleanSubscriptions = (payload = {}) => {
 
     unsubscribe({store: didRejectFulfillmentStore}, fulfillmentId);
 
-  } else if (action == 'didDeleteCoverImage') {
-
-    let coverImageId = payload[action].deletedCoverImageId;
-
-    unsubscribe({store: didDeleteCoverImageStore}, coverImageId);
-
   } else if (action == 'didDeleteProject') {
     let projectId = payload[action].deletedProjectId;
 
     unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didRejectFulfillmentStore}]}]}, projectId);
-    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteCoverImageStore}]}, projectId);
+    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}]}, projectId);
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
-    unsubscribe({store: didIntroduceCoverImageStore}, projectId);
     unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
 
   } else if (action == 'didDeleteCollaboration') {
     let projectId = payload[action].deletedCollaborationId;
 
     unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didRejectFulfillmentStore}]}]}, projectId);
-    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteCoverImageStore}]}, projectId);
+    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}]}, projectId);
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
-    unsubscribe({store: didIntroduceCoverImageStore}, projectId);
     unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
 
   } else if (action == 'didDeleteCollaborator') {

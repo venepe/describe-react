@@ -33,16 +33,16 @@ class CoverImageFormDialog extends Component {
 
   render() {
     return (
-      <CoverImageForm target={this.props.target} isOpen={this.state.isVisible} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
+      <CoverImageForm user={this.props.user} isOpen={this.state.isVisible} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
     );
   }
 }
 
 export default Relay.createContainer(CoverImageFormDialog, {
   fragments: {
-    target: () => Relay.QL`
-      fragment on Node {
-        ${CoverImageForm.getFragment('target')}
+    user: () => Relay.QL`
+      fragment on User {
+        ${CoverImageForm.getFragment('user')}
       }
     `,
   },

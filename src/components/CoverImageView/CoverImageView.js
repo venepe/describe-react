@@ -29,7 +29,7 @@ class CoverImageView extends Component {
 
   render() {
     return (
-      <CoverImage coverImage={this.props.coverImage} target={this.props.target} height={500} width={null} onDelete={this._goBack} onCreate={this._goBack} />
+      <CoverImage coverImage={this.props.coverImage} user={this.props.user} height={500} width={null} onDelete={this._goBack} onCreate={this._goBack} />
     );
   }
 }
@@ -41,9 +41,9 @@ export default Relay.createContainer(CoverImageView, {
         ${CoverImage.getFragment('coverImage')},
       }
     `,
-    target: () => Relay.QL`
-      fragment on Node {
-        ${CoverImage.getFragment('target')},
+    user: () => Relay.QL`
+      fragment on User {
+        ${CoverImage.getFragment('user')},
       }
     `,
   },

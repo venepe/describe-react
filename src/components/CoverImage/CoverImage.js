@@ -9,9 +9,7 @@ import { CoverImageSheetOptions } from '../../constants/SheetOptions';
 
 import ModalTypes, { CHANGE_COVER_IMAGE, DELETE_COVER_IMAGE } from '../../constants/ModalTypes';
 
-import { DeleteCoverImageMutation } from '../../mutations';
-import { registerDidDeleteCoverImage } from '../../stores/SubscriptionStore';
-import { DidDeleteCoverImageSubscription } from '../../subscriptions';
+import { DeleteUserCoverMutation } from '../../mutations';
 
 class CoverImage extends Component {
   static propTypes = {
@@ -62,7 +60,7 @@ class CoverImage extends Component {
         case DELETE_COVER_IMAGE:
             this.props.onDelete(this.props.coverImage.id);
             Relay.Store.commitUpdate(
-              new DeleteCoverImageMutation({coverImage: this.props.coverImage, target: this.props.target})
+              new DeleteUserCoverMutation({coverImage: this.props.coverImage, user: this.props.user})
             );
           break;
       default:
@@ -75,29 +73,6 @@ class CoverImage extends Component {
     });
   }
 
-  componentDidMount() {
-    this.subscribe();
-  }
-
-  componentDidUpdate() {
-    this.subscribe();
-  }
-
-  subscribe() {
-    if (this.props.coverImage && this.props.target) {
-      let coverImage = this.props.coverImage || {};
-      let target = this.props.target || {};
-      let coverImageId = coverImage.id || '';
-      let targetId = target.id || '';
-
-      registerDidDeleteCoverImage({coverImageId, targetId}, () => {
-        return Relay.Store.subscribe(
-          new DidDeleteCoverImageSubscription({coverImage, target})
-        );
-      });
-    }
-  }
-
   render() {
     let uri = '';
     if (this.props.coverImage) {
@@ -106,7 +81,7 @@ class CoverImage extends Component {
     return (
       <div className="CoverImage-container">
         <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={CoverImageSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
-        <CoverImageFormDialog isVisible={this.state.showCoverImageForm} target={this.props.target} onCancel={this._dismissCoverImageForm} onCreate={this.props.onCreate} />
+        <CoverImageFormDialog isVisible={this.state.showCoverImageForm} user={this.props.user} onCancel={this._dismissCoverImageForm} onCreate={this.props.onCreate} />
       </div>
     );
   }
@@ -118,16 +93,14 @@ export default Relay.createContainer(CoverImage, {
       fragment on File {
         id
         uri
-        ${DeleteCoverImageMutation.getFragment('coverImage')},
-        ${DidDeleteCoverImageSubscription.getFragment('coverImage')},
+        ${DeleteUserCoverMutation.getFragment('coverImage')},
       }
     `,
-    target: () => Relay.QL`
-      fragment on Node {
+    user: () => Relay.QL`
+      fragment on User {
         id
-        ${CoverImageFormDialog.getFragment('target')},
-        ${DeleteCoverImageMutation.getFragment('target')},
-        ${DidDeleteCoverImageSubscription.getFragment('target')},
+        ${CoverImageFormDialog.getFragment('user')},
+        ${DeleteUserCoverMutation.getFragment('user')},
       }
     `,
   },

@@ -681,6 +681,18 @@
               "deprecationReason": null
             },
             {
+              "name": "author",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "createdAt",
               "description": "The timestamp when the project was created.",
               "args": [],
@@ -972,6 +984,18 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "author",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1988,7 +2012,7 @@
               "deprecationReason": null
             },
             {
-              "name": "introduceCoverImage",
+              "name": "introduceUserCover",
               "description": null,
               "args": [
                 {
@@ -1999,7 +2023,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "IntroduceCoverImageInput",
+                      "name": "IntroduceUserCoverInput",
                       "ofType": null
                     }
                   },
@@ -2008,7 +2032,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "IntroduceCoverImagePayload",
+                "name": "IntroduceUserCoverPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2258,7 +2282,7 @@
               "deprecationReason": null
             },
             {
-              "name": "deleteCoverImage",
+              "name": "deleteUserCover",
               "description": null,
               "args": [
                 {
@@ -2269,7 +2293,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "DeleteCoverImageInput",
+                      "name": "DeleteUserCoverInput",
                       "ofType": null
                     }
                   },
@@ -2278,7 +2302,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "DeleteCoverImagePayload",
+                "name": "DeleteUserCoverPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2452,60 +2476,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "DidUpdateTestCasePayload",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "didIntroduceCoverImage",
-            "description": null,
-            "args": [
-              {
-                "name": "input",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "DidIntroduceCoverImageInput",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "DidIntroduceCoverImagePayload",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "didDeleteCoverImage",
-            "description": null,
-            "args": [
-              {
-                "name": "input",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "DidDeleteCoverImageInput",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "DidDeleteCoverImagePayload",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2893,12 +2863,12 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "IntroduceCoverImageInput",
+          "name": "IntroduceUserCoverInput",
           "description": null,
           "fields": null,
           "inputFields": [
             {
-              "name": "targetId",
+              "name": "userId",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -3422,7 +3392,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "DeleteCoverImageInput",
+          "name": "DeleteUserCoverInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -3441,7 +3411,7 @@
               "defaultValue": null
             },
             {
-              "name": "targetId",
+              "name": "userId",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -3835,98 +3805,6 @@
           "inputFields": [
             {
               "name": "id",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "clientSubscriptionId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "DidIntroduceCoverImageInput",
-          "description": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "targetId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "clientSubscriptionId",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "DidDeleteCoverImageInput",
-          "description": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "id",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "targetId",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -4370,28 +4248,16 @@
         },
         {
           "kind": "OBJECT",
-          "name": "IntroduceCoverImagePayload",
+          "name": "IntroduceUserCoverPayload",
           "description": null,
           "fields": [
             {
-              "name": "coverImageEdge",
+              "name": "user",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "FileEdge",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "target",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Node",
+                "name": "User",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4880,28 +4746,16 @@
         },
         {
           "kind": "OBJECT",
-          "name": "DeleteCoverImagePayload",
+          "name": "DeleteUserCoverPayload",
           "description": null,
           "fields": [
             {
-              "name": "deletedCoverImageId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "coverImageEdge",
+              "name": "user",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "FileEdge",
+                "name": "User",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -5460,120 +5314,6 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TestCaseEventEdge",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "clientSubscriptionId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "DidIntroduceCoverImagePayload",
-          "description": null,
-          "fields": [
-            {
-              "name": "coverImageEdge",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "FileEdge",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "target",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Node",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "clientSubscriptionId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "DidDeleteCoverImagePayload",
-          "description": null,
-          "fields": [
-            {
-              "name": "deletedCoverImageId",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "coverImageEdge",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "FileEdge",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "target",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Node",
                 "ofType": null
               },
               "isDeprecated": false,

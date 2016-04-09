@@ -42,7 +42,7 @@ export default class UpdateProjectMutation extends Relay.Mutation {
       connectionName: 'events',
       edgeName: 'projectEventEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       }
     },
   ];

@@ -42,7 +42,7 @@ export default class UpdateTestCaseMutation extends Relay.Mutation {
       connectionName: 'events',
       edgeName: 'testCaseEventEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       }
     },
   ];

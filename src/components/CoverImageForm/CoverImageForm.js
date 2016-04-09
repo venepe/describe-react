@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import styles from './CoverImageForm.css';
 import { track, Events } from '../../utils/SMTIAnalytics';
 
-import { IntroduceCoverImageMutation } from '../../mutations';
+import { IntroduceUserCoverMutation } from '../../mutations';
 
 class CoverImageForm extends Component {
   static propTypes = {
@@ -30,7 +30,7 @@ class CoverImageForm extends Component {
     if (e.target.files.length > 0) {
       let uri = e.target.files[0];
       Relay.Store.commitUpdate(
-        new IntroduceCoverImageMutation({uri, target: this.props.target})
+        new IntroduceUserCoverMutation({uri, user: this.props.user})
       );
       //Start SMTIAnalytics
       track(Events.ADDED_COVER_IMAGE);
@@ -64,9 +64,9 @@ class CoverImageForm extends Component {
 
 export default Relay.createContainer(CoverImageForm, {
   fragments: {
-    target: () => Relay.QL`
-      fragment on Node {
-        ${IntroduceCoverImageMutation.getFragment('target')}
+    user: () => Relay.QL`
+      fragment on User {
+        ${IntroduceUserCoverMutation.getFragment('user')}
       }
     `,
   },

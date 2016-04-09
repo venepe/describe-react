@@ -36,7 +36,7 @@ export default class DidUpdateTestCaseSubscription extends Relay.Subscription {
       connectionName: 'events',
       edgeName: 'testCaseEventEdge',
       rangeBehaviors: {
-        '': 'prepend',
+        '': 'append',
       }
     }];
   }

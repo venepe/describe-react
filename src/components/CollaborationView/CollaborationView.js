@@ -26,10 +26,16 @@ class CollaborationView extends Component {
   constructor(props, context) {
     super(props);
     this.router = context.router;
+    this._pushProjectEvents = this._pushProjectEvents.bind(this);
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCollaborator = this._pushCollaborator.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
+  }
+
+  _pushProjectEvents() {
+    let projectId = this.props.collaboration.id;
+    this.router.push(`/collaborations/${projectId}/events`);
   }
 
   _pushTestCase(testCaseId) {
@@ -128,7 +134,7 @@ class CollaborationView extends Component {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
           {
-            component: (<CollaborationText collaboration={this.props.collaboration} me={this.props.me} onDelete={this._onDelete}/>),
+            component: (<CollaborationText collaboration={this.props.collaboration} me={this.props.me} onClick={this._pushProjectEvents} onDelete={this._onDelete}/>),
             nodes: testCaseNodes
           }
         ]

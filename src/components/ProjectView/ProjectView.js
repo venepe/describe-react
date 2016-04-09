@@ -25,10 +25,16 @@ class ProjectView extends Component {
   constructor(props, context) {
     super(props);
     this.router = context.router;
+    this._pushProjectEvents = this._pushProjectEvents.bind(this);
     this._pushTestCase = this._pushTestCase.bind(this);
     this._pushCollaborator = this._pushCollaborator.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
+  }
+
+  _pushProjectEvents() {
+    let projectId = this.props.project.id;
+    this.router.push(`/projects/${projectId}/events`);
   }
 
   _pushTestCase(testCaseId) {
@@ -119,7 +125,7 @@ class ProjectView extends Component {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
           {
-            component: (<ProjectText project={this.props.project} me={this.props.me} onDelete={this._onDelete}/>),
+            component: (<ProjectText project={this.props.project} me={this.props.me} onClick={this._pushProjectEvents} onDelete={this._onDelete}/>),
             nodes: testCaseNodes
           }
         ]
