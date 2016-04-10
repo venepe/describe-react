@@ -3,10 +3,10 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import { Dialog } from 'material-ui';
-import styles from './TestCaseFormDialog.css';
-import TestCaseForm from '../TestCaseForm';
+import styles from './RejectionFormDialog.css';
+import RejectionForm from '../RejectionForm';
 
-class TestCaseFormDialog extends Component {
+class RejectionFormDialog extends Component {
   static propTypes = {
     isVisible: PropTypes.bool,
     onCancel: PropTypes.func,
@@ -37,20 +37,30 @@ class TestCaseFormDialog extends Component {
 
     return (
       <Dialog ref="dialog"
-        title="Add Test Case"
+        title="Reject Fulfillment"
         open={this.state.isVisible}
         modal={false}>
-        <TestCaseForm project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
+        <RejectionForm fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
       </Dialog>
     );
   }
 }
 
-export default Relay.createContainer(TestCaseFormDialog, {
+export default Relay.createContainer(RejectionFormDialog, {
   fragments: {
+    fulfillment: () => Relay.QL`
+      fragment on File {
+        ${RejectionForm.getFragment('fulfillment')}
+      }
+    `,
+    testCase: () => Relay.QL`
+      fragment on TestCase {
+        ${RejectionForm.getFragment('testCase')}
+      }
+    `,
     project: () => Relay.QL`
       fragment on Project {
-        ${TestCaseForm.getFragment('project')}
+        ${RejectionForm.getFragment('project')}
       }
     `,
   },

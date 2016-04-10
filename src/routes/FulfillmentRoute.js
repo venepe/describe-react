@@ -18,6 +18,13 @@ export default class FulfillmentRoute extends Relay.Route {
         },
       }
     `,
+    project: (Component) => Relay.QL`
+      query {
+        node(id: $projectId) {
+          ${Component.getFragment('project')},
+        },
+      }
+    `,
   };
 
   static paramDefinitions = {

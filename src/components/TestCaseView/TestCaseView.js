@@ -100,9 +100,15 @@ class TestCaseView extends Component {
       if (testCase.originalRejections) {
         let hasNextPage = testCase.originalRejections.pageInfo.hasNextPage;
         rejectionNodes = testCase.originalRejections.edges.map(function (object, index) {
-          let image = object.node;
+          let image = object.node.file;
            let imageComponent = {
              component: (<FileImage file={image} onClick={this._pushRejection} />),
+             nodes: [
+               {
+                 component: (<ArchyLabel text={'because:'} />),
+                 nodes: [{component: (<ArchyLabel text={object.node.reason} />)}]
+               }
+             ]
            };
            return imageComponent;
         }.bind(this));
@@ -201,8 +207,10 @@ export default Relay.createContainer(TestCaseView, {
             cursor
             node {
               id
-              uri
-              ${FileImage.getFragment('file')},
+              reason
+              file {
+                ${FileImage.getFragment('file')},
+              }
             }
           }
         }
@@ -214,8 +222,10 @@ export default Relay.createContainer(TestCaseView, {
             cursor
             node {
               id
-              uri
-              ${FileImage.getFragment('file')},
+              reason
+              file {
+                ${FileImage.getFragment('file')},
+              }
             }
           }
         }

@@ -20,6 +20,11 @@ export const isValidTestCase = (testCase) => {
   return isValid;
 }
 
+export const isValidRejection = (rejection) => {
+  let isValid = rejection.match(/^.{1,150}$/);
+  return isValid;
+}
+
 export const getProjectPlaceholderText = () => {
   var placeholders = ['my dream house', 'my summer vacation', 'my garden', 'a new dinner table', 'the patio window'];
   var index = getRandomArbitrary(0, placeholders.length);
@@ -28,6 +33,12 @@ export const getProjectPlaceholderText = () => {
 
 export const getTestCasePlaceholderText = () => {
   var placeholders = ['be a shade of blue', 'go 0 to 60 in under 4 secs', 'fit four people', 'have stainless steel tubing'];
+  var index = getRandomArbitrary(0, placeholders.length);
+  return placeholders[index];
+}
+
+export const getRejectionPlaceholderText = () => {
+  var placeholders = ['the color is too soft', 'the axle is rusted', 'the fabric rips too easily', 'it does not match the drapes'];
   var index = getRandomArbitrary(0, placeholders.length);
   return placeholders[index];
 }

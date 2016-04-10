@@ -36,7 +36,10 @@ export default class RejectFulfillmentMutation extends Relay.Mutation {
           cursor
           node {
             id
-            uri
+            file {
+              id
+              uri
+            }
           }
         }
         testCase
@@ -81,7 +84,8 @@ export default class RejectFulfillmentMutation extends Relay.Mutation {
   getVariables() {
     return {
       id: this.props.fulfillment.id,
-      testCaseId: this.props.testCase.id
+      testCaseId: this.props.testCase.id,
+      reason: this.props.reason,
     };
   }
   getOptimisticResponse() {
@@ -96,8 +100,11 @@ export default class RejectFulfillmentMutation extends Relay.Mutation {
       rejectedFulfillmentId: this.props.fulfillment.id,
       rejectionEdge: {
         node: {
-          id: this.props.fulfillment.id,
-          uri: this.props.fulfillment.uri
+          reason: this.props.reason,
+          file: {
+            id: this.props.fulfillment.id,
+            uri: this.props.fulfillment.uri
+          }
         },
       },
       testCase: {

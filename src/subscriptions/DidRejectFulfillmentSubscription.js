@@ -24,7 +24,10 @@ export default class DidRejectFulfillmentSubscription extends Relay.Subscription
             cursor
             node {
               id
-              uri
+              file {
+                id
+                uri
+              }
             }
           }
           testCase {
