@@ -24,6 +24,7 @@ export default class DidUpdateProjectSubscription extends Relay.Subscription {
             node {
               id
               title
+              createdAt
             }
           }
         }

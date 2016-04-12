@@ -24,7 +24,10 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
                 edges {
                   node {
                     id
-                    uri
+                    file {
+                      id
+                      uri
+                    }
                   }
                 }
               }

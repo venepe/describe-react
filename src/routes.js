@@ -20,6 +20,7 @@ import UserView from './components/UserView';
 import ResetForm from './components/ResetForm';
 import ProjectEventListView from './components/ProjectEventListView';
 import TestCaseEventListView from './components/TestCaseEventListView';
+import FulfillmentEventListView from './components/FulfillmentEventListView';
 
 import {
   CollaborationQueries,
@@ -169,6 +170,13 @@ export default (
       />
     <Route
         path="projects/:projectId/testCases/:testCaseId/fulfillments/:fulfillmentId" component={FulfillmentImageView}
+        queries={FulfillmentQueries}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="projects/:projectId/testCases/:testCaseId/fulfillments/:fulfillmentId/events" component={FulfillmentEventListView}
         queries={FulfillmentQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}

@@ -11,7 +11,7 @@ export { default as IntroduceUserCoverMutation } from './IntroduceUserCoverMutat
 export { default as IntroduceFulfillmentMutation } from './IntroduceFulfillmentMutation';
 export { default as IntroduceProjectMutation } from './IntroduceProjectMutation';
 export { default as IntroduceTestCaseMutation } from './IntroduceTestCaseMutation';
-export { default as RejectFulfillmentMutation } from './RejectFulfillmentMutation';
+export { default as UpdateFulfillmentMutation } from './UpdateFulfillmentMutation';
 export { default as UpdateProjectMutation } from './UpdateProjectMutation';
 export { default as UpdateTestCaseMutation } from './UpdateTestCaseMutation';
 export { default as UpdateUserMutation } from './UpdateUserMutation';

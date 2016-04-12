@@ -49,7 +49,7 @@ class RejectionFormDialog extends Component {
 export default Relay.createContainer(RejectionFormDialog, {
   fragments: {
     fulfillment: () => Relay.QL`
-      fragment on File {
+      fragment on Fulfillment {
         ${RejectionForm.getFragment('fulfillment')}
       }
     `,

@@ -13,7 +13,15 @@ class FulfillmentImageView extends Component {
   constructor(props, context) {
     super(props);
     this.router = context.router;
+    this._pushFulfillmentEvents = this._pushFulfillmentEvents.bind(this);
     this._onDelete = this._onDelete.bind(this);
+  }
+
+  _pushFulfillmentEvents() {
+    let projectId = this.props.project.id;
+    let testCaseId = this.props.testCase.id;
+    let fulfillmentId = this.props.fulfillment.id;
+    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}/events`);
   }
 
   _onDelete() {
@@ -23,7 +31,7 @@ class FulfillmentImageView extends Component {
 
   render() {
     return (
-      <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onDelete={this._onDelete} />
+      <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onClick={this._pushFulfillmentEvents} onDelete={this._onDelete} />
     );
   }
 }
@@ -31,17 +39,20 @@ class FulfillmentImageView extends Component {
 export default Relay.createContainer(FulfillmentImageView, {
   fragments: {
     fulfillment: () => Relay.QL`
-      fragment on File {
+      fragment on Fulfillment {
+        id
         ${FulfillmentImage.getFragment('fulfillment')},
       }
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
+        id
         ${FulfillmentImage.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
+        id
         ${FulfillmentImage.getFragment('project')},
       }
     `,

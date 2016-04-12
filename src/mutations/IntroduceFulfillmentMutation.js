@@ -28,7 +28,11 @@ export default class IntroduceFulfillmentMutation extends Relay.Mutation {
           cursor
           node {
             id
-            uri
+            status
+            file {
+              id
+              uri
+            }
           }
         }
         testCase {
@@ -89,7 +93,12 @@ export default class IntroduceFulfillmentMutation extends Relay.Mutation {
     }
     return {
       fulfillmentEdge: {
-        node: {},
+        node: {
+          status: 'SUBMITTED',
+          file: {
+            uri: ''
+          }
+        },
       },
       testCase: {
         id: this.props.testCase.id,

@@ -9,6 +9,6 @@ export { default as DidIntroduceCollaboratorSubscription } from './DidIntroduceC
 export { default as DidIntroduceFulfillmentSubscription } from './DidIntroduceFulfillmentSubscription';
 export { default as DidIntroduceProjectSubscription } from './DidIntroduceProjectSubscription';
 export { default as DidIntroduceTestCaseSubscription } from './DidIntroduceTestCaseSubscription';
-export { default as DidRejectFulfillmentSubscription } from './DidRejectFulfillmentSubscription';
+export { default as DidUpdateFulfillmentSubscription } from './DidUpdateFulfillmentSubscription';
 export { default as DidUpdateProjectSubscription } from './DidUpdateProjectSubscription';
 export { default as DidUpdateTestCaseSubscription } from './DidUpdateTestCaseSubscription';

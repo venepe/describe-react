@@ -4,13 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
+import TouchableImage from '../TouchableImage';
 import { FulfillmentSheetOptions } from '../../constants/SheetOptions';
 import RejectionFormDialog from '../RejectionFormDialog';
 
 import ModalTypes, { REJECT_FULFILLMENT } from '../../constants/ModalTypes';
 
-import { registerDidRejectFulfillment } from '../../stores/SubscriptionStore';
-import { DidRejectFulfillmentSubscription } from '../../subscriptions';
+import { registerDidUpdateFulfillment } from '../../stores/SubscriptionStore';
+import { DidUpdateFulfillmentSubscription } from '../../subscriptions';
 
 class FulfillmentImage extends Component {
   static propTypes = {
@@ -81,9 +82,10 @@ class FulfillmentImage extends Component {
       let fulfillmentId = fulfillment.id;
       let testCaseId = testCase.id;
 
-      registerDidRejectFulfillment({fulfillmentId, testCaseId}, () => {
+      registerDidUpdateFulfillment({fulfillmentId, testCaseId}, () => {
+        console.log('registerDidUpdateFulfillment');
         return Relay.Store.subscribe(
-          new DidRejectFulfillmentSubscription({fulfillment, testCase})
+          new DidUpdateFulfillmentSubscription({fulfillment, testCase})
         );
       });
     }
@@ -92,32 +94,44 @@ class FulfillmentImage extends Component {
   render() {
     let uri = '';
     if (this.props.fulfillment) {
-      uri = this.props.fulfillment.uri;
+      uri = this.props.fulfillment.file.uri;
     }
-    return (
-      <div className="FulfillmentImage-container">
-        <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={FulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
-        <RejectionFormDialog isVisible={this.state.showRejectionForm} fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissRejectionForm} onCreate={this._dismissRejectionForm} />
-      </div>
-    );
+    if (this.props.fulfillment.status === 'REJECTED') {
+      return (
+        <div className="FulfillmentImage-container">
+          <TouchableImage src={uri} height={this.state.height} width={this.state.width} onClick={this._onClick} />
+        </div>
+      )
+    } else {
+      return (
+        <div className="FulfillmentImage-container">
+          <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={FulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+          <RejectionFormDialog isVisible={this.state.showRejectionForm} fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissRejectionForm} onCreate={this._dismissRejectionForm} />
+        </div>
+      );
+    }
   }
 }
 
 export default Relay.createContainer(FulfillmentImage, {
   fragments: {
     fulfillment: () => Relay.QL`
-      fragment on File {
+      fragment on Fulfillment {
         id
-        uri
+        status
+        file {
+          id
+          uri
+        }
         ${RejectionFormDialog.getFragment('fulfillment')},
-        ${DidRejectFulfillmentSubscription.getFragment('fulfillment')},
+        ${DidUpdateFulfillmentSubscription.getFragment('fulfillment')},
       }
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
         ${RejectionFormDialog.getFragment('testCase')},
-        ${DidRejectFulfillmentSubscription.getFragment('testCase')},
+        ${DidUpdateFulfillmentSubscription.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`

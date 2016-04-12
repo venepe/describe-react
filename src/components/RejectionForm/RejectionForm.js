@@ -12,7 +12,7 @@ import FileImage from '../FileImage';
 import { getRejectionPlaceholderText, isValidRejection } from '../../utils/utilities';
 import { track, Events } from '../../utils/SMTIAnalytics';
 
-import { RejectFulfillmentMutation } from '../../mutations';
+import { UpdateFulfillmentMutation } from '../../mutations';
 
 class RejectionForm extends Component {
   static propTypes = {
@@ -38,7 +38,7 @@ class RejectionForm extends Component {
         key: this._getUUID(),
         nodes: [
           {
-            component: (<FileImage file={this.props.fulfillment} />),
+            component: (<FileImage file={this.props.fulfillment.file} />),
             key: this._getUUID(),
             nodes: [
               {
@@ -63,9 +63,10 @@ class RejectionForm extends Component {
 
   _onCreate() {
     var reason = this.state.reason;
+    var status = 'REJECTED';
     if (isValidRejection(reason)) {
       Relay.Store.commitUpdate(
-        new RejectFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project, reason})
+        new UpdateFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project, status, reason})
       );
       //Start SMTIAnalytics
       // track(Events.ADDED_TEST_CASE);
@@ -110,19 +111,21 @@ class RejectionForm extends Component {
 export default Relay.createContainer(RejectionForm, {
   fragments: {
     fulfillment: () => Relay.QL`
-      fragment on File {
-        ${FileImage.getFragment('file')},
-        ${RejectFulfillmentMutation.getFragment('fulfillment')},
+      fragment on Fulfillment {
+        file {
+          ${FileImage.getFragment('file')},
+        }
+        ${UpdateFulfillmentMutation.getFragment('fulfillment')},
       }
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
-        ${RejectFulfillmentMutation.getFragment('testCase')},
+        ${UpdateFulfillmentMutation.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
-        ${RejectFulfillmentMutation.getFragment('project')},
+        ${UpdateFulfillmentMutation.getFragment('project')},
       }
     `,
   },

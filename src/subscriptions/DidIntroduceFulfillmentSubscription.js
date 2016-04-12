@@ -18,7 +18,11 @@ export default class DidIntroduceFulfillmentSubscription extends Relay.Subscript
             cursor
             node {
               id
-              uri
+              status
+              file {
+                id
+                uri
+              }
             }
           }
           testCase {

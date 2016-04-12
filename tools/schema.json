@@ -839,59 +839,6 @@
               "deprecationReason": null
             },
             {
-              "name": "rejections",
-              "description": "The files not fulfilling the test case.",
-              "args": [
-                {
-                  "name": "before",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "first",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "RejectionConnection",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "events",
               "description": "The changes made on the test case.",
               "args": [
@@ -1027,6 +974,87 @@
         },
         {
           "kind": "OBJECT",
+          "name": "FulfillmentEvent",
+          "description": "Fulfillment event object",
+          "fields": [
+            {
+              "name": "id",
+              "description": "The ID of an object",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "status",
+              "description": "The status of the fulfillment.",
+              "args": [],
+              "type": {
+                "kind": "ENUM",
+                "name": "FulfillmentStatus",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "reason",
+              "description": "The reason for the status.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "author",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "The timestamp when the test case was created.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "ofType": null
+            }
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "File",
           "description": "File object",
           "fields": [
@@ -1095,9 +1123,38 @@
           "possibleTypes": null
         },
         {
+          "kind": "ENUM",
+          "name": "FulfillmentStatus",
+          "description": "Fulfillment status",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "PENDING",
+              "description": "The fulfillment is pending action.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "REJECTED",
+              "description": "The fulfillment is rejected.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ACCEPTED",
+              "description": "The fulfillment is accepted.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
           "kind": "OBJECT",
-          "name": "Rejection",
-          "description": "Rejection object",
+          "name": "Fulfillment",
+          "description": "Fulfillment object",
           "fields": [
             {
               "name": "id",
@@ -1117,7 +1174,7 @@
             },
             {
               "name": "file",
-              "description": "The file not fulfilling the test case.",
+              "description": "The file possibly fulfilling the test case.",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -1128,8 +1185,20 @@
               "deprecationReason": null
             },
             {
+              "name": "status",
+              "description": "The status of the fulfillment.",
+              "args": [],
+              "type": {
+                "kind": "ENUM",
+                "name": "FulfillmentStatus",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "reason",
-              "description": "The reason for a rejections's status.",
+              "description": "The reason for the status.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1141,7 +1210,7 @@
             },
             {
               "name": "createdAt",
-              "description": "The timestamp when the file was created.",
+              "description": "The timestamp when the fulfillment was created.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1153,11 +1222,64 @@
             },
             {
               "name": "updatedAt",
-              "description": "The timestamp when the file was last updated.",
+              "description": "The timestamp when the fulfillment was last updated.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "events",
+              "description": "The changes made on the fulfillment.",
+              "args": [
+                {
+                  "name": "before",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "FulfillmentEventConnection",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1291,7 +1413,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "FileEdge",
+                  "name": "FulfillmentEdge",
                   "ofType": null
                 }
               },
@@ -1306,8 +1428,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "RejectionConnection",
-          "description": "A connection to a list of fulfillments.",
+          "name": "FulfillmentEventConnection",
+          "description": "A connection to a list of fulfillment events.",
           "fields": [
             {
               "name": "pageInfo",
@@ -1334,7 +1456,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "RejectionEdge",
+                  "name": "FulfillmentEventEdge",
                   "ofType": null
                 }
               },
@@ -1903,6 +2025,45 @@
         },
         {
           "kind": "OBJECT",
+          "name": "FulfillmentEventEdge",
+          "description": "An edge in a connection.",
+          "fields": [
+            {
+              "name": "node",
+              "description": "The item at the end of the edge",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "FulfillmentEvent",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "cursor",
+              "description": "A cursor for use in pagination",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "UserEdge",
           "description": "An edge in a connection.",
           "fields": [
@@ -1981,7 +2142,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "RejectionEdge",
+          "name": "FulfillmentEdge",
           "description": "An edge in a connection.",
           "fields": [
             {
@@ -1990,7 +2151,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "Rejection",
+                "name": "Fulfillment",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2321,7 +2482,7 @@
               "deprecationReason": null
             },
             {
-              "name": "rejectFulfillment",
+              "name": "updateFulfillment",
               "description": null,
               "args": [
                 {
@@ -2332,7 +2493,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "RejectFulfillmentInput",
+                      "name": "UpdateFulfillmentInput",
                       "ofType": null
                     }
                   },
@@ -2341,7 +2502,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "RejectFulfillmentPayload",
+                "name": "UpdateFulfillmentPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -2521,7 +2682,7 @@
             "deprecationReason": null
           },
           {
-            "name": "didRejectFulfillment",
+            "name": "didUpdateFulfillment",
             "description": null,
             "args": [
               {
@@ -2532,7 +2693,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "DidRejectFulfillmentInput",
+                    "name": "DidUpdateFulfillmentInput",
                     "ofType": null
                   }
                 },
@@ -2541,7 +2702,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "DidRejectFulfillmentPayload",
+              "name": "DidUpdateFulfillmentPayload",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3367,7 +3528,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "RejectFulfillmentInput",
+          "name": "UpdateFulfillmentInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -3398,6 +3559,18 @@
                 }
               },
               "defaultValue": null
+            },
+            {
+              "name": "status",
+              "description": "The status of the fulfillment.",
+              "args": [],
+              "type": {
+                "kind": "ENUM",
+                "name": "FulfillmentStatus",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             },
             {
               "name": "reason",
@@ -3880,7 +4053,7 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "DidRejectFulfillmentInput",
+          "name": "DidUpdateFulfillmentInput",
           "description": null,
           "fields": null,
           "inputFields": [
@@ -4124,7 +4297,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "FileEdge",
+                "name": "FulfillmentEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4703,28 +4876,28 @@
         },
         {
           "kind": "OBJECT",
-          "name": "RejectFulfillmentPayload",
+          "name": "UpdateFulfillmentPayload",
           "description": null,
           "fields": [
             {
-              "name": "rejectedFulfillmentId",
+              "name": "fulfillment",
               "description": null,
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "OBJECT",
+                "name": "Fulfillment",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "rejectionEdge",
+              "name": "fulfillmentEventEdge",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "RejectionEdge",
+                "name": "FulfillmentEventEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -5246,7 +5419,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "FileEdge",
+                "name": "FulfillmentEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -5300,28 +5473,28 @@
         },
         {
           "kind": "OBJECT",
-          "name": "DidRejectFulfillmentPayload",
+          "name": "DidUpdateFulfillmentPayload",
           "description": null,
           "fields": [
             {
-              "name": "rejectedFulfillmentId",
+              "name": "fulfillment",
               "description": null,
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "OBJECT",
+                "name": "Fulfillment",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "rejectionEdge",
+              "name": "fulfillmentEventEdge",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "RejectionEdge",
+                "name": "FulfillmentEventEdge",
                 "ofType": null
               },
               "isDeprecated": false,

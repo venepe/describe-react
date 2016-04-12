@@ -1,0 +1,19 @@
+.event-row {
+  padding: 25px;
+}
+
+.sub-container {
+  padding-top: 5px;
+}
+
+.author {
+  font-size:18px;
+  color:rgba(0, 0, 0, 0.54);
+  float: left;
+}
+
+.date-created {
+  font-size:14px;
+  color:rgba(0, 0, 0, 0.54);
+  float: right;
+}

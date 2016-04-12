@@ -76,7 +76,6 @@ class TestCaseView extends Component {
     if (this.props.testCase) {
       let testCase = this.props.testCase;
       let fulfillmentNodes = [];
-      let rejectionNodes = [];
 
       if (testCase.originalFulfillments) {
         let hasNextPage = testCase.originalFulfillments.pageInfo.hasNextPage;
@@ -84,7 +83,15 @@ class TestCaseView extends Component {
           let image = object.node;
            let imageComponent = {
              component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} project={this.props.project} onClick={this._pushFulfillment} />),
+             nodes:[]
            };
+           if (image.status == 'REJECTED' && image.reason) {
+             let rejectionComponent = {
+               component: (<ArchyLabel text={image.status.toLowerCase()} />),
+               nodes: [{component: (<ArchyLabel text={image.reason} />)}]
+             }
+             imageComponent.nodes.push(rejectionComponent);
+           }
            return imageComponent;
         }.bind(this));
 
@@ -94,31 +101,6 @@ class TestCaseView extends Component {
              nodes: []
            };
            fulfillmentNodes.push(moreComponent);
-         }
-      }
-
-      if (testCase.originalRejections) {
-        let hasNextPage = testCase.originalRejections.pageInfo.hasNextPage;
-        rejectionNodes = testCase.originalRejections.edges.map(function (object, index) {
-          let image = object.node.file;
-           let imageComponent = {
-             component: (<FileImage file={image} onClick={this._pushRejection} />),
-             nodes: [
-               {
-                 component: (<ArchyLabel text={'because:'} />),
-                 nodes: [{component: (<ArchyLabel text={object.node.reason} />)}]
-               }
-             ]
-           };
-           return imageComponent;
-        }.bind(this));
-
-        if (hasNextPage) {
-           let moreComponent = {
-             component: (<MoreButton onClick={this._onLoadMoreRejections} />),
-             nodes: []
-           };
-           rejectionNodes.push(moreComponent);
          }
       }
 
@@ -135,17 +117,8 @@ class TestCaseView extends Component {
       if (fulfillmentNodes.length > 0) {
         object.nodes[0].nodes.push(
           {
-            component: (<ArchyLabel text={'fulfilled:'} />),
+            component: (<ArchyLabel text={'fulfillment:'} />),
             nodes: fulfillmentNodes
-          }
-        )
-      }
-
-      if (rejectionNodes.length > 0) {
-        object.nodes[0].nodes.push(
-          {
-            component: (<ArchyLabel text={'rejected:'} />),
-            nodes: rejectionNodes
           }
         )
       }
@@ -181,7 +154,8 @@ export default Relay.createContainer(TestCaseView, {
             cursor
             node {
               id
-              uri
+              status
+              reason
               ${FulfillmentImage.getFragment('fulfillment')},
             }
           }
@@ -194,38 +168,9 @@ export default Relay.createContainer(TestCaseView, {
             cursor
             node {
               id
-              uri
+              status
+              reason
               ${FulfillmentImage.getFragment('fulfillment')},
-            }
-          }
-        }
-        originalRejections: rejections(first: $firstRejection) {
-          pageInfo {
-            hasNextPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              reason
-              file {
-                ${FileImage.getFragment('file')},
-              }
-            }
-          }
-        }
-        moreRejections: rejections(first: $moreFirstRejection, after: $afterRejection) {
-          pageInfo {
-            hasNextPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              reason
-              file {
-                ${FileImage.getFragment('file')},
-              }
             }
           }
         }

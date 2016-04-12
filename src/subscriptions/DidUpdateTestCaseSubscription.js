@@ -23,6 +23,7 @@ export default class DidUpdateTestCaseSubscription extends Relay.Subscription {
             node {
               id
               it
+              createdAt
             }
           }
         }
