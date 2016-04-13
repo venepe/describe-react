@@ -130,7 +130,6 @@ function unsubscribe(node = {}, id = '') {
   _.forEach(children, node => {
     let store = node.store;
     _.forEach(store, (obj, key) => {
-      console.log(obj.parentId);
       if (obj.parentId === id) {
         unsubscribe(node, key);
       }
