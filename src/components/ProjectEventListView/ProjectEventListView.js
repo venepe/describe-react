@@ -9,6 +9,9 @@ import SpinnerView from '../SpinnerView';
 import { Card } from 'material-ui';
 import moment from 'moment';
 
+const _first = 10;
+const _next = 10;
+
 class ProjectEventListView extends Component {
   static propTypes = {
     onPressRow: PropTypes.func,
@@ -61,8 +64,8 @@ class ProjectEventListView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.events) {
-      this.setState(this._getUpdatedState(nextProps.events));
+    if (nextProps.project) {
+      this.setState(this._getUpdatedState(nextProps.project.events));
     }
   }
 
@@ -71,7 +74,12 @@ class ProjectEventListView extends Component {
     this.setState({hasNextPage});
     let edges = this.props.project.events.edges;
     if (edges.length > 0) {
-      this.props.onEndReached(edges[edges.length - 1].cursor);
+      let cursor = edges[edges.length - 1].cursor;
+      let first = this.props.relay.variables.first;
+      this.props.relay.setVariables({
+        first: first + _next,
+        after: cursor
+      });
     }
   }
 
@@ -98,10 +106,31 @@ class ProjectEventListView extends Component {
 }
 
 export default Relay.createContainer(ProjectEventListView, {
+  initialVariables: {
+    first: _first,
+    after: null,
+    moreFirst: _first
+  },
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
-        events (first: 10) {
+        events (first: $first) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              title
+              createdAt
+              author {
+                name
+              }
+            }
+          }
+        }
+        moreEvents: events(first: $moreFirst, after: $after) {
           pageInfo {
             hasNextPage
           }

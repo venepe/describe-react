@@ -8,6 +8,9 @@ import SpinnerView from '../SpinnerView';
 import { Card } from 'material-ui';
 import moment from 'moment';
 
+const _first = 5;
+const _next = 5;
+
 class FulfillmentEventListView extends Component {
   static propTypes = {
     onPressRow: PropTypes.func,
@@ -59,8 +62,8 @@ class FulfillmentEventListView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.events) {
-      this.setState(this._getUpdatedState(nextProps.events));
+    if (nextProps.fulfillment) {
+      this.setState(this._getUpdatedState(nextProps.fulfillment.events));
     }
   }
 
@@ -69,7 +72,12 @@ class FulfillmentEventListView extends Component {
     this.setState({hasNextPage});
     let edges = this.props.fulfillment.events.edges;
     if (edges.length > 0) {
-      this.props.onEndReached(edges[edges.length - 1].cursor);
+      let cursor = edges[edges.length - 1].cursor;
+      let first = this.props.relay.variables.first;
+      this.props.relay.setVariables({
+        first: first + _next,
+        after: cursor
+      });
     }
   }
 
@@ -96,11 +104,33 @@ class FulfillmentEventListView extends Component {
 }
 
 export default Relay.createContainer(FulfillmentEventListView, {
+  initialVariables: {
+    first: _first,
+    after: null,
+    moreFirst: _first
+  },
   fragments: {
     fulfillment: () => Relay.QL`
       fragment on Fulfillment {
         id
-        events (first: 10) {
+        events (first: $first) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              status
+              reason
+              createdAt
+              author {
+                name
+              }
+            }
+          }
+        }
+        moreEvents: events(first: $moreFirst, after: $after) {
           pageInfo {
             hasNextPage
           }
