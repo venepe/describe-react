@@ -33,6 +33,10 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
               id
               status
               reason
+              createdAt
+              author {
+                name
+              }
             }
           }
           testCase {

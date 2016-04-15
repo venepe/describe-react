@@ -63,6 +63,7 @@ class TestCaseView extends Component {
         let hasNextPage = testCase.originalFulfillments.pageInfo.hasNextPage;
         fulfillmentNodes = testCase.originalFulfillments.edges.map(function (object, index) {
           let image = object.node;
+          let status = image.status || '';
            let imageComponent = {
              component: (<FulfillmentImage fulfillment={image} testCase={this.props.testCase} project={this.props.project} onClick={this._pushFulfillment} />),
              nodes:[]
@@ -76,7 +77,7 @@ class TestCaseView extends Component {
              imageComponent.nodes.push(reasonComponent);
            }
             return {
-               component: (<ArchyLabel text={`fulfillment ${image.status.toLowerCase()}:`} />),
+               component: (<ArchyLabel text={`fulfillment ${status.toLowerCase()}:`} />),
                nodes: [imageComponent]
              };
         }.bind(this));

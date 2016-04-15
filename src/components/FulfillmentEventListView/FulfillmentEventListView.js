@@ -49,11 +49,12 @@ class FulfillmentEventListView extends Component {
   buildElements(events) {
     return events.edges.map((object, index) => {
       let status = object.node.status;
+      let author = object.node.author;
       return (
         <Card key={index} className="event-row">
           <div>{status}</div>
           <div className="sub-container">
-            <div className="author">{object.node.author.name}</div>
+            <div className="author">{author.name}</div>
             <div className="date-created">{moment(object.node.createdAt).format('MMM DD, YYYY hh:mm A')}</div>
           </div>
         </Card>

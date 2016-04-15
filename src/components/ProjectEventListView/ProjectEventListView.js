@@ -51,11 +51,12 @@ class ProjectEventListView extends Component {
     return events.edges.map((object, index) => {
       let current = object.node.title;
       let previous = (index === 0) ? current : events.edges[index - 1].node.title;
+      let author = object.node.author;
       return (
         <Card key={index} className="event-row">
           <DiffLabel previous={previous} current={current}></DiffLabel>
           <div className="sub-container">
-            <div className="author">{object.node.author.name}</div>
+            <div className="author">{author.name}</div>
             <div className="date-created">{moment(object.node.createdAt).format('MMM DD, YYYY hh:mm A')}</div>
           </div>
         </Card>
