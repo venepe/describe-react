@@ -7,7 +7,6 @@ import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ProjectText from '../ProjectText';
-import CollaboratorText from '../CollaboratorText';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
 
@@ -27,7 +26,6 @@ class ProjectView extends Component {
     this.router = context.router;
     this._pushProjectEvents = this._pushProjectEvents.bind(this);
     this._pushTestCase = this._pushTestCase.bind(this);
-    this._pushCollaborator = this._pushCollaborator.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
   }
@@ -40,10 +38,6 @@ class ProjectView extends Component {
   _pushTestCase(testCaseId) {
     let projectId = this.props.project.id;
     this.router.push(`/projects/${projectId}/testCases/${testCaseId}`);
-  }
-
-  _pushCollaborator(userId) {
-    this.router.push(`/users/${userId}`);
   }
 
   _onDelete() {
@@ -112,15 +106,6 @@ class ProjectView extends Component {
            testCaseNodes.push(moreComponent);
          }
 
-     let collaboratorNodes = this.props.project.collaborators.edges.map(function (object, index) {
-       let collaborator = object.node;
-           let collaboratorComponent = {
-              component: (<CollaboratorText collaborator={collaborator} project={this.props.project} onClick={this._pushCollaborator}/>),
-              nodes: []
-            };
-           return collaboratorComponent;
-      }.bind(this));
-
       object = {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
@@ -129,15 +114,6 @@ class ProjectView extends Component {
             nodes: testCaseNodes
           }
         ]
-      }
-
-      if (collaboratorNodes.length > 0) {
-        object.nodes.push(
-          {
-            component: (<ArchyLabel text={'collaborating with:'} />),
-            nodes: collaboratorNodes
-          }
-        )
       }
 
     }
@@ -192,17 +168,8 @@ export default Relay.createContainer(ProjectView, {
             }
           }
         }
-        collaborators(first: 10) {
-          edges {
-            cursor
-            node {
-              ${CollaboratorText.getFragment('collaborator')},
-            }
-          }
-        }
         ${ProjectText.getFragment('project')},
         ${TestCaseView.getFragment('project')},
-        ${CollaboratorText.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceTestCaseSubscription.getFragment('project')},
         ${DidIntroduceCollaboratorSubscription.getFragment('project')},

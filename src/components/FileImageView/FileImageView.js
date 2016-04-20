@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import FileImage from '../FileImage';
+import SMTIToolbar from '../SMTIToolbar';
 import styles from './FileImageView.css';
 
 class FileImageView extends Component {
@@ -12,7 +13,10 @@ class FileImageView extends Component {
 
   render() {
     return (
-      <FileImage file={this.props.file} height={500} width={null} onDelete={this._onDelete} />
+      <div>
+        <SMTIToolbar title={'Image'} />
+        <FileImage file={this.props.file} height={500} width={null} onDelete={this._onDelete} />
+      </div>
     );
   }
 }

@@ -7,6 +7,7 @@ import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import ProjectListView from '../ProjectListView';
 import ProjectFormDialog from '../ProjectFormDialog';
 import MyProjectsPlaceholder from '../MyProjectsPlaceholder';
+import SMTIToolbar from '../SMTIToolbar';
 import SMTIStorage from '../../utils/storage';
 
 import { IntroduceProjectMutation } from '../../mutations';
@@ -74,6 +75,7 @@ class MyProjectsView extends Component {
       if (me.originalProjects.edges.length > 0) {
         return (
           <div className="MyProjects-container">
+            <SMTIToolbar title={'Projects'} />
             <ProjectListView projects={this.props.me.originalProjects} me={this.props.me} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
               <div className="add-project-button">
                 <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
@@ -84,6 +86,7 @@ class MyProjectsView extends Component {
       } else {
         return (
           <div>
+            <SMTIToolbar title={'Projects'} />
             <div className="add-project-button">
               <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
             </div>
@@ -95,6 +98,7 @@ class MyProjectsView extends Component {
     } else {
       return (
         <div>
+          <SMTIToolbar title={'Projects'} />
           <div className="add-project-button">
             <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
           </div>

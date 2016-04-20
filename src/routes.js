@@ -5,8 +5,8 @@ import {IndexRoute, Route} from 'react-router';
 
 import App from './components/App';
 import HomeView from './components/HomeView';
-import ProjectView from './components/ProjectView';
-import CollaborationView from './components/CollaborationView';
+import ProjectPage from './components/ProjectPage';
+import CollaborationPage from './components/CollaborationPage';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
 import MyCollaborationsView from './components/MyCollaborationsView';
@@ -18,9 +18,10 @@ import FulfillmentImageView from './components/FulfillmentImageView';
 import MeView from './components/MeView';
 import UserView from './components/UserView';
 import ResetForm from './components/ResetForm';
-import ProjectEventListView from './components/ProjectEventListView';
-import TestCaseEventListView from './components/TestCaseEventListView';
-import FulfillmentEventListView from './components/FulfillmentEventListView';
+import ProjectEventListPage from './components/ProjectEventListPage';
+import TestCaseEventListPage from './components/TestCaseEventListPage';
+import FulfillmentEventListPage from './components/FulfillmentEventListPage';
+import CollaboratorListPage from './components/CollaboratorListPage';
 
 import {
   CollaborationQueries,
@@ -88,7 +89,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="projects/:projectId" component={ProjectView}
+        path="projects/:projectId" component={ProjectPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}
@@ -96,7 +97,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="projects/:projectId/events" component={ProjectEventListView}
+        path="projects/:projectId/events" component={ProjectEventListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}
@@ -104,7 +105,15 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="collaborations/:collaborationId" component={CollaborationView}
+        path="projects/:projectId/collaborators" component={CollaboratorListPage}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="collaborations/:collaborationId" component={CollaborationPage}
         queries={CollaborationQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), collaborationId: params.collaborationId })}
         renderLoading={() => <SpinnerView />}
@@ -112,7 +121,15 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="collaborations/:projectId/events" component={ProjectEventListView}
+        path="collaborations/:projectId/events" component={ProjectEventListPage}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="collaborations/:projectId/collaborators" component={CollaboratorListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}
@@ -134,7 +151,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="projects/:projectId/testCases/:testCaseId/events" component={TestCaseEventListView}
+        path="projects/:projectId/testCases/:testCaseId/events" component={TestCaseEventListPage}
         queries={TestCaseQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
@@ -176,7 +193,7 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="projects/:projectId/testCases/:testCaseId/fulfillments/:fulfillmentId/events" component={FulfillmentEventListView}
+        path="projects/:projectId/testCases/:testCaseId/fulfillments/:fulfillmentId/events" component={FulfillmentEventListPage}
         queries={FulfillmentQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}

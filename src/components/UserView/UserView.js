@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import styles from './UserView.css';
 import { Paper } from 'material-ui';
 import FileImage from '../FileImage';
+import SMTIToolbar from '../SMTIToolbar';
 import Divider from 'material-ui/lib/divider';
 
 class UserView extends Component {
@@ -30,6 +31,7 @@ class UserView extends Component {
 
       return (
         <div className="UserView-container">
+          <SMTIToolbar title={this.props.user.name} />
           <FileImage file={this.props.user.cover} height={400} width={null} onClick={this._pushCoverImage}/>
           <div className="user-container">
             <div className="name">{this.props.user.name}</div>

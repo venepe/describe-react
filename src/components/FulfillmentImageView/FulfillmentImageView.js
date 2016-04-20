@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import FulfillmentImage from '../FulfillmentImage';
+import SMTIToolbar from '../SMTIToolbar';
 import styles from './FulfillmentImageView.css';
 
 class FulfillmentImageView extends Component {
@@ -31,7 +32,10 @@ class FulfillmentImageView extends Component {
 
   render() {
     return (
-      <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onClick={this._pushFulfillmentEvents} onDelete={this._onDelete} />
+      <div>
+        <SMTIToolbar title={this.props.testCase.it} />
+        <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onClick={this._pushFulfillmentEvents} onDelete={this._onDelete} />
+      </div>
     );
   }
 }
@@ -47,6 +51,7 @@ export default Relay.createContainer(FulfillmentImageView, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
+        it
         ${FulfillmentImage.getFragment('testCase')},
       }
     `,

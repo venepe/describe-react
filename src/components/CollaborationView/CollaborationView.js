@@ -7,7 +7,6 @@ import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import CollaborationText from '../CollaborationText';
-import CollaboratorText from '../CollaboratorText';
 import TouchableArchyLabel from '../TouchableArchyLabel';
 import TestCaseView from '../TestCaseView';
 import MoreButton from '../MoreButton';
@@ -28,23 +27,18 @@ class CollaborationView extends Component {
     this.router = context.router;
     this._pushProjectEvents = this._pushProjectEvents.bind(this);
     this._pushTestCase = this._pushTestCase.bind(this);
-    this._pushCollaborator = this._pushCollaborator.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onLoadMoreTestCases = this._onLoadMoreTestCases.bind(this);
   }
 
   _pushProjectEvents() {
-    let projectId = this.props.collaboration.id;
-    this.router.push(`/collaborations/${projectId}/events`);
+    let collaborationId = this.props.collaboration.id;
+    this.router.push(`/collaborations/${collaborationId}/events`);
   }
 
   _pushTestCase(testCaseId) {
     let collaborationId = this.props.collaboration.id;
     this.router.push(`/collaborations/${collaborationId}/testCases/${testCaseId}`);
-  }
-
-  _pushCollaborator(userId) {
-    this.router.push(`/users/${userId}`);
   }
 
   _onDelete() {
@@ -112,24 +106,6 @@ class CollaborationView extends Component {
            testCaseNodes.push(moreComponent);
          }
 
-     let leaderNodes = this.props.collaboration.leaders.edges.map(function (object, index) {
-       let leader = object.node;
-           let leaderComponent = {
-              component: (<TouchableArchyLabel id={leader.id} text={leader.name} onClick={this._pushCollaborator}/>),
-              nodes: []
-            };
-           return leaderComponent;
-      }.bind(this));
-
-     let collaboratorNodes = this.props.collaboration.collaborators.edges.map(function (object, index) {
-       let collaborator = object.node;
-           let collaboratorComponent = {
-              component: (<CollaboratorText collaborator={collaborator} project={this.props.collaboration} onClick={this._pushCollaborator}/>),
-              nodes: []
-            };
-           return collaboratorComponent;
-      }.bind(this));
-
       object = {
         component: (<ArchyLabel text={'describe:'}/>),
         nodes: [
@@ -138,24 +114,6 @@ class CollaborationView extends Component {
             nodes: testCaseNodes
           }
         ]
-      }
-
-      if (leaderNodes.length > 0) {
-        object.nodes.push(
-          {
-            component: (<ArchyLabel text={'by:'} />),
-            nodes: leaderNodes
-          }
-        )
-      }
-
-      if (collaboratorNodes.length > 0) {
-        object.nodes.push(
-          {
-            component: (<ArchyLabel text={'collaborating with:'} />),
-            nodes: collaboratorNodes
-          }
-        )
       }
 
     }
@@ -205,25 +163,8 @@ export default Relay.createContainer(CollaborationView, {
             }
           }
         }
-        collaborators(first: 10) {
-          edges {
-            cursor
-            node {
-              ${CollaboratorText.getFragment('collaborator')},
-            }
-          }
-        }
-        leaders(first: 10) {
-          edges {
-            node {
-              id
-              name
-            }
-          }
-        }
         ${CollaborationText.getFragment('collaboration')},
         ${TestCaseView.getFragment('project')},
-        ${CollaboratorText.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceTestCaseSubscription.getFragment('project')},
         ${DidIntroduceCollaboratorSubscription.getFragment('project')},

@@ -530,59 +530,6 @@
               "deprecationReason": null
             },
             {
-              "name": "leaders",
-              "description": "The leaders of the project.",
-              "args": [
-                {
-                  "name": "before",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "first",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "LeaderConnection",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "events",
               "description": "The changes made on the project.",
               "args": [
@@ -1152,6 +1099,29 @@
           "possibleTypes": null
         },
         {
+          "kind": "ENUM",
+          "name": "CollaboratorRoles",
+          "description": "Collaborator roles",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "AUTHOR",
+              "description": "The collaborator is an author.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "CONTRIBUTOR",
+              "description": "The collaborator is a contributor.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
           "kind": "OBJECT",
           "name": "Fulfillment",
           "description": "Fulfillment object",
@@ -1280,6 +1250,87 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "FulfillmentEventConnection",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+            {
+              "kind": "INTERFACE",
+              "name": "Node",
+              "ofType": null
+            }
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Collaborator",
+          "description": "Collaborator object",
+          "fields": [
+            {
+              "name": "id",
+              "description": "The ID of an object",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "profile",
+              "description": "Who the collaborator is.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "role",
+              "description": "The role of the collaborator.",
+              "args": [],
+              "type": {
+                "kind": "ENUM",
+                "name": "CollaboratorRoles",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "The timestamp when the collaborator was created.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "The timestamp when the collaborator was last updated.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1671,50 +1722,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "UserEdge",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "LeaderConnection",
-          "description": "A connection to a list of leaders.",
-          "fields": [
-            {
-              "name": "pageInfo",
-              "description": "Information to aid in pagination.",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "PageInfo",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "edges",
-              "description": "Information to aid in pagination.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "UserEdge",
+                  "name": "CollaboratorEdge",
                   "ofType": null
                 }
               },
@@ -2074,6 +2082,45 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "cursor",
+              "description": "A cursor for use in pagination",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "CollaboratorEdge",
+          "description": "An edge in a connection.",
+          "fields": [
+            {
+              "name": "node",
+              "description": "The item at the end of the edge",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Collaborator",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4360,7 +4407,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "UserEdge",
+                "name": "CollaboratorEdge",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4411,7 +4458,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "UserEdge",
+                "name": "CollaboratorEdge",
                 "ofType": null
               },
               "isDeprecated": false,

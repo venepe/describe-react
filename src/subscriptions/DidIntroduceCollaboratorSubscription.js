@@ -18,7 +18,15 @@ export default class DidIntroduceCollaboratorSubscription extends Relay.Subscrip
             cursor
             node {
               id
-              name
+              role
+              profile {
+                id
+                name
+                cover {
+                  id
+                  uri
+                }
+              }
             }
           }
           project {

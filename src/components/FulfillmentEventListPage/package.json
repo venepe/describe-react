@@ -1,0 +1,6 @@
+{
+  "name": "FulfillmentEventListPage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FulfillmentEventListPage.js"
+}

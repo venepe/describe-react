@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Relay from 'react-relay';
 import CoverImage from '../CoverImage';
+import SMTIToolbar from '../SMTIToolbar';
 import styles from './CoverImageView.css';
 
 class CoverImageView extends Component {
@@ -29,7 +30,10 @@ class CoverImageView extends Component {
 
   render() {
     return (
-      <CoverImage coverImage={this.props.coverImage} user={this.props.user} height={500} width={null} onDelete={this._goBack} onCreate={this._goBack} />
+      <div>
+        <SMTIToolbar title={this.props.user.name} />
+        <CoverImage coverImage={this.props.coverImage} user={this.props.user} height={500} width={null} onDelete={this._goBack} onCreate={this._goBack} />
+      </div>
     );
   }
 }
@@ -43,6 +47,7 @@ export default Relay.createContainer(CoverImageView, {
     `,
     user: () => Relay.QL`
       fragment on User {
+        name
         ${CoverImage.getFragment('user')},
       }
     `,

@@ -4,6 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './TestCasePage.css';
 import TestCaseView from '../TestCaseView';
+import SMTIToolbar from '../SMTIToolbar';
 
 class TestCasePage extends Component {
   static contextTypes = {
@@ -30,8 +31,11 @@ class TestCasePage extends Component {
 
   render() {
     return (
-      <div className="TestCasePage-container">
-        <TestCaseView testCase={this.props.testCase} project={this.props.project} onClick={this._pushTestCaseEvents} onDelete={this._onDelete} />
+      <div>
+        <SMTIToolbar title={this.props.project.title} />
+        <div className="TestCasePage-container">
+          <TestCaseView testCase={this.props.testCase} project={this.props.project} onClick={this._pushTestCaseEvents} onDelete={this._onDelete} />
+        </div>
       </div>
     );
   }
@@ -48,6 +52,7 @@ export default Relay.createContainer(TestCasePage, {
     project: () => Relay.QL`
       fragment on Project {
         id
+        title
         ${TestCaseView.getFragment('project')},
       }
     `,

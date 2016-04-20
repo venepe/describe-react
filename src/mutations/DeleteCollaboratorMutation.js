@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 export default class DeleteCollaboratorMutation extends Relay.Mutation {
   static fragments = {
     collaborator: () => Relay.QL`
-      fragment on User {
+      fragment on Collaborator {
         id
       }
     `,

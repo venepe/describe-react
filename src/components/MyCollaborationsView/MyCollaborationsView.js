@@ -6,6 +6,7 @@ import styles from './MyCollaborationsView.css';
 import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import CollaborationListView from '../CollaborationListView';
 import MyCollaborationsPlaceholder from '../MyCollaborationsPlaceholder';
+import SMTIToolbar from '../SMTIToolbar';
 import SMTIStorage from '../../utils/storage';
 
 import { registerDidIntroduceCollaboration } from '../../stores/SubscriptionStore';
@@ -66,12 +67,14 @@ class MyCollaborationsView extends Component {
       if (me.originalCollaborations.edges.length > 0) {
         return (
           <div className="MyCollaborations-container">
+            <SMTIToolbar title={'Collaborations'} />
             <CollaborationListView collaborations={this.props.me.originalCollaborations} me={this.props.me} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
           </div>
         );
       } else {
         return (
           <div>
+            <SMTIToolbar title={'Collaborations'} />
             <MyCollaborationsPlaceholder />
           </div>
         );
@@ -79,6 +82,7 @@ class MyCollaborationsView extends Component {
     } else {
       return (
         <div>
+          <SMTIToolbar title={'Collaborations'} />
           <MyCollaborationsPlaceholder />
         </div>
       );

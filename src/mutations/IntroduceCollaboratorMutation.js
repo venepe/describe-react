@@ -20,7 +20,15 @@ export default class IntroduceCollaboratorMutation extends Relay.Mutation {
           cursor
           node {
             id
-            name
+            role
+            profile {
+              id
+              name
+              cover {
+                id
+                uri
+              }
+            }
           }
         }
         project {
@@ -50,7 +58,11 @@ export default class IntroduceCollaboratorMutation extends Relay.Mutation {
   getOptimisticResponse() {
     return {
       collaboratorEdge: {
-        node: {},
+        node: {
+          profile: {
+            cover:{}
+          }
+        },
       },
       project: {
         id: this.props.project.id,

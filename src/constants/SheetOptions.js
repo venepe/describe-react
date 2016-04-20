@@ -1,5 +1,4 @@
 import {
-  INTRODUCE_COLLABORATOR,
   INTRODUCE_TEST_CASE,
   INTRODUCE_EXAMPLE,
   FULFILL_TEST_CASE,
@@ -18,10 +17,6 @@ import {
 export const ProjectSheetOptions = {
   options: [
     {
-      text: 'Add Collaborator',
-      value: INTRODUCE_COLLABORATOR
-    },
-    {
       text: 'Add Test Case',
       value: INTRODUCE_TEST_CASE
     },
@@ -38,10 +33,6 @@ export const ProjectSheetOptions = {
 
 export const CollaborativeProjectSheetOptions = {
   options: [
-    {
-      text: 'Add Collaborator',
-      value: INTRODUCE_COLLABORATOR
-    },
     {
       text: 'Add Test Case',
       value: INTRODUCE_TEST_CASE

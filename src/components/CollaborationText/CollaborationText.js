@@ -7,9 +7,8 @@ import ModalableArchyLabel from '../ModalableArchyLabel';
 import { CollaborativeProjectSheetOptions } from '../../constants/SheetOptions';
 import TestCaseFormDialog from '../TestCaseFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
-import CollaboratorFormDialog from '../CollaboratorFormDialog';
 
-import ModalTypes, { INTRODUCE_COLLABORATOR, INTRODUCE_TEST_CASE, UPDATE_PROJECT, LEAVE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { INTRODUCE_TEST_CASE, UPDATE_PROJECT, LEAVE_PROJECT } from '../../constants/ModalTypes';
 
 import { DeleteCollaborationMutation } from '../../mutations';
 
@@ -30,9 +29,9 @@ class CollaborationText extends Component {
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissProjectUpdateForm = this._dismissProjectUpdateForm.bind(this);
     this._dismissTestCaseForm = this._dismissTestCaseForm.bind(this);
-    this._dismissCollaboratorForm = this._dismissCollaboratorForm.bind(this);
     this.state = {
-      showTestCaseForm: false
+      showTestCaseForm: false,
+      showProjectUpdateForm: false
     }
   }
 
@@ -53,11 +52,6 @@ class CollaborationText extends Component {
             showTestCaseForm: true
           });
         break;
-        case INTRODUCE_COLLABORATOR:
-            this.setState({
-              showCollaboratorForm: true
-            });
-          break;
         case UPDATE_PROJECT:
             this.setState({
               showProjectUpdateForm: true
@@ -85,12 +79,6 @@ class CollaborationText extends Component {
     });
   }
 
-  _dismissCollaboratorForm() {
-    this.setState({
-      showCollaboratorForm: false
-    });
-  }
-
   render() {
 
     return (
@@ -98,7 +86,6 @@ class CollaborationText extends Component {
         <ModalableArchyLabel text={this.props.collaboration.title} sheetOptions={CollaborativeProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
           <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.collaboration} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
           <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.collaboration} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
-          <CollaboratorFormDialog isVisible={this.state.showCollaboratorForm} project={this.props.collaboration} onCancel={this._dismissCollaboratorForm} onCreate={this._dismissCollaboratorForm} />
       </div>
     );
   }
@@ -112,7 +99,6 @@ export default Relay.createContainer(CollaborationText, {
         title
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
-        ${CollaboratorFormDialog.getFragment('project')},
         ${DeleteCollaborationMutation.getFragment('collaboration')},
       }
     `,
