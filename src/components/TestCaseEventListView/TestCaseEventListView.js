@@ -126,6 +126,7 @@ export default Relay.createContainer(TestCaseEventListView, {
               it
               createdAt
               author {
+                id
                 name
               }
             }
@@ -142,6 +143,7 @@ export default Relay.createContainer(TestCaseEventListView, {
               it
               createdAt
               author {
+                id
                 name
               }
             }

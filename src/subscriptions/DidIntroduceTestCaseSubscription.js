@@ -31,14 +31,6 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
                   }
                 }
               }
-              events(first: 1) {
-                edges {
-                  node {
-                    id
-                    it
-                  }
-                }
-              }
             }
           }
           project {

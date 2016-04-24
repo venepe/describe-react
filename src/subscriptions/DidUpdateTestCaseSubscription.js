@@ -25,6 +25,7 @@ export default class DidUpdateTestCaseSubscription extends Relay.Subscription {
               it
               createdAt
               author {
+                id
                 name
               }
             }

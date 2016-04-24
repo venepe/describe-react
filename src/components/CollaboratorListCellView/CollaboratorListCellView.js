@@ -2,8 +2,9 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import { Card, CardHeader, IconButton, FontIcon, Styles } from 'material-ui';
-import Colors from 'material-ui/lib/styles/colors';
+import { Card, CardHeader } from 'material-ui';
+import ConfirmationDialog from '../ConfirmationDialog';
+import DeleteButton from '../DeleteButton';
 import styles from './CollaboratorListCellView.css';
 
 import { DeleteCollaboratorMutation } from '../../mutations';
@@ -13,15 +14,28 @@ import { DidDeleteCollaboratorSubscription } from '../../subscriptions';
 class CollaboratorListCellView extends Component {
   constructor(props) {
     super(props);
-    this.onDelete = this.onDelete.bind(this);
-    this.renderDeleteButton = this.renderDeleteButton.bind(this);
+    this._onDelete = this._onDelete.bind(this);
+    this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
+    this._showConfirmationDialog = this._showConfirmationDialog.bind(this);
+    this.state = {
+      showConfirmationDialog: false
+    };
   }
 
-  onDelete(e) {
-    console.log(e);
-    e.preventDefault();
-    e.stopPropagation();
-    return;
+  _showConfirmationDialog() {
+    this.setState({
+      showConfirmationDialog: true
+    });
+  }
+
+  _dismissConfirmationDialog() {
+    this.setState({
+      showConfirmationDialog: false
+    });
+  }
+
+  _onDelete() {
+    this._dismissConfirmationDialog();
     Relay.Store.commitUpdate(
       new DeleteCollaboratorMutation({collaborator: this.props.collaborator, project: this.props.project})
     );
@@ -50,28 +64,28 @@ class CollaboratorListCellView extends Component {
     }
   }
 
-  renderDeleteButton() {
-    if (this.props.collaborator.role !== 'AUTHOR') {
-      return (
-        <IconButton onMouseUp={this.onDelete} onTouchEnd={this.onDelete} style={{width: '24px', padding: '0px', float: 'right'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>delete</FontIcon></IconButton>
-      )
-    } else {
-      return;
-    }
-  }
-
-
   render() {
     let collaborator = this.props.collaborator;
     let profile = collaborator.profile;
 
-    return (
-      <Card className="clickable" onClick={() => this.props.onClick(collaborator)}>
-        <CardHeader title={profile.name} subtitle={collaborator.role} avatar={profile.cover.uri}>
-          {this.renderDeleteButton()}
-        </CardHeader>
-      </Card>
-    );
+    if (this.props.collaborator.role !== 'AUTHOR') {
+      let marginRight = 30;
+      return (
+          <Card>
+            <DeleteButton onClick={this._showConfirmationDialog} />
+            <CardHeader style={{marginRight}} title={profile.name} subtitle={collaborator.role} avatar={profile.cover.uri} className="clickable" onClick={() => this.props.onClick(collaborator)}>
+            </CardHeader>
+            <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Collaborator?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
+          </Card>
+      );
+    } else {
+      return (
+          <Card>
+            <CardHeader title={profile.name} subtitle={collaborator.role} avatar={profile.cover.uri} className="clickable" onClick={() => this.props.onClick(collaborator)}>
+            </CardHeader>
+          </Card>
+      );
+    }
   }
 }
 

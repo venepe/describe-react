@@ -35,6 +35,7 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
               reason
               createdAt
               author {
+                id
                 name
               }
             }

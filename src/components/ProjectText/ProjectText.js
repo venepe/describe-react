@@ -7,6 +7,7 @@ import ModalableArchyLabel from '../ModalableArchyLabel';
 import { ProjectSheetOptions } from '../../constants/SheetOptions';
 import TestCaseFormDialog from '../TestCaseFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
+import ConfirmationDialog from '../ConfirmationDialog';
 
 import ModalTypes, { INTRODUCE_TEST_CASE, UPDATE_PROJECT, DELETE_PROJECT } from '../../constants/ModalTypes';
 
@@ -26,12 +27,15 @@ class ProjectText extends Component {
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
+    this._onDelete = this._onDelete.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissProjectUpdateForm = this._dismissProjectUpdateForm.bind(this);
     this._dismissTestCaseForm = this._dismissTestCaseForm.bind(this);
+    this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
     this.state = {
       showProjectUpdateForm: false,
-      showTestCaseForm: false
+      showTestCaseForm: false,
+      showConfirmationDialog: false
     }
   }
 
@@ -58,10 +62,9 @@ class ProjectText extends Component {
             });
           break;
         case DELETE_PROJECT:
-            this.props.onDelete(this.props.project.id);
-            Relay.Store.commitUpdate(
-              new DeleteProjectMutation({project: this.props.project, me: this.props.me})
-            );
+        this.setState({
+          showConfirmationDialog: true
+        });
           break;
       default:
     }
@@ -79,12 +82,27 @@ class ProjectText extends Component {
     });
   }
 
+  _dismissConfirmationDialog() {
+    this.setState({
+      showConfirmationDialog: false
+    });
+  }
+
+  _onDelete() {
+    this.props.onDelete(this.props.project.id);
+    Relay.Store.commitUpdate(
+      new DeleteProjectMutation({project: this.props.project, me: this.props.me})
+    );
+  }
+
   render() {
     return (
       <div className="ProjectText-container">
         <ModalableArchyLabel text={this.props.project.title} sheetOptions={ProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.project} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
+        <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
+        <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Project?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
       </div>
     );
   }

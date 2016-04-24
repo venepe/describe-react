@@ -7,6 +7,7 @@ import styles from './CollaboratorListView.css';
 import SpinnerView from '../SpinnerView';
 import CollaboratorListToolbar from '../CollaboratorListToolbar';
 import CollaboratorListCellView from '../CollaboratorListCellView';
+import CollaboratorListPlaceholder from '../CollaboratorListPlaceholder';
 
 const _first = 10;
 const _next = 10;
@@ -94,18 +95,22 @@ class CollaboratorListView extends Component {
   }
 
   render() {
-    return (
-        <Infinite elementHeight={97}
-                         containerHeight={window.screen.height}
-                         infiniteLoadBeginBottomOffset={200}
-                         onInfiniteLoad={this._onEndReached}
-                         loadingSpinnerDelegate={this.elementInfiniteLoad()}
-                         isInfiniteLoading={this.state.hasNextPage}
-                         useWindowAsScrollContainer={true}
-                         >
-            {this.state.elements}
-        </Infinite>
-    );
+    if (this.props.project.collaborators.edges.length > 0) {
+      return (
+          <Infinite elementHeight={97}
+                           containerHeight={window.screen.height}
+                           infiniteLoadBeginBottomOffset={200}
+                           onInfiniteLoad={this._onEndReached}
+                           loadingSpinnerDelegate={this.elementInfiniteLoad()}
+                           isInfiniteLoading={this.state.hasNextPage}
+                           useWindowAsScrollContainer={true}
+                           >
+              {this.state.elements}
+          </Infinite>
+      );
+    } else {
+      return (<CollaboratorListPlaceholder />);
+    }
   }
 }
 

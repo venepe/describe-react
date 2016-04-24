@@ -7,6 +7,7 @@ import ModalableArchyLabel from '../ModalableArchyLabel';
 import { TestCaseSheetOptions } from '../../constants/SheetOptions';
 import FulfillmentFormDialog from '../FulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
+import ConfirmationDialog from '../ConfirmationDialog';
 
 import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
@@ -28,12 +29,15 @@ class TestCaseText extends Component {
   constructor(props) {
     super(props);
     this._onClick = this._onClick.bind(this);
+    this._onDelete = this._onDelete.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissTestCaseUpdateForm = this._dismissTestCaseUpdateForm.bind(this);
     this._dismissFulfillmentForm = this._dismissFulfillmentForm.bind(this);
+    this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
     this.state = {
       showTestCaseUpdateForm: false,
-      showFulfillmentForm: false
+      showFulfillmentForm: false,
+      showConfirmationDialog: false
     }
   }
 
@@ -60,10 +64,9 @@ class TestCaseText extends Component {
             });
           break;
         case DELETE_TEST_CASE:
-            this.props.onDelete(this.props.testCase.id);
-            Relay.Store.commitUpdate(
-              new DeleteTestCaseMutation({testCase: this.props.testCase, project: this.props.project})
-            );
+            this.setState({
+              showConfirmationDialog: true
+            });
           break;
       default:
     }
@@ -79,6 +82,19 @@ class TestCaseText extends Component {
     this.setState({
       showFulfillmentForm: false
     });
+  }
+
+  _dismissConfirmationDialog() {
+    this.setState({
+      showConfirmationDialog: false
+    });
+  }
+
+  _onDelete() {
+    this.props.onDelete(this.props.testCase.id);
+    Relay.Store.commitUpdate(
+      new DeleteTestCaseMutation({testCase: this.props.testCase, project: this.props.project})
+    );
   }
 
   componentDidMount() {
@@ -122,6 +138,7 @@ class TestCaseText extends Component {
         <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
+        <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Test Case?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
       </div>
     );
   }
