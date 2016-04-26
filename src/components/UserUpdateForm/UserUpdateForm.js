@@ -38,7 +38,7 @@ class UserUpdateForm extends Component {
       name: props.me.name,
       fullName: props.me.fullName,
       summary: props.me.summary,
-      isDisabled: isDisabled
+      isDisabled
     }
   }
 
@@ -82,12 +82,14 @@ class UserUpdateForm extends Component {
   }
 
   render() {
+    let errorText = this.state.isDisabled ? 'Invalid username' : null;
+
     return (
       <div>
         <div>
           <div className="label">Username</div>
           <div className="text-field">
-            <TextField hintText={'Username'} type='text' onChange={this._onChangeName} value={this.state.name} fullWidth={true} /> <br/>
+            <TextField errorText={errorText} hintText={'Username'} type='text' onChange={this._onChangeName} value={this.state.name} fullWidth={true} /> <br/>
           </div>
           <div className="label">Full Name</div>
           <div className="text-field">

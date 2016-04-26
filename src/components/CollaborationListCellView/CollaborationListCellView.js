@@ -26,6 +26,7 @@ class CollaborationListCellView extends Component {
 
   _onClick() {
     this.props.onClick(this.props.collaboration);
+    this.renderBuiltWith = this.renderBuiltWith.bind(this);
   }
 
   componentDidMount() {
@@ -56,9 +57,22 @@ class CollaborationListCellView extends Component {
     }
   }
 
+  renderBuiltWith() {
+    let collaboration = this.props.collaboration;
+    if (collaboration.collaborators && collaboration.collaborators.edges.length > 0) {
+      return collaboration.collaborators.edges.map(function (object, index) {
+        let collaborator = object.node;
+        return(<img style={{float: 'left', marginLeft: 10, borderRadius: '50%',}} height={20} width={20} src={collaborator.profile.cover.uri} />)
+      });
+    } else {
+      return [];
+    }
+  }
+
   render() {
     let collaboration = this.props.collaboration;
-    let subtitle = `${collaboration.numOfTestCasesFulfilled}/${collaboration.numOfTestCases}`;
+    let subtitleText = `${collaboration.numOfTestCasesFulfilled}/${collaboration.numOfTestCases}`;
+    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}</div>)
     return (
       <Card key={this.props.key} className="clickable" onClick={this._onClick}>
         <CardTitle title={collaboration.title} subtitle={subtitle} />
@@ -75,6 +89,18 @@ export default Relay.createContainer(CollaborationListCellView, {
         title
         numOfTestCases
         numOfTestCasesFulfilled
+        collaborators (first: 5) {
+          edges {
+            node {
+              profile {
+                cover {
+                  id
+                  uri
+                }
+              }
+            }
+          }
+        }
         ${DidDeleteCollaborationSubscription.getFragment('collaboration')},
         ${DidUpdateProjectSubscription.getFragment('project')},
       }
