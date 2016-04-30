@@ -28,6 +28,19 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
                   }
                 }
               }
+              collaborators(first: 5) {
+                edges {
+                  node {
+                    id
+                    profile {
+                      cover {
+                        id
+                        uri
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
           me {

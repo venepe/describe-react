@@ -4,9 +4,10 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ProjectListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
+import CollaboratorIcon from '../CollaboratorIcon';
 
-import { registerDidDeleteProject, registerDidUpdateProject } from '../../stores/SubscriptionStore';
-import { DidDeleteProjectSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
+import { registerDidIntroduceCollaborator, registerDidDeleteProject, registerDidUpdateProject } from '../../stores/SubscriptionStore';
+import { DidIntroduceCollaboratorSubscription, DidDeleteProjectSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
 class ProjectListCellView extends Component {
   static propTypes = {
@@ -44,6 +45,11 @@ class ProjectListCellView extends Component {
       let projectId = project.id;
       let meId = me.id;
 
+      registerDidIntroduceCollaborator({projectId}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceCollaboratorSubscription({project})
+        );
+      });
       registerDidUpdateProject({projectId}, () => {
         return Relay.Store.subscribe(
           new DidUpdateProjectSubscription({project})
@@ -62,7 +68,7 @@ class ProjectListCellView extends Component {
     if (project.collaborators && project.collaborators.edges.length > 0) {
       return project.collaborators.edges.map(function (object, index) {
         let collaborator = object.node;
-        return(<img style={{float: 'left', marginLeft: 10, borderRadius: '50%',}} height={20} width={20} src={collaborator.profile.cover.uri} />)
+        return(<CollaboratorIcon key={index} collaborator={collaborator} project={project} />)
       });
     } else {
       return [];
@@ -92,17 +98,14 @@ export default Relay.createContainer(ProjectListCellView, {
         collaborators (first: 5) {
           edges {
             node {
-              profile {
-                cover {
-                  id
-                  uri
-                }
-              }
+              ${CollaboratorIcon.getFragment('collaborator')}
             }
           }
         }
+        ${CollaboratorIcon.getFragment('project')},
         ${DidDeleteProjectSubscription.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
+        ${DidIntroduceCollaboratorSubscription.getFragment('project')},
       }
     `,
     me: () => Relay.QL`

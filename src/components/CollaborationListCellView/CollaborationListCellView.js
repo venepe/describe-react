@@ -5,8 +5,8 @@ import Relay from 'react-relay';
 import styles from './CollaborationListCellView.css';
 import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
 
-import { registerDidDeleteCollaboration, registerDidUpdateProject } from '../../stores/SubscriptionStore';
-import { DidDeleteCollaborationSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
+import { registerDidIntroduceCollaborator, registerDidDeleteCollaboration, registerDidUpdateProject } from '../../stores/SubscriptionStore';
+import { DidIntroduceCollaboratorSubscription, DidDeleteCollaborationSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
 class CollaborationListCellView extends Component {
   static propTypes = {
@@ -44,6 +44,11 @@ class CollaborationListCellView extends Component {
       let collaborationId = collaboration.id;
       let meId = me.id;
 
+      registerDidIntroduceCollaborator({projectId: collaborationId}, () => {
+        return Relay.Store.subscribe(
+          new DidIntroduceCollaboratorSubscription({project: collaboration})
+        );
+      });
       registerDidUpdateProject({projectId: collaborationId}, () => {
         return Relay.Store.subscribe(
           new DidUpdateProjectSubscription({project: collaboration})
@@ -103,6 +108,7 @@ export default Relay.createContainer(CollaborationListCellView, {
         }
         ${DidDeleteCollaborationSubscription.getFragment('collaboration')},
         ${DidUpdateProjectSubscription.getFragment('project')},
+        ${DidIntroduceCollaboratorSubscription.getFragment('project')},
       }
     `,
     me: () => Relay.QL`
