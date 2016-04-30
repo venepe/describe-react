@@ -69,7 +69,7 @@ class RejectionForm extends Component {
         new UpdateFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project, status, reason})
       );
       //Start SMTIAnalytics
-      // track(Events.ADDED_TEST_CASE);
+      track(Events.REJECTED_FULFILLMENT);
       //End SMTIAnalytics
 
       this.props.onCreate();

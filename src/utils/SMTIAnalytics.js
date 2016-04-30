@@ -8,6 +8,7 @@ export const Events = {
   ADDED_COVER_IMAGE: 'added a cover image',
   ADDED_TEST_CASE: 'added a test case',
   FULFILLED_TEST_CASE: 'fulfilled a test case',
+  REJECTED_FULFILLMENT: 'rejected a fulfillment',
   UPDATED_PROFILE: 'updated their profile'
 }
 
