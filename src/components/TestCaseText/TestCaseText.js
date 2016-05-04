@@ -91,6 +91,7 @@ class TestCaseText extends Component {
   }
 
   _onDelete() {
+    this._dismissConfirmationDialog();
     this.props.onDelete(this.props.testCase.id);
     Relay.Store.commitUpdate(
       new DeleteTestCaseMutation({testCase: this.props.testCase, project: this.props.project})

@@ -118,11 +118,6 @@ class ProjectView extends Component {
 
     }
 
-    let coverImage = null;
-    if (this.props.project && this.props.project.coverImages && this.props.project.coverImages.edges.length > 0) {
-      coverImage = this.props.project.coverImages.edges[0].node;
-    }
-
     return (
       <div className="ProjectView-container">
         <div className="ProjectArchy-container">

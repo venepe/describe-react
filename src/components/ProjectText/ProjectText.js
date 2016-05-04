@@ -89,6 +89,7 @@ class ProjectText extends Component {
   }
 
   _onDelete() {
+    this._dismissConfirmationDialog();
     this.props.onDelete(this.props.project.id);
     Relay.Store.commitUpdate(
       new DeleteProjectMutation({project: this.props.project, me: this.props.me})
@@ -100,7 +101,6 @@ class ProjectText extends Component {
       <div className="ProjectText-container">
         <ModalableArchyLabel text={this.props.project.title} sheetOptions={ProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.project} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
-        <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Project?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
       </div>
