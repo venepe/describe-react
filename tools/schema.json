@@ -1078,8 +1078,8 @@
           "interfaces": null,
           "enumValues": [
             {
-              "name": "PENDING",
-              "description": "The fulfillment is pending action.",
+              "name": "SUBMITTED",
+              "description": "The fulfillment is submitted.",
               "isDeprecated": false,
               "deprecationReason": null
             },

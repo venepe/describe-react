@@ -24,7 +24,7 @@ class TestCaseLabel extends Component {
 
     if (this.props.testCase.isFulfilled) {
       name = 'check_circle';
-      color = '#76FF03';
+      color = '#69F0AE';
     }
 
     return (
