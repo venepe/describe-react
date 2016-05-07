@@ -10,6 +10,10 @@ class SMTIDefaultNetworkLayer {
     this.socket = socket;
     this.token = token;
 
+    socket.on('connect', () => {
+      socket.emit('authenticate', {token});
+    });
+
     this.subscriptionId = 0;
     this.subscriptions = {};
     this.socket.on('graphql/subscription/response', payload => this.handleSubscription(payload));
