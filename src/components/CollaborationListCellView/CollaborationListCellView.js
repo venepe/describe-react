@@ -76,8 +76,11 @@ class CollaborationListCellView extends Component {
 
   render() {
     let collaboration = this.props.collaboration;
+    let percentFulfilled = parseInt(collaboration.numOfTestCasesFulfilled / collaboration.numOfTestCases * 100);
+    let color = percentFulfilled < 79 ? '#FF5252' : percentFulfilled < 100 ? '#FFD740' : '#69F0AE';
+
     let subtitleText = `${collaboration.numOfTestCasesFulfilled}/${collaboration.numOfTestCases}`;
-    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}</div>)
+    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}<div style={{float: 'right', paddingBottom: 16, fontSize: 18, color}}>{percentFulfilled}%</div></div>)
     return (
       <Card key={this.props.key} className="clickable" onClick={this._onClick}>
         <CardTitle title={collaboration.title} subtitle={subtitle} />
