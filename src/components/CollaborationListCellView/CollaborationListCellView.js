@@ -77,7 +77,7 @@ class CollaborationListCellView extends Component {
   render() {
     let collaboration = this.props.collaboration;
     let percentFulfilled = parseInt(collaboration.numOfTestCasesFulfilled / collaboration.numOfTestCases * 100) || 0;
-    let color = percentFulfilled < 79 ? '#FF5252' : percentFulfilled < 100 ? '#FFD740' : '#69F0AE';
+    let color = percentFulfilled < 50 ? '#FF5252' : percentFulfilled < 80 ? '#FFD740' : '#69F0AE';
 
     let subtitleText = `${collaboration.numOfTestCasesFulfilled}/${collaboration.numOfTestCases}`;
     let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}<div style={{float: 'right', paddingBottom: 16, fontSize: 18, color}}>{percentFulfilled}%</div></div>)

@@ -78,7 +78,7 @@ class ProjectListCellView extends Component {
   render() {
     let project = this.props.project;
     let percentFulfilled = parseInt(project.numOfTestCasesFulfilled / project.numOfTestCases * 100) || 0;
-    let color = percentFulfilled < 79 ? '#FF5252' : percentFulfilled < 100 ? '#FFD740' : '#69F0AE';
+    let color = percentFulfilled < 50 ? '#FF5252' : percentFulfilled < 80 ? '#FFD740' : '#69F0AE';
 
     let subtitleText = `${project.numOfTestCasesFulfilled}/${project.numOfTestCases}`;
     let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}<div style={{float: 'right', paddingBottom: 16, fontSize: 18, color}}>{percentFulfilled}%</div></div>)
