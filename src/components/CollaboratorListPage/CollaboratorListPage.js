@@ -5,7 +5,6 @@ import Relay from 'react-relay';
 import styles from './CollaboratorListPage.css';
 import CollaboratorListToolbar from '../CollaboratorListToolbar';
 import CollaboratorListView from '../CollaboratorListView';
-import CollaboratorFormDialog from '../CollaboratorFormDialog';
 
 class CollaboratorListPage extends Component {
   static contextTypes = {
@@ -15,31 +14,20 @@ class CollaboratorListPage extends Component {
   constructor(props, context) {
     super(props);
     this.router = context.router;
-    this._dismissCollaboratorForm = this._dismissCollaboratorForm.bind(this);
-    this.introduceCollaborator = this.introduceCollaborator.bind(this);
-    this.state = {
-      showCollaboratorForm: false
-    };
+    this._pushInvitees = this._pushInvitees.bind(this);
   }
 
-  introduceCollaborator() {
-    this.setState({
-      showCollaboratorForm: true
-    });
-  }
 
-  _dismissCollaboratorForm() {
-    this.setState({
-      showCollaboratorForm: false
-    });
+  _pushInvitees() {
+    let projectId = this.props.project.id;
+    this.router.push(`/projects/${projectId}/invitees`);
   }
 
   render() {
     return (
       <div className="CollaboratorListPage-container">
-        <CollaboratorListToolbar title={'Collaborators'} onClick={this.introduceCollaborator} />
+        <CollaboratorListToolbar title={'Collaborators'} onClick={this._pushInvitees} />
         <CollaboratorListView project={this.props.project} me={this.props.me} />
-        <CollaboratorFormDialog isVisible={this.state.showCollaboratorForm} project={this.props.project} onCancel={this._dismissCollaboratorForm} onCreate={this._dismissCollaboratorForm} />
       </div>
     );
   }
@@ -52,7 +40,6 @@ export default Relay.createContainer(CollaboratorListPage, {
         id
         title
         ${CollaboratorListView.getFragment('project')},
-        ${CollaboratorFormDialog.getFragment('project')},
       }
     `,
     me: () => Relay.QL`

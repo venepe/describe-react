@@ -1,0 +1,6 @@
+{
+  "name": "InviteeListToolbar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./InviteeListToolbar.js"
+}

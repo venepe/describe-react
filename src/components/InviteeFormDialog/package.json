@@ -1,0 +1,6 @@
+{
+  "name": "InviteeFormDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./InviteeFormDialog.js"
+}

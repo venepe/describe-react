@@ -16,6 +16,12 @@ let didIntroduceTestCaseStore = {};
 let didUpdateProjectStore = {};
 let didUpdateTestCaseStore = {};
 
+let didIntroduceInviteeStore = {};
+let didDeleteInviteeStore = {};
+let didIntroduceInvitationStore = {};
+let didDeclineInvitationStore = {};
+let didAcceptInvitationStore = {};
+
 function registerStore(store, {id, parentId}, subscribe) {
   if (!store[id] && !isClientID(id)) {
     store[id] = {
@@ -91,6 +97,31 @@ export const registerDidUpdateTestCase = ({testCaseId, projectId}, subscribe) =>
   const parentId = projectId;
   registerStore(didUpdateTestCaseStore, {id, parentId}, subscribe);
 }
+export const registerDidDeclineInvitation = ({invitationId, meId}, subscribe) => {
+  const id = invitationId;
+  const parentId = meId;
+  registerStore(didDeclineInvitationStore, {id, parentId}, subscribe);
+}
+export const registerDidAcceptInvitation = ({invitationId, meId}, subscribe) => {
+  const id = invitationId;
+  const parentId = meId;
+  registerStore(didAcceptInvitationStore, {id, parentId}, subscribe);
+}
+export const registerDidDeleteInvitee = ({inviteeId, projectId}, subscribe) => {
+  const id = inviteeId;
+  const parentId = projectId;
+  registerStore(didDeleteInviteeStore, {id, parentId}, subscribe);
+}
+export const registerDidIntroduceInvitee = ({projectId}, subscribe) => {
+  const id = projectId;
+  const parentId = id;
+  registerStore(didIntroduceInviteeStore, {id, parentId}, subscribe);
+}
+export const registerDidIntroduceInvitation = ({meId}, subscribe) => {
+  const id = meId;
+  const parentId = id;
+  registerStore(didIntroduceInvitationStore, {id, parentId}, subscribe);
+}
 
 export const cleanSubscriptions = (payload = {}) => {
   const action = Object.keys(payload)[0];
@@ -105,22 +136,38 @@ export const cleanSubscriptions = (payload = {}) => {
     let projectId = payload[action].deletedProjectId;
 
     unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didUpdateFulfillmentStore}]}]}, projectId);
-    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}]}, projectId);
+    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteInviteeStore}]}, projectId);
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
     unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
+    unsubscribe({store: didIntroduceInviteeStore}, projectId);
 
   } else if (action == 'didDeleteCollaboration') {
     let projectId = payload[action].deletedCollaborationId;
 
     unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didUpdateFulfillmentStore}]}]}, projectId);
-    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}]}, projectId);
+    unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteInviteeStore}]}, projectId);
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
     unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
+    unsubscribe({store: didIntroduceInviteeStore}, projectId);
 
   } else if (action == 'didDeleteCollaborator') {
     let collaboratorId = payload[action].deletedCollaboratorId;
 
     unsubscribe({store: didDeleteCollaboratorStore}, collaboratorId);
+  } else if (action == 'didDeleteInvitee') {
+    let inviteeId = payload[action].deletedInviteeId;
+
+    unsubscribe({store: didDeleteInviteeStore}, inviteeId);
+  } else if (action == 'didAcceptInvitation') {
+    let invitationId = payload[action].acceptedInvitationId;
+
+    unsubscribe({store: didAcceptInvitationStore}, invitationId);
+    unsubscribe({store: didDeclineInvitationStore}, invitationId);
+  } else if (action == 'didDeclineInvitation') {
+    let invitationId = payload[action].declinedInvitationId;
+
+    unsubscribe({store: didAcceptInvitationStore}, invitationId);
+    unsubscribe({store: didDeclineInvitationStore}, invitationId);
   }
 }
 

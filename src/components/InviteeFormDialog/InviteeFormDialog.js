@@ -3,12 +3,12 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import { Dialog } from 'material-ui';
-import styles from './CollaboratorFormDialog.css';
-import CollaboratorForm from '../CollaboratorForm';
+import styles from './InviteeFormDialog.css';
+import InviteeForm from '../InviteeForm';
 
 import ProjectRoute from '../../routes/ProjectRoute';
 
-class CollaboratorFormDialog extends Component {
+class InviteeFormDialog extends Component {
   static propTypes = {
     isVisible: PropTypes.bool,
     onCancel: PropTypes.func,
@@ -39,20 +39,20 @@ class CollaboratorFormDialog extends Component {
 
     return (
       <Dialog ref="dialog"
-        title="Add Collaborator"
+        title="Invite"
         open={this.state.isVisible}
         modal={false}>
-        <CollaboratorForm project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
+        <InviteeForm project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
       </Dialog>
     );
   }
 }
 
-export default Relay.createContainer(CollaboratorFormDialog, {
+export default Relay.createContainer(InviteeFormDialog, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
-        ${CollaboratorForm.getFragment('project')}
+        ${InviteeForm.getFragment('project')}
       }
     `,
   },

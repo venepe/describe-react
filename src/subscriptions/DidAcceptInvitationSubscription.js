@@ -2,8 +2,13 @@
 
 import Relay from 'react-relay';
 
-export default class DidIntroduceCollaborationSubscription extends Relay.Subscription {
+export default class DidAcceptInvitationSubscription extends Relay.Subscription {
   static fragments = {
+    invitation: () => Relay.QL`
+      fragment on Invitation {
+        id
+      }
+    `,
     me: () => Relay.QL`
       fragment on User {
         id
@@ -13,7 +18,7 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
   getSubscription() {
     return Relay.QL`
       subscription {
-        didIntroduceCollaboration (input: $didIntroduceCollaboration) {
+        didAcceptInvitation (input: $didAcceptInvitation) {
           collaborationEdge {
             node {
               id
@@ -45,7 +50,8 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
                 }
               }
             }
-          }
+          },
+          acceptedInvitationId,
           me {
             id
           },
@@ -54,18 +60,16 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
   }
   getConfigs() {
     return [{
-      type: 'RANGE_ADD',
+      type: 'NODE_DELETE',
       parentName: 'me',
       parentID: this.props.me.id,
-      connectionName: 'collaborations',
-      edgeName: 'collaborationEdge',
-      rangeBehaviors: {
-        '': 'append',
-      },
-    }];
+      connectionName: 'invitations',
+      deletedIDFieldName: 'acceptedInvitationId',
+      }];
   }
   getVariables() {
     return {
+      id: this.props.invitation.id,
       meId: this.props.me.id,
     };
   }

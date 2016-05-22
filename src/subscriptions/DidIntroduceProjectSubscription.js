@@ -32,7 +32,10 @@ export default class DidIntroduceProjectSubscription extends Relay.Subscription 
                 edges {
                   node {
                     id
+                    role
                     profile {
+                      id
+                      name
                       cover {
                         id
                         uri

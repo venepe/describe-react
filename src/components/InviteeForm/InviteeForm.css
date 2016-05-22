@@ -8,14 +8,14 @@
   text-align: right;
 }
 
-.collaborator-label {
+.invitee-label {
    display: block;
    font-size: 1.5em;
    font-family: 'Roboto', sans-serif;
    font-weight: 300;
 }
 
-.collaborator-title {
+.invitee-title {
    display: block;
    font-size: 1.2em;
    font-family: 'Roboto', sans-serif;

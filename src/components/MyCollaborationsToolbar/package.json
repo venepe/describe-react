@@ -1,0 +1,6 @@
+{
+  "name": "MyCollaborationsToolbar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MyCollaborationsToolbar.js"
+}

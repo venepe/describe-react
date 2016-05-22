@@ -3,9 +3,9 @@
 import React, { PropTypes, Component } from 'react';
 import { IconButton, FontIcon, Styles, Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui';
 import Colors from 'material-ui/lib/styles/colors';
-import styles from './CollaboratorListToolbar.css';
+import styles from './InviteeListToolbar.css';
 
-class CollaboratorListToolbar extends Component {
+class InviteeListToolbar extends Component {
   static propTypes = {
     title: PropTypes.string,
     onClick: PropTypes.func
@@ -28,11 +28,11 @@ class CollaboratorListToolbar extends Component {
          <ToolbarSeparator />
        </ToolbarGroup>
        <ToolbarGroup float="right">
-         <IconButton onMouseUp={this.props.onClick} onTouchEnd={this.props.onClick} style={{width: '24px', padding: '0px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>group_add</FontIcon></IconButton>
+         <IconButton onMouseUp={this.props.onClick} onTouchEnd={this.props.onClick} style={{width: '24px', padding: '0px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>add</FontIcon></IconButton>
        </ToolbarGroup>
      </Toolbar>
     );
   }
 }
 
-export default CollaboratorListToolbar;
+export default InviteeListToolbar;

@@ -10,6 +10,7 @@ import CollaborationPage from './components/CollaborationPage';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
 import MyCollaborationsView from './components/MyCollaborationsView';
+import MyInvitationsView from './components/MyInvitationsView';
 import FailureView from './components/FailureView';
 import TestCasePage from './components/TestCasePage';
 import CoverImageView from './components/CoverImageView';
@@ -22,6 +23,7 @@ import ProjectEventListPage from './components/ProjectEventListPage';
 import TestCaseEventListPage from './components/TestCaseEventListPage';
 import FulfillmentEventListPage from './components/FulfillmentEventListPage';
 import CollaboratorListPage from './components/CollaboratorListPage';
+import InviteeListPage from './components/InviteeListPage';
 
 import {
   CollaborationQueries,
@@ -89,6 +91,14 @@ export default (
         onEnter={requireAuth}
       />
     <Route
+        path="myinvitations" component={MyInvitationsView}
+        queries={MeQueries}
+        prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
         path="projects/:projectId" component={ProjectPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
@@ -113,6 +123,14 @@ export default (
         onEnter={requireAuth}
       />
     <Route
+        path="projects/:projectId/invitees" component={InviteeListPage}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
         path="collaborations/:collaborationId" component={CollaborationPage}
         queries={CollaborationQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), collaborationId: params.collaborationId })}
@@ -130,6 +148,14 @@ export default (
       />
     <Route
         path="collaborations/:projectId/collaborators" component={CollaboratorListPage}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="collaborations/:projectId/invitees" component={InviteeListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}

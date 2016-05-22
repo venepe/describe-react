@@ -3,9 +3,9 @@
 import React, { PropTypes, Component } from 'react';
 import { IconButton, FontIcon, Styles, Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui';
 import Colors from 'material-ui/lib/styles/colors';
-import styles from './CollaboratorListToolbar.css';
+import styles from './MyCollaborationsToolbar.css';
 
-class CollaboratorListToolbar extends Component {
+class MyCollaborationsToolbar extends Component {
   static propTypes = {
     title: PropTypes.string,
     onClick: PropTypes.func
@@ -35,4 +35,4 @@ class CollaboratorListToolbar extends Component {
   }
 }
 
-export default CollaboratorListToolbar;
+export default MyCollaborationsToolbar;

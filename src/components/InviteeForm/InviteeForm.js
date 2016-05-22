@@ -2,15 +2,16 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
-import styles from './CollaboratorForm.css';
+import styles from './InviteeForm.css';
 import { FlatButton, TextField } from 'material-ui';
 import validator from 'validator';
 import { track, Events } from '../../utils/SMTIAnalytics';
-const errorText = 'Unable to add collaborator. Verify the email address is correct';
+import { getCollaboratorPlaceholderText } from '../../utils/utilities';
+const errorText = 'Unable to add invitee. Verify the email address is correct';
 
-import { IntroduceCollaboratorMutation } from '../../mutations';
+import { IntroduceInviteeMutation } from '../../mutations';
 
-class CollaboratorForm extends Component {
+class InviteeForm extends Component {
   static propTypes = {
     onCancel: PropTypes.func,
     onCreate: PropTypes.func
@@ -30,7 +31,8 @@ class CollaboratorForm extends Component {
     this.state = {
       isDisabled: true,
       email: '',
-      errorText: ''
+      errorText: '',
+      placeholder: getCollaboratorPlaceholderText()
     }
   }
 
@@ -44,7 +46,7 @@ class CollaboratorForm extends Component {
 
       let onSuccess = () => {
         //Start SMTIAnalytics
-        track(Events.ADDED_COLLABORATOR);
+        track(Events.SENT_INVITATION);
         //End SMTIAnalytics
 
         this.props.onCreate();
@@ -56,7 +58,7 @@ class CollaboratorForm extends Component {
         });
       };
 
-      let mutation = new IntroduceCollaboratorMutation({email, project: this.props.project});
+      let mutation = new IntroduceInviteeMutation({email, project: this.props.project});
 
       Relay.Store.commitUpdate(mutation, {onFailure, onSuccess});
     }
@@ -86,13 +88,13 @@ class CollaboratorForm extends Component {
 
     return (
       <div>
-        <div className="collaborator-title"> Email <br/></div>
-        <div className="collaborator-label">
-          <TextField hintText={'jane@doe.com'} errorText={this.state.errorText} type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
+        <div className="invitee-title"> Email <br/></div>
+        <div className="invitee-label">
+          <TextField hintText={this.state.placeholder} errorText={this.state.errorText} type='text' onChange={this._onChangeEmail} value={this.state.email} fullWidth={true} /> <br/>
         </div>
         <div className="action-container">
           <FlatButton label="Cancel" secondary={true} onTouchTap={this._onCancel} />
-          <FlatButton label="Add" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onCreate} />
+          <FlatButton label="Send" disabled={this.state.isDisabled} primary={true} onTouchTap={this._onCreate} />
         </div>
       </div>
     );
@@ -100,11 +102,11 @@ class CollaboratorForm extends Component {
 
 }
 
-export default Relay.createContainer(CollaboratorForm, {
+export default Relay.createContainer(InviteeForm, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
-        ${IntroduceCollaboratorMutation.getFragment('project')}
+        ${IntroduceInviteeMutation.getFragment('project')}
       }
     `,
   },

@@ -9,7 +9,10 @@ export const Events = {
   ADDED_TEST_CASE: 'added a test case',
   FULFILLED_TEST_CASE: 'fulfilled a test case',
   REJECTED_FULFILLMENT: 'rejected a fulfillment',
-  UPDATED_PROFILE: 'updated their profile'
+  UPDATED_PROFILE: 'updated their profile',
+  SENT_INVITATION: 'sent an invitation',
+  ACCEPTED_INVITATION: 'accepted an invitation',
+  DECLINED_INVITATION: 'declined an invitation'
 }
 
 export const setIdentity = (token) => {

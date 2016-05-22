@@ -43,6 +43,12 @@ export const getRejectionPlaceholderText = () => {
   return placeholders[index];
 }
 
+export const getCollaboratorPlaceholderText = () => {
+  let placeholders = ['jane@doe.com', 'john@doe.com'];
+  let index = getRandomArbitrary(0, placeholders.length);
+  return placeholders[index];
+}
+
 export const getRandomArbitrary = (min, max) => {
   return Math.floor(Math.random() * (max - min ) + min);
 }
