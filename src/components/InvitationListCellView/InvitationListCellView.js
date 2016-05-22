@@ -5,6 +5,7 @@ import Relay from 'react-relay';
 import ConfirmationDialog from '../ConfirmationDialog';
 import styles from './InvitationListCellView.css';
 import { Card, CardMedia, CardTitle, CardText, FlatButton } from 'material-ui';
+import CollaboratorIcon from '../CollaboratorIcon';
 
 import { AcceptInvitationMutation, DeclineInvitationMutation } from '../../mutations';
 
@@ -28,6 +29,7 @@ class InvitationListCellView extends Component {
     this._onDecline = this._onDecline.bind(this);
     this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
     this._showConfirmationDialog = this._showConfirmationDialog.bind(this);
+    this.renderBuiltWith = this.renderBuiltWith.bind(this);
     this.state = {
       showConfirmationDialog: false
     };
@@ -85,11 +87,37 @@ class InvitationListCellView extends Component {
     }
   }
 
+  renderBuiltWith() {
+    let invitation = this.props.invitation;
+    let project = invitation.project;
+    if (project.collaborators && project.collaborators.edges.length > 0) {
+      return project.collaborators.edges.map(function (object, index) {
+        let collaborator = object.node;
+        return (<CollaboratorIcon key={index} collaborator={collaborator} project={project} />)
+      });
+    } else {
+      return [];
+    }
+  }
+
   render() {
     let invitation = this.props.invitation;
+    let project = invitation.project;
+    let percentFulfilled = parseInt(project.numOfTestCasesFulfilled / project.numOfTestCases * 100) || 0;
+    let color = percentFulfilled < 50 ? '#FF5252' : percentFulfilled < 80 ? '#FFD740' : '#69F0AE';
 
-    let subtitleText = this.props.invitation.sponsor.name;
-    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div><div style={{float: 'right'}}><FlatButton onMouseUp={this._showConfirmationDialog} onTouchEnd={this._showConfirmationDialog} labelStyle={{color:'#FFC107'}} label='Decline' /><FlatButton labelStyle={{color:'#FFC107'}} onMouseUp={this._onAccept} onTouchEnd={this._onAccept} label='Accept' /></div></div>)
+    let blash = (
+      <div>
+      <div style={{float: 'right'}}>
+        <FlatButton onMouseUp={this._showConfirmationDialog} onTouchEnd={this._showConfirmationDialog} labelStyle={{color:'#FFC107'}} label='Decline' />
+        <FlatButton labelStyle={{color:'#FFC107'}} onMouseUp={this._onAccept} onTouchEnd={this._onAccept} label='Accept' />
+      </div>
+      </div>
+    );
+
+    let subtitleText = `${project.numOfTestCasesFulfilled}/${project.numOfTestCases}`;
+    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}{blash}</div>)
+
     return (
       <Card key={this.props.key}>
         <CardTitle title={invitation.project.title} subtitle={subtitle} />
@@ -105,7 +133,18 @@ export default Relay.createContainer(InvitationListCellView, {
       fragment on Invitation {
         id
         project {
+          id
           title
+          numOfTestCases
+          numOfTestCasesFulfilled
+          collaborators (first: 5) {
+            edges {
+              node {
+                ${CollaboratorIcon.getFragment('collaborator')}
+              }
+            }
+          }
+          ${CollaboratorIcon.getFragment('project')},
         }
         sponsor {
           id
