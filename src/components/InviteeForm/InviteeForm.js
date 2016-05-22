@@ -7,7 +7,7 @@ import { FlatButton, TextField } from 'material-ui';
 import validator from 'validator';
 import { track, Events } from '../../utils/SMTIAnalytics';
 import { getCollaboratorPlaceholderText } from '../../utils/utilities';
-const errorText = 'Unable to add invitee. Verify the email address is correct';
+const errorText = 'Unable to send invitation. Verify the email address is correct';
 
 import { IntroduceInviteeMutation } from '../../mutations';
 

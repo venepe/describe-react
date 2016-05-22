@@ -75,7 +75,7 @@ class InviteeListCellView extends Component {
             <DeleteButton onClick={this._showConfirmationDialog} />
             <CardHeader style={{marginRight}} title={profile.name} subtitle={invitee.role} avatar={profile.cover.uri} className="clickable" onClick={() => this.props.onClick(invitee)}>
             </CardHeader>
-            <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Invitee?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
+            <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Invitation?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
           </Card>
       );
     } else {

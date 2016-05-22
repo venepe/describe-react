@@ -2,6 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
+import ConfirmationDialog from '../ConfirmationDialog';
 import styles from './InvitationListCellView.css';
 import { Card, CardMedia, CardTitle, CardText, FlatButton } from 'material-ui';
 
@@ -25,6 +26,23 @@ class InvitationListCellView extends Component {
     super(props);
     this._onAccept = this._onAccept.bind(this);
     this._onDecline = this._onDecline.bind(this);
+    this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
+    this._showConfirmationDialog = this._showConfirmationDialog.bind(this);
+    this.state = {
+      showConfirmationDialog: false
+    };
+  };
+
+  _showConfirmationDialog() {
+    this.setState({
+      showConfirmationDialog: true
+    });
+  }
+
+  _dismissConfirmationDialog() {
+    this.setState({
+      showConfirmationDialog: false
+    });
   }
 
   _onAccept() {
@@ -71,10 +89,11 @@ class InvitationListCellView extends Component {
     let invitation = this.props.invitation;
 
     let subtitleText = this.props.invitation.sponsor.name;
-    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div><div style={{float: 'right'}}><FlatButton onMouseUp={this._onDecline} onTouchEnd={this._onDecline} labelStyle={{color:'#FFC107'}} label='Decline' /><FlatButton labelStyle={{color:'#FFC107'}} onMouseUp={this._onAccept} onTouchEnd={this._onAccept} label='Accept' /></div></div>)
+    let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div><div style={{float: 'right'}}><FlatButton onMouseUp={this._showConfirmationDialog} onTouchEnd={this._showConfirmationDialog} labelStyle={{color:'#FFC107'}} label='Decline' /><FlatButton labelStyle={{color:'#FFC107'}} onMouseUp={this._onAccept} onTouchEnd={this._onAccept} label='Accept' /></div></div>)
     return (
       <Card key={this.props.key}>
         <CardTitle title={invitation.project.title} subtitle={subtitle} />
+        <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Decline Invitation?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDecline} />
       </Card>
     );
   }
