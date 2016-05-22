@@ -18,7 +18,34 @@ export default class DidIntroduceInvitationSubscription extends Relay.Subscripti
             node {
               id
               project {
+                id
                 title
+                numOfTestCases
+                numOfTestCasesFulfilled
+                testCases(first: 1) {
+                  edges {
+                    node {
+                      id
+                      it
+                    }
+                  }
+                }
+                collaborators(first: 5) {
+                  edges {
+                    node {
+                      id
+                      role
+                      profile {
+                        id
+                        name
+                        cover {
+                          id
+                          uri
+                        }
+                      }
+                    }
+                  }
+                }
               }
               sponsor {
                 id
