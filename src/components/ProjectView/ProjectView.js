@@ -7,7 +7,8 @@ import { Dialog } from 'material-ui';
 import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import ProjectText from '../ProjectText';
-import TestCaseView from '../TestCaseView';
+import TestCaseLabel from '../TestCaseLabel';
+import TestCaseText from '../TestCaseText';
 import MoreButton from '../MoreButton';
 
 import { registerDidIntroduceTestCase, registerDidUpdateProject, registerDidIntroduceCollaborator } from '../../stores/SubscriptionStore';
@@ -88,14 +89,21 @@ class ProjectView extends Component {
   render() {
     let object = {};
     if (this.props.project) {
-      let hasNextPage = this.props.project.originalTestCases.pageInfo.hasNextPage;
-      let testCaseNodes = this.props.project.originalTestCases.edges.map(function (object, index) {
-        let testCase = object.node;
-         let testCaseComponent = {
-           component: (<TestCaseView testCase={testCase} project={this.props.project} onClick={this._pushTestCase} />),
-           nodes: []
-         };
-         return testCaseComponent;
+      let project = this.props.project;
+      let hasNextPage = project.originalTestCases.pageInfo.hasNextPage;
+      let testCaseNodes = project.originalTestCases.edges.map(function (object, index) {
+         let testCase = object.node;
+           let nodes = [
+            {
+              component: (<TestCaseText testCase={testCase} project={project} onClick={this._pushTestCase} />),
+              nodes: []
+            }
+           ];
+           let testCaseComponent = {
+             component: (<TestCaseLabel testCase={testCase} />),
+             nodes: nodes
+           };
+           return testCaseComponent;
        }.bind(this));
 
        if (hasNextPage) {
@@ -147,7 +155,8 @@ export default Relay.createContainer(ProjectView, {
             cursor
             node {
               id
-              ${TestCaseView.getFragment('testCase')},
+              ${TestCaseText.getFragment('testCase')},
+              ${TestCaseLabel.getFragment('testCase')},
             }
           }
         }
@@ -159,12 +168,13 @@ export default Relay.createContainer(ProjectView, {
             cursor
             node {
               id
-              ${TestCaseView.getFragment('testCase')},
+              ${TestCaseText.getFragment('testCase')},
+              ${TestCaseLabel.getFragment('testCase')},
             }
           }
         }
         ${ProjectText.getFragment('project')},
-        ${TestCaseView.getFragment('project')},
+        ${TestCaseText.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceTestCaseSubscription.getFragment('project')},
         ${DidIntroduceCollaboratorSubscription.getFragment('project')},
