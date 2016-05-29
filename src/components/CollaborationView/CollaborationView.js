@@ -8,7 +8,8 @@ import Archy from '../Archy';
 import ArchyLabel from '../ArchyLabel';
 import CollaborationText from '../CollaborationText';
 import TouchableArchyLabel from '../TouchableArchyLabel';
-import TestCaseView from '../TestCaseView';
+import TestCaseLabel from '../TestCaseLabel';
+import TestCaseText from '../TestCaseText';
 import MoreButton from '../MoreButton';
 
 import { registerDidIntroduceTestCase, registerDidUpdateProject, registerDidIntroduceCollaborator } from '../../stores/SubscriptionStore';
@@ -88,14 +89,21 @@ class CollaborationView extends Component {
   render() {
     let object = {};
     if (this.props.collaboration) {
-      let hasNextPage = this.props.collaboration.originalTestCases.pageInfo.hasNextPage;
-      let testCaseNodes = this.props.collaboration.originalTestCases.edges.map(function (object, index) {
-        let testCase = object.node;
-         let testCaseComponent = {
-           component: (<TestCaseView testCase={testCase} project={this.props.collaboration} onClick={this._pushTestCase} />),
-           nodes: []
-         };
-         return testCaseComponent;
+      let collaboration = this.props.collaboration;
+      let hasNextPage = collaboration.originalTestCases.pageInfo.hasNextPage;
+      let testCaseNodes = collaboration.originalTestCases.edges.map(function (object, index) {
+         let testCase = object.node;
+           let nodes = [
+            {
+              component: (<TestCaseText testCase={testCase} project={collaboration} onClick={this._pushTestCase} />),
+              nodes: []
+            }
+           ];
+           let testCaseComponent = {
+             component: (<TestCaseLabel testCase={testCase} />),
+             nodes: nodes
+           };
+           return testCaseComponent;
        }.bind(this));
 
        if (hasNextPage) {
