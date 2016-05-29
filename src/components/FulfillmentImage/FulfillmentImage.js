@@ -2,6 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
+import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
 import TouchableImage from '../TouchableImage';
@@ -14,6 +15,10 @@ import { registerDidUpdateFulfillment } from '../../stores/SubscriptionStore';
 import { DidUpdateFulfillmentSubscription } from '../../subscriptions';
 
 class FulfillmentImage extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   static propTypes = {
     height: PropTypes.number,
     width: PropTypes.number,
@@ -28,11 +33,13 @@ class FulfillmentImage extends Component {
     onDelete: function() {}
   }
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onClick = this._onClick.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissRejectionForm = this._dismissRejectionForm.bind(this);
+    this._pushMessages = this._pushMessages.bind(this);
     this.state = {
       height: props.height,
       width: props.width,
@@ -65,6 +72,11 @@ class FulfillmentImage extends Component {
     this.setState({
       showRejectionForm: false
     });
+  }
+
+  _pushMessages() {
+    let channelId = this.props.fulfillment.file.id;
+    this.router.push(`/channels/${channelId}/messages`);
   }
 
   componentDidMount() {
@@ -107,6 +119,9 @@ class FulfillmentImage extends Component {
         <div className="FulfillmentImage-container">
           <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={FulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
           <RejectionFormDialog isVisible={this.state.showRejectionForm} fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissRejectionForm} onCreate={this._dismissRejectionForm} />
+          <div className="message">
+            <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
+          </div>
         </div>
       );
     }

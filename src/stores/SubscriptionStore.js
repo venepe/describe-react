@@ -15,6 +15,7 @@ let didIntroduceProjectStore = {};
 let didIntroduceTestCaseStore = {};
 let didUpdateProjectStore = {};
 let didUpdateTestCaseStore = {};
+let didIntroduceMessageStore = {};
 
 let didIntroduceInviteeStore = {};
 let didDeleteInviteeStore = {};
@@ -122,6 +123,11 @@ export const registerDidIntroduceInvitation = ({meId}, subscribe) => {
   const parentId = id;
   registerStore(didIntroduceInvitationStore, {id, parentId}, subscribe);
 }
+export const registerDidIntroduceMessage = ({channelId}, subscribe) => {
+  const id = channelId;
+  const parentId = id;
+  registerStore(didIntroduceMessageStore, {id, parentId}, subscribe);
+}
 
 export const cleanSubscriptions = (payload = {}) => {
   const action = Object.keys(payload)[0];
@@ -131,6 +137,7 @@ export const cleanSubscriptions = (payload = {}) => {
     unsubscribe({store: didUpdateTestCaseStore, children: [{store: didUpdateFulfillmentStore}]}, testCaseId);
     unsubscribe({store: didDeleteTestCaseStore}, testCaseId);
     unsubscribe({store: didIntroduceFulfillmentStore}, testCaseId);
+    unsubscribe({store: didIntroduceMessageStore}, testCaseId);
 
   } else if (action == 'didDeleteProject') {
     let projectId = payload[action].deletedProjectId;
@@ -140,6 +147,7 @@ export const cleanSubscriptions = (payload = {}) => {
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
     unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
     unsubscribe({store: didIntroduceInviteeStore}, projectId);
+    unsubscribe({store: didIntroduceMessageStore}, projectId);
 
   } else if (action == 'didDeleteCollaboration') {
     let projectId = payload[action].deletedCollaborationId;
@@ -149,6 +157,7 @@ export const cleanSubscriptions = (payload = {}) => {
     unsubscribe({store: didIntroduceTestCaseStore}, projectId);
     unsubscribe({store: didIntroduceCollaboratorStore}, projectId);
     unsubscribe({store: didIntroduceInviteeStore}, projectId);
+    unsubscribe({store: didIntroduceMessageStore}, projectId);
 
   } else if (action == 'didDeleteCollaborator') {
     let collaboratorId = payload[action].deletedCollaboratorId;

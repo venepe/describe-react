@@ -2,6 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
+import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './CollaborationText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import { CollaborativeProjectSheetOptions } from '../../constants/SheetOptions';
@@ -14,6 +15,10 @@ import ModalTypes, { INTRODUCE_TEST_CASE, UPDATE_PROJECT, LEAVE_PROJECT } from '
 import { DeleteCollaborationMutation } from '../../mutations';
 
 class CollaborationText extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   static propTypes = {
     onClick: PropTypes.func,
     onDelete: PropTypes.func
@@ -24,14 +29,16 @@ class CollaborationText extends Component {
     onDelete: function() {}
   }
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onClick = this._onClick.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissProjectUpdateForm = this._dismissProjectUpdateForm.bind(this);
     this._dismissTestCaseForm = this._dismissTestCaseForm.bind(this);
     this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
+    this._pushMessages = this._pushMessages.bind(this);
     this.state = {
       showTestCaseForm: false,
       showProjectUpdateForm: false,
@@ -88,6 +95,11 @@ class CollaborationText extends Component {
     });
   }
 
+  _pushMessages() {
+    let channelId = this.props.collaboration.id;
+    this.router.push(`/channels/${channelId}/messages`);
+  }
+
   _onDelete() {
     this.props.onDelete(this.props.collaboration.id);
     Relay.Store.commitUpdate(
@@ -103,6 +115,9 @@ class CollaborationText extends Component {
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.collaboration} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.collaboration} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Leave Project?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
+        <div className="message">
+          <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
+        </div>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 'use strict';
 
+export { ChannelQueries } from './ChannelQueries';
 export { CollaborationQueries } from './CollaborationQueries';
 export { CoverImageQueries } from './CoverImageQueries';
 export { FileQueries } from './FileQueries';

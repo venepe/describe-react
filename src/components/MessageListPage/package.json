@@ -1,0 +1,6 @@
+{
+  "name": "MessageListPage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MessageListPage.js"
+}

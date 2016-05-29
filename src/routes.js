@@ -24,8 +24,10 @@ import TestCaseEventListPage from './components/TestCaseEventListPage';
 import FulfillmentEventListPage from './components/FulfillmentEventListPage';
 import CollaboratorListPage from './components/CollaboratorListPage';
 import InviteeListPage from './components/InviteeListPage';
+import MessageListPage from './components/MessageListPage';
 
 import {
+  ChannelQueries,
   CollaborationQueries,
   CoverImageQueries,
   FileQueries,
@@ -158,6 +160,13 @@ export default (
         path="collaborations/:projectId/invitees" component={InviteeListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="channels/:channelId/messages" component={MessageListPage}
+        queries={ChannelQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}

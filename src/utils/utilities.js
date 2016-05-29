@@ -25,6 +25,11 @@ export const isValidRejection = (rejection) => {
   return isValid;
 }
 
+export const isValidMessage = (testCase) => {
+  let isValid = testCase.match(/^.{1,150}$/);
+  return isValid;
+}
+
 export const getProjectPlaceholderText = () => {
   var placeholders = ['my dream house', 'my summer vacation', 'my garden', 'a new dinner table', 'the patio window'];
   var index = getRandomArbitrary(0, placeholders.length);

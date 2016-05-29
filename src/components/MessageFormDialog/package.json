@@ -1,0 +1,6 @@
+{
+  "name": "MessageFormDialog",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MessageFormDialog.js"
+}

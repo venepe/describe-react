@@ -2,6 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
+import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './TestCaseText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
 import { TestCaseSheetOptions } from '../../constants/SheetOptions';
@@ -16,6 +17,10 @@ import { registerDidDeleteTestCase, registerDidUpdateTestCase, registerDidIntrod
 import { DidDeleteTestCaseSubscription, DidUpdateTestCaseSubscription, DidIntroduceFulfillmentSubscription } from '../../subscriptions';
 
 class TestCaseText extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  }
+
   static propTypes = {
     onClick: PropTypes.func,
     onDelete: PropTypes.func
@@ -26,14 +31,16 @@ class TestCaseText extends Component {
     onDelete: function() {}
   }
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
+    this.router = context.router;
     this._onClick = this._onClick.bind(this);
     this._onDelete = this._onDelete.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissTestCaseUpdateForm = this._dismissTestCaseUpdateForm.bind(this);
     this._dismissFulfillmentForm = this._dismissFulfillmentForm.bind(this);
     this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
+    this._pushMessages = this._pushMessages.bind(this);
     this.state = {
       showTestCaseUpdateForm: false,
       showFulfillmentForm: false,
@@ -98,6 +105,11 @@ class TestCaseText extends Component {
     );
   }
 
+  _pushMessages() {
+    let channelId = this.props.testCase.id;
+    this.router.push(`/channels/${channelId}/messages`);
+  }
+
   componentDidMount() {
     this.subscribe();
   }
@@ -134,12 +146,16 @@ class TestCaseText extends Component {
   }
 
   render() {
+
     return (
       <div className="TestCaseText-container">
         <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Test Case?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
+        <div className="message">
+          <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
+        </div>
       </div>
     );
   }

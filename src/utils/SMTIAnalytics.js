@@ -12,7 +12,8 @@ export const Events = {
   UPDATED_PROFILE: 'updated their profile',
   SENT_INVITATION: 'sent an invitation',
   ACCEPTED_INVITATION: 'accepted an invitation',
-  DECLINED_INVITATION: 'declined an invitation'
+  DECLINED_INVITATION: 'declined an invitation',
+  ADDED_MESSAGE: 'added a message'
 }
 
 export const setIdentity = (token) => {

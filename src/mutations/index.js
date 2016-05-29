@@ -11,6 +11,7 @@ export { default as DeleteTestCaseMutation } from './DeleteTestCaseMutation';
 export { default as DeleteUserMutation } from './DeleteUserMutation';
 export { default as IntroduceCollaboratorMutation } from './IntroduceCollaboratorMutation';
 export { default as IntroduceInviteeMutation } from './IntroduceInviteeMutation';
+export { default as IntroduceMessageMutation } from './IntroduceMessageMutation';
 export { default as IntroduceUserCoverMutation } from './IntroduceUserCoverMutation';
 export { default as IntroduceFulfillmentMutation } from './IntroduceFulfillmentMutation';
 export { default as IntroduceProjectMutation } from './IntroduceProjectMutation';
