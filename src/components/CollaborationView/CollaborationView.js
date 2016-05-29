@@ -155,7 +155,8 @@ export default Relay.createContainer(CollaborationView, {
             cursor
             node {
               id
-              ${TestCaseView.getFragment('testCase')},
+              ${TestCaseText.getFragment('testCase')},
+              ${TestCaseLabel.getFragment('testCase')},
             }
           }
         }
@@ -167,12 +168,13 @@ export default Relay.createContainer(CollaborationView, {
             cursor
             node {
               id
-              ${TestCaseView.getFragment('testCase')},
+              ${TestCaseText.getFragment('testCase')},
+              ${TestCaseLabel.getFragment('testCase')},
             }
           }
         }
         ${CollaborationText.getFragment('collaboration')},
-        ${TestCaseView.getFragment('project')},
+        ${TestCaseText.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceTestCaseSubscription.getFragment('project')},
         ${DidIntroduceCollaboratorSubscription.getFragment('project')},
