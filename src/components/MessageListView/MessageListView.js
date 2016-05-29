@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Card, CardHeader, CardText } from 'material-ui';
 import styles from './MessageListView.css';
 import SpinnerView from '../SpinnerView';
+import MessageListPlaceholder from '../MessageListPlaceholder';
 
 import { IntroduceMessageMutation } from '../../mutations';
 import { registerDidIntroduceMessage } from '../../stores/SubscriptionStore';
@@ -63,7 +64,7 @@ class MessageListView extends Component {
         <Card key={index}>
           <CardHeader title={message.author.name} subtitle={moment(message.createdAt).format('MMM DD, YYYY hh:mm A')} avatar={message.author.cover.uri}>
           </CardHeader>
-          <CardText>
+          <CardText style={{marginLeft: 55, marginTop: -25, fontSize: '1.2em'}}>
             {message.text}
           </CardText>
         </Card>
@@ -120,6 +121,7 @@ class MessageListView extends Component {
   }
 
   render() {
+    if (this.props.channel.messages.edges.length > 0) {
       return (
           <Infinite elementHeight={97}
                            containerHeight={window.screen.height}
@@ -132,6 +134,9 @@ class MessageListView extends Component {
               {this.state.elements}
           </Infinite>
       );
+    } else {
+      return (<MessageListPlaceholder />);
+    }
   }
 }
 

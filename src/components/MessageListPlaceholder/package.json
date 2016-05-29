@@ -1,0 +1,6 @@
+{
+  "name": "MessageListPlaceholder",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MessageListPlaceholder.js"
+}
