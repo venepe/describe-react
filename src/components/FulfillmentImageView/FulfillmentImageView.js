@@ -34,7 +34,9 @@ class FulfillmentImageView extends Component {
     return (
       <div>
         <SMTIToolbar title={this.props.testCase.it} />
-        <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onClick={this._pushFulfillmentEvents} onDelete={this._onDelete} />
+        <div className="FulfillmentImageView-container">
+          <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onClick={this._pushFulfillmentEvents} onDelete={this._onDelete} />
+        </div>
       </div>
     );
   }
