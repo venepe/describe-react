@@ -22,7 +22,7 @@ class MessageListPlaceholder extends Component {
       <div className="bubble">
         <img src={`${SMTIBaseUrl}/assets/bubble.png`} width={120} height={120} />
         <div className="bubble-line1">No messages.</div>
-        <div className="bubble-line2">asdf</div>
+        <div className="bubble-line2"></div>
       </div>
     );
   }
