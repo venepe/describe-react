@@ -69,13 +69,6 @@ class TestCaseView extends Component {
              nodes:[]
            };
 
-           if (image.reason) {
-             let reasonComponent = {
-               component: (<ArchyLabel text={'because:'} />),
-               nodes: [{component: (<ArchyLabel text={image.reason} />)}]
-             }
-             imageComponent.nodes.push(reasonComponent);
-           }
             return {
                component: (<ArchyLabel text={`fulfillment ${status.toLowerCase()}:`} />),
                nodes: [imageComponent]
@@ -130,7 +123,6 @@ export default Relay.createContainer(TestCaseView, {
             node {
               id
               status
-              reason
               ${FulfillmentImage.getFragment('fulfillment')},
             }
           }
@@ -144,7 +136,6 @@ export default Relay.createContainer(TestCaseView, {
             node {
               id
               status
-              reason
               ${FulfillmentImage.getFragment('fulfillment')},
             }
           }

@@ -22,7 +22,6 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
           fulfillment {
             id
             status
-            reason
             file {
               id
               uri
@@ -32,7 +31,6 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
             node {
               id
               status
-              reason
               createdAt
               author {
                 id

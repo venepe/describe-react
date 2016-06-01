@@ -123,7 +123,6 @@ export default Relay.createContainer(FulfillmentEventListView, {
             node {
               id
               status
-              reason
               createdAt
               author {
                 name
@@ -140,7 +139,6 @@ export default Relay.createContainer(FulfillmentEventListView, {
             node {
               id
               status
-              reason
               createdAt
               author {
                 name

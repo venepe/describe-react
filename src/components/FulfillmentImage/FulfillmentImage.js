@@ -7,10 +7,12 @@ import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
 import TouchableImage from '../TouchableImage';
 import { FulfillmentSheetOptions } from '../../constants/SheetOptions';
-import RejectionFormDialog from '../RejectionFormDialog';
+import ConfirmationDialog from '../ConfirmationDialog';
+import { track, Events } from '../../utils/SMTIAnalytics';
 
 import ModalTypes, { REJECT_FULFILLMENT } from '../../constants/ModalTypes';
 
+import { UpdateFulfillmentMutation } from '../../mutations';
 import { registerDidUpdateFulfillment } from '../../stores/SubscriptionStore';
 import { DidUpdateFulfillmentSubscription } from '../../subscriptions';
 
@@ -37,13 +39,14 @@ class FulfillmentImage extends Component {
     super(props);
     this.router = context.router;
     this._onClick = this._onClick.bind(this);
+    this._onReject = this._onReject.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
-    this._dismissRejectionForm = this._dismissRejectionForm.bind(this);
+    this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
     this._pushMessages = this._pushMessages.bind(this);
     this.state = {
       height: props.height,
       width: props.width,
-      showRejectionForm: false
+      showConfirmationDialog: false
     }
   }
 
@@ -61,17 +64,30 @@ class FulfillmentImage extends Component {
     switch (value) {
         case REJECT_FULFILLMENT:
           this.setState({
-            showRejectionForm: true
+            showConfirmationDialog: true
           });
           break;
       default:
     }
   }
 
-  _dismissRejectionForm() {
+  _dismissConfirmationDialog() {
     this.setState({
-      showRejectionForm: false
+      showConfirmationDialog: false
     });
+  }
+
+  _onReject() {
+    const status = 'REJECTED';
+    this._dismissConfirmationDialog();
+    Relay.Store.commitUpdate(
+      new UpdateFulfillmentMutation({fulfillment: this.props.fulfillment, testCase: this.props.testCase, project: this.props.project, status})
+    );
+
+    //Start SMTIAnalytics
+    track(Events.REJECTED_FULFILLMENT);
+    //End SMTIAnalytics
+
   }
 
   _pushMessages() {
@@ -95,7 +111,6 @@ class FulfillmentImage extends Component {
       let testCaseId = testCase.id;
 
       registerDidUpdateFulfillment({fulfillmentId, testCaseId}, () => {
-        console.log('registerDidUpdateFulfillment');
         return Relay.Store.subscribe(
           new DidUpdateFulfillmentSubscription({fulfillment, testCase})
         );
@@ -118,7 +133,7 @@ class FulfillmentImage extends Component {
       return (
         <div className="FulfillmentImage-container">
           <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={FulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
-          <RejectionFormDialog isVisible={this.state.showRejectionForm} fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissRejectionForm} onCreate={this._dismissRejectionForm} />
+          <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Reject Fulfillment?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onReject} />
           <div className="message">
             <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
           </div>
@@ -138,20 +153,20 @@ export default Relay.createContainer(FulfillmentImage, {
           id
           uri
         }
-        ${RejectionFormDialog.getFragment('fulfillment')},
+        ${UpdateFulfillmentMutation.getFragment('fulfillment')},
         ${DidUpdateFulfillmentSubscription.getFragment('fulfillment')},
       }
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        ${RejectionFormDialog.getFragment('testCase')},
+        ${UpdateFulfillmentMutation.getFragment('testCase')},
         ${DidUpdateFulfillmentSubscription.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
-        ${RejectionFormDialog.getFragment('project')},
+        ${UpdateFulfillmentMutation.getFragment('project')},
       }
     `,
   },

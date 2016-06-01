@@ -38,7 +38,6 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
         fulfillment {
           id
           status
-          reason
           file {
             id
             uri
@@ -49,7 +48,6 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
           node {
             id
             status
-            reason
           }
         }
         testCase
@@ -95,7 +93,6 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
       id: this.props.fulfillment.id,
       testCaseId: this.props.testCase.id,
       status: this.props.status,
-      reason: this.props.reason,
     };
   }
   getOptimisticResponse() {
@@ -110,7 +107,6 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
     return {
       fulfillment: {
         id: this.props.fulfillment.id,
-        reason: this.props.reason,
         file: {
           id: this.props.fulfillment.file.id,
           uri: this.props.fulfillment.file.uri
@@ -119,7 +115,6 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
       },
       fulfillmentEventEdge: {
         node: {
-          reason: this.props.reason,
           status
         }
       },

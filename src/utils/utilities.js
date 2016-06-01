@@ -42,12 +42,6 @@ export const getTestCasePlaceholderText = () => {
   return placeholders[index];
 }
 
-export const getRejectionPlaceholderText = () => {
-  var placeholders = ['the color is too soft', 'the axle is rusted', 'the fabric rips too easily', 'it does not match the drapes'];
-  var index = getRandomArbitrary(0, placeholders.length);
-  return placeholders[index];
-}
-
 export const getCollaboratorPlaceholderText = () => {
   let placeholders = ['jane@doe.com', 'john@doe.com'];
   let index = getRandomArbitrary(0, placeholders.length);
