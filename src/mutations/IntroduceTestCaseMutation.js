@@ -20,7 +20,7 @@ export default class IntroduceTestCaseMutation extends Relay.Mutation {
         testCaseEdge {
           node {
             id
-            it
+            text
             isFulfilled
           }
         }
@@ -52,7 +52,7 @@ export default class IntroduceTestCaseMutation extends Relay.Mutation {
   getVariables() {
     return {
       projectId: this.props.project.id,
-      it: this.props.it,
+      text: this.props.text,
     };
   }
   getOptimisticResponse() {
@@ -61,7 +61,7 @@ export default class IntroduceTestCaseMutation extends Relay.Mutation {
     return {
       testCaseEdge: {
         node: {
-          it: this.props.it,
+          text: this.props.text,
           isFulfilled: false,
         },
       },

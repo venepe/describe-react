@@ -17,12 +17,12 @@ export default class UpdateTestCaseMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on UpdateTestCasePayload {
         testCase {
-          it
+          text
         }
         testCaseEventEdge {
           node {
             id
-            it
+            text
           }
         }
       }
@@ -50,18 +50,18 @@ export default class UpdateTestCaseMutation extends Relay.Mutation {
   getVariables() {
     return {
       id: this.props.testCase.id,
-      it: this.props.it,
+      text: this.props.text,
     };
   }
   getOptimisticResponse() {
     return {
       testCase: {
         id: this.props.testCase.id,
-        it: this.props.it,
+        text: this.props.text,
       },
       testCaseEventEdge: {
         node: {
-          it: this.props.it,
+          text: this.props.text,
         }
       }
     };

@@ -146,7 +146,7 @@ export default Relay.createContainer(ProjectView, {
     project: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         originalTestCases: testCases(first: $first) {
           pageInfo {
             hasNextPage

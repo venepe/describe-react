@@ -26,7 +26,7 @@ class ProjectPage extends Component {
   render() {
     return (
       <div className="ProjectPage-container">
-        <ProjectToolbar title={this.props.project.title} onClick={this._pushCollaborators} />
+        <ProjectToolbar title={this.props.project.text} onClick={this._pushCollaborators} />
         <ProjectView project={this.props.project} me={this.props.me} />
       </div>
     );
@@ -38,7 +38,7 @@ export default Relay.createContainer(ProjectPage, {
     project: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         ${ProjectView.getFragment('project')},
       }
     `,

@@ -25,7 +25,7 @@ export default class AcceptInvitationMutation extends Relay.Mutation {
         collaborationEdge {
           node {
             id
-            title
+            text
             numOfTestCases
             numOfTestCasesFulfilled
           }

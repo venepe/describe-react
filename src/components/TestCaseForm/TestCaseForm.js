@@ -37,7 +37,7 @@ class TestCaseForm extends Component {
         key: this._getUUID(),
         nodes: [
           {
-            component: (<ArchyLabel text={this.props.project.title} />),
+            component: (<ArchyLabel text={this.props.project.text} />),
             key: this._getUUID(),
             nodes: [
               {
@@ -56,15 +56,15 @@ class TestCaseForm extends Component {
         ],
       },
       isDisabled: true,
-      it: ''
+      text: ''
     }
   }
 
   _onCreate() {
-    var it = this.state.it;
-    if (isValidTestCase(it)) {
+    var text = this.state.text;
+    if (isValidTestCase(text)) {
       Relay.Store.commitUpdate(
-        new IntroduceTestCaseMutation({it, project: this.props.project})
+        new IntroduceTestCaseMutation({text, project: this.props.project})
       );
       //Start SMTIAnalytics
       track(Events.ADDED_TEST_CASE);
@@ -78,13 +78,13 @@ class TestCaseForm extends Component {
     this.props.onCancel();
   }
 
-  _onChangeIt(it) {
+  _onChangeIt(text) {
     var isDisabled = true;
-    if (isValidTestCase(it)) {
+    if (isValidTestCase(text)) {
       isDisabled = false;
     }
     this.setState({
-      it,
+      text,
       isDisabled
     });
   }
@@ -110,7 +110,7 @@ export default Relay.createContainer(TestCaseForm, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
-        title,
+        text,
         ${IntroduceTestCaseMutation.getFragment('project')}
       }
     `,

@@ -14,7 +14,7 @@ class TestCaseEventListPage extends Component {
   render() {
     return (
       <div className="TestCaseEventListPage-container">
-        <SMTIToolbar title={this.props.testCase.it} />
+        <SMTIToolbar title={this.props.testCase.text} />
         <TestCaseEventListView testCase={this.props.testCase} project={this.props.project} />
       </div>
     );
@@ -25,7 +25,7 @@ export default Relay.createContainer(TestCaseEventListPage, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
-        it
+        text
         ${TestCaseEventListView.getFragment('testCase')},
       }
     `,

@@ -49,8 +49,8 @@ class ProjectEventListView extends Component {
 
   buildElements(events) {
     return events.edges.map((object, index) => {
-      let current = object.node.title;
-      let previous = (index === 0) ? current : events.edges[index - 1].node.title;
+      let current = object.node.text;
+      let previous = (index === 0) ? current : events.edges[index - 1].node.text;
       let author = object.node.author;
       return (
         <Card key={index} className="event-row">
@@ -123,7 +123,7 @@ export default Relay.createContainer(ProjectEventListView, {
             cursor
             node {
               id
-              title
+              text
               createdAt
               author {
                 name
@@ -139,7 +139,7 @@ export default Relay.createContainer(ProjectEventListView, {
             cursor
             node {
               id
-              title
+              text
               createdAt
               author {
                 name

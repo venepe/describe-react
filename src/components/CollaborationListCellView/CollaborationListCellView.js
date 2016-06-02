@@ -83,7 +83,7 @@ class CollaborationListCellView extends Component {
     let subtitle = (<div><div style={{float: 'left', paddingBottom: 16}}>{subtitleText}</div>{this.renderBuiltWith()}<div style={{float: 'right', paddingBottom: 16, fontSize: 18, color}}>{percentFulfilled}%</div></div>)
     return (
       <Card key={this.props.key} className="clickable" onClick={this._onClick}>
-        <CardTitle title={collaboration.title} subtitle={subtitle} />
+        <CardTitle title={collaboration.text} subtitle={subtitle} />
       </Card>
     );
   }
@@ -94,7 +94,7 @@ export default Relay.createContainer(CollaborationListCellView, {
     collaboration: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         numOfTestCases
         numOfTestCasesFulfilled
         collaborators (first: 5) {

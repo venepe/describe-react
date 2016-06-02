@@ -55,7 +55,7 @@ export default class IntroduceFulfillmentMutation extends Relay.Mutation {
       connectionName: 'fulfillments',
       edgeName: 'fulfillmentEdge',
       rangeBehaviors: {
-        '': 'append',
+        '': 'prepend',
       },
     },
     {

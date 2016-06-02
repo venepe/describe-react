@@ -533,8 +533,8 @@
               "deprecationReason": null
             },
             {
-              "name": "title",
-              "description": "The title of the project.",
+              "name": "text",
+              "description": "The text of the project.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -972,8 +972,8 @@
               "deprecationReason": null
             },
             {
-              "name": "title",
-              "description": "The title of the project.",
+              "name": "text",
+              "description": "The text of the project.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1041,8 +1041,8 @@
               "deprecationReason": null
             },
             {
-              "name": "it",
-              "description": "The it or what a test case should do.",
+              "name": "text",
+              "description": "The text or what a test case should do.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1286,8 +1286,8 @@
               "deprecationReason": null
             },
             {
-              "name": "it",
-              "description": "The it or what a test case should do.",
+              "name": "text",
+              "description": "The text or what a test case should do.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -4163,7 +4163,7 @@
               "defaultValue": null
             },
             {
-              "name": "title",
+              "name": "text",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -4428,7 +4428,7 @@
               "defaultValue": null
             },
             {
-              "name": "it",
+              "name": "text",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -4603,7 +4603,7 @@
               "defaultValue": null
             },
             {
-              "name": "title",
+              "name": "text",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -4656,7 +4656,7 @@
               "defaultValue": null
             },
             {
-              "name": "it",
+              "name": "text",
               "description": null,
               "type": {
                 "kind": "NON_NULL",

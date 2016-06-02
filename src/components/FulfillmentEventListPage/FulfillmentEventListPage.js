@@ -14,7 +14,7 @@ class FulfillmentEventListPage extends Component {
   render() {
     return (
       <div className="FulfillmentEventListPage-container">
-        <SMTIToolbar title={this.props.testCase.it} />
+        <SMTIToolbar title={this.props.testCase.text} />
         <FulfillmentEventListView fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} />
       </div>
     );
@@ -30,7 +30,7 @@ export default Relay.createContainer(FulfillmentEventListPage, {
     `,
     testCase: () => Relay.QL`
       fragment on TestCase {
-        it
+        text
         ${FulfillmentEventListView.getFragment('testCase')},
       }
     `,

@@ -17,12 +17,12 @@ export default class UpdateProjectMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on UpdateProjectPayload {
         project {
-          title,
+          text,
         }
         projectEventEdge {
           node {
             id
-            title
+            text
           }
         }
       }
@@ -50,18 +50,18 @@ export default class UpdateProjectMutation extends Relay.Mutation {
   getVariables() {
     return {
       id: this.props.project.id,
-      title: this.props.title,
+      text: this.props.text,
     };
   }
   getOptimisticResponse() {
     return {
       project: {
         id: this.props.project.id,
-        title: this.props.title,
+        text: this.props.text,
       },
       projectEventEdge: {
         node: {
-          title: this.props.title,
+          text: this.props.text,
         }
       }
     };

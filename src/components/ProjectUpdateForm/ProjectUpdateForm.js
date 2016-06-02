@@ -35,21 +35,21 @@ class ProjectUpdateForm extends Component {
         component: (<ArchyLabel text={'describe:'} />),
         nodes: [
           {
-            component: (<ArchyInput text={this.props.project.title} placeholder={projectPlaceholder} onChangeText={this._onChangeTitle} />),
+            component: (<ArchyInput text={this.props.project.text} placeholder={projectPlaceholder} onChangeText={this._onChangeTitle} />),
             nodes: [],
           },
         ],
       },
       isDisabled: true,
-      title: ''
+      text: ''
     }
   }
 
   _onUpdate() {
-    var title = this.state.title;
-    if (isValidTitle(title)) {
+    var text = this.state.text;
+    if (isValidTitle(text)) {
       Relay.Store.commitUpdate(
-        new UpdateProjectMutation({title, project: this.props.project})
+        new UpdateProjectMutation({text, project: this.props.project})
       );
       this.props.onUpdate();
     }
@@ -59,13 +59,13 @@ class ProjectUpdateForm extends Component {
     this.props.onCancel();
   }
 
-  _onChangeTitle(title) {
+  _onChangeTitle(text) {
     var isDisabled = true;
-    if (isValidTitle(title)) {
+    if (isValidTitle(text)) {
       isDisabled = false;
     }
     this.setState({
-      title,
+      text,
       isDisabled
     });
   }
@@ -87,7 +87,7 @@ export default Relay.createContainer(ProjectUpdateForm, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
-        title
+        text
         ${UpdateProjectMutation.getFragment('project')}
       }
     `,

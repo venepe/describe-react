@@ -120,7 +120,7 @@ class InvitationListCellView extends Component {
 
     return (
       <Card key={this.props.key}>
-        <CardTitle title={invitation.project.title} subtitle={subtitle} />
+        <CardTitle title={invitation.project.text} subtitle={subtitle} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Decline Invitation?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDecline} />
       </Card>
     );
@@ -134,7 +134,7 @@ export default Relay.createContainer(InvitationListCellView, {
         id
         project {
           id
-          title
+          text
           numOfTestCases
           numOfTestCasesFulfilled
           collaborators (first: 5) {

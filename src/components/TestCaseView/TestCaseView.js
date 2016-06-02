@@ -113,7 +113,7 @@ export default Relay.createContainer(TestCaseView, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        it
+        text
         originalFulfillments: fulfillments(first: $firstFulfillment) {
           pageInfo {
             hasNextPage

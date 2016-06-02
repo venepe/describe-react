@@ -111,7 +111,7 @@ class CollaborationText extends Component {
 
     return (
       <div className="CollaborationText-container">
-        <ModalableArchyLabel text={this.props.collaboration.title} sheetOptions={CollaborativeProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={this.props.collaboration.text} sheetOptions={CollaborativeProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.collaboration} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.collaboration} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Leave Project?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
@@ -128,7 +128,7 @@ export default Relay.createContainer(CollaborationText, {
     collaboration: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
         ${DeleteCollaborationMutation.getFragment('collaboration')},

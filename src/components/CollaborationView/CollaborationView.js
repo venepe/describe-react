@@ -146,7 +146,6 @@ export default Relay.createContainer(CollaborationView, {
     collaboration: () => Relay.QL`
       fragment on Project {
         id
-        title
         originalTestCases: testCases(first: $first) {
           pageInfo {
             hasNextPage

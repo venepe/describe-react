@@ -19,7 +19,7 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
         projectEdge {
           node {
             id
-            title
+            text
             numOfTestCases
             numOfTestCasesFulfilled
           }
@@ -45,14 +45,14 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
   getVariables() {
     return {
       targetId: this.props.me.id,
-      title: this.props.title,
+      text: this.props.text,
     };
   }
   getOptimisticResponse() {
     return {
       projectEdge: {
         node: {
-          title: this.props.title,
+          text: this.props.text,
           numOfTestCases: 0,
           numOfTestCasesFulfilled: 0,
         },

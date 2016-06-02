@@ -14,7 +14,7 @@ class ProjectEventListPage extends Component {
   render() {
     return (
       <div className="ProjectEventListPage-container">
-        <SMTIToolbar title={this.props.project.title} />
+        <SMTIToolbar title={this.props.project.text} />
         <ProjectEventListView project={this.props.project} me={this.props.me} />
       </div>
     );
@@ -25,7 +25,7 @@ export default Relay.createContainer(ProjectEventListPage, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
-        title
+        text
         ${ProjectEventListView.getFragment('project')},
       }
     `,

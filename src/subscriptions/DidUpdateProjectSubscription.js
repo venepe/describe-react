@@ -16,14 +16,14 @@ export default class DidUpdateProjectSubscription extends Relay.Subscription {
         didUpdateProject (input: $didUpdateProject) {
           project {
             id
-            title
+            text
             numOfTestCases
             numOfTestCasesFulfilled
           }
           projectEventEdge {
             node {
               id
-              title
+              text
               createdAt
               author {
                 id

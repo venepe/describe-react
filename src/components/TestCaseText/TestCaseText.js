@@ -149,7 +149,7 @@ class TestCaseText extends Component {
 
     return (
       <div className="TestCaseText-container">
-        <ModalableArchyLabel text={this.props.testCase.it} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={this.props.testCase.text} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Test Case?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
@@ -166,12 +166,12 @@ export default Relay.createContainer(TestCaseText, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        it
+        text
         events(first: 2) {
           edges {
             node {
               id
-              it
+              text
               createdAt
             }
           }

@@ -19,14 +19,14 @@ export default class DidIntroduceInvitationSubscription extends Relay.Subscripti
               id
               project {
                 id
-                title
+                text
                 numOfTestCases
                 numOfTestCasesFulfilled
                 testCases(first: 1) {
                   edges {
                     node {
                       id
-                      it
+                      text
                     }
                   }
                 }

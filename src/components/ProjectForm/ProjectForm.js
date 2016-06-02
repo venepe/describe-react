@@ -41,15 +41,15 @@ class ProjectForm extends Component {
         ],
       },
       isDisabled: true,
-      title: ''
+      text: ''
     }
   }
 
   _onCreate() {
-    var title = this.state.title;
-    if (isValidTitle(title)) {
+    var text = this.state.text;
+    if (isValidTitle(text)) {
       Relay.Store.commitUpdate(
-        new IntroduceProjectMutation({title, me: this.props.me})
+        new IntroduceProjectMutation({text, me: this.props.me})
       );
       //Start SMTIAnalytics
       track(Events.CREATED_PROJECT);
@@ -63,13 +63,13 @@ class ProjectForm extends Component {
     this.props.onCancel();
   }
 
-  _onChangeTitle(title) {
+  _onChangeTitle(text) {
     var isDisabled = true;
-    if (isValidTitle(title)) {
+    if (isValidTitle(text)) {
       isDisabled = false;
     }
     this.setState({
-      title,
+      text,
       isDisabled
     });
   }

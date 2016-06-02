@@ -36,22 +36,22 @@ class TestCaseUpdateForm extends Component {
         key: this._getUUID(),
         nodes: [
           {
-            component: (<ArchyInput text={props.testCase.it} placeholder={testCasePlaceholder} onChangeText={this._onChangeIt} />),
+            component: (<ArchyInput text={props.testCase.text} placeholder={testCasePlaceholder} onChangeText={this._onChangeIt} />),
             key: this._getUUID(),
             nodes: [],
           },
         ],
       },
       isDisabled: true,
-      it: ''
+      text: ''
     }
   }
 
   _onUpdate() {
-    var it = this.state.it;
-    if (isValidTestCase(it)) {
+    var text = this.state.text;
+    if (isValidTestCase(text)) {
       Relay.Store.commitUpdate(
-        new UpdateTestCaseMutation({it, testCase: this.props.testCase})
+        new UpdateTestCaseMutation({text, testCase: this.props.testCase})
       );
       this.props.onUpdate();
     }
@@ -61,13 +61,13 @@ class TestCaseUpdateForm extends Component {
     this.props.onCancel();
   }
 
-  _onChangeIt(it) {
+  _onChangeIt(text) {
     var isDisabled = true;
-    if (isValidTestCase(it)) {
+    if (isValidTestCase(text)) {
       isDisabled = false;
     }
     this.setState({
-      it,
+      text,
       isDisabled
     });
   }
@@ -93,7 +93,7 @@ export default Relay.createContainer(TestCaseUpdateForm, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
-        it,
+        text,
         ${UpdateTestCaseMutation.getFragment('testCase')}
       }
     `,

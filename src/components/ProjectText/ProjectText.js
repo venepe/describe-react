@@ -111,7 +111,7 @@ class ProjectText extends Component {
   render() {
     return (
       <div className="ProjectText-container">
-        <ModalableArchyLabel text={this.props.project.title} sheetOptions={ProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={this.props.project.text} sheetOptions={ProjectSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.project} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
         <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Project?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
@@ -128,7 +128,7 @@ export default Relay.createContainer(ProjectText, {
     project: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
         ${DeleteProjectMutation.getFragment('project')}

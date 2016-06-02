@@ -18,7 +18,7 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
             cursor
             node {
               id
-              it
+              text
               isFulfilled
               fulfillments(first: 1) {
                 edges {

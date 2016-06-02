@@ -26,7 +26,7 @@ class CollaborationPage extends Component {
   render() {
     return (
       <div className="CollaborationPage-container">
-        <ProjectToolbar title={this.props.collaboration.title} onClick={this._pushCollaborators} />
+        <ProjectToolbar title={this.props.collaboration.text} onClick={this._pushCollaborators} />
         <CollaborationView collaboration={this.props.collaboration} me={this.props.me} />
       </div>
     );
@@ -38,7 +38,7 @@ export default Relay.createContainer(CollaborationPage, {
     collaboration: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         ${CollaborationView.getFragment('collaboration')},
       }
     `,

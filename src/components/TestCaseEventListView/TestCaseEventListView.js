@@ -49,8 +49,8 @@ class TestCaseEventListView extends Component {
 
   buildElements(events) {
     return events.edges.map((object, index) => {
-      let current = object.node.it;
-      let previous = (index === 0) ? current : events.edges[index - 1].node.it;
+      let current = object.node.text;
+      let previous = (index === 0) ? current : events.edges[index - 1].node.text;
       let author = object.node.author;
       return (
         <Card key={index} className="event-row">
@@ -123,7 +123,7 @@ export default Relay.createContainer(TestCaseEventListView, {
             cursor
             node {
               id
-              it
+              text
               createdAt
               author {
                 id
@@ -140,7 +140,7 @@ export default Relay.createContainer(TestCaseEventListView, {
             cursor
             node {
               id
-              it
+              text
               createdAt
               author {
                 id

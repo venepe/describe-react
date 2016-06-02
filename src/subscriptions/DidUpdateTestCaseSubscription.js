@@ -16,13 +16,13 @@ export default class DidUpdateTestCaseSubscription extends Relay.Subscription {
         didUpdateTestCase (input: $didUpdateTestCase) {
           testCase {
             id
-            it
+            text
             isFulfilled
           }
           testCaseEventEdge {
             node {
               id
-              it
+              text
               createdAt
               author {
                 id

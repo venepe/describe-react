@@ -38,7 +38,6 @@ export default Relay.createContainer(CollaboratorListPage, {
     project: () => Relay.QL`
       fragment on Project {
         id
-        title
         ${CollaboratorListView.getFragment('project')},
       }
     `,

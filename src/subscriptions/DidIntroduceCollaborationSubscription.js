@@ -17,14 +17,14 @@ export default class DidIntroduceCollaborationSubscription extends Relay.Subscri
           collaborationEdge {
             node {
               id
-              title
+              text
               numOfTestCases
               numOfTestCasesFulfilled
               testCases(first: 1) {
                 edges {
                   node {
                     id
-                    it
+                    text
                   }
                 }
               }

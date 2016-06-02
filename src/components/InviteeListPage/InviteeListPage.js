@@ -50,7 +50,6 @@ export default Relay.createContainer(InviteeListPage, {
     project: () => Relay.QL`
       fragment on Project {
         id
-        title
         ${InviteeListView.getFragment('project')},
         ${InviteeFormDialog.getFragment('project')},
       }

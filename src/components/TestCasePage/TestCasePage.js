@@ -32,7 +32,7 @@ class TestCasePage extends Component {
   render() {
     return (
       <div>
-        <SMTIToolbar title={this.props.project.title} />
+        <SMTIToolbar title={this.props.project.text} />
         <div className="TestCasePage-container">
           <TestCaseView testCase={this.props.testCase} project={this.props.project} onClick={this._pushTestCaseEvents} onDelete={this._onDelete} />
         </div>
@@ -52,7 +52,7 @@ export default Relay.createContainer(TestCasePage, {
     project: () => Relay.QL`
       fragment on Project {
         id
-        title
+        text
         ${TestCaseView.getFragment('project')},
       }
     `,

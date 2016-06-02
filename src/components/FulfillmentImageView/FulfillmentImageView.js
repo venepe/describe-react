@@ -33,7 +33,7 @@ class FulfillmentImageView extends Component {
   render() {
     return (
       <div>
-        <SMTIToolbar title={this.props.testCase.it} />
+        <SMTIToolbar title={this.props.testCase.text} />
         <div className="FulfillmentImageView-container">
           <FulfillmentImage fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} height={500} width={null} onClick={this._pushFulfillmentEvents} onDelete={this._onDelete} />
         </div>
@@ -53,7 +53,7 @@ export default Relay.createContainer(FulfillmentImageView, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        it
+        text
         ${FulfillmentImage.getFragment('testCase')},
       }
     `,
