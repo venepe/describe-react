@@ -86,6 +86,7 @@ export default Relay.createContainer(MessageForm, {
   fragments: {
     channel: () => Relay.QL`
       fragment on Channel {
+        id
         ${IntroduceMessageMutation.getFragment('channel')}
       }
     `,

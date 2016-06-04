@@ -66,6 +66,19 @@ export const TestCaseSheetOptions = {
   ],
 };
 
+export const TestCaseFulfilledSheetOptions = {
+  options: [
+    {
+      text: 'Update Test Case',
+      value: UPDATE_TEST_CASE
+    },
+    {
+      text: 'Delete Test Case',
+      value:  DELETE_TEST_CASE
+    },
+  ],
+};
+
 export const FulfillmentSheetOptions = {
   options: [
     {

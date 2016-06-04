@@ -127,6 +127,9 @@ class FulfillmentImage extends Component {
       return (
         <div className="FulfillmentImage-container">
           <TouchableImage src={uri} height={this.state.height} width={this.state.width} onClick={this._onClick} />
+          <div className="message">
+            <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
+          </div>
         </div>
       )
     } else {

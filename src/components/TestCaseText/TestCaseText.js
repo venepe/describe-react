@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './TestCaseText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
-import { TestCaseSheetOptions } from '../../constants/SheetOptions';
+import { TestCaseSheetOptions, TestCaseFulfilledSheetOptions } from '../../constants/SheetOptions';
 import FulfillmentFormDialog from '../FulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 import ConfirmationDialog from '../ConfirmationDialog';
@@ -146,10 +146,14 @@ class TestCaseText extends Component {
   }
 
   render() {
+    let sheetOptions = TestCaseSheetOptions;
+    if (this.props.testCase.isFulfilled) {
+      sheetOptions = TestCaseFulfilledSheetOptions;
+    }
 
     return (
       <div className="TestCaseText-container">
-        <ModalableArchyLabel text={this.props.testCase.text} sheetOptions={TestCaseSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+        <ModalableArchyLabel text={this.props.testCase.text} sheetOptions={sheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Test Case?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
@@ -167,6 +171,7 @@ export default Relay.createContainer(TestCaseText, {
       fragment on TestCase {
         id
         text
+        isFulfilled
         events(first: 2) {
           edges {
             node {
