@@ -90,7 +90,7 @@ class CoverImage extends Component {
 export default Relay.createContainer(CoverImage, {
   fragments: {
     coverImage: () => Relay.QL`
-      fragment on File {
+      fragment on Cover {
         id
         uri
         ${DeleteUserCoverMutation.getFragment('coverImage')},

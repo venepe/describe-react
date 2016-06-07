@@ -29,15 +29,12 @@ export default class IntroduceFulfillmentMutation extends Relay.Mutation {
           node {
             id
             status
-            file {
-              id
-              uri
-            }
+            uri
           }
         }
         testCase {
           id
-          isFulfilled,
+          status,
           fulfillments
         },
         project {
@@ -83,26 +80,25 @@ export default class IntroduceFulfillmentMutation extends Relay.Mutation {
     return {
       testCaseId: this.props.testCase.id,
       uri: this.props.uri,
+      status: this.props.status,
     };
   }
 
   getOptimisticResponse() {
     let numOfTestCasesFulfilled = this.props.project.numOfTestCasesFulfilled;
-    if (this.props.testCase.isFulfilled === false) {
+    if (this.props.testCase.status !== 'SUBMITTED') {
       numOfTestCasesFulfilled++;
     }
     return {
       fulfillmentEdge: {
         node: {
-          status: 'SUBMITTED',
-          file: {
-            uri: ''
-          }
+          status: this.props.status,
+          uri: ''
         },
       },
       testCase: {
         id: this.props.testCase.id,
-        isFulfilled: true
+        status: 'SUBMITTED'
       },
       project: {
         id: this.props.project.id,

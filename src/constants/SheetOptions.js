@@ -1,13 +1,13 @@
 import {
   INTRODUCE_TEST_CASE,
   INTRODUCE_EXAMPLE,
-  FULFILL_TEST_CASE,
   UPDATE_TEST_CASE,
   UPDATE_PROJECT,
   DELETE_TEST_CASE,
   DELETE_PROJECT,
   DELETE_EXAMPLE,
   REJECT_FULFILLMENT,
+  SUBMIT_FULFILLMENT,
   DELETE_COVER_IMAGE,
   CHANGE_COVER_IMAGE,
   DELETE_COLLABORATOR,
@@ -52,10 +52,6 @@ export const CollaborativeProjectSheetOptions = {
 export const TestCaseSheetOptions = {
   options: [
     {
-      text: 'Fulfill Test Case',
-      value: FULFILL_TEST_CASE
-    },
-    {
       text: 'Update Test Case',
       value: UPDATE_TEST_CASE
     },
@@ -66,24 +62,20 @@ export const TestCaseSheetOptions = {
   ],
 };
 
-export const TestCaseFulfilledSheetOptions = {
-  options: [
-    {
-      text: 'Update Test Case',
-      value: UPDATE_TEST_CASE
-    },
-    {
-      text: 'Delete Test Case',
-      value:  DELETE_TEST_CASE
-    },
-  ],
-};
-
-export const FulfillmentSheetOptions = {
+export const RejectFulfillmentSheetOptions = {
   options: [
     {
       text: 'Reject Fulfillment',
       value: REJECT_FULFILLMENT
+    }
+  ],
+};
+
+export const SubmitFulfillmentSheetOptions = {
+  options: [
+    {
+      text: 'Submit Fulfillment',
+      value: SUBMIT_FULFILLMENT
     }
   ],
 };

@@ -19,15 +19,12 @@ export default class DidIntroduceTestCaseSubscription extends Relay.Subscription
             node {
               id
               text
-              isFulfilled
+              status
               fulfillments(first: 1) {
                 edges {
                   node {
                     id
-                    file {
-                      id
-                      uri
-                    }
+                    uri
                   }
                 }
               }

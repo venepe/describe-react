@@ -114,7 +114,7 @@
             },
             {
               "kind": "OBJECT",
-              "name": "File",
+              "name": "Cover",
               "ofType": null
             },
             {
@@ -230,7 +230,81 @@
             },
             {
               "kind": "OBJECT",
-              "name": "File",
+              "name": "Fulfillment",
+              "ofType": null
+            }
+          ]
+        },
+        {
+          "kind": "INTERFACE",
+          "name": "File",
+          "description": "An object point to an uri",
+          "fields": [
+            {
+              "name": "id",
+              "description": "The id of the object.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "uri",
+              "description": "The uri of the file.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "The timestamp when the file was created.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "The timestamp when the file was last updated.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "Cover",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "Fulfillment",
               "ofType": null
             }
           ]
@@ -330,11 +404,11 @@
             },
             {
               "name": "cover",
-              "description": "The cover image of the user.",
+              "description": "The cover of the user.",
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "File",
+                "name": "Cover",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1053,12 +1127,12 @@
               "deprecationReason": null
             },
             {
-              "name": "isFulfilled",
-              "description": "Whether the test case is fulfilled.",
+              "name": "status",
+              "description": "The status of the test case.",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
+                "kind": "ENUM",
+                "name": "FulfillmentStatus",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1367,6 +1441,18 @@
               "deprecationReason": null
             },
             {
+              "name": "uri",
+              "description": "The uri of the fulfillment.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "author",
               "description": null,
               "args": [],
@@ -1404,8 +1490,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "File",
-          "description": "File object",
+          "name": "Cover",
+          "description": "Cover object",
           "fields": [
             {
               "name": "id",
@@ -1425,7 +1511,7 @@
             },
             {
               "name": "uri",
-              "description": "The uri of the file.",
+              "description": "The uri of the cover.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1436,61 +1522,8 @@
               "deprecationReason": null
             },
             {
-              "name": "messages",
-              "description": "The messages on the fulfillment.",
-              "args": [
-                {
-                  "name": "before",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "after",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "first",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "last",
-                  "description": null,
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "Int",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "MessageConnection",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "createdAt",
-              "description": "The timestamp when the file was created.",
+              "description": "The timestamp when the cover was created.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1502,7 +1535,7 @@
             },
             {
               "name": "updatedAt",
-              "description": "The timestamp when the file was last updated.",
+              "description": "The timestamp when the cover was last updated.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1522,7 +1555,7 @@
             },
             {
               "kind": "INTERFACE",
-              "name": "Channel",
+              "name": "File",
               "ofType": null
             }
           ],
@@ -1537,6 +1570,12 @@
           "inputFields": null,
           "interfaces": null,
           "enumValues": [
+            {
+              "name": "INCOMPLETE",
+              "description": "The fulfillment is incomplete.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
             {
               "name": "SUBMITTED",
               "description": "The fulfillment is submitted.",
@@ -1603,12 +1642,12 @@
               "deprecationReason": null
             },
             {
-              "name": "file",
-              "description": "The file possibly fulfilling the test case.",
+              "name": "uri",
+              "description": "The uri of the fulfillment.",
               "args": [],
               "type": {
-                "kind": "OBJECT",
-                "name": "File",
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1621,6 +1660,59 @@
               "type": {
                 "kind": "ENUM",
                 "name": "FulfillmentStatus",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "messages",
+              "description": "The messages on the fulfillment.",
+              "args": [
+                {
+                  "name": "before",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "MessageConnection",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1709,6 +1801,16 @@
             {
               "kind": "INTERFACE",
               "name": "Node",
+              "ofType": null
+            },
+            {
+              "kind": "INTERFACE",
+              "name": "Channel",
+              "ofType": null
+            },
+            {
+              "kind": "INTERFACE",
+              "name": "File",
               "ofType": null
             }
           ],
@@ -2172,7 +2274,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "FileEdge",
+                  "name": "CoverEdge",
                   "ofType": null
                 }
               },
@@ -3018,7 +3120,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "FileEdge",
+          "name": "CoverEdge",
           "description": "An edge in a connection.",
           "fields": [
             {
@@ -3027,7 +3129,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "File",
+                "name": "Cover",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4269,6 +4371,18 @@
               "defaultValue": null
             },
             {
+              "name": "status",
+              "description": "The status of the fulfillment.",
+              "args": [],
+              "type": {
+                "kind": "ENUM",
+                "name": "FulfillmentStatus",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "uri",
               "description": null,
               "type": {
@@ -4889,6 +5003,20 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "uri",
+              "description": null,
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
             },
             {
               "name": "clientMutationId",

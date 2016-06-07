@@ -22,9 +22,12 @@ class TestCaseLabel extends Component {
     let name = 'remove_circle_outline';
     let color = '#E0E0E0';
 
-    if (this.props.testCase.isFulfilled) {
+    if (this.props.testCase.status === 'SUBMITTED') {
       name = 'check_circle';
       color = '#69F0AE';
+    } else if (this.props.testCase.status === 'REJECTED') {
+      name = 'cancel';
+      color = '#FF5252';
     }
 
     return (
@@ -42,7 +45,7 @@ export default Relay.createContainer(TestCaseLabel, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
-        isFulfilled
+        status
       }
     `,
   },

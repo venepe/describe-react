@@ -9,11 +9,6 @@ import ArchyLabel from '../ArchyLabel';
 import TestCaseLabel from '../TestCaseLabel';
 import TestCaseText from '../TestCaseText';
 import FulfillmentImage from '../FulfillmentImage';
-import MoreButton from '../MoreButton';
-import FileImage from '../FileImage';
-
-const _first = 2;
-const _next = 2;
 
 class TestCaseView extends Component {
   static propTypes = {
@@ -34,7 +29,6 @@ class TestCaseView extends Component {
     super(props);
     this.router = context.router;
     this._pushFulfillment = this._pushFulfillment.bind(this);
-    this._onLoadMoreFulfillments = this._onLoadMoreFulfillments.bind(this);
   }
 
   _pushFulfillment(fulfillmentId) {
@@ -43,25 +37,14 @@ class TestCaseView extends Component {
     this.router.push(`/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}`);
   }
 
-  _onLoadMoreFulfillments() {
-    var first = this.props.relay.variables.firstFulfillment;
-    var edges = this.props.testCase.originalFulfillments.edges;
-    var cursor = edges[edges.length - 1].cursor;
-    this.props.relay.setVariables({
-      firstFulfillment: first + _next,
-      afterFulfillment: cursor
-    });
-  }
-
   render() {
     let object = {};
     if (this.props.testCase) {
       let testCase = this.props.testCase;
       let fulfillmentNodes = [];
 
-      if (testCase.originalFulfillments) {
-        let hasNextPage = testCase.originalFulfillments.pageInfo.hasNextPage;
-        fulfillmentNodes = testCase.originalFulfillments.edges.map(function (object, index) {
+      if (testCase.fulfillments) {
+        fulfillmentNodes = testCase.fulfillments.edges.map(function (object, index) {
           let image = object.node;
           let status = image.status || '';
            let imageComponent = {
@@ -75,13 +58,6 @@ class TestCaseView extends Component {
              };
         }.bind(this));
 
-        if (hasNextPage) {
-           let moreComponent = {
-             component: (<MoreButton onClick={this._onLoadMoreFulfillments} />),
-             nodes: []
-           };
-           fulfillmentNodes.push(moreComponent);
-         }
       }
 
       object = {
@@ -104,33 +80,12 @@ class TestCaseView extends Component {
 }
 
 export default Relay.createContainer(TestCaseView, {
-  initialVariables: {
-    firstFulfillment: _first,
-    afterFulfillment: null,
-    moreFirstFulfillment: _first
-  },
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
         text
-        originalFulfillments: fulfillments(first: $firstFulfillment) {
-          pageInfo {
-            hasNextPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              status
-              ${FulfillmentImage.getFragment('fulfillment')},
-            }
-          }
-        }
-        moreFulfillments: fulfillments(first: $moreFirstFulfillment, after: $afterFulfillment) {
-          pageInfo {
-            hasNextPage
-          }
+        fulfillments(first: 1) {
           edges {
             cursor
             node {

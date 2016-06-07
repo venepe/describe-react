@@ -19,15 +19,12 @@ export default class DidIntroduceFulfillmentSubscription extends Relay.Subscript
             node {
               id
               status
-              file {
-                id
-                uri
-              }
+              uri
             }
           }
           testCase {
             id
-            isFulfilled,
+            status,
           },
           project {
             id

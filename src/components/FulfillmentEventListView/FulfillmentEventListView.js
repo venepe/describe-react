@@ -5,7 +5,7 @@ import Relay from 'react-relay';
 import Infinite from 'react-infinite';
 import styles from './FulfillmentEventListView.css';
 import SpinnerView from '../SpinnerView';
-import { Card } from 'material-ui';
+import { Card, CardMedia } from 'material-ui';
 import moment from 'moment';
 
 const _first = 5;
@@ -46,16 +46,35 @@ class FulfillmentEventListView extends Component {
     };
   }
 
+  renderImage(previous, current) {
+    if (previous !== current) {
+      return (
+        <div>
+          <CardMedia className='FulfillmentEventImage-container' expandable={true}>
+            <img className='FulfillmentEventImage-img' height={400} src={current} />
+          </CardMedia>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   buildElements(events) {
     return events.edges.map((object, index) => {
       let status = object.node.status;
       let author = object.node.author;
+      let current = object.node.uri;
+      let previous = (index === 0) ? null : events.edges[index - 1].node.uri;
       return (
-        <Card key={index} className="event-row">
-          <div>{status}</div>
-          <div className="sub-container">
-            <div className="author">{author.name}</div>
-            <div className="date-created">{moment(object.node.createdAt).format('MMM DD, YYYY hh:mm A')}</div>
+        <Card key={index} className="FulfillmentEvent-container">
+          {this.renderImage(previous, current)}
+          <div className="event-row">
+            <div>{status}</div>
+            <div className="sub-container">
+              <div className="author">{author.name}</div>
+              <div className="date-created">{moment(object.node.createdAt).format('MMM DD, YYYY hh:mm A')}</div>
+            </div>
           </div>
         </Card>
       );
@@ -123,6 +142,7 @@ export default Relay.createContainer(FulfillmentEventListView, {
             node {
               id
               status
+              uri
               createdAt
               author {
                 name
@@ -139,6 +159,7 @@ export default Relay.createContainer(FulfillmentEventListView, {
             node {
               id
               status
+              uri
               createdAt
               author {
                 name

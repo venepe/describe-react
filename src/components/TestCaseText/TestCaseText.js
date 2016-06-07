@@ -5,16 +5,15 @@ import Relay from 'react-relay';
 import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './TestCaseText.css';
 import ModalableArchyLabel from '../ModalableArchyLabel';
-import { TestCaseSheetOptions, TestCaseFulfilledSheetOptions } from '../../constants/SheetOptions';
-import FulfillmentFormDialog from '../FulfillmentFormDialog';
+import { TestCaseSheetOptions } from '../../constants/SheetOptions';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 import ConfirmationDialog from '../ConfirmationDialog';
 
 import ModalTypes, { INTRODUCE_EXAMPLE, FULFILL_TEST_CASE, UPDATE_TEST_CASE, DELETE_TEST_CASE } from '../../constants/ModalTypes';
 
 import { DeleteTestCaseMutation } from '../../mutations';
-import { registerDidDeleteTestCase, registerDidUpdateTestCase, registerDidIntroduceFulfillment } from '../../stores/SubscriptionStore';
-import { DidDeleteTestCaseSubscription, DidUpdateTestCaseSubscription, DidIntroduceFulfillmentSubscription } from '../../subscriptions';
+import { registerDidDeleteTestCase, registerDidUpdateTestCase } from '../../stores/SubscriptionStore';
+import { DidDeleteTestCaseSubscription, DidUpdateTestCaseSubscription } from '../../subscriptions';
 
 class TestCaseText extends Component {
   static contextTypes = {
@@ -38,12 +37,10 @@ class TestCaseText extends Component {
     this._onDelete = this._onDelete.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissTestCaseUpdateForm = this._dismissTestCaseUpdateForm.bind(this);
-    this._dismissFulfillmentForm = this._dismissFulfillmentForm.bind(this);
     this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
     this._pushMessages = this._pushMessages.bind(this);
     this.state = {
       showTestCaseUpdateForm: false,
-      showFulfillmentForm: false,
       showConfirmationDialog: false
     }
   }
@@ -60,11 +57,6 @@ class TestCaseText extends Component {
 
   _onItemTouchTap(value) {
     switch (value) {
-        case FULFILL_TEST_CASE:
-          this.setState({
-            showFulfillmentForm: true
-          });
-          break;
         case UPDATE_TEST_CASE:
             this.setState({
               showTestCaseUpdateForm: true
@@ -82,12 +74,6 @@ class TestCaseText extends Component {
   _dismissTestCaseUpdateForm() {
     this.setState({
       showTestCaseUpdateForm: false
-    });
-  }
-
-  _dismissFulfillmentForm() {
-    this.setState({
-      showFulfillmentForm: false
     });
   }
 
@@ -136,26 +122,16 @@ class TestCaseText extends Component {
           new DidDeleteTestCaseSubscription({testCase, project})
         );
       });
-
-      registerDidIntroduceFulfillment({testCaseId}, () => {
-        return Relay.Store.subscribe(
-          new DidIntroduceFulfillmentSubscription({testCase, project})
-        );
-      });
     }
   }
 
   render() {
     let sheetOptions = TestCaseSheetOptions;
-    if (this.props.testCase.isFulfilled) {
-      sheetOptions = TestCaseFulfilledSheetOptions;
-    }
 
     return (
       <div className="TestCaseText-container">
         <ModalableArchyLabel text={this.props.testCase.text} sheetOptions={sheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
         <TestCaseUpdateFormDialog isVisible={this.state.showTestCaseUpdateForm} testCase={this.props.testCase} onCancel={this._dismissTestCaseUpdateForm} onUpdate={this._dismissTestCaseUpdateForm} />
-        <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
         <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Test Case?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
         <div className="message">
           <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
@@ -171,7 +147,7 @@ export default Relay.createContainer(TestCaseText, {
       fragment on TestCase {
         id
         text
-        isFulfilled
+        status
         events(first: 2) {
           edges {
             node {
@@ -183,10 +159,8 @@ export default Relay.createContainer(TestCaseText, {
         }
         ${DeleteTestCaseMutation.getFragment('testCase')},
         ${TestCaseUpdateFormDialog.getFragment('testCase')},
-        ${FulfillmentFormDialog.getFragment('testCase')},
         ${DidDeleteTestCaseSubscription.getFragment('testCase')},
         ${DidUpdateTestCaseSubscription.getFragment('testCase')},
-        ${DidIntroduceFulfillmentSubscription.getFragment('testCase')},
       }
 
     `,
@@ -194,7 +168,6 @@ export default Relay.createContainer(TestCaseText, {
       fragment on Project {
         id,
         ${DeleteTestCaseMutation.getFragment('project')},
-        ${FulfillmentFormDialog.getFragment('project')},
         ${DidDeleteTestCaseSubscription.getFragment('project')},
       }
     `,

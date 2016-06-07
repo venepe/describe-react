@@ -21,7 +21,7 @@ export default class IntroduceTestCaseMutation extends Relay.Mutation {
           node {
             id
             text
-            isFulfilled
+            status
           }
         }
         project {
@@ -62,7 +62,7 @@ export default class IntroduceTestCaseMutation extends Relay.Mutation {
       testCaseEdge: {
         node: {
           text: this.props.text,
-          isFulfilled: false,
+          status: 'INCOMPLETE',
         },
       },
       project: {

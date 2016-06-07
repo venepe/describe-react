@@ -6,11 +6,12 @@ import { IconButton, FontIcon, Styles } from 'material-ui';
 import styles from './FulfillmentImage.css';
 import ModalableImage from '../ModalableImage';
 import TouchableImage from '../TouchableImage';
-import { FulfillmentSheetOptions } from '../../constants/SheetOptions';
+import FulfillmentFormDialog from '../FulfillmentFormDialog';
+import { RejectFulfillmentSheetOptions, SubmitFulfillmentSheetOptions } from '../../constants/SheetOptions';
 import ConfirmationDialog from '../ConfirmationDialog';
 import { track, Events } from '../../utils/SMTIAnalytics';
 
-import ModalTypes, { REJECT_FULFILLMENT } from '../../constants/ModalTypes';
+import ModalTypes, { REJECT_FULFILLMENT, SUBMIT_FULFILLMENT } from '../../constants/ModalTypes';
 
 import { UpdateFulfillmentMutation } from '../../mutations';
 import { registerDidUpdateFulfillment } from '../../stores/SubscriptionStore';
@@ -42,10 +43,12 @@ class FulfillmentImage extends Component {
     this._onReject = this._onReject.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
+    this._dismissFulfillmentForm = this._dismissFulfillmentForm.bind(this);
     this._pushMessages = this._pushMessages.bind(this);
     this.state = {
       height: props.height,
       width: props.width,
+      showFulfillmentForm: false,
       showConfirmationDialog: false
     }
   }
@@ -62,6 +65,11 @@ class FulfillmentImage extends Component {
 
   _onItemTouchTap(value) {
     switch (value) {
+        case SUBMIT_FULFILLMENT:
+          this.setState({
+            showFulfillmentForm: true
+          });
+          break;
         case REJECT_FULFILLMENT:
           this.setState({
             showConfirmationDialog: true
@@ -74,6 +82,12 @@ class FulfillmentImage extends Component {
   _dismissConfirmationDialog() {
     this.setState({
       showConfirmationDialog: false
+    });
+  }
+
+  _dismissFulfillmentForm() {
+    this.setState({
+      showFulfillmentForm: false
     });
   }
 
@@ -91,7 +105,7 @@ class FulfillmentImage extends Component {
   }
 
   _pushMessages() {
-    let channelId = this.props.fulfillment.file.id;
+    let channelId = this.props.fulfillment.id;
     this.router.push(`/channels/${channelId}/messages`);
   }
 
@@ -121,12 +135,13 @@ class FulfillmentImage extends Component {
   render() {
     let uri = '';
     if (this.props.fulfillment) {
-      uri = this.props.fulfillment.file.uri;
+      uri = this.props.fulfillment.uri;
     }
-    if (this.props.fulfillment.status === 'REJECTED') {
+    if (this.props.fulfillment.status === 'SUBMITTED') {
       return (
         <div className="FulfillmentImage-container">
-          <TouchableImage src={uri} height={this.state.height} width={this.state.width} onClick={this._onClick} />
+          <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={RejectFulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+          <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Reject Fulfillment?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onReject} />
           <div className="message">
             <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
           </div>
@@ -135,8 +150,8 @@ class FulfillmentImage extends Component {
     } else {
       return (
         <div className="FulfillmentImage-container">
-          <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={FulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
-          <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Reject Fulfillment?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onReject} />
+          <ModalableImage src={uri} height={this.state.height} width={this.state.width} sheetOptions={SubmitFulfillmentSheetOptions} onItemTouchTap={this._onItemTouchTap} onClick={this._onClick} />
+          <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} fulfillment={this.props.fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
           <div className="message">
             <IconButton style={{width: '24px', padding: '0px'}} onMouseUp={this._pushMessages} onTouchEnd={this._pushMessages}><FontIcon className="material-icons" color={Styles.Colors.grey600}>chat_bubble</FontIcon></IconButton>
           </div>
@@ -152,10 +167,8 @@ export default Relay.createContainer(FulfillmentImage, {
       fragment on Fulfillment {
         id
         status
-        file {
-          id
-          uri
-        }
+        uri
+        ${FulfillmentFormDialog.getFragment('fulfillment')},
         ${UpdateFulfillmentMutation.getFragment('fulfillment')},
         ${DidUpdateFulfillmentSubscription.getFragment('fulfillment')},
       }
@@ -163,12 +176,14 @@ export default Relay.createContainer(FulfillmentImage, {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
+        ${FulfillmentFormDialog.getFragment('testCase')},
         ${UpdateFulfillmentMutation.getFragment('testCase')},
         ${DidUpdateFulfillmentSubscription.getFragment('testCase')},
       }
     `,
     project: () => Relay.QL`
       fragment on Project {
+        ${FulfillmentFormDialog.getFragment('project')},
         ${UpdateFulfillmentMutation.getFragment('project')},
       }
     `,

@@ -3,7 +3,7 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './CollaborationListCellView.css';
-import { Card, CardMedia, CardTitle, CardText } from 'material-ui';
+import { Card, CardTitle, CardText } from 'material-ui';
 
 import { registerDidIntroduceCollaborator, registerDidDeleteCollaboration, registerDidUpdateProject } from '../../stores/SubscriptionStore';
 import { DidIntroduceCollaboratorSubscription, DidDeleteCollaborationSubscription, DidUpdateProjectSubscription } from '../../subscriptions';

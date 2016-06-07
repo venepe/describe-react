@@ -17,7 +17,7 @@ export default class DidUpdateTestCaseSubscription extends Relay.Subscription {
           testCase {
             id
             text
-            isFulfilled
+            status
           }
           testCaseEventEdge {
             node {

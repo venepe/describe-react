@@ -7,7 +7,7 @@ export default class DeleteTestCaseMutation extends Relay.Mutation {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        isFulfilled
+        status
       }
     `,
     project: () => Relay.QL`
@@ -57,7 +57,7 @@ export default class DeleteTestCaseMutation extends Relay.Mutation {
     let numOfTestCases = this.props.project.numOfTestCases;
     let numOfTestCasesFulfilled = this.props.project.numOfTestCasesFulfilled;
     numOfTestCases--;
-    if (this.props.testCase.isFulfilled) {
+    if (this.props.testCase.status === 'SUBMITTED') {
       numOfTestCasesFulfilled--;
     }
     return {

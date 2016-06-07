@@ -8,10 +8,7 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
       fragment on Fulfillment {
         id
         status
-        file {
-          id
-          uri
-        }
+        uri
       }
     `,
     testCase: () => Relay.QL`
@@ -38,16 +35,14 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
         fulfillment {
           id
           status
-          file {
-            id
-            uri
-          }
+          uri
         }
         fulfillmentEventEdge {
           cursor
           node {
             id
             status
+            uri
           }
         }
         testCase
@@ -88,39 +83,45 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
     }
   ];
   }
+  getFiles() {
+    return [
+      this.props.uri
+    ]
+  }
   getVariables() {
     return {
       id: this.props.fulfillment.id,
       testCaseId: this.props.testCase.id,
+      uri: this.props.uri || this.props.fulfillment.uri,
       status: this.props.status,
     };
   }
   getOptimisticResponse() {
     let status = this.props.status || this.props.fulfillment.status;
-    let isFulfilled = false;
+    let uri = this.props.fulfillment.uri;
     let numOfTestCasesFulfilled = this.props.project.numOfTestCasesFulfilled;
-    if (this.props.testCase.fulfillments.edges.length > 1) {
-      isFulfilled = true;
-    } else {
-      numOfTestCasesFulfilled--;
+    if (this.props.status !== this.props.fulfillment.status) {
+      if (this.props.status === 'SUBMITTED') {
+        numOfTestCasesFulfilled++;
+      } else {
+        numOfTestCasesFulfilled--;
+      }
     }
     return {
       fulfillment: {
         id: this.props.fulfillment.id,
-        file: {
-          id: this.props.fulfillment.file.id,
-          uri: this.props.fulfillment.file.uri
-        },
+        uri,
         status
       },
       fulfillmentEventEdge: {
         node: {
+          uri,
           status
         }
       },
       testCase: {
         id: this.props.testCase.id,
-        isFulfilled
+        status
       },
       project: {
         id: this.props.project.id,

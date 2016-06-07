@@ -22,15 +22,13 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
           fulfillment {
             id
             status
-            file {
-              id
-              uri
-            }
+            uri
           }
           fulfillmentEventEdge {
             node {
               id
               status
+              uri
               createdAt
               author {
                 id
@@ -40,7 +38,7 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
           }
           testCase {
             id
-            isFulfilled
+            status
           }
           project {
             id
