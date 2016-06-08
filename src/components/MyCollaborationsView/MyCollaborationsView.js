@@ -7,6 +7,7 @@ import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import CollaborationListView from '../CollaborationListView';
 import MyCollaborationsPlaceholder from '../MyCollaborationsPlaceholder';
 import MyCollaborationsToolbar from '../MyCollaborationsToolbar';
+import SMTIToolbar from '../SMTIToolbar';
 import SMTIStorage from '../../utils/storage';
 
 import { registerDidIntroduceCollaboration } from '../../stores/SubscriptionStore';
