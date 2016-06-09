@@ -65,7 +65,6 @@ class SMTIDefaultNetworkLayer {
       } else if (!payload.data) {
         request.onError('Server response was missing `data`.');
       } else {
-        console.log(payload.data);
         request.onNext({response: payload.data});
         cleanSubscriptions(payload.data);
       }
