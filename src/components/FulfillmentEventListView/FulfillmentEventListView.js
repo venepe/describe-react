@@ -109,9 +109,9 @@ class FulfillmentEventListView extends Component {
 
   render() {
     return (
-      <Infinite elementHeight={97}
+      <Infinite elementHeight={340}
                        containerHeight={window.screen.height}
-                       infiniteLoadBeginBottomOffset={200}
+                       infiniteLoadBeginBottomOffset={100}
                        onInfiniteLoad={this._onEndReached}
                        loadingSpinnerDelegate={this.elementInfiniteLoad()}
                        isInfiniteLoading={this.state.hasNextPage}
