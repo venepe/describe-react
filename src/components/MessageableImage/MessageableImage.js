@@ -4,15 +4,17 @@ import React, { PropTypes, Component } from 'react';
 import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
-import styles from './ModalableImage.css';
+import styles from './MessageableImage.css';
 import TouchableImage from '../TouchableImage';
+import MessageButton from '../MessageButton';
 
-class ModalableImage extends Component {
+class MessageableImage extends Component {
   static propTypes = {
     height: PropTypes.number,
     onClick: PropTypes.func,
     onItemTouchTap: PropTypes.func,
     overlay: PropTypes.element,
+    onMessage: PropTypes.func,
   }
 
   static defaultProps = {
@@ -20,12 +22,12 @@ class ModalableImage extends Component {
     height: 400,
     onClick: function() {},
     onItemTouchTap: function() {},
-    overlay: null
+    overlay: null,
+    onMessage: function() {},
   }
 
   constructor(props) {
     super(props);
-    this._onClick = this._onClick.bind(this);
     this._buildMenuItem = this._buildMenuItem.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this.state = {
@@ -40,10 +42,6 @@ class ModalableImage extends Component {
     this.setState({
       ...nextProps
     });
-  }
-
-  _onClick() {
-    this.props.onClick();
   }
 
   _buildMenuItem() {
@@ -66,20 +64,23 @@ class ModalableImage extends Component {
     let iconButtonElement = (<IconButton style={{width: '24px', padding: '5px'}}><FontIcon className="material-icons" color={Styles.Colors.grey600}>mode_edit</FontIcon></IconButton>);
 
     return (
-      <div className="modalable-image">
-        <div className="modalable-container">
-          <TouchableImage src={this.state.src} height={this.state.height} overlay={this.state.overlay} onClick={this._onClick} />
+      <div className="messageable-image">
+        <div className="messageable-container">
+          <TouchableImage src={this.state.src} height={this.state.height} overlay={this.state.overlay} onClick={this.props.onClick} />
           <div className="modal">
-          <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
-            {this._buildMenuItem()}
-            <Divider />
-            <MenuItem primaryText="Close" />
-          </IconMenu>
-        </div>
+            <IconMenu iconButtonElement={iconButtonElement} openDirection={'bottom-right'} onItemTouchTap={this._onItemTouchTap}>
+              {this._buildMenuItem()}
+              <Divider />
+              <MenuItem primaryText="Close" />
+            </IconMenu>
+          </div>
+          <div className="message">
+            <MessageButton onClick={this.props.onMessage} />
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default ModalableImage;
+export default MessageableImage;

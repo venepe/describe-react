@@ -3,38 +3,34 @@
 import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import { CardTitle } from 'material-ui';
+import styles from './TestCaseListCell.css';
 import TestCaseImage from '../TestCaseImage';
-import styles from './TestCaseView.css';
 
-class TestCaseView extends Component {
+class TestCaseListCell extends Component {
   static contextTypes = {
     router: React.PropTypes.object.isRequired
+  }
+
+  static propTypes = {
+    key: PropTypes.number,
+    onClick: PropTypes.func
+  }
+
+  static defaultProps = {
+    key: 0,
+    onClick: function() {}
   }
 
   constructor(props, context) {
     super(props);
     this.router = context.router;
-    this._pushFulfillmentEvents = this._pushFulfillmentEvents.bind(this);
-    this._pushTestCaseEvents = this._pushTestCaseEvents.bind(this);
+    this._onClick = this._onClick.bind(this);
     this.getFulfillment = this.getFulfillment.bind(this);
   }
 
-  _pushFulfillmentEvents(e) {
-    e.stopPropagation();
-    let projectId = this.props.project.id;
-    let testCase = this.props.testCase;
-    let testCaseId = testCase.id;
-    let fulfillment = this.getFulfillment();;
-    let fulfillmentId = fulfillment.id;
-    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/fulfillments/${fulfillmentId}/events`);
-  }
-
-  _pushTestCaseEvents(e) {
-    e.stopPropagation();
-    let projectId = this.props.project.id;
+  _onClick(fulfillmentId) {
     let testCaseId = this.props.testCase.id;
-    this.router.push(`/projects/${projectId}/testCases/${testCaseId}/events`);
-    return false;
+    this.props.onClick({testCaseId, fulfillmentId});
   }
 
   getFulfillment() {
@@ -54,15 +50,16 @@ class TestCaseView extends Component {
     let fulfillmentId = '';
     let testCase = this.props.testCase || {};
     let fulfillment = this.getFulfillment();
-    uri = fulfillment.uri;
     fulfillmentId = fulfillment.id;
     return (
-      <TestCaseImage project={this.props.project} testCase={testCase} height={400} overlay={<CardTitle title={testCase.text} onClick={this._pushTestCaseEvents} />} onClick={this._pushFulfillmentEvents}/>
+      <div className="TestCaseListCell-container">
+        <TestCaseImage project={this.props.project} testCase={testCase} height={400} overlay={<CardTitle title={testCase.text} />} onClick={() => {this._onClick(fulfillmentId)}}/>
+      </div>
     );
   }
 }
 
-export default Relay.createContainer(TestCaseView, {
+export default Relay.createContainer(TestCaseListCell, {
   fragments: {
     testCase: () => Relay.QL`
       fragment on TestCase {

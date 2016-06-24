@@ -14,9 +14,6 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
     testCase: () => Relay.QL`
       fragment on TestCase {
         id
-        fulfillments(first: 2) {
-          edges
-        }
       }
     `,
     project: () => Relay.QL`

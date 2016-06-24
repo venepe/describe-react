@@ -36,7 +36,7 @@ class MyProjectsView extends Component {
   }
 
   _onPressRow(project) {
-    this.router.push(`/projects/${project.id}`);
+    this.router.push(`/projects/${project.id}/testCases`);
   }
 
   _onEndReached(cursor) {

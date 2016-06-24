@@ -46,20 +46,6 @@ class FulfillmentEventListView extends Component {
     };
   }
 
-  renderImage(previous, current) {
-    if (previous !== current) {
-      return (
-        <div>
-          <CardMedia className='FulfillmentEventImage-container' expandable={true}>
-            <img className='FulfillmentEventImage-img' height={400} src={current} />
-          </CardMedia>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  }
-
   buildElements(events) {
     return events.edges.map((object, index) => {
       let status = object.node.status;
@@ -68,7 +54,11 @@ class FulfillmentEventListView extends Component {
       let previous = (index === 0) ? null : events.edges[index - 1].node.uri;
       return (
         <Card key={index} className="FulfillmentEvent-container">
-          {this.renderImage(previous, current)}
+          <div>
+            <CardMedia className='FulfillmentEventImage-container' expandable={true}>
+              <img className='FulfillmentEventImage-img' height={400} src={current} />
+            </CardMedia>
+          </div>
           <div className="event-row">
             <div>{status}</div>
             <div className="sub-container">
@@ -109,9 +99,9 @@ class FulfillmentEventListView extends Component {
 
   render() {
     return (
-      <Infinite elementHeight={340}
+      <Infinite elementHeight={601}
                        containerHeight={window.screen.height}
-                       infiniteLoadBeginBottomOffset={100}
+                       infiniteLoadBeginBottomOffset={400}
                        onInfiniteLoad={this._onEndReached}
                        loadingSpinnerDelegate={this.elementInfiniteLoad()}
                        isInfiniteLoading={this.state.hasNextPage}

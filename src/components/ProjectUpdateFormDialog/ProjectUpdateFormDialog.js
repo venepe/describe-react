@@ -37,7 +37,7 @@ class ProjectUpdateFormDialog extends Component {
 
     return (
       <Dialog ref="dialog"
-        title="Update Project"
+        title="Edit Project"
         open={this.state.isVisible}
         modal={false}>
         <ProjectUpdateForm project={this.props.project} onCancel={this.props.onCancel} onUpdate={this.props.onUpdate} />

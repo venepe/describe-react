@@ -39,7 +39,7 @@ class TestCaseUpdateFormDialog extends Component {
 
     return (
       <Dialog ref="dialog"
-        title="Update Test Case"
+        title="Edit Test Case"
         open={this.state.isVisible}
         modal={false}>
         <TestCaseUpdateForm testCase={this.props.testCase} onCancel={this.props.onCancel} onUpdate={this.props.onUpdate} />

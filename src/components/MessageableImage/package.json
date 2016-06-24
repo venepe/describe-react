@@ -1,0 +1,6 @@
+{
+  "name": "MessageableImage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MessageableImage.js"
+}

@@ -33,7 +33,7 @@ class MyCollaborationsView extends Component {
   }
 
   _onPressRow(collaboration) {
-    this.router.push(`/collaborations/${collaboration.id}`);
+    this.router.push(`/projects/${collaboration.id}/testCases`);
   }
 
   _onEndReached(cursor) {

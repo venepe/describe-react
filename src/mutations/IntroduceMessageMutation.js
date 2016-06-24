@@ -48,7 +48,14 @@ export default class IntroduceMessageMutation extends Relay.Mutation {
       rangeBehaviors: {
         '': 'prepend',
       },
-    }];
+    },
+    {
+      type: 'FIELDS_CHANGE',
+      fieldIDs: {
+        channel: this.props.channel.id,
+      },
+    }
+  ];
   }
   getVariables() {
     return {
@@ -66,6 +73,9 @@ export default class IntroduceMessageMutation extends Relay.Mutation {
           }
         },
       },
+      channel: {
+        id: this.props.channel.id,
+      }
     };
   }
 }

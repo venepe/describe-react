@@ -8,16 +8,16 @@ class TouchableImage extends Component {
   static propTypes = {
     id: PropTypes.string,
     height: PropTypes.number,
-    width: PropTypes.number,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    overlay: PropTypes.element
   }
 
   static defaultProps = {
     id: '',
     src: '',
-    height: 200,
-    width: 200,
-    onClick: function() {}
+    height: 400,
+    onClick: function() {},
+    overlay: null
   }
 
   constructor(props) {
@@ -27,7 +27,7 @@ class TouchableImage extends Component {
       src: props.src,
       id: props.id,
       height: props.height,
-      width: props.width
+      overlay: props.overlay
     }
   }
 
@@ -37,21 +37,15 @@ class TouchableImage extends Component {
     });
   }
 
-  _onClick() {
-    this.props.onClick(this.state.id);
+  _onClick(e) {
+    this.props.onClick(e, this.state.id);
   }
 
   render() {
-    let width = null;
-    if (this.state.width) {
-      width = `${this.state.width}px`
-    }
     return (
-      <div style={{width}}>
-        <CardMedia expandable={true}>
-          <img className='touchable-image' height={this.state.height} src={this.state.src} onClick={this._onClick}/>
-        </CardMedia>
-      </div>
+      <CardMedia className='touchable-image' expandable={true} overlay={this.state.overlay} onClick={this._onClick}>
+        <img height={this.state.height} src={this.state.src}/>
+      </CardMedia>
     );
   }
 }

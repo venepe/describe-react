@@ -55,7 +55,7 @@ export default class DidUpdateFulfillmentSubscription extends Relay.Subscription
         connectionName: 'events',
         edgeName: 'fulfillmentEventEdge',
         rangeBehaviors: {
-          '': 'append',
+          '': 'prepend',
         }
       }];
   }

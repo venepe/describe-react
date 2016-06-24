@@ -11,6 +11,7 @@ import {
   DELETE_COVER_IMAGE,
   CHANGE_COVER_IMAGE,
   DELETE_COLLABORATOR,
+  INTRODUCE_COLLABORATOR,
   LEAVE_PROJECT
 } from './ModalTypes';
 
@@ -21,12 +22,12 @@ export const ProjectSheetOptions = {
       value: INTRODUCE_TEST_CASE
     },
     {
-      text: 'Update Project',
+      text: 'Edit Project',
       value: UPDATE_PROJECT
     },
     {
-      text: 'Delete Project',
-      value:  DELETE_PROJECT
+      text: 'Invite Collaborator',
+      value:  INTRODUCE_COLLABORATOR
     },
   ],
 };
@@ -38,7 +39,7 @@ export const CollaborativeProjectSheetOptions = {
       value: INTRODUCE_TEST_CASE
     },
     {
-      text: 'Update Project',
+      text: 'Edit Project',
       value: UPDATE_PROJECT
     },
     {
@@ -49,10 +50,31 @@ export const CollaborativeProjectSheetOptions = {
 }
 
 
-export const TestCaseSheetOptions = {
+export const SubmitTestCaseSheetOptions = {
   options: [
     {
-      text: 'Update Test Case',
+      text: 'Submit Fulfillment',
+      value: SUBMIT_FULFILLMENT
+    },
+    {
+      text: 'Edit Test Case',
+      value: UPDATE_TEST_CASE
+    },
+    {
+      text: 'Delete Test Case',
+      value:  DELETE_TEST_CASE
+    },
+  ],
+};
+
+export const RejectTestCaseSheetOptions = {
+  options: [
+    {
+      text: 'Reject Fulfillment',
+      value: REJECT_FULFILLMENT
+    },
+    {
+      text: 'Edit Test Case',
       value: UPDATE_TEST_CASE
     },
     {

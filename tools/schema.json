@@ -7600,7 +7600,7 @@
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "User",
+                "name": "Channel",
                 "ofType": null
               },
               "isDeprecated": false,

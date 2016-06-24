@@ -1,0 +1,13 @@
+
+.modal {
+    display: none;
+}
+
+.TestCaseListCell-container:hover .modal {
+    display: block;
+}
+
+
+.test-case-cell-image {
+  cursor: pointer;
+}

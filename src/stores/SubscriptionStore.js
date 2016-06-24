@@ -24,7 +24,7 @@ let didDeclineInvitationStore = {};
 let didAcceptInvitationStore = {};
 
 function registerStore(store, {id, parentId}, subscribe) {
-  if (!store[id] && !isClientID(id)) {
+  if (id && !store[id] && !isClientID(id)) {
     store[id] = {
       parentId,
       subscription: subscribe()

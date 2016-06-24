@@ -12,10 +12,10 @@ import MyProjectsView from './components/MyProjectsView';
 import MyCollaborationsView from './components/MyCollaborationsView';
 import MyInvitationsView from './components/MyInvitationsView';
 import FailureView from './components/FailureView';
+import TestCaseListPage from './components/TestCaseListPage';
 import TestCasePage from './components/TestCasePage';
 import CoverImageView from './components/CoverImageView';
 import FileImageView from './components/FileImageView';
-import FulfillmentImageView from './components/FulfillmentImageView';
 import MeView from './components/MeView';
 import UserView from './components/UserView';
 import ResetForm from './components/ResetForm';
@@ -102,6 +102,14 @@ export default (
       />
     <Route
         path="projects/:projectId" component={ProjectPage}
+        queries={ProjectQueries}
+        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="projects/:projectId/testCases" component={TestCaseListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
         renderLoading={() => <SpinnerView />}
@@ -216,13 +224,6 @@ export default (
     <Route
         path="*/:userId/coverImages/:coverImageId" component={CoverImageView}
         queries={CoverImageQueries}
-        renderLoading={() => <SpinnerView />}
-        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
-        onEnter={requireAuth}
-      />
-    <Route
-        path="projects/:projectId/testCases/:testCaseId/fulfillments/:fulfillmentId" component={FulfillmentImageView}
-        queries={FulfillmentQueries}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}
