@@ -1,0 +1,6 @@
+{
+  "name": "SettingsButton",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SettingsButton.js"
+}

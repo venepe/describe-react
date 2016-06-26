@@ -15,6 +15,24 @@ import {
   LEAVE_PROJECT
 } from './ModalTypes';
 
+export const ProjectListCellSheetOptions = {
+  options: [
+    {
+      text: 'Delete Project',
+      value:  DELETE_PROJECT
+    },
+  ],
+};
+
+export const CollaborationListCellSheetOptions = {
+  options: [
+    {
+      text: 'Leave Project',
+      value:  LEAVE_PROJECT
+    },
+  ],
+};
+
 export const ProjectSheetOptions = {
   options: [
     {
@@ -31,24 +49,6 @@ export const ProjectSheetOptions = {
     },
   ],
 };
-
-export const CollaborativeProjectSheetOptions = {
-  options: [
-    {
-      text: 'Add Test Case',
-      value: INTRODUCE_TEST_CASE
-    },
-    {
-      text: 'Edit Project',
-      value: UPDATE_PROJECT
-    },
-    {
-      text: 'Leave Project',
-      value:  LEAVE_PROJECT
-    },
-  ],
-}
-
 
 export const SubmitTestCaseSheetOptions = {
   options: [

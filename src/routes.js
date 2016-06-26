@@ -5,8 +5,6 @@ import {IndexRoute, Route} from 'react-router';
 
 import App from './components/App';
 import HomeView from './components/HomeView';
-import ProjectPage from './components/ProjectPage';
-import CollaborationPage from './components/CollaborationPage';
 import SpinnerView from './components/SpinnerView';
 import MyProjectsView from './components/MyProjectsView';
 import MyCollaborationsView from './components/MyCollaborationsView';
@@ -101,14 +99,6 @@ export default (
         onEnter={requireAuth}
       />
     <Route
-        path="projects/:projectId" component={ProjectPage}
-        queries={ProjectQueries}
-        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
-        renderLoading={() => <SpinnerView />}
-        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
-        onEnter={requireAuth}
-      />
-    <Route
         path="projects/:projectId/testCases" component={TestCaseListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
@@ -136,14 +126,6 @@ export default (
         path="projects/:projectId/invitees" component={InviteeListPage}
         queries={ProjectQueries}
         prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), projectId: params.projectId })}
-        renderLoading={() => <SpinnerView />}
-        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
-        onEnter={requireAuth}
-      />
-    <Route
-        path="collaborations/:collaborationId" component={CollaborationPage}
-        queries={CollaborationQueries}
-        prepareParams={(params) => ({meId: SMTIStorage.getMeIdFromLocalStorage(), collaborationId: params.collaborationId })}
         renderLoading={() => <SpinnerView />}
         renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
         onEnter={requireAuth}
