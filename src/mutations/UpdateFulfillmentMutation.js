@@ -75,15 +75,19 @@ export default class UpdateFulfillmentMutation extends Relay.Mutation {
       connectionName: 'events',
       edgeName: 'fulfillmentEventEdge',
       rangeBehaviors: {
-        '': 'append',
+        '': 'prepend',
       }
     }
   ];
   }
   getFiles() {
-    return [
-      this.props.uri
-    ]
+    if (this.props.uri) {
+      return [
+        this.props.uri
+      ];
+    } else {
+      return [];
+    }
   }
   getVariables() {
     return {

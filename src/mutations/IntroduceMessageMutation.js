@@ -68,6 +68,7 @@ export default class IntroduceMessageMutation extends Relay.Mutation {
       messageEdge: {
         node: {
           text: this.props.text,
+          createdAt: Date.now(),
           author: {
             cover: {}
           }

@@ -33,7 +33,7 @@ class TestCaseForm extends Component {
 
     this.state = {
       archible: {
-        component: (<ArchyLabel text={'describe:'} />),
+        component: (<ArchyLabel text={'describe'} />),
         key: this._getUUID(),
         nodes: [
           {
@@ -41,7 +41,7 @@ class TestCaseForm extends Component {
             key: this._getUUID(),
             nodes: [
               {
-                component: (<ArchyLabel text={'it should:'} />),
+                component: (<ArchyLabel text={'it should'} />),
                 key: this._getUUID(),
                 nodes: [
                   {

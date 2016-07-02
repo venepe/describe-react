@@ -7,6 +7,7 @@ import { Paper, FloatingActionButton, FontIcon } from 'material-ui';
 import ProjectListView from '../ProjectListView';
 import ProjectFormDialog from '../ProjectFormDialog';
 import MyProjectsPlaceholder from '../MyProjectsPlaceholder';
+import MyCollaborationsToolbar from '../MyCollaborationsToolbar';
 import SMTIToolbar from '../SMTIToolbar';
 import SMTIStorage from '../../utils/storage';
 
@@ -25,9 +26,14 @@ class MyProjectsView extends Component {
   constructor(props, context) {
     super(props);
     this.router = context.router;
+    this._pushInvitations = this._pushInvitations.bind(this);
     this._onPressRow = this._onPressRow.bind(this);
     this._onEndReached = this._onEndReached.bind(this);
     this._introduceProject = this._introduceProject.bind(this);
+  }
+
+  _pushInvitations() {
+    this.router.push('myinvitations');
   }
 
   _introduceProject() {
@@ -75,7 +81,7 @@ class MyProjectsView extends Component {
       if (me.originalProjects.edges.length > 0) {
         return (
           <div className="MyProjects-container">
-            <SMTIToolbar title={'Projects'} />
+            <MyCollaborationsToolbar title={'Projects'} onClick={this._pushInvitations} />
             <ProjectListView projects={this.props.me.originalProjects} me={this.props.me} onPressRow={this._onPressRow} onEndReached={this._onEndReached}/>
               <div className="add-project-button">
                 <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
@@ -86,7 +92,7 @@ class MyProjectsView extends Component {
       } else {
         return (
           <div>
-            <SMTIToolbar title={'Projects'} />
+            <MyCollaborationsToolbar title={'Projects'} onClick={this._pushInvitations} />
             <div className="add-project-button">
               <FloatingActionButton onClick={this._introduceProject}><FontIcon className="material-icons">add</FontIcon></FloatingActionButton>
             </div>

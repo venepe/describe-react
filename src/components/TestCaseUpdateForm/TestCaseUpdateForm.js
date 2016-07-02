@@ -32,7 +32,7 @@ class TestCaseUpdateForm extends Component {
 
     this.state = {
       archible: {
-        component: (<ArchyLabel text={'it should:'} />),
+        component: (<ArchyLabel text={'it should'} />),
         key: this._getUUID(),
         nodes: [
           {

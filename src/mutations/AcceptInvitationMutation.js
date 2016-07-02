@@ -22,7 +22,7 @@ export default class AcceptInvitationMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on AcceptInvitationPayload {
         acceptedInvitationId
-        collaborationEdge {
+        projectEdge {
           node {
             id
             text
@@ -31,7 +31,7 @@ export default class AcceptInvitationMutation extends Relay.Mutation {
           }
         }
         me {
-          collaborations
+          projects
         }
       }
     `;
@@ -41,10 +41,10 @@ export default class AcceptInvitationMutation extends Relay.Mutation {
       type: 'RANGE_ADD',
       parentName: 'me',
       parentID: this.props.me.id,
-      connectionName: 'collaborations',
-      edgeName: 'collaborationEdge',
+      connectionName: 'projects',
+      edgeName: 'projectEdge',
       rangeBehaviors: {
-        '': 'append',
+        '': 'prepend',
       },
     },
     {
@@ -62,7 +62,7 @@ export default class AcceptInvitationMutation extends Relay.Mutation {
   }
   getOptimisticResponse() {
     return {
-      collaborationEdge: {
+      projectEdge: {
         node: this.props.invitation.project,
       },
       acceptedInvitationId: this.props.invitation.id

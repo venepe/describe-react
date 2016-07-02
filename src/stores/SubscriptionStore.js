@@ -3,7 +3,7 @@
 import { isClientID } from '../utils/isClientID';
 import _ from 'lodash';
 
-let didDeleteCollaborationStore = {};
+let didLeaveProjectStore = {};
 let didDeleteCollaboratorStore = {};
 let didUpdateFulfillmentStore = {};
 let didDeleteProjectStore = {};
@@ -32,10 +32,10 @@ function registerStore(store, {id, parentId}, subscribe) {
   }
 }
 
-export const registerDidDeleteCollaboration = ({collaborationId, meId}, subscribe) => {
+export const registerDidLeaveProject = ({collaborationId, meId}, subscribe) => {
   const id = collaborationId;
   const parentId = meId;
-  registerStore(didDeleteCollaborationStore, {id, parentId}, subscribe);
+  registerStore(didLeaveProjectStore, {id, parentId}, subscribe);
 }
 export const registerDidDeleteCollaborator = ({collaboratorId, projectId}, subscribe) => {
   const id = collaboratorId;
@@ -149,8 +149,8 @@ export const cleanSubscriptions = (payload = {}) => {
     unsubscribe({store: didIntroduceInviteeStore}, projectId);
     unsubscribe({store: didIntroduceMessageStore}, projectId);
 
-  } else if (action == 'didDeleteCollaboration') {
-    let projectId = payload[action].deletedCollaborationId;
+  } else if (action == 'didLeaveProject') {
+    let projectId = payload[action].deletedProjectId;
 
     unsubscribe({store: didUpdateProjectStore, children:[{store: didDeleteTestCaseStore, children: [{store: didUpdateFulfillmentStore}]}]}, projectId);
     unsubscribe({store: didDeleteProjectStore, children: [{store: didDeleteCollaboratorStore}, {store: didDeleteInviteeStore}]}, projectId);

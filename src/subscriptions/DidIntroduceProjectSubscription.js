@@ -20,6 +20,7 @@ export default class DidIntroduceProjectSubscription extends Relay.Subscription 
               text
               numOfTestCases
               numOfTestCasesFulfilled
+              role
               testCases(first: 1) {
                 edges {
                   node {
@@ -60,7 +61,7 @@ export default class DidIntroduceProjectSubscription extends Relay.Subscription 
       connectionName: 'projects',
       edgeName: 'projectEdge',
       rangeBehaviors: {
-        '': 'append',
+        '': 'prepend',
       },
     }];
   }

@@ -33,7 +33,6 @@ class Header extends Component {
         this._onForgot = this._onForgot.bind(this);
         this._onRegisterLogin = this._onRegisterLogin.bind(this);
         this._pushProjects = this._pushProjects.bind(this);
-        this._pushCollaborations = this._pushCollaborations.bind(this);
         this._presentDialog = this._presentDialog.bind(this);
         this._onDeleteUser = this._onDeleteUser.bind(this);
 
@@ -77,10 +76,6 @@ class Header extends Component {
 
     _pushProjects() {
       this.router.push('/myprojects');
-    }
-
-    _pushCollaborations() {
-      this.router.push('/mycollaborations');
     }
 
     _onDeleteUser() {
@@ -139,7 +134,7 @@ class Header extends Component {
     render() {
       let children;
       if (Authenticate.isLoggedIn()) {
-        children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Projects"} onClick={this._pushProjects} />, <FlatButton key={1} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Collaborations"} onClick={this._pushCollaborations} />, <EditUserModal key={2} onItemTouchTap={this._presentDialog} />];
+        children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Projects"} onClick={this._pushProjects} />, <EditUserModal key={1} onItemTouchTap={this._presentDialog} />];
       } else {
         children = [<FlatButton key={0} style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Log in"} onClick={this._showLogin} />, <FlatButton key={1}  style={{backgroundColor: 'transparent', color: SMTIRawTheme.palette.alternateTextColor}} label={"Sign up"} onClick={this._showRegister} />];
       }

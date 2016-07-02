@@ -32,7 +32,7 @@ class ProjectForm extends Component {
 
     this.state = {
       archible: {
-        component: (<ArchyLabel text={'describe:'} />),
+        component: (<ArchyLabel text={'describe'} />),
         nodes: [
           {
             component: (<ArchyInput placeholder={projectPlaceholder} onChangeText={this._onChangeTitle} />),

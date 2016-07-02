@@ -19,7 +19,7 @@ export default class DidAcceptInvitationSubscription extends Relay.Subscription 
     return Relay.QL`
       subscription {
         didAcceptInvitation (input: $didAcceptInvitation) {
-          collaborationEdge {
+          projectEdge {
             node {
               id
               text

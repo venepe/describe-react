@@ -2,9 +2,9 @@
 
 import Relay from 'react-relay';
 
-export default class DidDeleteCollaborationSubscription extends Relay.Subscription {
+export default class DidLeaveProjectSubscription extends Relay.Subscription {
   static fragments = {
-    collaboration: () => Relay.QL`
+    project: () => Relay.QL`
       fragment on Project {
         id
       }
@@ -18,8 +18,8 @@ export default class DidDeleteCollaborationSubscription extends Relay.Subscripti
   getSubscription() {
     return Relay.QL`
       subscription {
-        didDeleteCollaboration (input: $didDeleteCollaboration) {
-          deletedCollaborationId,
+        didLeaveProject (input: $didLeaveProject) {
+          leftProjectId,
           me {
             id
           },
@@ -31,13 +31,13 @@ export default class DidDeleteCollaborationSubscription extends Relay.Subscripti
       type: 'NODE_DELETE',
       parentName: 'me',
       parentID: this.props.me.id,
-      connectionName: 'collaborations',
-      deletedIDFieldName: 'deletedCollaborationId',
+      connectionName: 'projects',
+      deletedIDFieldName: 'leftProjectId',
       }];
   }
   getVariables() {
     return {
-      id: this.props.collaboration.id,
+      id: this.props.project.id,
       meId: this.props.me.id,
     };
   }

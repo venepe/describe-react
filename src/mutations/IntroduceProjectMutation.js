@@ -22,6 +22,7 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
             text
             numOfTestCases
             numOfTestCasesFulfilled
+            role
           }
         }
         me {
@@ -38,7 +39,7 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
       connectionName: 'projects',
       edgeName: 'projectEdge',
       rangeBehaviors: {
-        '': 'append',
+        '': 'prepend',
       },
     }];
   }
@@ -55,6 +56,7 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
           text: this.props.text,
           numOfTestCases: 0,
           numOfTestCasesFulfilled: 0,
+          role: 'AUTHOR',
         },
       },
     };

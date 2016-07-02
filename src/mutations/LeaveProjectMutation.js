@@ -2,9 +2,9 @@
 
 import Relay from 'react-relay';
 
-export default class DeleteCollaborationMutation extends Relay.Mutation {
+export default class LeaveProjectMutation extends Relay.Mutation {
   static fragments = {
-    collaboration: () => Relay.QL`
+    project: () => Relay.QL`
       fragment on Project {
         id
       }
@@ -16,13 +16,13 @@ export default class DeleteCollaborationMutation extends Relay.Mutation {
     `,
   };
   getMutation() {
-    return Relay.QL`mutation{deleteCollaboration}`;
+    return Relay.QL`mutation{leaveProject}`;
   }
   getFatQuery() {
     return Relay.QL`
-      fragment on DeleteCollaborationPayload {
-        deletedCollaborationId,
-        me { collaborations }
+      fragment on LeaveProjectPayload {
+        leftProjectId,
+        me { projects }
       }
     `;
   }
@@ -31,18 +31,18 @@ export default class DeleteCollaborationMutation extends Relay.Mutation {
       type: 'NODE_DELETE',
       parentName: 'me',
       parentID: this.props.me.id,
-      connectionName: 'collaborations',
-      deletedIDFieldName: 'deletedCollaborationId',
+      connectionName: 'projects',
+      deletedIDFieldName: 'leftProjectId',
     }];
   }
   getVariables() {
     return {
-      id: this.props.collaboration.id,
+      id: this.props.project.id,
     };
   }
   getOptimisticResponse() {
     return {
-      deletedCollaborationId: this.props.collaboration.id
+      leftProjectId: this.props.project.id
     };
   }
 }

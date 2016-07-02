@@ -3,7 +3,7 @@
 export { default as AcceptInvitationMutation } from './AcceptInvitationMutation';
 export { default as DeclineInvitationMutation } from './DeclineInvitationMutation';
 export { default as DeleteInviteeMutation } from './DeleteInviteeMutation';
-export { default as DeleteCollaborationMutation } from './DeleteCollaborationMutation';
+export { default as LeaveProjectMutation } from './LeaveProjectMutation';
 export { default as DeleteCollaboratorMutation } from './DeleteCollaboratorMutation';
 export { default as DeleteUserCoverMutation } from './DeleteUserCoverMutation';
 export { default as DeleteProjectMutation } from './DeleteProjectMutation';

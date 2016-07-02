@@ -4,14 +4,14 @@ import React, { PropTypes, Component } from 'react';
 import Relay from 'react-relay';
 import styles from './ProjectListCellView.css';
 import { Card, CardTitle, CardText } from 'material-ui';
-import { ProjectListCellSheetOptions } from '../../constants/SheetOptions';
+import { CollaborationListCellSheetOptions, ProjectListCellSheetOptions } from '../../constants/SheetOptions';
 import CollaboratorIcon from '../CollaboratorIcon';
 import SettingsButton from '../SettingsButton';
 import ConfirmationDialog from '../ConfirmationDialog';
 
-import ModalTypes, { DELETE_PROJECT } from '../../constants/ModalTypes';
+import ModalTypes, { DELETE_PROJECT, LEAVE_PROJECT } from '../../constants/ModalTypes';
 
-import { DeleteProjectMutation } from '../../mutations';
+import { DeleteProjectMutation, LeaveProjectMutation } from '../../mutations';
 import { registerDidIntroduceCollaborator, registerDidDeleteProject, registerDidUpdateProject } from '../../stores/SubscriptionStore';
 import { DidIntroduceCollaboratorSubscription, DidDeleteProjectSubscription, DidUpdateProjectSubscription } from '../../subscriptions';
 
@@ -30,6 +30,7 @@ class ProjectListCellView extends Component {
     super(props);
     this._onClick = this._onClick.bind(this);
     this._onDelete = this._onDelete.bind(this);
+    this._onLeave = this._onLeave.bind(this);
     this._onItemTouchTap = this._onItemTouchTap.bind(this);
     this._dismissConfirmationDialog = this._dismissConfirmationDialog.bind(this);
     this.renderBuiltWith = this.renderBuiltWith.bind(this);
@@ -50,6 +51,11 @@ class ProjectListCellView extends Component {
               showConfirmationDialog: true
             });
           break;
+        case LEAVE_PROJECT:
+            this.setState({
+              showConfirmationDialog: true
+            });
+          break;
       default:
     }
   }
@@ -64,6 +70,13 @@ class ProjectListCellView extends Component {
     this._dismissConfirmationDialog();
     Relay.Store.commitUpdate(
       new DeleteProjectMutation({project: this.props.project, me: this.props.me})
+    );
+  }
+
+  _onLeave() {
+    this._dismissConfirmationDialog();
+    Relay.Store.commitUpdate(
+      new LeaveProjectMutation({project: this.props.project, me: this.props.me})
     );
   }
 
@@ -118,6 +131,20 @@ class ProjectListCellView extends Component {
 
   render() {
     let project = this.props.project;
+    let sheetOptions;
+    let dialogTitle;
+    let onConfirm;
+
+    if (project.role === 'AUTHOR') {
+      sheetOptions = ProjectListCellSheetOptions;
+      dialogTitle = 'Delete Project';
+      onConfirm = this._onDelete;
+    } else {
+      sheetOptions = CollaborationListCellSheetOptions;
+      dialogTitle = 'Leave Project';
+      onConfirm = this._onLeave;
+    }
+
     let percentFulfilled = parseInt(project.numOfTestCasesFulfilled / project.numOfTestCases * 100) || 0;
     let color = percentFulfilled < 50 ? '#FF5252' : percentFulfilled < 80 ? '#FFD740' : '#69F0AE';
 
@@ -126,10 +153,10 @@ class ProjectListCellView extends Component {
     return (
       <Card key={this.props.key} className="clickable" onClick={this._onClick}>
         <div className="settings-btn" onClick={this._onStopPropogation}>
-          <SettingsButton sheetOptions={ProjectListCellSheetOptions} onItemTouchTap={this._onItemTouchTap} />
+          <SettingsButton sheetOptions={sheetOptions} onItemTouchTap={this._onItemTouchTap} />
         </div>
         <CardTitle title={project.text} subtitle={subtitle} style={{padding: '0px', margin: '16px'}} />
-        <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={'Delete Project?'} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={this._onDelete} />
+        <ConfirmationDialog isVisible={this.state.showConfirmationDialog} title={dialogTitle} message={'Do you wish to continue?'} onCancel={this._dismissConfirmationDialog} onConfirm={onConfirm} />
       </Card>
     );
   }
@@ -143,6 +170,7 @@ export default Relay.createContainer(ProjectListCellView, {
         text
         numOfTestCases
         numOfTestCasesFulfilled
+        role
         collaborators (first: 5) {
           edges {
             node {
@@ -152,6 +180,7 @@ export default Relay.createContainer(ProjectListCellView, {
         }
         ${CollaboratorIcon.getFragment('project')},
         ${DeleteProjectMutation.getFragment('project')},
+        ${LeaveProjectMutation.getFragment('project')},
         ${DidDeleteProjectSubscription.getFragment('project')},
         ${DidUpdateProjectSubscription.getFragment('project')},
         ${DidIntroduceCollaboratorSubscription.getFragment('project')},
@@ -160,6 +189,7 @@ export default Relay.createContainer(ProjectListCellView, {
     me: () => Relay.QL`
       fragment on User {
         ${DeleteProjectMutation.getFragment('me')},
+        ${LeaveProjectMutation.getFragment('me')},
         ${DidDeleteProjectSubscription.getFragment('me')},
       }
     `,
