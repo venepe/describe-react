@@ -22,7 +22,7 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
             text
             numOfTestCases
             numOfTestCasesFulfilled
-            role
+            permission
           }
         }
         me {
@@ -56,7 +56,7 @@ export default class IntroduceProjectMutation extends Relay.Mutation {
           text: this.props.text,
           numOfTestCases: 0,
           numOfTestCasesFulfilled: 0,
-          role: 'AUTHOR',
+          permission: 15,
         },
       },
     };

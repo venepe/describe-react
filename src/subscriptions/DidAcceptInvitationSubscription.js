@@ -25,6 +25,7 @@ export default class DidAcceptInvitationSubscription extends Relay.Subscription 
               text
               numOfTestCases
               numOfTestCasesFulfilled
+              permission
               testCases(first: 1) {
                 edges {
                   node {

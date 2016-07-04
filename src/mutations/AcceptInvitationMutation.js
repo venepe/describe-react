@@ -28,6 +28,7 @@ export default class AcceptInvitationMutation extends Relay.Mutation {
             text
             numOfTestCases
             numOfTestCasesFulfilled
+            permission
           }
         }
         me {

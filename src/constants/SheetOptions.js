@@ -50,6 +50,19 @@ export const ProjectSheetOptions = {
   ],
 };
 
+export const CollaboratorProjectSheetOptions = {
+  options: [
+    {
+      text: 'Add Test Case',
+      value: INTRODUCE_TEST_CASE
+    },
+    {
+      text: 'Invite Collaborator',
+      value:  INTRODUCE_COLLABORATOR
+    },
+  ],
+};
+
 export const SubmitTestCaseSheetOptions = {
   options: [
     {

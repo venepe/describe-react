@@ -20,7 +20,7 @@ export default class DidIntroduceProjectSubscription extends Relay.Subscription 
               text
               numOfTestCases
               numOfTestCasesFulfilled
-              role
+              permission
               testCases(first: 1) {
                 edges {
                   node {

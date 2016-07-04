@@ -590,12 +590,12 @@
               "deprecationReason": null
             },
             {
-              "name": "role",
-              "description": "The user role on the project.",
+              "name": "permission",
+              "description": "The user permission on the project.",
               "args": [],
               "type": {
-                "kind": "ENUM",
-                "name": "CollaboratorRoles",
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,

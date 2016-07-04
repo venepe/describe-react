@@ -10,6 +10,7 @@ import SettingsButton from '../SettingsButton';
 import ConfirmationDialog from '../ConfirmationDialog';
 
 import ModalTypes, { DELETE_PROJECT, LEAVE_PROJECT } from '../../constants/ModalTypes';
+import { hasDeleteNodePerm } from '../../utils/permissions';
 
 import { DeleteProjectMutation, LeaveProjectMutation } from '../../mutations';
 import { registerDidIntroduceCollaborator, registerDidDeleteProject, registerDidUpdateProject } from '../../stores/SubscriptionStore';
@@ -135,7 +136,7 @@ class ProjectListCellView extends Component {
     let dialogTitle;
     let onConfirm;
 
-    if (project.role === 'AUTHOR') {
+    if (hasDeleteNodePerm(project.permission)) {
       sheetOptions = ProjectListCellSheetOptions;
       dialogTitle = 'Delete Project';
       onConfirm = this._onDelete;
@@ -170,7 +171,7 @@ export default Relay.createContainer(ProjectListCellView, {
         text
         numOfTestCases
         numOfTestCasesFulfilled
-        role
+        permission
         collaborators (first: 5) {
           edges {
             node {
