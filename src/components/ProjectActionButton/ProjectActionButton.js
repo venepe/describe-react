@@ -6,10 +6,11 @@ import { FloatingActionButton, IconMenu, IconButton, FontIcon, Dialog, Styles } 
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
 import styles from './ProjectActionButton.css';
-import { ProjectSheetOptions } from '../../constants/SheetOptions';
+import { ProjectSheetOptions, CollaboratorProjectSheetOptions } from '../../constants/SheetOptions';
 import TestCaseFormDialog from '../TestCaseFormDialog';
 import ProjectUpdateFormDialog from '../ProjectUpdateFormDialog';
 import InviteeFormDialog from '../InviteeFormDialog';
+import { hasUpdateNodePerm } from '../../utils/permissions';
 
 import ModalTypes, { INTRODUCE_TEST_CASE, UPDATE_PROJECT, INTRODUCE_COLLABORATOR } from '../../constants/ModalTypes';
 
@@ -34,12 +35,21 @@ class ProjectActionButton extends Component {
   }
 
   _buildMenuItem() {
-    return ProjectSheetOptions.options.map(function (object, index) {
-      let menuItem = (
-        <MenuItem key={index} primaryText={object.text} value={object.value} />
-      );
-     return menuItem;
-   }.bind(this));
+    if (hasUpdateNodePerm(this.props.project.permission)) {
+      return ProjectSheetOptions.options.map(function (object, index) {
+        let menuItem = (
+          <MenuItem key={index} primaryText={object.text} value={object.value} />
+        );
+       return menuItem;
+     }.bind(this));
+    } else {
+      return CollaboratorProjectSheetOptions.options.map(function (object, index) {
+        let menuItem = (
+          <MenuItem key={index} primaryText={object.text} value={object.value} />
+        );
+       return menuItem;
+     }.bind(this));
+    }
   }
 
   _onItemTouchTap(event, item) {
@@ -104,6 +114,7 @@ export default Relay.createContainer(ProjectActionButton, {
   fragments: {
     project: () => Relay.QL`
       fragment on Project {
+        permission
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
         ${InviteeFormDialog.getFragment('project')}
