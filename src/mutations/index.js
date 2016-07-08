@@ -4,12 +4,14 @@ export { default as AcceptInvitationMutation } from './AcceptInvitationMutation'
 export { default as DeclineInvitationMutation } from './DeclineInvitationMutation';
 export { default as DeleteInviteeMutation } from './DeleteInviteeMutation';
 export { default as LeaveProjectMutation } from './LeaveProjectMutation';
+export { default as DeleteContactMutation } from './DeleteContactMutation';
 export { default as DeleteCollaboratorMutation } from './DeleteCollaboratorMutation';
 export { default as DeleteUserCoverMutation } from './DeleteUserCoverMutation';
 export { default as DeleteProjectMutation } from './DeleteProjectMutation';
 export { default as DeleteTestCaseMutation } from './DeleteTestCaseMutation';
 export { default as DeleteUserMutation } from './DeleteUserMutation';
 export { default as IntroduceCollaboratorMutation } from './IntroduceCollaboratorMutation';
+export { default as IntroduceContactMutation } from './IntroduceContactMutation';
 export { default as IntroduceInviteeMutation } from './IntroduceInviteeMutation';
 export { default as IntroduceMessageMutation } from './IntroduceMessageMutation';
 export { default as IntroduceUserCoverMutation } from './IntroduceUserCoverMutation';

@@ -63,6 +63,18 @@ export default Relay.createContainer(MeView, {
         cover {
           ${CoverImage.getFragment('coverImage')},
         }
+        contacts (first: 30) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              name
+            }
+          }
+        }
         ${CoverImage.getFragment('user')},
       }
     `,

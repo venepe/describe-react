@@ -16,7 +16,7 @@ import Authenticate from '../../utils/authenticate';
 import SMTIStorage from '../../utils/storage';
 const SMTIRawTheme = require('../../utils/theme');
 
-import ModalTypes, { VIEW_PROFILE, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT, DELETE_USER } from '../../constants/ModalTypes';
+import ModalTypes, { VIEW_PROFILE, VIEW_CONTACTS, UPDATE_USER, CHANGE_PASSWORD, SIGN_OUT, DELETE_USER } from '../../constants/ModalTypes';
 
 class Header extends Component {
   static contextTypes = {
@@ -92,6 +92,9 @@ class Header extends Component {
       switch (dialogType) {
           case VIEW_PROFILE:
             this.router.push('/me');
+            break;
+          case VIEW_CONTACTS:
+            this.router.push('/contacts');
             break;
           case UPDATE_USER:
             let meId = SMTIStorage.getMeIdFromLocalStorage();

@@ -22,6 +22,7 @@ import FulfillmentEventListPage from './components/FulfillmentEventListPage';
 import CollaboratorListPage from './components/CollaboratorListPage';
 import InviteeListPage from './components/InviteeListPage';
 import MessageListPage from './components/MessageListPage';
+import ContactListPage from './components/ContactListPage';
 
 import {
   ChannelQueries,
@@ -83,6 +84,14 @@ export default (
       />
     <Route
         path="myinvitations" component={MyInvitationsView}
+        queries={MeQueries}
+        prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
+        renderLoading={() => <SpinnerView />}
+        renderFailure={(error, retry) => <FailureView error={error} retry={retry} />}
+        onEnter={requireAuth}
+      />
+    <Route
+        path="contacts" component={ContactListPage}
         queries={MeQueries}
         prepareParams={() => ({meId: SMTIStorage.getMeIdFromLocalStorage() })}
         renderLoading={() => <SpinnerView />}
