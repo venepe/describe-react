@@ -8,6 +8,7 @@ export { default as DidDeleteInviteeSubscription } from './DidDeleteInviteeSubsc
 export { default as DidDeleteProjectSubscription } from './DidDeleteProjectSubscription';
 export { default as DidDeleteTestCaseSubscription } from './DidDeleteTestCaseSubscription';
 export { default as DidIntroduceCollaboratorSubscription } from './DidIntroduceCollaboratorSubscription';
+export { default as DidIntroduceContactSubscription } from './DidIntroduceContactSubscription';
 export { default as DidIntroduceFulfillmentSubscription } from './DidIntroduceFulfillmentSubscription';
 export { default as DidIntroduceInvitationSubscription } from './DidIntroduceInvitationSubscription';
 export { default as DidIntroduceInviteeSubscription } from './DidIntroduceInviteeSubscription';

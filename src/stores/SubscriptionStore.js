@@ -9,13 +9,13 @@ let didUpdateFulfillmentStore = {};
 let didDeleteProjectStore = {};
 let didDeleteTestCaseStore = {};
 let didIntroduceCollaboratorStore = {};
-let didIntroduceCollaborationStore = {};
 let didIntroduceFulfillmentStore = {};
 let didIntroduceProjectStore = {};
 let didIntroduceTestCaseStore = {};
 let didUpdateProjectStore = {};
 let didUpdateTestCaseStore = {};
 let didIntroduceMessageStore = {};
+let didIntroduceContactStore = {};
 
 let didIntroduceInviteeStore = {};
 let didDeleteInviteeStore = {};
@@ -63,11 +63,6 @@ export const registerDidIntroduceCollaborator = ({projectId}, subscribe) => {
   const id = projectId;
   const parentId = id;
   registerStore(didIntroduceCollaboratorStore, {id, parentId}, subscribe);
-}
-export const registerDidIntroduceCollaboration = ({meId}, subscribe) => {
-  const id = meId;
-  const parentId = id;
-  registerStore(didIntroduceCollaborationStore, {id, parentId}, subscribe);
 }
 
 export const registerDidIntroduceFulfillment = ({testCaseId}, subscribe) => {
@@ -127,6 +122,12 @@ export const registerDidIntroduceMessage = ({channelId}, subscribe) => {
   const id = channelId;
   const parentId = id;
   registerStore(didIntroduceMessageStore, {id, parentId}, subscribe);
+}
+
+export const registerDidIntroduceContact = ({meId}, subscribe) => {
+  const id = meId;
+  const parentId = id;
+  registerStore(didIntroduceContactStore, {id, parentId}, subscribe);
 }
 
 export const cleanSubscriptions = (payload = {}) => {

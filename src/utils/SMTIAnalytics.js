@@ -5,6 +5,7 @@ export const Events = {
   SIGNED_IN: 'signed in',
   REGISTERED: 'registered',
   CREATED_PROJECT: 'created a project',
+  ADDED_CONTACT: 'added a contact',
   ADDED_COVER_IMAGE: 'added a cover image',
   ADDED_TEST_CASE: 'added a test case',
   FULFILLED_TEST_CASE: 'fulfilled a test case',
