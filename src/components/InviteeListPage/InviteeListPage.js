@@ -39,7 +39,7 @@ class InviteeListPage extends Component {
       <div className="InviteeListPage-container">
         <InviteeListToolbar title={'Invited'} onClick={this.introduceInvitee} />
         <InviteeListView project={this.props.project} me={this.props.me} />
-        <InviteeFormDialog isVisible={this.state.showInviteeForm} project={this.props.project} onCancel={this._dismissInviteeForm} onCreate={this._dismissInviteeForm} />
+        <InviteeFormDialog isVisible={this.state.showInviteeForm} project={this.props.project} me={this.props.me} onCancel={this._dismissInviteeForm} onCreate={this._dismissInviteeForm} />
       </div>
     );
   }
@@ -57,6 +57,7 @@ export default Relay.createContainer(InviteeListPage, {
     me: () => Relay.QL`
       fragment on User {
         ${InviteeListView.getFragment('me')},
+        ${InviteeFormDialog.getFragment('me')},
       }
     `,
   },

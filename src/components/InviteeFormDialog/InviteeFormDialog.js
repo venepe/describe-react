@@ -42,7 +42,7 @@ class InviteeFormDialog extends Component {
         title="Invite"
         open={this.state.isVisible}
         modal={false}>
-        <InviteeForm project={this.props.project} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
+        <InviteeForm project={this.props.project} me={this.props.me} onCancel={this.props.onCancel} onCreate={this.props.onCreate} />
       </Dialog>
     );
   }
@@ -53,6 +53,11 @@ export default Relay.createContainer(InviteeFormDialog, {
     project: () => Relay.QL`
       fragment on Project {
         ${InviteeForm.getFragment('project')}
+      }
+    `,
+    me: () => Relay.QL`
+      fragment on User {
+        ${InviteeForm.getFragment('me')}
       }
     `,
   },

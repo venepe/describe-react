@@ -21,8 +21,8 @@ class ContactListPlaceholder extends Component {
     return (
       <div className="group">
         <img src={`${SMTIBaseUrl}/assets/group.png`} width={120} height={120} />
-        <div className="group-line1">You have no collaborators!</div>
-        <div className="group-line2">Invite someone and work together.</div>
+        <div className="group-line1">You have no contacts!</div>
+        <div className="group-line2">Add someone to quickly work together.</div>
       </div>
     );
   }

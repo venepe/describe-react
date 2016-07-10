@@ -104,7 +104,7 @@ class ProjectActionButton extends Component {
           </IconMenu>
           <ProjectUpdateFormDialog isVisible={this.state.showProjectUpdateForm} project={this.props.project} onCancel={this._dismissProjectUpdateForm} onUpdate={this._dismissProjectUpdateForm} />
           <TestCaseFormDialog isVisible={this.state.showTestCaseForm} project={this.props.project} onCancel={this._dismissTestCaseForm} onCreate={this._dismissTestCaseForm} />
-          <InviteeFormDialog isVisible={this.state.showInviteeForm} project={this.props.project} onCancel={this._dismissInviteeForm} onCreate={this._dismissInviteeForm} />
+          <InviteeFormDialog isVisible={this.state.showInviteeForm} project={this.props.project} me={this.props.me} onCancel={this._dismissInviteeForm} onCreate={this._dismissInviteeForm} />
       </div>
     );
   }
@@ -118,6 +118,11 @@ export default Relay.createContainer(ProjectActionButton, {
         ${ProjectUpdateFormDialog.getFragment('project')},
         ${TestCaseFormDialog.getFragment('project')},
         ${InviteeFormDialog.getFragment('project')}
+      }
+    `,
+    me: () => Relay.QL`
+      fragment on User {
+        ${InviteeFormDialog.getFragment('me')}
       }
     `,
   },

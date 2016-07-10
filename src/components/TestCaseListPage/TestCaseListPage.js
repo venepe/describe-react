@@ -29,7 +29,7 @@ class TestCaseListPage extends Component {
       <div className="TestCaseListPage-container">
         <ProjectToolbar title={this.props.project.text} onClick={this._pushCollaborators} />
         <TestCaseListView project={this.props.project} me={this.props.me} />
-        <ProjectActionButton project={this.props.project} />
+        <ProjectActionButton project={this.props.project} me={this.props.me} />
       </div>
     );
   }
@@ -48,6 +48,7 @@ export default Relay.createContainer(TestCaseListPage, {
     me: () => Relay.QL`
       fragment on User {
         ${TestCaseListView.getFragment('me')},
+        ${ProjectActionButton.getFragment('me')},
       }
     `,
   },
