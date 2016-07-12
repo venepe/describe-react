@@ -8,7 +8,6 @@ import ConfirmationDialog from '../ConfirmationDialog';
 import FulfillmentFormDialog from '../FulfillmentFormDialog';
 import TestCaseUpdateFormDialog from '../TestCaseUpdateFormDialog';
 import MessageableImage from '../MessageableImage';
-import MessageButton from '../MessageButton';
 import { SubmitTestCaseSheetOptions, RejectTestCaseSheetOptions } from '../../constants/SheetOptions';
 import { track, Events } from '../../utils/SMTIAnalytics';
 
@@ -210,7 +209,7 @@ class TestCaseImage extends Component {
     fulfillmentId = fulfillment.id;
     return (
       <div className="TestCaseImage-container">
-        <MessageableImage height={this.props.height} overlay={this.props.overlay} src={uri} sheetOptions={this.state.testCaseSheet} onItemTouchTap={this._onItemTouchTap} onClick={this.props.onClick} onMessage={this._pushMessages}/>
+        <MessageableImage channel={this.props.testCase} height={this.props.height} overlay={this.props.overlay} src={uri} sheetOptions={this.state.testCaseSheet} onItemTouchTap={this._onItemTouchTap} onClick={this.props.onClick} onMessage={this._pushMessages}/>
         <ConfirmationDialog isVisible={this.state.showRejectFulfillmentDialog} title={'Reject Fulfillment?'} message={'Do you wish to continue?'} onCancel={this._dismissRejectFulfillmentDialog} onConfirm={this._onReject} />
         <ConfirmationDialog isVisible={this.state.showDeleteTestCaseDialog} title={'Delete Test Case?'} message={'Do you wish to continue?'} onCancel={this._dismissDeleteTestCaseDialog} onConfirm={this._onDelete} />
         <FulfillmentFormDialog isVisible={this.state.showFulfillmentForm} fulfillment={fulfillment} testCase={this.props.testCase} project={this.props.project} onCancel={this._dismissFulfillmentForm} />
@@ -240,6 +239,7 @@ export default Relay.createContainer(TestCaseImage, {
             }
           }
         }
+        ${MessageableImage.getFragment('channel')},
         ${FulfillmentFormDialog.getFragment('testCase')},
         ${TestCaseUpdateFormDialog.getFragment('testCase')},
         ${DeleteTestCaseMutation.getFragment('testCase')},

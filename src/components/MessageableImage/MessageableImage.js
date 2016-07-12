@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { PropTypes, Component } from 'react';
+import Relay from 'react-relay';
 import { IconMenu, IconButton, FontIcon, Dialog, Styles } from 'material-ui';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
@@ -75,7 +76,7 @@ class MessageableImage extends Component {
             </IconMenu>
           </div>
           <div className="message">
-            <MessageButton onClick={this.props.onMessage} />
+            <MessageButton channel={this.props.channel} onClick={this.props.onMessage} />
           </div>
         </div>
       </div>
@@ -83,4 +84,12 @@ class MessageableImage extends Component {
   }
 }
 
-export default MessageableImage;
+export default Relay.createContainer(MessageableImage, {
+  fragments: {
+    channel: () => Relay.QL`
+      fragment on Channel {
+        ${MessageButton.getFragment('channel')},
+      }
+    `
+  },
+});

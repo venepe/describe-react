@@ -1,0 +1,10 @@
+
+.unread-label {
+   position: absolute;
+   top: 14px;
+   right: 8px;
+   font-size: .9em;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
+   color: #FFFFFF;
+}

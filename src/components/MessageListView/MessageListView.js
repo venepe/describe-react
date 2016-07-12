@@ -9,7 +9,7 @@ import styles from './MessageListView.css';
 import SpinnerView from '../SpinnerView';
 import MessageListPlaceholder from '../MessageListPlaceholder';
 
-import { IntroduceMessageMutation } from '../../mutations';
+import { IntroduceMessageMutation, ReadChannelMutation } from '../../mutations';
 import { registerDidIntroduceMessage } from '../../stores/SubscriptionStore';
 import { DidIntroduceMessageSubscription } from '../../subscriptions';
 
@@ -75,6 +75,7 @@ class MessageListView extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.channel) {
       this.setState(this._getUpdatedState(nextProps.channel.messages));
+      this.didReadChannel();
     }
   }
 
@@ -94,10 +95,17 @@ class MessageListView extends Component {
 
   componentDidMount() {
     this.subscribe();
+    this.didReadChannel();
   }
 
   componentDidUpdate() {
     this.subscribe();
+  }
+
+  didReadChannel() {
+    Relay.Store.commitUpdate(
+      new ReadChannelMutation({channel: this.props.channel})
+    );
   }
 
   subscribe() {
@@ -193,6 +201,7 @@ export default Relay.createContainer(MessageListView, {
           }
         }
         ${IntroduceMessageMutation.getFragment('channel')},
+        ${ReadChannelMutation.getFragment('channel')},
         ${DidIntroduceMessageSubscription.getFragment('channel')},
       }
     `
