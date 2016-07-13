@@ -31,6 +31,7 @@ export default class DidIntroduceMessageSubscription extends Relay.Subscription 
           }
           channel {
             id
+            numOfMessagesUnread
           }
         }
       }`;

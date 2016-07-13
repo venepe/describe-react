@@ -75,7 +75,6 @@ class MessageListView extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.channel) {
       this.setState(this._getUpdatedState(nextProps.channel.messages));
-      this.didReadChannel();
     }
   }
 
@@ -95,11 +94,14 @@ class MessageListView extends Component {
 
   componentDidMount() {
     this.subscribe();
-    this.didReadChannel();
   }
 
   componentDidUpdate() {
     this.subscribe();
+  }
+
+  componentWillUnmount() {
+    this.didReadChannel();
   }
 
   didReadChannel() {
