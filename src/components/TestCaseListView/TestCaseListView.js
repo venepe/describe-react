@@ -67,6 +67,33 @@ class TestCaseListView extends Component {
     }
   }
 
+  componentDidMount() {
+    this.subscribe();
+  }
+
+  componentDidUpdate() {
+    this.subscribe();
+  }
+
+  subscribe() {
+    if (this.props.project) {
+      let project = this.props.project;
+      let projectId = project.id;
+
+      registerDidUpdateProject({projectId}, () => {
+        return Relay.Store.subscribe(
+          new DidUpdateProjectSubscription({project})
+        );
+      });
+      registerDidIntroduceTestCase({projectId}, () => {
+          return Relay.Store.subscribe(
+            new DidIntroduceTestCaseSubscription({project})
+          );
+      });
+    }
+  }
+
+
   _onEndReached() {
     let hasNextPage = this.props.project.testCases.pageInfo.hasNextPage;
     this.setState({hasNextPage});
